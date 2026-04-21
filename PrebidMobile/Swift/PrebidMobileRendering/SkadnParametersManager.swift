@@ -33,11 +33,14 @@ public class SkadnParametersManager: NSObject {
     @available(iOS 14.5, *)
     public static func getSkadnImpression(for skadnInfo: ORTBBidExtSkadn) -> SKAdImpression? {
         guard let fidelity = SkadnParametersManager.getFidelity(from: skadnInfo, fidelityType: 0) else { return nil }
-        
+
+        let resolvedSourceapp = skadnInfo.sourceapp
+            ?? Targeting.shared.sourceapp.flatMap { Int64($0) }.map { NSNumber(value: $0) }
+
         let imp = SKAdImpression()
         if let itunesitem = skadnInfo.itunesitem,
            let network = skadnInfo.network,
-           let sourceapp = skadnInfo.sourceapp,
+           let sourceapp = resolvedSourceapp,
            let nonce = fidelity.nonce,
            let timestamp = fidelity.timestamp,
            let signature = fidelity.signature,
@@ -72,11 +75,14 @@ public class SkadnParametersManager: NSObject {
         if #available(iOS 14.5, *) {
             guard let fidelity = SkadnParametersManager.getFidelity(from: skadnInfo, fidelityType: 1) else { return nil }
             
+            let resolvedSourceapp = skadnInfo.sourceapp
+                ?? Targeting.shared.sourceapp.flatMap { Int64($0) }.map { NSNumber(value: $0) }
+
             var productParams = Dictionary<String, Any>()
-            
+
             if let itunesitem = skadnInfo.itunesitem,
                let network = skadnInfo.network,
-               let sourceapp = skadnInfo.sourceapp,
+               let sourceapp = resolvedSourceapp,
                let version = skadnInfo.version,
                let timestamp = fidelity.timestamp,
                let nonce = fidelity.nonce,
