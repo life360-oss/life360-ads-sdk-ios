@@ -397,6 +397,15 @@ public class BannerView:
         }
     }
     
+    private func nativoDidRenderBid() -> Bool {
+        guard let response = adLoadFlowController?.bidResponse,
+              response is NativoBidResponse,
+              let adType = response.winningBid?.nativoAdType else {
+            return false
+        }
+        return adType != .standardDisplay
+    }
+
     private func reportNativoLoadingSuccess(with size: CGSize) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self,
@@ -507,14 +516,15 @@ extension BannerView : AdLoadFlowControllerDelegate, BannerAdLoaderDelegate {
         adSize: CGSize
     ) {
         deployView(adView)
-        
-        // If Nativo provided the winning bid/response for this load, invoke the dedicated callback and suppress the generic one.
-        if let response = adLoadFlowController?.bidResponse, (response is NativoBidResponse) {
+
+        if nativoDidRenderBid() {
             reportNativoLoadingSuccess(with: adSize)
         } else {
             reportLoadingSuccess(with: adSize)
         }
     }
+    
+    
 }
 
 @_spi(PBMInternal)
