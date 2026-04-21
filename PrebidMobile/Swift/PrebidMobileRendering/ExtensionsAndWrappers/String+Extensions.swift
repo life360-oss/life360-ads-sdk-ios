@@ -53,6 +53,10 @@ extension String {
         return pathComponents.last ?? ""
     }
     
+    func toNSNumber() -> NSNumber? {
+        Int64(self).map { NSNumber(value: $0) }
+    }
+
     func toCGSize() -> CGSize? {
         let sizeArr = self.split(separator: "x").map(String.init)
         

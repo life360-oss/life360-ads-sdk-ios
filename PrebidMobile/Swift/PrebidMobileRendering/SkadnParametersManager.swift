@@ -34,8 +34,7 @@ public class SkadnParametersManager: NSObject {
     public static func getSkadnImpression(for skadnInfo: ORTBBidExtSkadn) -> SKAdImpression? {
         guard let fidelity = SkadnParametersManager.getFidelity(from: skadnInfo, fidelityType: 0) else { return nil }
 
-        let resolvedSourceapp = skadnInfo.sourceapp
-            ?? Targeting.shared.sourceapp.flatMap { Int64($0) }.map { NSNumber(value: $0) }
+        let resolvedSourceapp = skadnInfo.sourceapp ?? Targeting.shared.sourceapp?.toNSNumber()
 
         let imp = SKAdImpression()
         if let itunesitem = skadnInfo.itunesitem,
@@ -75,8 +74,7 @@ public class SkadnParametersManager: NSObject {
         if #available(iOS 14.5, *) {
             guard let fidelity = SkadnParametersManager.getFidelity(from: skadnInfo, fidelityType: 1) else { return nil }
             
-            let resolvedSourceapp = skadnInfo.sourceapp
-                ?? Targeting.shared.sourceapp.flatMap { Int64($0) }.map { NSNumber(value: $0) }
+            let resolvedSourceapp = skadnInfo.sourceapp ?? Targeting.shared.sourceapp?.toNSNumber()
 
             var productParams = Dictionary<String, Any>()
 
