@@ -379,17 +379,17 @@ public class BannerView:
         }
         
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            
-            if let oldDeployedView = self.deployedView {
+            guard let self = self, self.deployedView !== view else { return }
+
+            if let oldDeployedView = self.deployedView, oldDeployedView !== view {
                 self.insertSubview(view, aboveSubview: oldDeployedView)
                 oldDeployedView.removeFromSuperview()
-            } else {
+            } else if view.superview !== self {
                 self.addSubview(view)
-            }            
-            self.notifyRendererDidInjectView(view)
-            
+            }
+
             self.installDeployedViewConstraints(view: view)
+            self.notifyRendererDidInjectView(view)
             self.deployedView = view
             if let displayView = self.deployedView as? DisplayView {
                 displayView.videoPlaybackDelegate = self
@@ -447,6 +447,8 @@ public class BannerView:
     
     // TODO: GAM requires banners to be fixed size. Why not set Banner view size to parent, and inner DisplayView to hard coded size?
     private func installDeployedViewConstraints(view: UIView) {
+        guard view.superview === self else { return }
+
         view.translatesAutoresizingMaskIntoConstraints = false
         
         let widthConstraint = self.widthAnchor.constraint(equalTo: view.widthAnchor)
