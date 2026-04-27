@@ -472,9 +472,8 @@ public class BannerView:
             return
         }
         
-        let plugin: any PrebidMobilePluginRenderer = PrebidMobilePluginRegister.shared.getPluginForPreferredRenderer(bid: bid)
-        
         // Notify plugin if it implements this method
+        let plugin: any PrebidMobilePluginRenderer = PrebidMobilePluginRegister.shared.getPluginForPreferredRenderer(bid: bid)
         let selector = NSSelectorFromString("didInjectView:into:")
         if (plugin as AnyObject).responds(to: selector) {
             (plugin as AnyObject).perform(selector, with: injectedView, with: self)
