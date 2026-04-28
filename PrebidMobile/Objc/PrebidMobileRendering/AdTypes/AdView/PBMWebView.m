@@ -226,7 +226,8 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
 #else
         dispatch_async(dispatch_get_main_queue(), ^{
 #endif
-            [self.internalWebView loadHTMLString:html baseURL:nil];
+            NSURL *resolvedBaseURL = baseURL ?: [NSURL URLWithString:@"https://localhost/"];
+            [self.internalWebView loadHTMLString:html baseURL:resolvedBaseURL];
             [self pollForDocumentReadyState];
         });
 #if REMOTE_DEBUGGING
