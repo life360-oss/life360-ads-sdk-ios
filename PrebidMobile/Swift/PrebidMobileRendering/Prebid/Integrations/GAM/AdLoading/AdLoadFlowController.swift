@@ -82,10 +82,6 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
 
     public func adLoader(_ adLoader: AdLoaderProtocol, loadedPrimaryAd adObject: AnyObject, adSize: NSValue?) {
         enqueueGatedBlock { [weak self] in
-            if let error = self?.bidRequestError {
-                self?.bidRequestError = nil
-                Log.info("[ERROR]: \(error.localizedDescription)")
-            }
             self?.winningAdSize = adSize
             self?.primaryAdObject = adObject
             self?.markReadyToDeployAdView()
@@ -94,6 +90,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
 
     public func adLoader(_ adLoader: AdLoaderProtocol, failedWithPrimarySDKError error: Error?) {
         enqueueGatedBlock { [weak self] in
+            // If Ad Server fails fallback to winner between Prebid or Nativo, otherwise fail
             guard self?.bidResponse?.winningBid != nil else {
                 self?.reportLoadingFailedWithError(error)
                 return
@@ -170,7 +167,9 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
             tryLaunchingAdRequestFlow()
         case .nativoRequest:
             sendNativoBidRequest()
-        case .bidRequest, .primaryAdRequest, .loadingDisplayView:
+        case .bidRequest:
+            sendBidRequest()
+        case .primaryAdRequest, .loadingDisplayView:
             return // waiting
         case .demandReceived:
             decideWinner { winningBid in
@@ -190,28 +189,28 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
         )
         nativoRequester?.requestBids { [weak self] (nativoResponse: BidResponse?, err: Error?) in
             self?.enqueueGatedBlock { [weak self] in
-                if let err {
-                    self?.reportLoadingFailedWithError(err)
-                    return
-                }
                 self?.handleNativoResponse(response: nativoResponse, error: err)
             }
         }
     }
     
     private func handleNativoResponse(response: BidResponse?, error: Error?) {
+        if let error {
+            Log.debug("Failed to get Nativo bid: \(error)")
+            self.bidRequestError = error
+        }
         self.nativoBidResponse = response
         let bid = response?.winningBid
         let isOwnedOperated: Bool = bid?.bid.ext?.nativo?.isOwnedOperated ?? false
         if (isOwnedOperated) {
             // Render O&O demand via adLoader Nativo flow
-            self.bidRequestError = error
             self.bidRequester = nil
             adLoader?.flowDelegate = self
             self.loadPrebidDisplayView(bidResponse: response)
         } else {
+            // Continue request flow
             flowState = .bidRequest
-            sendBidRequest()
+            moveToNextLoadingStep()
         }
     }
     
@@ -242,7 +241,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
         if let error = error as NSError? {
             self.bidRequestError = error
             let errorMsg = error.localizedFailureReason ?? String(describing: error)
-            Log.debug("Prebid Server: \(errorMsg)")
+            Log.debug("Failed to get Prebid Server bid: \(errorMsg)")
         }
         self.bidRequester = nil
         self.flowState = .demandReceived

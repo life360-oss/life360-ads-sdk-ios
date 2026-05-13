@@ -4,6 +4,7 @@
 #import "PBMPrebidParameterBuilder.h"
 #import "PBMParameterBuilderService.h"
 #import "NativoParameterBuilder.h"
+#import "NativoGeoLocationParameterBuilder.h"
 #import "Log+Extensions.h"
 #import "SwiftImport.h"
 #import "PBMMacros.h"
@@ -57,7 +58,7 @@
     const NSTimeInterval postTimeout = (dynamicTimeout ? dynamicTimeout.doubleValue : (rawTimeoutMS / 1000.0));
 
     // Fixed Nativo endpoint
-    NSString * const nativoURL = @"http://exchange.postrelease.com/esi.json?ntv_epid=7&ntv_tm=tout";
+    NSString * const nativoURL = @"https://exchange.postrelease.com/esi.json?ntv_epid=7";
 
     @weakify(self);
     [self.connection post:nativoURL
@@ -95,10 +96,13 @@
     
     // this will add tagid and any other needed params for Nativo
     NativoParameterBuilder * nativoParamsBuilder = [[NativoParameterBuilder alloc] initWithAdConfiguration:self.adUnitConfiguration];
+    
+    // Add geo location if opted in
+    NativoGeoLocationParameterBuilder *geoBuilder = [[NativoGeoLocationParameterBuilder alloc] initWithLocationManager:PBMLocationManager.shared];
 
     NSDictionary<NSString *, NSString *> * const params =
     [PBMParameterBuilderService buildParamsDictWithAdConfiguration:self.adUnitConfiguration.adConfiguration
-                                           extraParameterBuilders:@[prebidParamsBuilder, nativoParamsBuilder]];
+                                           extraParameterBuilders:@[prebidParamsBuilder, nativoParamsBuilder, geoBuilder]];
 
     return params[@"openrtb"] ?: @"";
 }

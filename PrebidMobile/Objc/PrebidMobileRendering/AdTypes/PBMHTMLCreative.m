@@ -396,7 +396,7 @@
         }
     }
     
-    if (self.MRAIDController) {
+    if (self.MRAIDController && self.MRAIDController.isTwoPartExpand) {
         [self.creativeViewDelegate creativeReadyToReimplant:self];
         [self.MRAIDController updateForClose:self.creativeModel.adConfiguration.presentAsInterstitial];
     }

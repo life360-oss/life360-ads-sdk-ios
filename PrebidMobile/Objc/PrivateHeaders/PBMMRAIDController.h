@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PBMMRAIDController : NSObject
 
 @property (nonatomic, assign, nonnull) PBMMRAIDState *mraidState;
+@property (nonatomic) BOOL isTwoPartExpand;
 
 +(BOOL)isMRAIDLink:(NSString *)urlString;
 

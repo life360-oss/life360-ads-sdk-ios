@@ -288,8 +288,10 @@ static const CGFloat kAlphaEpsilon = 0.01;
     return a;
 }
 
-// Heuristically determine whether the view draws non-transparent content in its bounds
-- (BOOL)viewHasOpaqueVisualContent:(UIView *)view {
+// Heuristically determine whether the view draws non-transparent content within boundsRect.
+// boundsRect is expressed in the view's own coordinate space (view.bounds / layer coordinates),
+// so sublayer frames — which live in that same space — can be compared directly.
+- (BOOL)viewHasOpaqueVisualContent:(UIView *)view inBoundsRect:(CGRect)boundsRect {
     // Combine view.alpha and layer.opacity
     if (view.alpha <= kAlphaEpsilon) {
         return NO;
@@ -297,7 +299,7 @@ static const CGFloat kAlphaEpsilon = 0.01;
     if (view.layer.opacity <= kAlphaEpsilon) {
         return NO;
     }
-    
+
     // Backgrounds
     CGFloat bgAlpha = [self alphaForUIColor:view.backgroundColor];
     if (bgAlpha > kAlphaEpsilon) {
@@ -309,7 +311,7 @@ static const CGFloat kAlphaEpsilon = 0.01;
             return YES;
         }
     }
-    
+
     // Known classes
     if ([view isKindOfClass:[UIVisualEffectView class]]) {
         return YES;
@@ -347,24 +349,30 @@ static const CGFloat kAlphaEpsilon = 0.01;
     if (wkClass && [view isKindOfClass:wkClass]) {
         return YES;
     }
-    
-    // Layer content: if layer has contents or sublayers with contents, assume it draws
+
+    // Layer content: if layer has contents or sublayers with contents that overlap
+    // boundsRect, assume it draws. Sublayer frames are in the view's own coordinate
+    // space, so we can intersect directly without any coordinate conversion.
     if (view.layer.contents != nil) {
         return YES;
     }
     if (view.layer.sublayers.count > 0) {
         for (CALayer *sublayer in view.layer.sublayers) {
-            if (sublayer.opacity > kAlphaEpsilon) {
-                if (sublayer.backgroundColor && CGColorGetAlpha(sublayer.backgroundColor) > kAlphaEpsilon) {
-                    return YES;
-                }
-                if (sublayer.contents != nil) {
-                    return YES;
-                }
+            if (sublayer.opacity <= kAlphaEpsilon) {
+                continue;
+            }
+            if (!CGRectIntersectsRect(sublayer.frame, boundsRect)) {
+                continue;
+            }
+            if (sublayer.backgroundColor && CGColorGetAlpha(sublayer.backgroundColor) > kAlphaEpsilon) {
+                return YES;
+            }
+            if (sublayer.contents != nil) {
+                return YES;
             }
         }
     }
-    
+
     // Default: assume this view itself does not draw opaque content
     return NO;
 }
@@ -412,8 +420,11 @@ static const CGFloat kAlphaEpsilon = 0.01;
         return;
     }
     
-    // If the view contributes opaque content, add its intersecting rect as an obstruction
-    if ([self viewHasOpaqueVisualContent:view]) {
+    // If the view contributes opaque content, add its intersecting rect as an obstruction.
+    // Convert intersection to the view's own coordinate space so that sublayer frames
+    // (which live in that same space) can be compared directly inside the check.
+    CGRect intersectionInViewBounds = [view convertRect:intersection fromView:self.testedView];
+    if ([self viewHasOpaqueVisualContent:view inBoundsRect:intersectionInViewBounds]) {
         [self.obstructions addObject:@(intersection)];
         if (view.clipsToBounds) {
             return;

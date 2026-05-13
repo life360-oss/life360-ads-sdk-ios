@@ -41,6 +41,7 @@ public class GAMBannerEventHandler :
     let adUnitID: String
     
     var bidResponse: BidResponse?
+    var gamClickURL: URL?
     
     // MARK: - Public Methods
     
@@ -61,6 +62,30 @@ public class GAMBannerEventHandler :
     
     public func trackImpression() {
         proxyBanner?.recordImpression()
+    }
+
+    public func trackClick() {
+        if let url = gamClickURL {
+            // Fire GAM click URL if we have it cached
+            Log.debug("Firing GAM click URL from cache.")
+            NativoGAMUtils.fire(url: url)
+        } else {
+            // Otherwise extract from GAM banner
+            guard let bannerView = proxyBanner?.banner else {
+                Log.debug("No GAM proxy banner view available")
+                return
+            }
+
+            NativoGAMUtils.extractClickURL(from: bannerView) { url in
+                guard let url = url else {
+                    Log.debug("No GAM click URL found")
+                    return
+                }
+                self.gamClickURL = url
+                Log.debug("Extracted and firing GAM click URL")
+                NativoGAMUtils.fire(url: url)
+            }
+        }
     }
     
     public func requestAd(with bidResponse: BidResponse?) {
@@ -131,7 +156,11 @@ public class GAMBannerEventHandler :
     }
     
     public func bannerViewDidRecordImpression(_ bannerView: GoogleMobileAds.BannerView) {
-        // TODO
+        interactionDelegate?.didDisplayAd()
+    }
+
+    public func bannerViewDidRecordClick(_ bannerView: GoogleMobileAds.BannerView) {
+        interactionDelegate?.willLeaveApp()
     }
     
     public func bannerViewWillPresentScreen(_ bannerView: GoogleMobileAds.BannerView) {

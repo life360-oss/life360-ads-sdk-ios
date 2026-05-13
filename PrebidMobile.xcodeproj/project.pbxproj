@@ -44,10 +44,15 @@
 		3A46AA312EF5D5410010B2A6 /* NativoViewExposureChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A46AA302EF5D5410010B2A6 /* NativoViewExposureChecker.m */; };
 		3A46AA322EF5D5410010B2A6 /* NativoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A46AA2F2EF5D5410010B2A6 /* NativoUtils.m */; };
 		3A46AA352EF5D5740010B2A6 /* NativoViewExposureChecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A46AA342EF5D5740010B2A6 /* NativoViewExposureChecker.h */; };
+		2FCEAF460A636FBFDFBFB2AF /* NativoGeoLocationParameterBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4D48A4D7937F085F698A3 /* NativoGeoLocationParameterBuilder.m */; };
+		F2024739341E397628C487E9 /* NativoGeoLocationParameterBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 300092CED1FCEADB7E16B18F /* NativoGeoLocationParameterBuilder.h */; };
 		3A46AA362EF5D5740010B2A6 /* NativoUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A46AA332EF5D5740010B2A6 /* NativoUtils.h */; };
 		3A6D7AE92ED0EC54001099B1 /* NativoORTBDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A6D7AE72ED0EC54001099B1 /* NativoORTBDevice.h */; };
 		3A6D7AEA2ED0EC54001099B1 /* NativoORTBDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AE82ED0EC54001099B1 /* NativoORTBDevice.m */; };
 		3A6D7AF02ED52DCB001099B1 /* ORTBBidExtNativo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtNativo.swift */; };
+		93FABAF0BAC33DE239EFED1D /* NativoAdType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744E60F09562467414158B98 /* NativoAdType.swift */; };
+		FDC2FDF2C1018D2D033A591B /* BidAdTypeExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51286FB5526C0F52FF4556 /* BidAdTypeExtention.swift */; };
+		978A82F58FD9C612F99D1C0B /* NativoGAMUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DA79F1C9609A18EC09622A /* NativoGAMUtils.swift */; };
 		3A6D7AF22ED53AD6001099B1 /* NativoBidResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AF12ED53AD6001099B1 /* NativoBidResponse.swift */; };
 		3A6D7AF42ED65676001099B1 /* NativoBid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AF32ED65676001099B1 /* NativoBid.swift */; };
 		3A8E19112F60C12400720D1B /* NativoPrebidRendererInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8E19102F60C12400720D1B /* NativoPrebidRendererInternal.swift */; };
@@ -121,6 +126,7 @@
 		5329368C2CEE14320056FD8D /* PrebidImpressionTrackerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5329368B2CEE14320056FD8D /* PrebidImpressionTrackerProtocol.swift */; };
 		532936932CEF1FFE0056FD8D /* ArbitraryORTBHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532936922CEF1FFE0056FD8D /* ArbitraryORTBHelperTests.swift */; };
 		533135C6282A869800AA1E4D /* BidTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533135C5282A869800AA1E4D /* BidTest.swift */; };
+		F271AB277F15E7BB4DC4FD29 /* NativoBidResponseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8FE9E7076E1528CD4EE3E3 /* NativoBidResponseTest.swift */; };
 		53322AA3282D45EE0049229D /* PrebidServerEventTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53322AA2282D45EE0049229D /* PrebidServerEventTracker.swift */; };
 		53322AA8282E29910049229D /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53322AA7282E29910049229D /* EventManager.swift */; };
 		5335762129C45A300097242D /* VAST_with_companion.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5335762029C45A300097242D /* VAST_with_companion.xml */; };
@@ -913,9 +919,14 @@
 		3A46AA302EF5D5410010B2A6 /* NativoViewExposureChecker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativoViewExposureChecker.m; sourceTree = "<group>"; };
 		3A46AA332EF5D5740010B2A6 /* NativoUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativoUtils.h; sourceTree = "<group>"; };
 		3A46AA342EF5D5740010B2A6 /* NativoViewExposureChecker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativoViewExposureChecker.h; sourceTree = "<group>"; };
+		300092CED1FCEADB7E16B18F /* NativoGeoLocationParameterBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativoGeoLocationParameterBuilder.h; sourceTree = "<group>"; };
+		C2C4D48A4D7937F085F698A3 /* NativoGeoLocationParameterBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativoGeoLocationParameterBuilder.m; sourceTree = "<group>"; };
 		3A6D7AE72ED0EC54001099B1 /* NativoORTBDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativoORTBDevice.h; sourceTree = "<group>"; };
 		3A6D7AE82ED0EC54001099B1 /* NativoORTBDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativoORTBDevice.m; sourceTree = "<group>"; };
 		3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtNativo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORTBBidExtNativo.swift; sourceTree = "<group>"; };
+		744E60F09562467414158B98 /* NativoAdType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoAdType.swift; sourceTree = "<group>"; };
+		5A51286FB5526C0F52FF4556 /* BidAdTypeExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidAdTypeExtention.swift; sourceTree = "<group>"; };
+		B6DA79F1C9609A18EC09622A /* NativoGAMUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoGAMUtils.swift; sourceTree = "<group>"; };
 		3A6D7AF12ED53AD6001099B1 /* NativoBidResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBidResponse.swift; sourceTree = "<group>"; };
 		3A6D7AF32ED65676001099B1 /* NativoBid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBid.swift; sourceTree = "<group>"; };
 		3A826B132F61E42800EB10C0 /* NativoPrebidRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoPrebidRenderer.swift; sourceTree = "<group>"; };
@@ -992,6 +1003,7 @@
 		5329368B2CEE14320056FD8D /* PrebidImpressionTrackerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidImpressionTrackerProtocol.swift; sourceTree = "<group>"; };
 		532936922CEF1FFE0056FD8D /* ArbitraryORTBHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArbitraryORTBHelperTests.swift; sourceTree = "<group>"; };
 		533135C5282A869800AA1E4D /* BidTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidTest.swift; sourceTree = "<group>"; };
+		4C8FE9E7076E1528CD4EE3E3 /* NativoBidResponseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBidResponseTest.swift; sourceTree = "<group>"; };
 		53322AA2282D45EE0049229D /* PrebidServerEventTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidServerEventTracker.swift; sourceTree = "<group>"; };
 		53322AA7282E29910049229D /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
 		5335762029C45A300097242D /* VAST_with_companion.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VAST_with_companion.xml; sourceTree = "<group>"; };
@@ -1789,6 +1801,9 @@
 				3A6D7AF32ED65676001099B1 /* NativoBid.swift */,
 				3A6D7AF12ED53AD6001099B1 /* NativoBidResponse.swift */,
 				3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtNativo.swift */,
+				744E60F09562467414158B98 /* NativoAdType.swift */,
+				5A51286FB5526C0F52FF4556 /* BidAdTypeExtention.swift */,
+				B6DA79F1C9609A18EC09622A /* NativoGAMUtils.swift */,
 			);
 			path = Nativo;
 			sourceTree = "<group>";
@@ -1806,6 +1821,7 @@
 			children = (
 				3A46AA2F2EF5D5410010B2A6 /* NativoUtils.m */,
 				3A46AA302EF5D5410010B2A6 /* NativoViewExposureChecker.m */,
+				C2C4D48A4D7937F085F698A3 /* NativoGeoLocationParameterBuilder.m */,
 				3AFDF6432EC808D600FC7AA2 /* NativoBidRequester.m */,
 				3AFDF6512ECD1DE500FC7AA2 /* NativoParameterBuilder.m */,
 				3A6D7AE82ED0EC54001099B1 /* NativoORTBDevice.m */,
@@ -2409,6 +2425,7 @@
 			children = (
 				3A46AA332EF5D5740010B2A6 /* NativoUtils.h */,
 				3A46AA342EF5D5740010B2A6 /* NativoViewExposureChecker.h */,
+				300092CED1FCEADB7E16B18F /* NativoGeoLocationParameterBuilder.h */,
 				3AFDF6502ECD1DE500FC7AA2 /* NativoParameterBuilder.h */,
 				3AFDF6422EC808D600FC7AA2 /* NativoBidRequester.h */,
 				5AF5E9B72E13580F002D80C1 /* InternalUserConsentDataManager.h */,
@@ -3311,6 +3328,7 @@
 				53514CC52D01B5AF00A480C0 /* InterstitialRenderingAdUnitTest.swift */,
 				53514CC72D01B5F200A480C0 /* RewardedAdUnitTest.swift */,
 				533135C5282A869800AA1E4D /* BidTest.swift */,
+				4C8FE9E7076E1528CD4EE3E3 /* NativoBidResponseTest.swift */,
 			);
 			path = Prebid;
 			sourceTree = "<group>";
@@ -3646,6 +3664,7 @@
 				5AF5EA562E13580F002D80C1 /* PBMAdLoadFlowController.h in Headers */,
 				5AF5EA572E13580F002D80C1 /* Log+Extensions.h in Headers */,
 				3AFDF6532ECD1DE500FC7AA2 /* NativoParameterBuilder.h in Headers */,
+				F2024739341E397628C487E9 /* NativoGeoLocationParameterBuilder.h in Headers */,
 				5AF5EA582E13580F002D80C1 /* PBMAdLoadManagerDelegate.h in Headers */,
 				5AF5EA592E13580F002D80C1 /* PBMFunctions.h in Headers */,
 				5AF5EA5A2E13580F002D80C1 /* PBMWinNotifierFactoryBlock.h in Headers */,
@@ -4209,6 +4228,7 @@
 				92F6720827F252E500EA3B8D /* BaseInterstitialAdUnitTest.swift in Sources */,
 				925D5D9D2737C2FA00A8A2B5 /* DeviceInfoParameterBuilderTest.swift in Sources */,
 				533135C6282A869800AA1E4D /* BidTest.swift in Sources */,
+				F271AB277F15E7BB4DC4FD29 /* NativoBidResponseTest.swift in Sources */,
 				539897A12CE498A20075234B /* InterstitialObserverTests.swift in Sources */,
 				922AFC9127352C9B00732C53 /* MockPBMWebView.swift in Sources */,
 				922AFCEE2736FC8600732C53 /* XCTest.swift in Sources */,
@@ -4492,6 +4512,7 @@
 				5AF5EB4F2E13580F002D80C1 /* PBMBidResponseTransformer.m in Sources */,
 				5AF5EB502E13580F002D80C1 /* PBMWKScriptMessageHandlerLeakAvoider.m in Sources */,
 				3A46AA312EF5D5410010B2A6 /* NativoViewExposureChecker.m in Sources */,
+				2FCEAF460A636FBFDFBFB2AF /* NativoGeoLocationParameterBuilder.m in Sources */,
 				3A46AA322EF5D5410010B2A6 /* NativoUtils.m in Sources */,
 				5AF5EB512E13580F002D80C1 /* PBMExternalURLOpenCallbacks.m in Sources */,
 				5AF5EB522E13580F002D80C1 /* PBMMRAIDController.m in Sources */,
@@ -4517,6 +4538,9 @@
 				3A6D7AEA2ED0EC54001099B1 /* NativoORTBDevice.m in Sources */,
 				5ADC1EB12DB9A90E00EA6477 /* AdViewManagerDelegate.swift in Sources */,
 				3A6D7AF02ED52DCB001099B1 /* ORTBBidExtNativo.swift in Sources */,
+				93FABAF0BAC33DE239EFED1D /* NativoAdType.swift in Sources */,
+				FDC2FDF2C1018D2D033A591B /* BidAdTypeExtention.swift in Sources */,
+				978A82F58FD9C612F99D1C0B /* NativoGAMUtils.swift in Sources */,
 				5AA8F4152DB26445008A7702 /* BidRequesterProtocol.swift in Sources */,
 				92C85D6427A979F20080BAC5 /* NativeLink.swift in Sources */,
 				0012D7492E08717A007013F3 /* DeviceAccessManager.swift in Sources */,

@@ -13,8 +13,8 @@
  limitations under the License.
  */
 
-#import "PBHTTPStubURLProtocol.h"
-#import "PBURLConnectionStub.h"
+#import <TestUtils/PBHTTPStubURLProtocol.h>
+#import <TestUtils/PBURLConnectionStub.h>
 
 
 

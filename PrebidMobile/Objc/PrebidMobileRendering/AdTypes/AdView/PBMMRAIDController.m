@@ -21,6 +21,7 @@
 #import "NSString+PBMExtensions.h"
 #import "UIView+PBMExtensions.h"
 #import "NSURL+PBMExtensions.h"
+#import "NativoUtils.h"
 
 #import "PBMFunctions+Private.h"
 #import "PBMMRAIDCommand.h"
@@ -54,6 +55,8 @@
 
 @property (nonatomic, copy, nullable) PBMVoidBlock dismissExpandedModalState;
 @property (nonatomic, copy, nullable) PBMVoidBlock dismissResizedModalState;
+
+@property (nonatomic, strong) PBMInterstitialDisplayProperties *interstitialDisplayProperties;
 
 //See the par. 3.1.4 https://www.iab.com/wp-content/uploads/2017/07/MRAID_3.0_FINAL.pdf
 //A new state (via sending changeState) must be set
@@ -107,6 +110,14 @@
         self.mraidState = PBMMRAIDState.defaultState;
         self.delayedMraidState = PBMMRAIDState.notEnabled;
         self.playingMRAIDVideo = NO;
+
+        // Grab interstitial display properties from the owning DisplayView if possible
+        if ([creativeViewDelegate respondsToSelector:@selector(adViewManagerDelegate)]) {
+            id<PBMAdViewManagerDelegate> adViewManagerDelegate = [(id)creativeViewDelegate adViewManagerDelegate];
+            self.interstitialDisplayProperties = adViewManagerDelegate.interstitialDisplayProperties ?: [PBMInterstitialDisplayProperties new];
+        } else {
+            self.interstitialDisplayProperties = [PBMInterstitialDisplayProperties new];
+        }
     }
     return self;
 }
@@ -131,6 +142,11 @@
         return;
     }
     
+    // Refresh viewability synchronously before checking. Scroll-based
+    // tracking can leave a stale viewable=NO after tab switches since
+    // no scroll event fires when the view re-enters the hierarchy.
+    [webView forceExposureCheck];
+
     if (!webView.viewable) {
         NSString *message = [NSString stringWithFormat:@"MRAID COMMAND: %@ not usable, PBMWebView is not viewable)", command];
         @throw [NSException pbmException:message];
@@ -187,13 +203,13 @@
 
         PBMMRAIDState *prevState = self.prebidWebView.mraidState;
         [self.prebidWebView updateMRAIDLayoutInfoWithForceNotification:NO];
-        if ([prevState isEqual:PBMMRAIDState.expanded] || [prevState isEqual:PBMMRAIDState.resized]) {
+        if (self.isTwoPartExpand && ([prevState isEqual:PBMMRAIDState.expanded] || [prevState isEqual:PBMMRAIDState.resized])) {
             self.delayedMraidState = PBMMRAIDState.defaultState;
+            // Force exposure check to keep MRAID states in sync.
+            [self.prebidWebView forceExposureCheck];
         } else {
             [self.prebidWebView changeToMRAIDState:(isInterstitial ? PBMMRAIDState.hidden : PBMMRAIDState.defaultState)];
         }
-
-        
         // Notify Mraid Collapsed *after* the state has changed and Only if we were Expanded.
         if ([prevState isEqual:PBMMRAIDState.expanded]) {
             self.mraidState = PBMMRAIDState.defaultState;
@@ -293,8 +309,8 @@
         @throw [NSException pbmException:[NSString stringWithFormat:@"MRAID cannot expand from state: %@", mraidState]];
     }
     
-    PBMInterstitialDisplayProperties *displayProperties = [PBMInterstitialDisplayProperties new];
-    
+    PBMInterstitialDisplayProperties *displayProperties = self.interstitialDisplayProperties;
+
     @weakify(self);
     [webView MRAID_getExpandProperties:^(PBMMRAIDExpandProperties * _Nullable expandProperties) {
         @strongify(self);
@@ -307,10 +323,12 @@
         
         BOOL const shouldReplace = (self.dismissResizedModalState != nil);
         
-        //Check whether we are expanding existing content or expanding to a specific URL.
+        // Check whether we are performing MRAID one-part (expanding existing content)
+        // or two-part expand (expanding to a specific URL)
         NSString *strExpandURL = [[command.arguments firstObject] stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
         if (strExpandURL && ![strExpandURL isEqualToString:@""]) {
-            //Epanding to a URL
+            // MRAID two-part expand (Expanding to a URL)
+            self.isTwoPartExpand = YES;
             NSURL *expandURL = [NSURL PBMURLWithoutEncodingFromString:strExpandURL];
             if (!expandURL) {
                 PBMLogError(@"Could not create expand url to: %@", strExpandURL);
@@ -344,13 +362,20 @@
                 
                 // ALSO set the first part (banner) to Expanded per MRAID spec
                 self.delayedMraidState = PBMMRAIDState.expanded;
+                [self.prebidWebView forceExposureCheck];
 
                 [newWebView prepareForMRAIDWithRootViewController:self.viewControllerForPresentingModals];
                 [self.creative.modalManager.modalViewController addFriendlyObstructionsToMeasurementSession:self.creative.transaction.measurementSession];
             }];
         }
         else {
-            //Expand existing content.
+            // MRAID one-part expand (Expanding existing content)
+            self.isTwoPartExpand = NO;
+            
+            // Add snapshot image of ad to help transition between web view swaps
+            UIImageView *snapshotImage = [NativoUtils getViewAsImage:self.creative.view];
+            [self.creative.view.superview addSubview:snapshotImage];
+            
             @weakify(self);
             id<PBMModalState> pbmModalState = [PBMFactory createModalStateWithView:webView
                                                                    adConfiguration:self.creative.creativeModel.adConfiguration
@@ -358,14 +383,27 @@
                                                                 onStatePopFinished:^(id<PBMModalState> _Nonnull poppedState) {
                 @strongify(self);
                 if (!self) { return; }
-                
                 [self modalManagerDidFinishPop:poppedState];
+                
+                // Remove snapshot
+                [snapshotImage removeFromSuperview];
+                
+                // Force an exposure check to keep state in sync
+                [self.prebidWebView forceExposureCheck];
+                
             } onStateHasLeftApp:^(id<PBMModalState> _Nonnull leavingState) {
                 @strongify(self);
                 if (!self) { return; }
-                
+
                 [self modalManagerDidLeaveApp:leavingState];
             } nextOnStatePopFinished:nil nextOnStateHasLeftApp:nil onModalPushedBlock:nil];
+
+            pbmModalState.onStateWillPop = ^(id<PBMModalState> _Nonnull poppedState) {
+                @strongify(self);
+                if (!self) { return; }
+                [self.creativeViewDelegate creativeReadyToReimplant:self.creative];
+                [self updateForClose:self.creative.creativeModel.adConfiguration.presentAsInterstitial];
+            };
             
             self.dismissExpandedModalState = [self.creative.modalManager pushModal:pbmModalState fromRootViewController:self.viewControllerForPresentingModals animated:YES shouldReplace:shouldReplace completionHandler:^{
                 @strongify(self);
@@ -417,7 +455,7 @@
             return;
         }
         
-        PBMInterstitialDisplayProperties *displayProperties = [PBMInterstitialDisplayProperties new];
+        PBMInterstitialDisplayProperties *displayProperties = [self.interstitialDisplayProperties copy];
         //Make the close button invisible but still tappable.
         [displayProperties setButtonImageHidden];
         
@@ -596,7 +634,7 @@
             
             id<PBMModalState> state = [PBMFactory createModalStateWithView:containerView
                                                            adConfiguration:self.creative.creativeModel.adConfiguration
-                                                         displayProperties:[PBMInterstitialDisplayProperties new]
+                                                         displayProperties:self.interstitialDisplayProperties
                                                         onStatePopFinished:^(id<PBMModalState> _Nonnull poppedState) {
                 @strongify(self);
                 if (!self) { return; }

@@ -78,7 +78,13 @@ public class NativoPrebidRenderer: NSObject, PrebidMobilePluginRenderer, Display
         let isNativoRendering = adm.range(of: "load.js", options: String.CompareOptions.caseInsensitive) != nil
         
         if isNativoRendering {
-            expandFullWidth(displayView)
+            DispatchQueue.main.async {
+                if let bannerView = displayView.superview as? UIView {
+                    self.expandFullWidth(bannerView)
+                    self.expandFullHeight(bannerView)
+                    self.expandView(view, to: bannerView, withMinimum:bid.size.height)
+                }
+            }
         }
     }
     
@@ -90,56 +96,66 @@ public class NativoPrebidRenderer: NSObject, PrebidMobilePluginRenderer, Display
     
     // MARK: - Private functions
     
-    private func expandFullWidth(_ view: UIView) {
-        // TODO: PR to Prebid for new delegate callback to PluginRenderer for after view gets injected
-        // Forced to briefly wait for Prebid's AdViewManager to finish before PBMWebView gets injected
-        DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.milliseconds(200)) {
-            if let parentView = view.superview {
-                // Remove any constraints we don't need
-                let parentContraints = parentView.constraints
-                let widthConstraints = parentContraints.filter({ constraint in
-                    (constraint.firstItem as? UIView) === parentView && constraint.firstAttribute == .width
-                    || (constraint.secondItem as? UIView) === parentView && constraint.secondAttribute == .width
-                })
-                let heightConstraints = parentContraints.filter({ constraint in
-                    (constraint.firstItem as? UIView) === parentView && constraint.firstAttribute == .height
-                    || (constraint.secondItem as? UIView) === parentView && constraint.secondAttribute == .height
-                })
-                NSLayoutConstraint.deactivate(widthConstraints + heightConstraints)
-                
-                // Allow displayView to expand to the full width of its parent
-                if let grandParentView = parentView.superview {
-                    parentView.widthAnchor.constraint(equalTo: grandParentView.widthAnchor).isActive = true
-                    parentView.heightAnchor.constraint(equalTo: grandParentView.heightAnchor).isActive = true
-                }
-                let displayWidth = view.widthAnchor.constraint(equalTo: parentView.widthAnchor)
-                let displayHeight = view.heightAnchor.constraint(equalTo: parentView.heightAnchor)
-                let displayCenterX = view.centerXAnchor.constraint(equalTo:parentView.centerXAnchor)
-                let displayCenterY = view.centerYAnchor.constraint(equalTo: parentView.centerYAnchor)
-                displayCenterX.priority = .defaultHigh
-                displayCenterY.priority = .defaultHigh
-                NSLayoutConstraint.activate([
-                    displayWidth,
-                    displayHeight,
-                    displayCenterX,
-                    displayCenterY
-                ])
-            }
-            
-            // Allow the inner web view to expand to the full width of its parent
-            if let pbmWebView = view.subviews.first {
-                NSLayoutConstraint.activate([
-                    pbmWebView.widthAnchor.constraint(equalTo: view.widthAnchor),
-                    pbmWebView.heightAnchor.constraint(equalTo: view.heightAnchor)
-                ])
-            } else {
-                let error = NSError(
-                    domain: "NativoPrebidRenderer",
-                    code: 1,
-                    userInfo: [NSLocalizedDescriptionKey: "Nativo renderer expected a subview on DisplayView, but none was found."]
-                )
-                print("\(error)")
-            }
+    private func expandFullWidth(_ parentView: UIView) {
+        // Remove any constraints we don't need
+        let parentContraints = parentView.constraints
+        let widthConstraints = parentContraints.filter({ constraint in
+            (constraint.firstItem as? UIView) === parentView && constraint.firstAttribute == .width
+            || (constraint.secondItem as? UIView) === parentView && constraint.secondAttribute == .width
+        })
+        NSLayoutConstraint.deactivate(widthConstraints)
+        
+        // Allow BannerView to expand to the full width of its parent
+        if let grandParentView = parentView.superview {
+            parentView.widthAnchor.constraint(equalTo: grandParentView.widthAnchor).isActive = true
+        }
+    }
+    
+    private func expandFullHeight(_ parentView: UIView) {
+        // Remove any constraints we don't need
+        let parentConstraints = parentView.constraints
+        let heightConstraints = parentConstraints.filter({ constraint in
+            (constraint.firstItem as? UIView) === parentView && constraint.firstAttribute == .height
+            || (constraint.secondItem as? UIView) === parentView && constraint.secondAttribute == .height
+        })
+        NSLayoutConstraint.deactivate(heightConstraints)
+        
+        // Allow displayView to expand to the full height of its parent
+        if let grandParentView = parentView.superview {
+            parentView.heightAnchor.constraint(equalTo: grandParentView.heightAnchor).isActive = true
+        }
+    }
+    
+    private func expandView(_ view: UIView, to parentView: UIView, withMinimum height: CGFloat) {
+        let displayWidth = view.widthAnchor.constraint(equalTo: parentView.widthAnchor)
+        let displayHeight = view.heightAnchor.constraint(equalTo: parentView.heightAnchor)
+        let displayMinHeight = view.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
+        let displayCenterX = view.centerXAnchor.constraint(equalTo:parentView.centerXAnchor)
+        let displayCenterY = view.centerYAnchor.constraint(equalTo: parentView.centerYAnchor)
+        displayHeight.priority = .defaultHigh
+        displayCenterX.priority = .defaultHigh
+        displayCenterY.priority = .defaultHigh
+        NSLayoutConstraint.activate([
+            displayWidth,
+            displayHeight,
+            displayMinHeight,
+            displayCenterX,
+            displayCenterY
+        ])
+        
+        // Allow the inner web view to expand to the full width of its parent
+        if let pbmWebView = view.subviews.first {
+            NSLayoutConstraint.activate([
+                pbmWebView.widthAnchor.constraint(equalTo: view.widthAnchor),
+                pbmWebView.heightAnchor.constraint(equalTo: view.heightAnchor)
+            ])
+        } else {
+            let error = NSError(
+                domain: "NativoPrebidRenderer",
+                code: 1,
+                userInfo: [NSLocalizedDescriptionKey: "Nativo renderer expected a subview on DisplayView, but none was found."]
+            )
+            print("\(error)")
         }
     }
     

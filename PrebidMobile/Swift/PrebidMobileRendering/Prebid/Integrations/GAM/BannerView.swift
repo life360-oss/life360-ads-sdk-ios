@@ -7,11 +7,11 @@
   http://www.apache.org/licenses/LICENSE-2.0
  
   Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-  */
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
 
 import UIKit
 
@@ -86,7 +86,9 @@ public class BannerView:
     
     // MARK: Externally observable
     var deployedView: UIView?
+    
     var isRefreshStopped = false
+    var isRequestStopped = false
     var isAdOpened = false
     
     // MARK: Computed helpers
@@ -94,6 +96,10 @@ public class BannerView:
     /// whether auto-refresh is allowed to occur now
     var mayRefreshNow: Bool {
         guard let controller = adLoadFlowController else {
+            return false
+        }
+        
+        if isRefreshStopped {
             return false
         }
         
@@ -226,6 +232,7 @@ public class BannerView:
     
     /// Loads the ad for the banner view.
     public func loadAd() {
+        isRequestStopped = false
         adLoadFlowController?.refresh()
     }
     
@@ -261,8 +268,16 @@ public class BannerView:
         adUnitConfig.globalORTBConfig
     }
     
+    /// Stops any in-flight request (this load cycle).
+    public func stopRequest() {
+        adLoadFlowController?.enqueueGatedBlock { [weak self] in
+            self?.isRequestStopped = true
+        }
+    }
+    
     /// Stops the auto-refresh of the ad.
     public func stopRefresh() {
+        autoRefreshManager?.cancelRefreshTimer()
         adLoadFlowController?.enqueueGatedBlock { [weak self] in
             self?.isRefreshStopped = true
         }
@@ -287,6 +302,7 @@ public class BannerView:
               }
         
         eventHandler.trackImpression()
+        didDisplayAd()
     }
     
     public func viewControllerForModalPresentation(
@@ -296,10 +312,12 @@ public class BannerView:
     }
     
     public func didLeaveApp(from displayView: UIView) {
+        eventHandler?.trackClick()
         willLeaveApp()
     }
-    
+
     public func willPresentModal(from displayView: UIView) {
+        eventHandler?.trackClick()
         willPresentModal()
     }
     
@@ -328,7 +346,13 @@ public class BannerView:
         
         invokeDelegateSelector(#selector(BannerViewDelegate.bannerViewWillLeaveApplication))
     }
-    
+
+    public func didDisplayAd() {
+        assert(Thread.isMainThread, assertionMessageMainThread)
+        
+        invokeDelegateSelector(#selector(BannerViewDelegate.bannerViewDidDisplay))
+    }
+
     public var viewControllerForPresentingModal: UIViewController? {
         guard let delegate = self.delegate,
               delegate.responds(to: #selector(BannerViewDelegate.bannerViewPresentationController)) else {
@@ -355,21 +379,43 @@ public class BannerView:
         }
         
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            
-            if let oldDeployedView = self.deployedView {
+            guard let self = self, self.deployedView !== view else { return }
+
+            if let oldDeployedView = self.deployedView, oldDeployedView !== view {
                 self.insertSubview(view, aboveSubview: oldDeployedView)
                 oldDeployedView.removeFromSuperview()
-            } else {
+            } else if view.superview !== self {
                 self.addSubview(view)
-            }            
-            self.notifyRendererDidInjectView(view)
-            
+            }
+
             self.installDeployedViewConstraints(view: view)
+            self.notifyRendererDidInjectView(view)
             self.deployedView = view
             if let displayView = self.deployedView as? DisplayView {
                 displayView.videoPlaybackDelegate = self
             } 
+        }
+    }
+    
+    private func nativoDidRenderBid() -> Bool {
+        guard let response = adLoadFlowController?.bidResponse,
+              response is NativoBidResponse,
+              let adType = response.winningBid?.nativoAdType else {
+            return false
+        }
+        return adType != .standardDisplay
+    }
+
+    private func reportNativoLoadingSuccess(with size: CGSize) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self,
+                  let delegate = self.delegate,
+                  delegate.responds(to: #selector(BannerViewDelegate.bannerView(_:didReceiveNativoAdWithSize:)))
+            else {
+                self?.reportLoadingSuccess(with: size)
+                return
+            }
+            delegate.bannerView?(self, didReceiveNativoAdWithSize: size)
         }
     }
     
@@ -401,6 +447,8 @@ public class BannerView:
     
     // TODO: GAM requires banners to be fixed size. Why not set Banner view size to parent, and inner DisplayView to hard coded size?
     private func installDeployedViewConstraints(view: UIView) {
+        guard view.superview === self else { return }
+
         view.translatesAutoresizingMaskIntoConstraints = false
         
         let widthConstraint = self.widthAnchor.constraint(equalTo: view.widthAnchor)
@@ -424,9 +472,8 @@ public class BannerView:
             return
         }
         
-        let plugin: any PrebidMobilePluginRenderer = PrebidMobilePluginRegister.shared.getPluginForPreferredRenderer(bid: bid)
-        
         // Notify plugin if it implements this method
+        let plugin: any PrebidMobilePluginRenderer = PrebidMobilePluginRegister.shared.getPluginForPreferredRenderer(bid: bid)
         let selector = NSSelectorFromString("didInjectView:into:")
         if (plugin as AnyObject).responds(to: selector) {
             (plugin as AnyObject).perform(selector, with: injectedView, with: self)
@@ -446,17 +493,19 @@ extension BannerView : AdLoadFlowControllerDelegate, BannerAdLoaderDelegate {
     }
     
     public func adLoadFlowControllerWillSendBidRequest(_ adLoadFlowController: AdLoadFlowController) {
-        isRefreshStopped = false
         autoRefreshManager?.cancelRefreshTimer()
     }
     
     public func adLoadFlowControllerWillRequestPrimaryAd(_ adLoadFlowController: AdLoadFlowController) {
-        autoRefreshManager?.setupRefreshTimer()
+        // Only set up the timer if refresh is not stopped.
+        if !isRefreshStopped {
+            autoRefreshManager?.setupRefreshTimer()
+        }
         eventHandler?.interactionDelegate = self
     }
     
     public func adLoadFlowControllerShouldContinue(_ adLoadFlowController: AdLoadFlowController) -> Bool {
-        !isRefreshStopped
+        return !isRequestStopped
     }
     
     // MARK: - BannerAdLoaderDelegate
@@ -468,8 +517,15 @@ extension BannerView : AdLoadFlowControllerDelegate, BannerAdLoaderDelegate {
         adSize: CGSize
     ) {
         deployView(adView)
-        reportLoadingSuccess(with: adSize)
+
+        if nativoDidRenderBid() {
+            reportNativoLoadingSuccess(with: adSize)
+        } else {
+            reportLoadingSuccess(with: adSize)
+        }
     }
+    
+    
 }
 
 @_spi(PBMInternal)

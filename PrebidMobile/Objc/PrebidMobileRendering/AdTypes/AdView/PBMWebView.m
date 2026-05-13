@@ -60,7 +60,7 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
 
 // viewability polling
 @property (nonatomic, strong, nullable) id<PBMCreativeViewabilityTracker> viewabilityTracker;
-@property (nonatomic, strong, nullable) NativoViewExposureChecker *nativoExposureChecker;
+@property (nonatomic, strong, nullable) NativoViewExposureChecker *exposureChecker;
 
 // the last frame sent to an ad via onSizeChange
 @property (nonatomic, assign) CGRect mraidLastSentFrame;
@@ -96,6 +96,7 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
     if (!(self = [super initWithFrame:frame])) {
         return nil;
     }
+    self.backgroundColor = [UIColor clearColor];
     self.accessibilityIdentifier = PrebidConstants.ACCESSIBILITY_WEB_VIEW_LABEL;
     WKUserContentController * const wkUserContentController = [[WKUserContentController alloc] init];
     self.wkUserContentController = wkUserContentController;
@@ -130,7 +131,7 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
                     @"metaTag.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';"
                     @"headTag.appendChild(metaTag);"
                     @"var style = document.createElement('style');"
-                    @"style.innerHTML = 'body {margin:0px; padding:0px;}';"
+                    @"style.innerHTML = 'body {margin:0px; padding:0px; background-color:transparent;}';"
                     @"headTag.appendChild(style);";
     
     //Run JS
@@ -141,7 +142,12 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
     configuration.userContentController = wkUserContentController;
     WKWebView * const internalWebView = [[WKWebView alloc] initWithFrame:frame configuration:configuration];
     [internalWebView setOpaque:NO];
-    
+    internalWebView.backgroundColor = [UIColor clearColor];
+    internalWebView.scrollView.backgroundColor = [UIColor clearColor];
+    if (@available(iOS 15.0, *)) {
+        internalWebView.underPageBackgroundColor = [UIColor systemBackgroundColor];
+    }
+
     _internalWebView = internalWebView;
     
     [internalWebView.scrollView setScrollEnabled:NO];
@@ -173,7 +179,7 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
     if (self.isVolumeObserverSetup) {
         [[AVAudioSession sharedInstance] removeObserver:self forKeyPath:KeyPathOutputVolume];
     }
-    self.nativoExposureChecker = nil;
+    self.exposureChecker = nil;
     self.viewabilityTracker = nil;
 }
 
@@ -220,7 +226,8 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
 #else
         dispatch_async(dispatch_get_main_queue(), ^{
 #endif
-            [self.internalWebView loadHTMLString:html baseURL:nil];
+            NSURL *resolvedBaseURL = baseURL ?: [NSURL URLWithString:@"https://localhost/"];
+            [self.internalWebView loadHTMLString:html baseURL:resolvedBaseURL];
             [self pollForDocumentReadyState];
         });
 #if REMOTE_DEBUGGING
@@ -699,8 +706,27 @@ static PBMError *extracted(NSString *errorMessage) {
     if (self.viewabilityTracker != nil && self.exposureDelegate != nil && [self.exposureDelegate shouldCheckExposure]) {
         [self.viewabilityTracker checkExposureWithForce:YES];
     }
-    if (self.nativoExposureChecker != nil && self.exposureDelegate != nil && [self.exposureDelegate shouldCheckExposure]) {
-        id<PBMViewExposure> exposureNow = self.nativoExposureChecker.exposure;
+    if (self.exposureChecker != nil && self.exposureDelegate != nil && [self.exposureDelegate shouldCheckExposure]) {
+        id<PBMViewExposure> exposureNow = self.exposureChecker.exposure;
+        [self MRAID_onExposureChange:exposureNow];
+        if (self.exposureDelegate != nil) {
+            [self.exposureDelegate webView:self exposureChange:exposureNow];
+        }
+    }
+}
+
+// Force exposure check to keep the MRAID state in sync.
+// Runs synchronously on the calling thread so the viewable flag is
+// up-to-date immediately (e.g. before gating on webView.viewable).
+// Moving from Prebid's poll based tracking to Nativo scroll based tracking
+// means that MRAID_onExposureChange doesn't happen without user interaction anymore.
+// Instead we simply manually force the exposure check when needed.
+- (void)forceExposureCheck {
+    if (self.viewabilityTracker != nil) {
+        [self.viewabilityTracker checkExposureWithForce:YES];
+    }
+    if (self.exposureChecker != nil) {
+        id<PBMViewExposure> exposureNow = self.exposureChecker.exposure;
         [self MRAID_onExposureChange:exposureNow];
         if (self.exposureDelegate != nil) {
             [self.exposureDelegate webView:self exposureChange:exposureNow];
@@ -866,7 +892,7 @@ static PBMError *extracted(NSString *errorMessage) {
 
 - (void)observeScrollForViewability {
     @weakify(self);
-    self.nativoExposureChecker = [[NativoViewExposureChecker alloc] initWithView:self onExposureChange:^(id<PBMViewExposure>  _Nonnull viewExposure, NSError *error) {
+    self.exposureChecker = [[NativoViewExposureChecker alloc] initWithView:self onExposureChange:^(id<PBMViewExposure>  _Nonnull viewExposure, NSError *error) {
         @strongify(self);
         if (!self) { return; }
         if (!error) {

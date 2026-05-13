@@ -32,4 +32,5 @@ import UIKit
     var adSizes: [CGSize] { get }
 
     func trackImpression()
+    func trackClick()
 }

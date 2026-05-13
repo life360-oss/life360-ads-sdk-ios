@@ -144,11 +144,15 @@ class ModalManager: NSObject, ModalViewControllerDelegate {
     }
     
     func dismissModalViewController(lastModalState: ModalState) {
+        // Fire before the dismiss animation so any pre-implant work (e.g. re-adding a
+        // web view to its original container) is already in place underneath the fading modal.
+        lastModalState.onStateWillPop?(lastModalState)
+
         dismissModalOnce(animated: true) { [weak self] in
             guard let self else {
                 return
             }
-            
+
             self.modalViewController = nil
             lastModalState.onStatePopFinished?(lastModalState)
         }
@@ -252,6 +256,18 @@ class ModalManager: NSObject, ModalViewControllerDelegate {
                 }
                 
                 self.delegate?.modalManagerWillPresentModal()
+                // Hide content for full-screen modals during the presentation
+                // animation, then fade it in once the modal is fully on screen.
+                let shouldHideContent = !(modalViewController is NonModalViewController)
+                if shouldHideContent {
+                    modalViewController.contentView?.alpha = 0
+                    Task { @MainActor in
+                        try? await Task.sleep(nanoseconds: 100_000_000)
+                        UIView.animate(withDuration: 0.2) {
+                            modalViewController.contentView?.alpha = 1
+                        }
+                    }
+                }
                 fromRootViewController.present(modalViewController, animated: animated)
             }
             

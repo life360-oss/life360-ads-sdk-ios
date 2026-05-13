@@ -27,6 +27,7 @@ public class InterstitialDisplayProperties: NSObject, Copyable {
     
     @objc public var contentFrame: CGRect = .infinite
     @objc public var contentViewColor: UIColor = .clear
+    @objc public var modalBackgroundColor: UIColor = .systemBackground
     @objc public var interstitialLayout: InterstitialLayout = .undefined
     
     @objc(rotationEnabled)
@@ -74,6 +75,7 @@ public class InterstitialDisplayProperties: NSObject, Copyable {
         ret.closeDelayLeft = closeDelayLeft
         ret.contentFrame = contentFrame
         ret.contentViewColor = contentViewColor
+        ret.modalBackgroundColor = modalBackgroundColor
         ret.interstitialLayout = interstitialLayout
         return ret
     }

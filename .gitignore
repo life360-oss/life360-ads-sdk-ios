@@ -116,3 +116,5 @@ Pods/
 # Visual Studio Code 
 .build/
 
+.claude/
+

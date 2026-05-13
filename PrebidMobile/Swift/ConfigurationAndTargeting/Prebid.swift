@@ -71,6 +71,9 @@ public class Prebid: NSObject {
     
     /// This property is set by the developer when he is willing to share the location for better ad targeting
     public var shareGeoLocation = false
+
+    /// Set when willing to share precise location with Nativo for better ad targeting
+    public var shareGeoLocationWithNativo = false
     
     /// Set the desidered verbosity of the logs
     public var logLevel: LogLevel {

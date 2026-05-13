@@ -38,14 +38,14 @@ public class ModalViewController: UIViewController {
     
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        
-        view.backgroundColor = .black
+
+        view.backgroundColor = .systemBackground
     }
-    
+
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
-        view.backgroundColor = .black
+
+        view.backgroundColor = .systemBackground
     }
 
     public override func viewDidLoad() {
@@ -114,6 +114,7 @@ public class ModalViewController: UIViewController {
 
         self.interstitialLayout = modalState.displayProperties?.interstitialLayout ?? .undefined
         self.modalState = modalState
+        view.backgroundColor = modalState.displayProperties?.modalBackgroundColor
 
         if self.interstitialLayout == .undefined {
             self.isRotationEnabled = modalState.isRotationEnabled

@@ -31,6 +31,8 @@ protocol ModalState {
     
     var onStatePopFinished: ModalStatePopHandler? { get }
     var onStateHasLeftApp: ModalStateAppLeavingHandler? { get }
+
+    var onStateWillPop: ModalStatePopHandler? { get set }
     
     var nextOnStatePopFinished: ModalStatePopHandler? { get }
     var nextOnStateHasLeftApp: ModalStateAppLeavingHandler? { get }

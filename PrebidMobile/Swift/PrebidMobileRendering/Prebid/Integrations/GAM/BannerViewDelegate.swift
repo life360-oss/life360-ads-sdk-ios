@@ -31,6 +31,13 @@ import UIKit
     /// - Parameter bannerView: The BannerView instance sending the message.
     @objc optional func bannerView(_ bannerView: BannerView, didReceiveAdWithAdSize adSize: CGSize)
 
+    /// Notifies the delegate that a Nativo ad won and has been loaded.
+    /// If this is called, bannerView(_:didReceiveAdWithAdSize:) will not be called for the same load.
+    /// - Parameters:
+    ///   - bannerView: The BannerView instance sending the message.
+    ///   - adSize: The size of the loaded Nativo ad.
+    @objc optional func bannerView(_ bannerView: BannerView, didReceiveNativoAdWithSize adSize: CGSize)
+
     /// Notifies the delegate of an error encountered while loading or rendering an ad.
     /// - Parameter bannerView: The BannerView instance sending the message.
     /// - Parameter error: The error encountered while attempting to receive or render the
@@ -50,4 +57,9 @@ import UIKit
     /// the current view controller.
     /// - Parameter bannerView: The BannerView instance sending the message.
     @objc optional func bannerViewDidDismissModal(_ bannerView: BannerView)
+
+    /// Notifies the delegate that the banner ad has been displayed and an impression has been tracked.
+    /// - Parameter bannerView: The BannerView instance sending the message.
+    @objc optional func bannerViewDidDisplay(_ bannerView: BannerView)
 }
+

@@ -35,12 +35,14 @@ public class NativoBidResponse: BidResponse {
             targeting["hb_env"] = "mobile-app"
             targeting["hb_env_nativo"] = "mobile-app"
             let size = winningBid.size
-            targeting["hb_size"] = "\(size.width)x\(size.height)"
-            targeting["hb_size_nativo"] = "\(size.width)x\(size.height)"
+            let sizeString = "\(Int(size.width))x\(Int(size.height))"
+            targeting["hb_size"] = sizeString
+            targeting["hb_size_nativo"] = sizeString
             targeting["hb_bidder"] = "nativo"
             targeting["hb_bidder_nativo"] = "nativo"
-            targeting["hb_pb"] = "\(winningBid.price)"
-            targeting["hb_pb_nativo"] = "\(winningBid.price)"
+            let priceString = String(format: "%.2f", winningBid.price)
+            targeting["hb_pb"] = priceString
+            targeting["hb_pb_nativo"] = priceString
             self.targetingInfo = targeting
         }
     }

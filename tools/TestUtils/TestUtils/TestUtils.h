@@ -6,8 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PBHTTPStubbingManager.h"
-#import "PBHTTPStubURLProtocol.h"
+#import <TestUtils/PBHTTPStubbingManager.h>
+#import <TestUtils/PBHTTPStubURLProtocol.h>
 
 //! Project version number for TestUtils.
 FOUNDATION_EXPORT double TestUtilsVersionNumber;

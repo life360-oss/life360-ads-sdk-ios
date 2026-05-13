@@ -25,6 +25,17 @@ NS_ASSUME_NONNULL_BEGIN
     };
 }
 
++ (UIImageView *)getViewAsImage:(UIView *)view {
+    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithBounds:view.bounds];
+    
+    UIImage *image = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
+        // Renders the view layer into the context
+        [view.layer renderInContext:rendererContext.CGContext];
+    }];
+    return [[UIImageView alloc] initWithImage:image];
+}
+
+
 @end
 
 NS_ASSUME_NONNULL_END

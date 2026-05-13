@@ -111,6 +111,10 @@ typedef NS_ENUM(NSInteger, PBMWebViewState) {
 - (void)changeToMRAIDState:(PBMMRAIDState *)state
     NS_SWIFT_NAME(changeToMRAIDState(_:));
 
+// Force an immediate exposure check and notify the exposureDelegate.
+- (void)forceExposureCheck
+    NS_SWIFT_NAME(forceExposureCheck());
+
 #pragma mark - MRAID Injection
 
 - (BOOL)injectMRAIDForExpandContent:(BOOL)isForExpandContent error:(NSError * __nullable * __null_unspecified)error

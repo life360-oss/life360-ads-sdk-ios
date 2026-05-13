@@ -21,9 +21,11 @@ class ORTBBidExtNativo: PBMJsonCodable {
     
     // Special Nativo property to declare if ad should be rendered immediately
     private(set) var isOwnedOperated: Bool?
-
+    private(set) var nativoAdType: NativoAdType?
+    
     private enum KeySet: String {
         case oo
+        case nativoAdType
     }
 
     init() { }
@@ -41,6 +43,15 @@ class ORTBBidExtNativo: PBMJsonCodable {
         } else {
             isOwnedOperated = nil
         }
+        if let raw = jsonDictionary[KeySet.nativoAdType.rawValue] {
+            if let n = raw as? NSNumber {
+                nativoAdType = NativoAdType(rawValue: n.intValue)
+            } else {
+                nativoAdType = nil
+            }
+        } else {
+            nativoAdType = nil
+        }
     }
 
     var jsonDictionary: [String : Any] {
@@ -48,7 +59,9 @@ class ORTBBidExtNativo: PBMJsonCodable {
         if let isOwnedOperated {
             json[.oo] = NSNumber(value: isOwnedOperated)
         }
+        if let nativoAdType {
+            json[.nativoAdType] = NSNumber(value: nativoAdType.rawValue)
+        }
         return json.dict
     }
 }
-

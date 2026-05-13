@@ -33,6 +33,7 @@
 @synthesize onModalPushedBlock = _onModalPushedBlock;
 @synthesize onStateHasLeftApp = _onStateHasLeftApp;
 @synthesize onStatePopFinished = _onStatePopFinished;
+@synthesize onStateWillPop = _onStateWillPop;
 @synthesize view = _view;
 
 #pragma mark - Initialization
