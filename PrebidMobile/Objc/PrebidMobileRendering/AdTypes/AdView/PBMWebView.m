@@ -36,7 +36,7 @@
 #import "NativoViewExposureChecker.h"
 
 // If remote debugging via Safari, delay the html injection until the Safari instance can connect
-#define REMOTE_DEBUGGING 0
+#define REMOTE_DEBUGGING 1
 
 #pragma mark - Constants
 
@@ -497,9 +497,16 @@ static PBMError *extracted(NSString *errorMessage) {
 #pragma mark - MRAID Injection
 
 - (BOOL)injectMRAIDForExpandContent:(BOOL)isForExpandContent error:(NSError **)error {
+    
+#if REMOTE_DEBUGGING
+    // DEBUG MRAID
+    NSString *mraidScript = [NativoMRAIDDebugBridge script];
+#else
     NSString *mraidScript = [self.libraryManager getMRAIDLibrary];
+#endif
+        
     if (!mraidScript) {
-        [PBMError createError:error message:@"Could not load mraid.js from library manager" type:PBMErrorType.internalError];
+        [PBMError createError:error message:@"Could not load mraid.js debug script" type:PBMErrorType.internalError];
         return false;
     }
     
