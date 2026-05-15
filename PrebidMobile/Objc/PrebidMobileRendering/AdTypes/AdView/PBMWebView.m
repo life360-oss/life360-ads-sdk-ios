@@ -115,6 +115,7 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
     //Setup MRAID-required properties
     //see section '8.4 Video' (page 68) of MRAID 3.0 specification
     WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
+    configuration.websiteDataStore = [WKWebsiteDataStore nonPersistentDataStore];
     configuration.allowsInlineMediaPlayback = YES;
     if (@available(iOS 10.0, *)) {
         configuration.mediaTypesRequiringUserActionForPlayback = WKAudiovisualMediaTypeNone;
