@@ -36,7 +36,7 @@
 #import "NativoViewExposureChecker.h"
 
 // If remote debugging via Safari, delay the html injection until the Safari instance can connect
-#define REMOTE_DEBUGGING 1
+#define REMOTE_DEBUGGING 0
 
 #pragma mark - Constants
 
