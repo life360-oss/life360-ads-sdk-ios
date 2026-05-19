@@ -304,7 +304,7 @@
         }
         
         if (!appExtPrebid.source) {
-            appExtPrebid.source = @"prebid-mobile";
+            appExtPrebid.source = @"life360-prebid-sdk";
         }
         
         if (!appExtPrebid.version) {

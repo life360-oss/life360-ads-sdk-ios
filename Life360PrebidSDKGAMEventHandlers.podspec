@@ -1,15 +1,15 @@
 Pod::Spec.new do |s|
 
-  s.name         = "NativoPrebidSDKMAXAdapters"
+  s.name         = "Life360PrebidSDKGAMEventHandlers"
   s.version      = "3.3.0"
-  s.summary      = "The bridge between NativoPrebidSDK and Applovin MAX SDK."
+  s.summary      = "The bridge between Life360 Prebid SDK and GMA SDK."
 
-  s.description  = "MAX Adapters manages rendering of Prebid or MAX ads respectively to the winning bid."
-  s.homepage     = "https://www.prebid.org"
+  s.description  = "GAM Event Handlers manages rendering of Prebid or GAM ads respectively to the winning bid."
+  s.homepage     = "https://ads.life360.com/"
 
 
   s.license      = { :type => "Apache License, Version 2.0", :text => <<-LICENSE
-    Copyright 2018-2021 Prebid.org, Inc.
+    Copyright 2018-2025 Life360, Inc.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -25,22 +25,22 @@ Pod::Spec.new do |s|
     LICENSE
     }
 
-  s.author		= { "Prebid.org, Inc." => "info@prebid.org" }
+  s.author		= { "Life360, Inc." => "info@life360.com" }
   s.platform     	= :ios, "13.0"
   s.swift_version 	= '5.0'
-  s.source       	= { :git => "https://github.com/prebid/prebid-mobile-ios.git", :tag => "#{s.version}" }
+  s.source       	= { :git => "git@github.com:life360-oss/nativo-prebid-sdk-ios.git", :tag => "#{s.version}" }
   s.xcconfig 		= { :LIBRARY_SEARCH_PATHS => '$(inherited)',
-			    :OTHER_CFLAGS => '$(inherited)',
+  			    :OTHER_CFLAGS => '$(inherited)',
 			    :OTHER_LDFLAGS => '$(inherited)',
 			    :HEADER_SEARCH_PATHS => '$(inherited)',
 			    :FRAMEWORK_SEARCH_PATHS => '$(inherited)'
 			  }
 
-  s.source_files = 'EventHandlers/PrebidMobileMAXAdapters/**/*.{h,m,swift}'
+  s.source_files = 'EventHandlers/PrebidMobileGAMEventHandlers/**/*.{h,m,swift}'
   s.static_framework = true
 
-  s.dependency 'NativoPrebidSDK', '3.3.0'
-  s.dependency 'AppLovinSDK'
+  s.dependency 'Life360PrebidSDK', '>= 3.3.0'
+  s.dependency 'Google-Mobile-Ads-SDK', '>= 13.0.0'
 
   s.pod_target_xcconfig = {
     'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES'

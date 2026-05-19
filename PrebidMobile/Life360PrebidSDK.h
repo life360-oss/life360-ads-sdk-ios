@@ -16,10 +16,10 @@
 #import <Foundation/Foundation.h>
 
 //! Project version number for PrebidMobile.
-FOUNDATION_EXPORT double NativoPrebidSDKVersionNumber;
+FOUNDATION_EXPORT double Life360PrebidSDKVersionNumber;
 
 //! Project version string for PrebidMobile.
-FOUNDATION_EXPORT const unsigned char NativoPrebidSDKVersionString[];
+FOUNDATION_EXPORT const unsigned char Life360PrebidSDKVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <PrebidMobile/PublicHeader.h>
 

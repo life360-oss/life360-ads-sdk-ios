@@ -52,7 +52,7 @@ class PBMErrorType: NSObject, RawRepresentable {
 
 @objc @_spi(PBMInternal) public
 class PBMError: NSError, @unchecked Sendable {
-    static let errorDomain: String = "org.prebid.mobile"
+    static let errorDomain: String = "com.life360.prebidsdk"
     
     @objc public var message: String? {
         userInfo[NSLocalizedDescriptionKey] as? String

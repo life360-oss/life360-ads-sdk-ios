@@ -14,7 +14,7 @@
  */
 
 import Foundation
-import NativoPrebidSDK
+import Life360PrebidSDK
 
 @objc public enum GAMEventHandlerError: Int, Error {
     

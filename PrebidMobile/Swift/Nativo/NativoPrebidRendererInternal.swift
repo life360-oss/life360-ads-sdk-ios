@@ -4,10 +4,10 @@ import WebKit
 /**
  Nativo's custom Prebid renderer
  
- Ideally we want one single NativoPrebidRenderer that both NativoPrebidSDK and PrebidMobile can use.
+ Ideally we want one single NativoPrebidRenderer that both Life360PrebidSDK and PrebidMobile can use.
  However since SPM doesn't allow overlapping source targets or conditional dependencies,
  we are forced to have two separate implementations in NativoPrebidRenderer and NativoPrebidRendererInternal.
- One internal to NativoPrebidSDK, and another external that depends on PrebidMobile.
+ One internal to Life360PrebidSDK, and another external that depends on PrebidMobile.
  */
 public class NativoPrebidRendererInternal: NSObject, PrebidMobilePluginRenderer, DisplayViewLoadingDelegate {
 

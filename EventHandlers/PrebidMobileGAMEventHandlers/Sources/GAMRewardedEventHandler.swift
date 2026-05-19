@@ -15,7 +15,7 @@
 
 import Foundation
 import GoogleMobileAds
-import NativoPrebidSDK
+import Life360PrebidSDK
 
 @objcMembers
 public class GAMRewardedAdEventHandler :

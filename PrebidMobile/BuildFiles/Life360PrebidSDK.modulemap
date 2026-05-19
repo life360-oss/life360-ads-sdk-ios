@@ -13,5 +13,5 @@
   limitations under the License.
   */
 
-framework module NativoPrebidSDK {
+framework module Life360PrebidSDK {
 }

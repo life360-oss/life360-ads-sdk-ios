@@ -1,17 +1,17 @@
 Pod::Spec.new do |s|
 
-  s.name         = "NativoPrebidSDK"
-  s.version      = "3.3.0-alpha.1"
-  s.summary      = "Nativo's PrebidMobile wrapper is a lightweight framework that integrates directly with Nativo and Prebid Server."
+  s.name         = "Life360PrebidSDK"
+  s.version      = "3.3.0"
+  s.summary      = "Life360 Prebid SDK is a lightweight framework that integrates directly with Nativo and Prebid Server."
 
   s.description  = <<-DESC
-    Nativo-Prebid-SDK is a lightweight framework that integrates directly with Prebid Server to increase yield for publishers by adding more mobile buyers."
+    Life360 Ads SDK is a lightweight framework that integrates directly with Prebid Server to increase yield for publishers by adding more mobile buyers."
     DESC
-  s.homepage     = "https://www.prebid.org"
+  s.homepage     = "https://ads.life360.com/"
 
 
   s.license      = { :type => "Apache License, Version 2.0", :text => <<-LICENSE
-    Copyright 2018-2021 Prebid.org, Inc.
+    Copyright 2018-2025 Life360, Inc.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -27,10 +27,10 @@ Pod::Spec.new do |s|
     LICENSE
     }
 
-  s.author         = { "Nativo, Inc." => "info@nativo.com" }
+  s.author         = { "Life360, Inc." => "info@life360.com" }
   s.platform     	 = :ios, "13.0"
   s.swift_version  = '5.0'
-  s.source         = { :git => "https://github.com/NativoPlatform/nativo-prebid-sdk-ios.git", :tag => "#{s.version}" }
+  s.source         = { :git => "git@github.com:life360-oss/nativo-prebid-sdk-ios.git", :tag => "#{s.version}" }
   s.xcconfig 		   = { :LIBRARY_SEARCH_PATHS => '$(inherited)',
 			       :OTHER_CFLAGS => '$(inherited)',
 			       :OTHER_LDFLAGS => '$(inherited)',
