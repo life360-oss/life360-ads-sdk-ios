@@ -4,27 +4,27 @@
 import PackageDescription
 
 let package = Package(
-    
-    name: "NativoPrebidSDK",
+
+    name: "Life360PrebidSDK",
     platforms: [
         .iOS(.v13),
     ],
     products: [
         .library(
-            name: "NativoPrebidSDK",
-            targets: ["NativoPrebidSDK", "__PrebidMobileInternal"]
+            name: "Life360PrebidSDK",
+            targets: ["Life360PrebidSDK", "__PrebidMobileInternal"]
         ),
         .library(
-            name: "NativoPrebidSDKAdMobAdapters",
-            targets: ["NativoPrebidSDKAdMobAdapters"]
+            name: "Life360PrebidSDKAdMobAdapters",
+            targets: ["Life360PrebidSDKAdMobAdapters"]
         ),
         .library(
-            name: "NativoPrebidSDKGAMEventHandlers",
-            targets: ["NativoPrebidSDKGAMEventHandlers"]
+            name: "Life360PrebidSDKGAMEventHandlers",
+            targets: ["Life360PrebidSDKGAMEventHandlers"]
         ),
         .library(
-            name: "NativoPrebidSDKMAXAdapters",
-            targets: ["NativoPrebidSDKMAXAdapters"]
+            name: "Life360PrebidSDKMAXAdapters",
+            targets: ["Life360PrebidSDKMAXAdapters"]
         )
     ],
     dependencies: [
@@ -36,14 +36,14 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "NativoPrebidSDK",
+            name: "Life360PrebidSDK",
             path: "PrebidMobile",
             sources: ["Swift"]
         ),
         .target(
             name: "__PrebidMobileInternal",
             dependencies: [
-                "NativoPrebidSDK",
+                "Life360PrebidSDK",
                 "PrebidMobileOMSDK",
             ],
             path: "PrebidMobile",
@@ -58,27 +58,27 @@ let package = Package(
             path: "Frameworks/OMSDK_Prebidorg.xcframework"
         ),
         .target(
-            name: "NativoPrebidSDKAdMobAdapters",
+            name: "Life360PrebidSDKAdMobAdapters",
             dependencies: [
-                "NativoPrebidSDK",
+                "Life360PrebidSDK",
                 .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads"),
             ],
             path: "EventHandlers/PrebidMobileAdMobAdapters",
             sources: ["Sources"]
         ),
         .target(
-            name: "NativoPrebidSDKGAMEventHandlers",
+            name: "Life360PrebidSDKGAMEventHandlers",
             dependencies: [
-                "NativoPrebidSDK",
+                "Life360PrebidSDK",
                 .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads"),
             ],
             path: "EventHandlers/PrebidMobileGAMEventHandlers",
             sources: ["Sources"]
         ),
         .target(
-            name: "NativoPrebidSDKMAXAdapters",
+            name: "Life360PrebidSDKMAXAdapters",
             dependencies: [
-                "NativoPrebidSDK",
+                "Life360PrebidSDK",
                 .product(name: "AppLovinSDK", package: "AppLovin-MAX-Swift-Package"),
             ],
             path: "EventHandlers/PrebidMobileMAXAdapters",
