@@ -24,8 +24,8 @@
 @implementation PBMOpenMeasurementSessionObjcTest
 
 -(void)testInitiWithInvalidParams {
-    OMIDPrebidorgAdSessionContext *context = nil;
-    OMIDPrebidorgAdSessionConfiguration *configuration = nil;
+    OMIDLife360AdSessionContext *context = nil;
+    OMIDLife360AdSessionConfiguration *configuration = nil;
     
     PBMOpenMeasurementSession *session = [[PBMOpenMeasurementSession alloc] initWithContext:context configuration:configuration];
     XCTAssertNil(session);

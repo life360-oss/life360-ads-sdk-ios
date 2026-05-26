@@ -65,7 +65,7 @@ Pod::Spec.new do |s|
     core.private_header_files = [
       'PrebidMobile/Objc/PrivateHeaders/*.h'
     ]
-    core.vendored_frameworks = 'Frameworks/OMSDK_Prebidorg.xcframework'
+    core.vendored_frameworks = 'Frameworks/OMSDK_Life360.xcframework'
   end
 
   # Separate subspec for standalone renderer with PrebidMobile dependency
@@ -76,7 +76,7 @@ Pod::Spec.new do |s|
 
   s.pod_target_xcconfig = {
     'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
-    'OTHER_LDFLAGS' => '$(inherited) -lObjC -framework OMSDK_Prebidorg',
+    'OTHER_LDFLAGS' => '$(inherited) -lObjC -framework OMSDK_Life360',
     'LD_RUNPATH_SEARCH_PATHS' => '$(inherited) @executable_path/Frameworks',
     'OTHER_SWIFT_FLAGS' => '$(inherited) -no-verify-emitted-module-interface'
   }

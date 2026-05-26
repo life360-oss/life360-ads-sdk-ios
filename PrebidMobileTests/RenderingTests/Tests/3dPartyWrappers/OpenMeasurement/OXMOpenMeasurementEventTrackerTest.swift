@@ -71,7 +71,7 @@ class PBMOpenMeasurementEventTrackerTest: XCTestCase {
     func testInvalidSession() {
         logToFile = .init()
         
-        var pbmTracker = PBMOpenMeasurementEventTracker(session: OMIDPrebidorgAdSession())
+        var pbmTracker = PBMOpenMeasurementEventTracker(session: OMIDLife360AdSession())
         XCTAssertNotNil(pbmTracker)
         XCTAssertNotNil(pbmTracker.session)
         UtilitiesForTesting.checkLogContains("Open Measurement can't create ad events with error")

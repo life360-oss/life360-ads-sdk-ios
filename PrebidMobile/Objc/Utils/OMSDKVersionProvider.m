@@ -13,7 +13,7 @@
  limitations under the License.
  */
 
-#import <OMSDK_Prebidorg/OMIDSDK.h>
+#import <OMSDK_Life360/OMIDSDK.h>
 
 #import "SwiftImport.h"
 
@@ -24,7 +24,7 @@
 @implementation OMSDKVersionProvider_Objc
 
 + (nonnull NSString *) omSDKVersionString {
-    return [OMIDPrebidorgSDK versionString];
+    return [OMIDLife360SDK versionString];
 }
 
 @end
