@@ -15,7 +15,7 @@
 
 import XCTest
 
-@testable @_spi(PBMInternal) import NativoPrebidSDK
+@testable @_spi(PBMInternal) import Life360AdsSDK
 
 class MockBannerView: BannerView {
     override var lastBidResponse: BidResponse? {
@@ -150,23 +150,23 @@ class BannerViewTest: XCTestCase {
         
         var events: BannerViewVideoPlaybackDelegateEvents = []
         
-        func videoPlaybackDidPause(_ banner: NativoPrebidSDK.BannerView) {
+        func videoPlaybackDidPause(_ banner: Life360AdsSDK.BannerView) {
             events.insert(.pause)
         }
         
-        func videoPlaybackDidResume(_ banner: NativoPrebidSDK.BannerView) {
+        func videoPlaybackDidResume(_ banner: Life360AdsSDK.BannerView) {
             events.insert(.resume)
         }
         
-        func videoPlaybackWasMuted(_ banner: NativoPrebidSDK.BannerView) {
+        func videoPlaybackWasMuted(_ banner: Life360AdsSDK.BannerView) {
             events.insert(.mute)
         }
         
-        func videoPlaybackWasUnmuted(_ banner: NativoPrebidSDK.BannerView) {
+        func videoPlaybackWasUnmuted(_ banner: Life360AdsSDK.BannerView) {
             events.insert(.unmute)
         }
         
-        func videoPlaybackDidComplete(_ banner: NativoPrebidSDK.BannerView) {
+        func videoPlaybackDidComplete(_ banner: Life360AdsSDK.BannerView) {
             events.insert(.complete)
         }
     }

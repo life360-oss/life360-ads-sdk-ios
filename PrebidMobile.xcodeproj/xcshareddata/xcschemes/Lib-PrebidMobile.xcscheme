@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FAAA00BC2322733E009DC7D6"
                BuildableName = "Life360PrebidSDK.framework"
-               BlueprintName = "Life360PrebidSDK"
+               BlueprintName = "Life360AdsSDK"
                ReferencedContainer = "container:PrebidMobile.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -30,7 +30,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "60D792FA217E229B0080F428"
                BuildableName = "Life360PrebidSDKTests.xctest"
-               BlueprintName = "Life360PrebidSDKTests"
+               BlueprintName = "Life360AdsSDKTests"
                ReferencedContainer = "container:PrebidMobile.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,7 +47,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FAAA00BC2322733E009DC7D6"
             BuildableName = "Life360PrebidSDK.framework"
-            BlueprintName = "Life360PrebidSDK"
+            BlueprintName = "Life360AdsSDK"
             ReferencedContainer = "container:PrebidMobile.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -59,7 +59,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "60D792FA217E229B0080F428"
                BuildableName = "Life360PrebidSDKTests.xctest"
-               BlueprintName = "Life360PrebidSDKTests"
+               BlueprintName = "Life360AdsSDKTests"
                ReferencedContainer = "container:PrebidMobile.xcodeproj">
             </BuildableReference>
             <SkippedTests>
@@ -97,7 +97,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FAAA00BC2322733E009DC7D6"
             BuildableName = "Life360PrebidSDK.framework"
-            BlueprintName = "Life360PrebidSDK"
+            BlueprintName = "Life360AdsSDK"
             ReferencedContainer = "container:PrebidMobile.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -113,7 +113,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FAAA00BC2322733E009DC7D6"
             BuildableName = "Life360PrebidSDK.framework"
-            BlueprintName = "Life360PrebidSDK"
+            BlueprintName = "Life360AdsSDK"
             ReferencedContainer = "container:PrebidMobile.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

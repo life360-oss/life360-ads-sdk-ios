@@ -15,7 +15,7 @@
 
 import CoreLocation
 
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class MockLocationManagerSuccessful: LocationManager {
 

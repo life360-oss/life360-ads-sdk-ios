@@ -14,7 +14,7 @@
   */
 
 import XCTest
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 private class MockUserAgentPersistence: UserAgentPersistence {
     var userAgent: String?

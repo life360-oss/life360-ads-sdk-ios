@@ -14,9 +14,9 @@
 //
     
 #if PrebidMobile_SPM
-@import Life360PrebidSDK;
+@import Life360AdsSDK;
 #elif __has_include("PrebidMobile-Swift.h")
-#import "Life360PrebidSDK-Swift.h"
+#import "Life360AdsSDK-Swift.h"
 #else
-#import <Life360PrebidSDK/Life360PrebidSDK-Swift.h>
+#import <Life360AdsSDK/Life360AdsSDK-Swift.h>
 #endif

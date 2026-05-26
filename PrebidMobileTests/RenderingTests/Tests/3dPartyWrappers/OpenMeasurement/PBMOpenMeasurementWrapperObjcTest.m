@@ -18,7 +18,7 @@
 #import "PBMOpenMeasurementWrapper.h"
 #import "PBMOpenMeasurementWrapper+pbmTestExtension.h"
 
-@import NativoPrebidSDK;
+@import Life360AdsSDK;
 
 @interface PBMOpenMeasurementWrapperObjcTest : XCTestCase
 

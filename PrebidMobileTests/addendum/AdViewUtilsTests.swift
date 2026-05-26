@@ -15,7 +15,7 @@
 
 import XCTest
 import WebKit
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class AdViewUtilsTests: XCTestCase {
     

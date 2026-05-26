@@ -15,7 +15,7 @@
 
 import Foundation
 import GoogleMobileAds
-import Life360PrebidSDK
+import Life360AdsSDK
 
 @objcMembers
 public class GAMBannerEventHandler :

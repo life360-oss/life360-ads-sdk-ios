@@ -14,7 +14,7 @@
   */
 
 import XCTest
-@testable @_spi(PBMInternal) import Life360PrebidSDK
+@testable @_spi(PBMInternal) import Life360AdsSDK
 
 class ArbitraryORTBHelperTests: XCTestCase {
     

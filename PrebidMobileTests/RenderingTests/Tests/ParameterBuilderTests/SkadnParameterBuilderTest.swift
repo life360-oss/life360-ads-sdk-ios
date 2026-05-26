@@ -14,7 +14,7 @@
   */
 
 import XCTest
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 fileprivate let skAdNetworkIdsMock = ["cstr6suwn9.skadnetwork", "4fzdc2evr5.skadnetwork"]
 fileprivate let sourceappMock = "MockTestApp"

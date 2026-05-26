@@ -4,17 +4,17 @@ import WebKit
 /**
  Nativo's custom Prebid renderer
  
- Ideally we want one single NativoPrebidRenderer that both Life360PrebidSDK and PrebidMobile can use.
+ Ideally we want one single NativoRenderer that both Life360AdsSDK and PrebidMobile can use.
  However since SPM doesn't allow overlapping source targets or conditional dependencies,
- we are forced to have two separate implementations in NativoPrebidRenderer and NativoPrebidRendererInternal.
- One internal to Life360PrebidSDK, and another external that depends on PrebidMobile.
+ we are forced to have two separate implementations in NativoRenderer and NativoRendererInternal.
+ One internal to Life360AdsSDK, and another external that depends on PrebidMobile.
  */
-public class NativoPrebidRendererInternal: NSObject, PrebidMobilePluginRenderer, DisplayViewLoadingDelegate {
+public class NativoRendererInternal: NSObject, PrebidMobilePluginRenderer, DisplayViewLoadingDelegate {
 
     public static let NAME = "NativoRenderer"
     public static let VERSION = "1.0.0"
-    public let name = NativoPrebidRendererInternal.NAME
-    public let version = NativoPrebidRendererInternal.VERSION
+    public let name = NativoRendererInternal.NAME
+    public let version = NativoRendererInternal.VERSION
     public var data: [String: Any]?
     var bannerLoadingDelegate: DisplayViewLoadingDelegate?
     
@@ -154,7 +154,7 @@ public class NativoPrebidRendererInternal: NSObject, PrebidMobilePluginRenderer,
         
         guard let childView = view.subviews.first else {
             let error = NSError(
-                domain: "NativoPrebidRenderer", code: 1,
+                domain: "NativoRenderer", code: 1,
                 userInfo: [NSLocalizedDescriptionKey: "Nativo renderer expected a subview on DisplayView, but none was found."]
             )
             print("\(error)")

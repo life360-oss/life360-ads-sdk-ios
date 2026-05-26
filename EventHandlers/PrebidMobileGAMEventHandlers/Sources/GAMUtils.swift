@@ -15,7 +15,7 @@
 
 import Foundation
 import GoogleMobileAds
-import Life360PrebidSDK
+import Life360AdsSDK
 
 fileprivate let prebidKeywordPrefix = "hb_"
 
@@ -112,7 +112,7 @@ extension GAMUtils {
     
     public func findNativeAd(
         for nativeAd: GoogleMobileAds.NativeAd
-    ) -> Result<Life360PrebidSDK.NativeAd, GAMEventHandlerError> {
+    ) -> Result<Life360AdsSDK.NativeAd, GAMEventHandlerError> {
         guard let wrappedAd = GADNativeAdWrapper(nativeAd: nativeAd) else {
             return .failure(GAMEventHandlerError.gamClassesNotFound)
         }
@@ -130,7 +130,7 @@ extension GAMUtils {
     
     public func findNativeAdObjc(
         for nativeAd: GoogleMobileAds.NativeAd,
-        completion: @escaping (Life360PrebidSDK.NativeAd?, NSError?) -> Void
+        completion: @escaping (Life360AdsSDK.NativeAd?, NSError?) -> Void
     ) {
         switch findNativeAd(for: nativeAd) {
         case .success(let nativeAd):
@@ -149,7 +149,7 @@ extension GAMUtils {
     
     public func findCustomNativeAd(
         for nativeAd: GoogleMobileAds.CustomNativeAd
-    ) -> Result<Life360PrebidSDK.NativeAd, GAMEventHandlerError> {
+    ) -> Result<Life360AdsSDK.NativeAd, GAMEventHandlerError> {
         guard let wrappedAd = GADCustomNativeAdWrapper(customNativeAd: nativeAd) else {
             return .failure(GAMEventHandlerError.gamClassesNotFound)
         }
@@ -167,7 +167,7 @@ extension GAMUtils {
     
     public func findCustomNativeAdObjc(
         for nativeAd: GoogleMobileAds.CustomNativeAd,
-        completion: @escaping (Life360PrebidSDK.NativeAd?, NSError?) -> Void
+        completion: @escaping (Life360AdsSDK.NativeAd?, NSError?) -> Void
     ) {
         switch findCustomNativeAd(for: nativeAd) {
         case .success(let nativeAd):
@@ -180,7 +180,7 @@ extension GAMUtils {
     
     private func createNativeAd(
         from cacheId: String
-    ) -> Result<Life360PrebidSDK.NativeAd, GAMEventHandlerError> {
+    ) -> Result<Life360AdsSDK.NativeAd, GAMEventHandlerError> {
         guard CacheManager.shared.isValid(cacheId: cacheId) else {
             return .failure(GAMEventHandlerError.invalidLocalCacheID)
         }

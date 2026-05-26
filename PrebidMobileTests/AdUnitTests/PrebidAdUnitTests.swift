@@ -15,7 +15,7 @@
 
 import XCTest
 import TestUtils
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class PrebidAdUnitTests: XCTestCase {
     

@@ -1,6 +1,6 @@
-# Life360-Prebid SDK (iOS)
+# Life360 Ads SDK (iOS)
 
-The Life360-Prebid SDK is an extension of the open-source [Prebid Mobile iOS](https://github.com/prebid/prebid-mobile-ios) project. It adds Nativo as a competing demand source alongside Prebid, with the winning bid sent to Google Ad Manager (GAM) for final decisioning. For base Prebid Mobile concepts and API documentation, visit the [Prebid documentation](https://docs.prebid.org/prebid-mobile/pbm-api/ios/code-integration-ios.html)
+The Life360 Ads SDK is an extension of the open-source [Prebid Mobile iOS](https://github.com/prebid/prebid-mobile-ios) project. It adds Nativo as a competing demand source alongside Prebid, with the winning bid sent to Google Ad Manager (GAM) for final decisioning. For base Prebid Mobile concepts and API documentation, visit the [Prebid documentation](https://docs.prebid.org/prebid-mobile/pbm-api/ios/code-integration-ios.html)
 
 ## Features
 
@@ -51,19 +51,19 @@ The SDK orchestrates the following 9-step flow for each ad request:
 
 Starting from version `3.1.0`, PrebidMobile supports Swift Package Manager (SPM), making integration much easier and more maintainable compared to manual setups or CocoaPods.
 
-To [add the Life360-Prebid SDK package dependency](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app#Add-a-package-dependency) using SPM, follow these steps:
+To [add the Life360 Ads SDK package dependency](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app#Add-a-package-dependency) using SPM, follow these steps:
 
-1. In Xcode, install the Life360-Prebid SDK by navigating to File > Add Package Dependencies...
-2. In the prompt that appears, search for the Life360-Prebid SDK GitHub repository:
+1. In Xcode, install the Life360 Ads SDK by navigating to File > Add Package Dependencies...
+2. In the prompt that appears, search for the Life360 Ads SDK GitHub repository:
     ```
     https://github.com/life360-oss/nativo-prebid-sdk-ios.git
     ```
-3. Select the version of the Life360-Prebid SDK you want to use. For new projects, we recommend using the Up to Next Major Version.
+3. Select the version of the Life360 Ads SDK you want to use. For new projects, we recommend using the Up to Next Major Version.
 4. In the package selection screen, make sure to check the modules you need for your integration and link it to your application target.
 
 ## Use Cocoapods?
 
-Easily include the Life360-Prebid SDK for your primary ad server in your Podfile/
+Easily include the Life360 Ads SDK for your primary ad server in your Podfile/
 
 ```
 platform :ios, '13.0'
@@ -75,16 +75,16 @@ end
 
 ## Build framework from source
 
-Build the Life360-Prebid SDK from source code. After cloning the repo, from the root directory run
+Build the Life360 Ads SDK from source code. After cloning the repo, from the root directory run
 
 ```
 ./scripts/buildPrebidMobile.sh
 ```
 
-to output the Life360-Prebid framework.
+to output the Life360 Ads framework.
 
 
-## Test Life360-Prebid SDK
+## Test Life360 Ads SDK
 
 Run the test script to run unit tests and integration tests.
 
@@ -95,11 +95,11 @@ Run the test script to run unit tests and integration tests.
 
 ## FAQ
 
-**Does the Life360-Prebid SDK use OMID / OMSDK?**
+**Does the Life360 Ads SDK use OMID / OMSDK?**
 
 Yes, but the SDK is not currently IAB certified. Without certification, the demand-side benefits of OMID measurement are not fully realized unless the publisher obtains their own certification.
 
-**Does the Life360-Prebid SDK support multi-format bidding?**
+**Does the Life360 Ads SDK support multi-format bidding?**
 
 Not currently. The SDK uses Prebid Rendering (rather than Bidding-only with GAM rendering), which does not support multi-format bidding at this time. This is an area of future exploration.
 

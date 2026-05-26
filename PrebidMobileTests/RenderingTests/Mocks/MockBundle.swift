@@ -16,7 +16,7 @@
 
 import Foundation
 
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class MockBundle: PBMBundleProtocol {
     var mockBundleIdentifier: String? = "Mock.Bundle.Identifier"

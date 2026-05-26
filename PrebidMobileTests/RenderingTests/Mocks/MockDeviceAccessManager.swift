@@ -16,7 +16,7 @@
 import AppTrackingTransparency
 import CoreGraphics
 
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 fileprivate let advertisingTrackingEnabledDefault = true
 fileprivate let defaultUserLanguageCode = "ml"

@@ -14,7 +14,7 @@
  */
 
 import Foundation
-import Life360PrebidSDK
+import Life360AdsSDK
 
 @objc public enum GAMEventHandlerError: Int, Error {
     
