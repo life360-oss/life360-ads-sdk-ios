@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
 
-  s.name         = "Life360PrebidSDKMAXAdapters"
+  s.name         = "Life360AdsSDKMAXAdapters"
   s.version      = "3.3.1"
-  s.summary      = "The bridge between Life360 Prebid SDK and Applovin MAX SDK."
+  s.summary      = "The bridge between Life360 Ads SDK and Applovin MAX SDK."
 
   s.description  = "MAX Adapters manages rendering of Prebid or MAX ads respectively to the winning bid."
   s.homepage     = "https://ads.life360.com/"
@@ -39,7 +39,7 @@ Pod::Spec.new do |s|
   s.source_files = 'EventHandlers/PrebidMobileMAXAdapters/**/*.{h,m,swift}'
   s.static_framework = true
 
-  s.dependency 'Life360PrebidSDK', '3.3.1'
+  s.dependency 'Life360AdsSDK', '3.3.1'
   s.dependency 'AppLovinSDK'
 
   s.pod_target_xcconfig = {

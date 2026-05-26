@@ -1,6 +1,6 @@
 //
-//  NativoPrebidRenderer-prebid.swift
-//  NativoPrebidSDK
+//  NativoRenderer.swift
+//  Life360AdsSDK
 //
 
 #if canImport(PrebidMobile)
@@ -11,7 +11,7 @@ import UIKit
 /**
  Nativo's custom Prebid renderer
  */
-public class NativoPrebidRenderer: NSObject, PrebidMobilePluginRenderer, DisplayViewLoadingDelegate {
+public class NativoRenderer: NSObject, PrebidMobilePluginRenderer, DisplayViewLoadingDelegate {
     
     public let name = "NativoRenderer"
     public let version = "1.0.0"
@@ -151,7 +151,7 @@ public class NativoPrebidRenderer: NSObject, PrebidMobilePluginRenderer, Display
             ])
         } else {
             let error = NSError(
-                domain: "NativoPrebidRenderer",
+                domain: "NativoRenderer",
                 code: 1,
                 userInfo: [NSLocalizedDescriptionKey: "Nativo renderer expected a subview on DisplayView, but none was found."]
             )

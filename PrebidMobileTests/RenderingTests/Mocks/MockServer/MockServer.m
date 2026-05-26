@@ -15,7 +15,7 @@
 
 @import Foundation;
 
-@import NativoPrebidSDK;
+@import Life360AdsSDK;
 
 #import "MockServer.h"
 #import "MockServerRule.h"

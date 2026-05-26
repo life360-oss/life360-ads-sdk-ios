@@ -15,7 +15,7 @@
 
 
 import XCTest
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 //This is a test of EnumSequence, NOT neccessarily a test of TrackingEvent (which was the first enum to implement EnumSequence)
 class EnumSequenceTest: XCTestCase {

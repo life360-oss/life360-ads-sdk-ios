@@ -16,7 +16,7 @@
 import Foundation
 import XCTest
 
-@testable @_spi(PBMInternal) import NativoPrebidSDK
+@testable @_spi(PBMInternal) import Life360AdsSDK
 
 //TODO: Refactor to use MockServer
 

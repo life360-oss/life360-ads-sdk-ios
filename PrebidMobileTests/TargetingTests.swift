@@ -15,7 +15,7 @@
 
 import XCTest
 import CoreLocation
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class TargetingTests: XCTestCase {
 

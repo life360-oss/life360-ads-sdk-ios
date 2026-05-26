@@ -15,7 +15,7 @@
 
 import UIKit
 
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class MockAlertController: UIAlertController {
     

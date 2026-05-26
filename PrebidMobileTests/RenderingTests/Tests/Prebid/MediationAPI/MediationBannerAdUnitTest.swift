@@ -14,7 +14,7 @@
   */
 
 import XCTest
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class MediationBannerAdUnitTest: XCTestCase {
     

@@ -15,7 +15,7 @@ limitations under the License.
 
 import Foundation
 import XCTest
-import NativoPrebidSDK
+import Life360AdsSDK
 
 class NativeAdMarkupTest: XCTestCase {
     func testInitFromJson() {

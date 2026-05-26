@@ -18,7 +18,7 @@ import AppTrackingTransparency
 import XCTest
 import CoreLocation
 
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class ParameterBuilderServiceTest : XCTestCase {
     

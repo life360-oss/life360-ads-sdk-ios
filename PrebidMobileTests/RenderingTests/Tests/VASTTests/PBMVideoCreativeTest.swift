@@ -17,7 +17,7 @@ import UIKit
 import XCTest
 import AVFoundation
 
-@testable @_spi(PBMInternal) import NativoPrebidSDK
+@testable @_spi(PBMInternal) import Life360AdsSDK
 
 class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDelegate, PBMVideoViewDelegate {
    

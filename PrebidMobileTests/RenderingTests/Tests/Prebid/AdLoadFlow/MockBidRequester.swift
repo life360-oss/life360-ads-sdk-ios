@@ -16,7 +16,7 @@
 import Foundation
 import XCTest
 
-@testable @_spi(PBMInternal) import NativoPrebidSDK
+@testable @_spi(PBMInternal) import Life360AdsSDK
 
 class MockBidRequester: NSObject, BidRequesterProtocol {
     typealias ExpectedCall = (@escaping (BidResponse?, Error?)->())->()

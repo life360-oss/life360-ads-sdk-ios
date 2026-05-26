@@ -15,7 +15,7 @@
 
 import Foundation
 
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class MockPBMHTMLCreative: PBMHTMLCreative {
     var mockUIApplication: PBMUIApplicationProtocol?

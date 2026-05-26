@@ -14,7 +14,7 @@
   */
 
 import Foundation
-import NativoPrebidSDK
+import Life360AdsSDK
 
 extension PBMBidResponseTransformer {
     static func invalidAccountIDResponse(accountID: String) -> PrebidServerResponse {

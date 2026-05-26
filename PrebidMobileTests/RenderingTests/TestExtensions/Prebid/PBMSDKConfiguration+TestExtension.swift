@@ -14,7 +14,7 @@
  */
 
 import Foundation
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 extension Prebid {
     static let devintServerURL = "https://prebid.devint.openx.net/openrtb2/auction"

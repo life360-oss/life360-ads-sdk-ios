@@ -30,7 +30,7 @@ class PrebidSDKInitializer {
         PrebidJSLibraryManager.shared.downloadLibraries()
         
         Prebid.registerPluginRenderer(PrebidRenderer())
-        Prebid.registerPluginRenderer(NativoPrebidRendererInternal())
+        Prebid.registerPluginRenderer(NativoRendererInternal())
 
         serverStatusRequester.requestStatus { completion?($0, $1) }
     }

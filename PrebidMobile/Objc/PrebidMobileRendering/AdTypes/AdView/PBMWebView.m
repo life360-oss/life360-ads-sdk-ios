@@ -573,7 +573,7 @@ static PBMError *extracted(NSString *errorMessage) {
     };
     [s appendString:@"window.MRAID_ENV = {"];
     nextFeed(); [s appendString:@"version: '3.0'"];
-    nextFeed(); [s appendString:@"sdk: 'life360-prebid-sdk'"];
+    nextFeed(); [s appendFormat:@"sdk: '%@'", PrebidConstants.SDK_NAME];
     nextFeed(); [s appendFormat:@"sdkVersion: '%@'", [PBMFunctions sdkVersion]];
     nextFeed(); [s appendFormat:@"appId: '%@'", [NSBundle mainBundle].bundleIdentifier];
     nextFeed(); [s appendFormat:@"ifa: '%@'", [ASIdentifierManager.sharedManager advertisingIdentifier].UUIDString];

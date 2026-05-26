@@ -15,7 +15,7 @@
 
 import XCTest
 
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class MediationInterstitialAdUnitTest: XCTestCase {
     private let sdkConfiguration: Prebid = {

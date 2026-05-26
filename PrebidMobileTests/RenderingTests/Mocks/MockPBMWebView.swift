@@ -15,7 +15,7 @@
 
 import Foundation
 
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 typealias MockMRAIDResizeHandler = (MRAIDResizeProperties?) -> Void
 typealias MockMRAIDExpandHandler = (MRAIDExpandProperties?) -> Void

@@ -18,7 +18,7 @@ import XCTest
 
 import UIKit
 import AdSupport
-@testable @_spi(PBMInternal) import NativoPrebidSDK
+@testable @_spi(PBMInternal) import Life360AdsSDK
 
 // MARK: - Mocks
 

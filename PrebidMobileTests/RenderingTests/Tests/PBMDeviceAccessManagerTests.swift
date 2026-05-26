@@ -17,7 +17,7 @@ import Foundation
 import XCTest
 import UIKit
 
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class PBMDeviceAccessManagerTests : XCTestCase {
     
