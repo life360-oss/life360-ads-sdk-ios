@@ -55,7 +55,7 @@ let package = Package(
         ),
         .binaryTarget(
             name: "PrebidMobileOMSDK",
-            path: "Frameworks/OMSDK_Prebidorg.xcframework"
+            path: "Frameworks/OMSDK_Life360.xcframework"
         ),
         .target(
             name: "Life360AdsSDKAdMobAdapters",

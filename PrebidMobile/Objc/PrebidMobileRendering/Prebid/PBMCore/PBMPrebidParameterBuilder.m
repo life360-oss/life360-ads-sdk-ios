@@ -119,7 +119,7 @@
     PBMORTBSourceExtOMID *extSource = [PBMORTBSourceExtOMID new];
     
     if (!self.adConfiguration.adConfiguration.isOriginalAPI) {
-        extSource.omidpn = @"Prebid";
+        extSource.omidpn = @"Life360";
         extSource.omidpv = [PBMFunctions sdkVersion];
     }
     

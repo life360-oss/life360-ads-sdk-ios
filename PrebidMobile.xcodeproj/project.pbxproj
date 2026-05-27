@@ -46,6 +46,7 @@
 		3A46AA322EF5D5410010B2A6 /* NativoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A46AA2F2EF5D5410010B2A6 /* NativoUtils.m */; };
 		3A46AA352EF5D5740010B2A6 /* NativoViewExposureChecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A46AA342EF5D5740010B2A6 /* NativoViewExposureChecker.h */; };
 		3A46AA362EF5D5740010B2A6 /* NativoUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A46AA332EF5D5740010B2A6 /* NativoUtils.h */; };
+		3A61D27A2FBFC980005F8B0A /* OMSDK_Life360.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A61D2792FBFC980005F8B0A /* OMSDK_Life360.xcframework */; };
 		3A6D7AE92ED0EC54001099B1 /* NativoORTBDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A6D7AE72ED0EC54001099B1 /* NativoORTBDevice.h */; };
 		3A6D7AEA2ED0EC54001099B1 /* NativoORTBDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AE82ED0EC54001099B1 /* NativoORTBDevice.m */; };
 		3A6D7AF02ED52DCB001099B1 /* ORTBBidExtNativo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtNativo.swift */; };
@@ -247,7 +248,6 @@
 		5A663B5C2DB31790005DF07F /* AdMarkupStringHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A663B5B2DB31790005DF07F /* AdMarkupStringHandler.swift */; };
 		5A663B642DB31E41005DF07F /* PrimaryAdRequesterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A663B632DB31E41005DF07F /* PrimaryAdRequesterProtocol.swift */; };
 		5A663B662DB32010005DF07F /* InterstitialAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A663B652DB32010005DF07F /* InterstitialAd.swift */; };
-		5A6E9E6B2E1C585F00F22587 /* OMSDK_Prebidorg.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF1BFD42E1C4F660096B53C /* OMSDK_Prebidorg.xcframework */; };
 		5A8447F82DB6FFF800446F70 /* ThreadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8447F72DB6FFF800446F70 /* ThreadProtocol.swift */; };
 		5A8447FC2DB7050D00446F70 /* TrackingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8447FB2DB7050D00446F70 /* TrackingEvent.swift */; };
 		5A8447FE2DB7053E00446F70 /* EventTrackerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8447FD2DB7053E00446F70 /* EventTrackerProtocol.swift */; };
@@ -285,7 +285,6 @@
 		5AE4E5E52DB863EB002C84DF /* ModalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE4E5E42DB863EB002C84DF /* ModalManager.swift */; };
 		5AE4E5E82DB865B4002C84DF /* DeferredModalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE4E5E72DB865B4002C84DF /* DeferredModalState.swift */; };
 		5AE4E5EB2DB87172002C84DF /* ModalManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE4E5EA2DB87172002C84DF /* ModalManagerDelegate.swift */; };
-		5AF1BFD52E1C4F660096B53C /* OMSDK_Prebidorg.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF1BFD42E1C4F660096B53C /* OMSDK_Prebidorg.xcframework */; };
 		5AF1BFDE2E1C50D30096B53C /* omsdk.js in Resources */ = {isa = PBXBuildFile; fileRef = 5AF1BFDC2E1C50D30096B53C /* omsdk.js */; };
 		5AF1BFDF2E1C50D30096B53C /* mraid.js in Resources */ = {isa = PBXBuildFile; fileRef = 5AF1BFDB2E1C50D30096B53C /* mraid.js */; };
 		5AF5EA532E13580F002D80C1 /* PBMORTBUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AF5EA122E13580F002D80C1 /* PBMORTBUser.h */; };
@@ -921,6 +920,7 @@
 		3A46AA302EF5D5410010B2A6 /* NativoViewExposureChecker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativoViewExposureChecker.m; sourceTree = "<group>"; };
 		3A46AA332EF5D5740010B2A6 /* NativoUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativoUtils.h; sourceTree = "<group>"; };
 		3A46AA342EF5D5740010B2A6 /* NativoViewExposureChecker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativoViewExposureChecker.h; sourceTree = "<group>"; };
+		3A61D2792FBFC980005F8B0A /* OMSDK_Life360.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OMSDK_Life360.xcframework; path = Frameworks/OMSDK_Life360.xcframework; sourceTree = "<group>"; };
 		3A6D7AE72ED0EC54001099B1 /* NativoORTBDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativoORTBDevice.h; sourceTree = "<group>"; };
 		3A6D7AE82ED0EC54001099B1 /* NativoORTBDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativoORTBDevice.m; sourceTree = "<group>"; };
 		3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtNativo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORTBBidExtNativo.swift; sourceTree = "<group>"; };
@@ -1168,7 +1168,6 @@
 		5AE4E5E42DB863EB002C84DF /* ModalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalManager.swift; sourceTree = "<group>"; };
 		5AE4E5E72DB865B4002C84DF /* DeferredModalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeferredModalState.swift; sourceTree = "<group>"; };
 		5AE4E5EA2DB87172002C84DF /* ModalManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalManagerDelegate.swift; sourceTree = "<group>"; };
-		5AF1BFD42E1C4F660096B53C /* OMSDK_Prebidorg.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OMSDK_Prebidorg.xcframework; path = Frameworks/OMSDK_Prebidorg.xcframework; sourceTree = "<group>"; };
 		5AF1BFDB2E1C50D30096B53C /* mraid.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mraid.js; sourceTree = "<group>"; };
 		5AF1BFDC2E1C50D30096B53C /* omsdk.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = omsdk.js; sourceTree = "<group>"; };
 		5AF5E9242E13580F002D80C1 /* InternalUserConsentDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InternalUserConsentDataManager.m; sourceTree = "<group>"; };
@@ -1772,7 +1771,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A6E9E6B2E1C585F00F22587 /* OMSDK_Prebidorg.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1780,7 +1778,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AF1BFD52E1C4F660096B53C /* OMSDK_Prebidorg.xcframework in Frameworks */,
+				3A61D27A2FBFC980005F8B0A /* OMSDK_Life360.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3083,7 +3081,7 @@
 		6062B19A218243FA00CE1BA3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5AF1BFD42E1C4F660096B53C /* OMSDK_Prebidorg.xcframework */,
+				3A61D2792FBFC980005F8B0A /* OMSDK_Life360.xcframework */,
 				6062B19B218243FA00CE1BA3 /* CoreLocation.framework */,
 			);
 			name = Frameworks;

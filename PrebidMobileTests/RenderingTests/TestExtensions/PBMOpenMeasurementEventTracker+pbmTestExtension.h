@@ -13,15 +13,15 @@
   limitations under the License.
   */
 
-#import <OMSDK_Prebidorg/OMIDAdSession.h>
-#import <OMSDK_Prebidorg/OMIDAdEvents.h>
-#import <OMSDK_Prebidorg/OMIDMediaEvents.h>
+#import <OMSDK_Life360/OMIDAdSession.h>
+#import <OMSDK_Life360/OMIDAdEvents.h>
+#import <OMSDK_Life360/OMIDMediaEvents.h>
 
 @interface PBMOpenMeasurementEventTracker ()
 
-@property (nonatomic, strong) OMIDPrebidorgAdEvents *adEvents;
-@property (nonatomic, strong) OMIDPrebidorgMediaEvents *mediaEvents;
-@property (nonatomic, strong) OMIDPrebidorgAdSession *session;
+@property (nonatomic, strong) OMIDLife360AdEvents *adEvents;
+@property (nonatomic, strong) OMIDLife360MediaEvents *mediaEvents;
+@property (nonatomic, strong) OMIDLife360AdSession *session;
 
 - (void)trackImpression;
 

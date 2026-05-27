@@ -21,15 +21,14 @@
 
 #import "SwiftImport.h"
 
-#import <OMSDK_Prebidorg/OMIDAdSession.h>
-#import <OMSDK_Prebidorg/OMIDScriptInjector.h>
-#import <OMSDK_Prebidorg/OMIDPartner.h>
-#import <OMSDK_Prebidorg/OMIDSDK.h>
+#import <OMSDK_Life360/OMIDAdSession.h>
+#import <OMSDK_Life360/OMIDScriptInjector.h>
+#import <OMSDK_Life360/OMIDPartner.h>
+#import <OMSDK_Life360/OMIDSDK.h>
 
 #pragma mark - Constants
 
-static NSString * const PBMOpenMeasurementPartnerName   = @"Prebidorg";
-static NSString * const PBMOpenMeasurementJSLibURL      = @"https://my.server.com/omsdk.js";
+static NSString * const PBMOpenMeasurementPartnerName   = @"Life360";
 static NSString * const PBMOpenMeasurementCustomRefId   = @"";
 
 #pragma mark - Private Interface
@@ -37,10 +36,9 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
 @interface PBMOpenMeasurementWrapper ()
 
 @property (nonatomic, readonly) NSString *partnerName;
-@property (nonatomic, readonly) NSString *jsLibURL;
 @property (nonatomic, readonly) NSString *customRefId;
 
-@property (nonatomic, strong, nonnull) OMIDPrebidorgPartner *partner;
+@property (nonatomic, strong, nonnull) OMIDLife360Partner *partner;
 
 @property (nonatomic, strong, nullable) PrebidJSLibraryManager *libraryManager;
 
@@ -79,10 +77,6 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     return PBMOpenMeasurementPartnerName;
 }
 
-- (NSString *)jsLibURL {
-    return PBMOpenMeasurementJSLibURL;
-}
-
 - (NSString *)customRefId {
     return PBMOpenMeasurementCustomRefId;
 }
@@ -102,7 +96,7 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
         return nil;
     }
     
-    NSString *res = [OMIDPrebidorgScriptInjector injectScriptContent:jsLib
+    NSString *res = [OMIDLife360ScriptInjector injectScriptContent:jsLib
                                                             intoHTML:html
                                                                error:error];
     
@@ -112,7 +106,7 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
 - (nullable PBMOpenMeasurementSession *)initializeWebViewSession:(WKWebView *)webView contentUrl:(NSString *)contentUrl {
     
     NSError *contextError;
-    OMIDPrebidorgAdSessionContext *context = [[OMIDPrebidorgAdSessionContext alloc] initWithPartner:self.partner
+    OMIDLife360AdSessionContext *context = [[OMIDLife360AdSessionContext alloc] initWithPartner:self.partner
                                                                                             webView:webView
                                                                                          contentUrl:contentUrl
                                                                           customReferenceIdentifier:self.customRefId
@@ -125,8 +119,8 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     
     NSError *configurationError;
     
-    OMIDPrebidorgAdSessionConfiguration *config = [
-        [OMIDPrebidorgAdSessionConfiguration alloc]
+    OMIDLife360AdSessionConfiguration *config = [
+        [OMIDLife360AdSessionConfiguration alloc]
         initWithCreativeType:OMIDCreativeTypeHtmlDisplay
         impressionType:OMIDImpressionTypeOnePixel
         impressionOwner:OMIDNativeOwner
@@ -162,7 +156,7 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     }
     
     NSError *contextError;
-    OMIDPrebidorgAdSessionContext *context = [[OMIDPrebidorgAdSessionContext alloc] initWithPartner:self.partner
+    OMIDLife360AdSessionContext *context = [[OMIDLife360AdSessionContext alloc] initWithPartner:self.partner
                                                                                              script:jsLib
                                                                                           resources:[self getScriptResources:verificationParameters]
                                                                                          contentUrl:nil
@@ -175,7 +169,7 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     
     NSError *configurationError;
     
-    OMIDPrebidorgAdSessionConfiguration *config = [[OMIDPrebidorgAdSessionConfiguration alloc] initWithCreativeType:OMIDCreativeTypeVideo
+    OMIDLife360AdSessionConfiguration *config = [[OMIDLife360AdSessionConfiguration alloc] initWithCreativeType:OMIDCreativeTypeVideo
                                                                                                      impressionType:OMIDImpressionTypeOnePixel
                                                                                                     impressionOwner:OMIDNativeOwner
                                                                                                    mediaEventsOwner:OMIDNativeOwner
@@ -210,11 +204,11 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
         return nil;
     }
     
-    NSArray<OMIDPrebidorgVerificationScriptResource *> *resources = [self scriptResourcesFrom:omidJSUrl
+    NSArray<OMIDLife360VerificationScriptResource *> *resources = [self scriptResourcesFrom:omidJSUrl
                                                                                     vendorKey:vendorKey
                                                                                    parameters:verificationParameters];
     NSError *contextError;
-    OMIDPrebidorgAdSessionContext *context = [[OMIDPrebidorgAdSessionContext alloc] initWithPartner:self.partner
+    OMIDLife360AdSessionContext *context = [[OMIDLife360AdSessionContext alloc] initWithPartner:self.partner
                                                                                              script:jsLib
                                                                                           resources:resources
                                                                                          contentUrl:nil
@@ -228,8 +222,8 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     
     NSError *configurationError;
     
-    OMIDPrebidorgAdSessionConfiguration *config = [
-        [OMIDPrebidorgAdSessionConfiguration alloc]
+    OMIDLife360AdSessionConfiguration *config = [
+        [OMIDLife360AdSessionConfiguration alloc]
         initWithCreativeType:OMIDCreativeTypeNativeDisplay
         impressionType:OMIDImpressionTypeOnePixel
         impressionOwner:OMIDNativeOwner
@@ -260,13 +254,13 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
 
 - (void)initializeOMSDK {
     NSError *error;
-    BOOL sdkStarted = [[OMIDPrebidorgSDK sharedInstance] activate];
+    BOOL sdkStarted = [[OMIDLife360SDK sharedInstance] activate];
     
     if (!sdkStarted) {
-        PBMLogError(@"Prebid SDK can't initialize Open Measurement SDK with error: %@", [error localizedDescription]);
+        PBMLogError(@"Life360 SDK can't initialize Open Measurement SDK with error: %@", [error localizedDescription]);
     }
     
-    self.partner = [[OMIDPrebidorgPartner alloc] initWithName:self.partnerName
+    self.partner = [[OMIDLife360Partner alloc] initWithName:self.partnerName
                                                 versionString:[PBMFunctions sdkVersion]];
 }
 
@@ -274,7 +268,7 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     return [self.libraryManager getOMSDKLibrary];;
 }
 
-- (nonnull NSArray<OMIDPrebidorgVerificationScriptResource *> *)getScriptResources:(PBMVideoVerificationParameters *)vastVerificationParamaters {
+- (nonnull NSArray<OMIDLife360VerificationScriptResource *> *)getScriptResources:(PBMVideoVerificationParameters *)vastVerificationParamaters {
     NSMutableArray *scripts = [NSMutableArray new];
     
     for (PBMVideoVerificationResource *vastResource in vastVerificationParamaters.verificationResources) {
@@ -289,7 +283,7 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
             continue;
         }
         
-        OMIDPrebidorgVerificationScriptResource *resource = [[OMIDPrebidorgVerificationScriptResource alloc] initWithURL:url
+        OMIDLife360VerificationScriptResource *resource = [[OMIDLife360VerificationScriptResource alloc] initWithURL:url
                                                                                                                vendorKey:vastResource.vendorKey
                                                                                                               parameters:vastResource.params];
         
@@ -304,7 +298,7 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     return scripts;
 }
 
-- (nonnull NSArray<OMIDPrebidorgVerificationScriptResource *> *)scriptResourcesFrom:(NSString *)omidJSUrl
+- (nonnull NSArray<OMIDLife360VerificationScriptResource *> *)scriptResourcesFrom:(NSString *)omidJSUrl
                                                                           vendorKey:(NSString *)vendorKey
                                                                          parameters:(NSString *)parameters {
     
@@ -320,7 +314,7 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
         return @[];
     }
     
-    OMIDPrebidorgVerificationScriptResource *resource = [[OMIDPrebidorgVerificationScriptResource alloc] initWithURL:url
+    OMIDLife360VerificationScriptResource *resource = [[OMIDLife360VerificationScriptResource alloc] initWithURL:url
                                                                                                            vendorKey:vendorKey
                                                                                                           parameters:parameters];
     

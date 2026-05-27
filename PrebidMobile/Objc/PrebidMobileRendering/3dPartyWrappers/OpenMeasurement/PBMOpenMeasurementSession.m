@@ -20,11 +20,11 @@
 
 #import "SwiftImport.h"
 
-#import <OMSDK_Prebidorg/OMIDAdSession.h>
+#import <OMSDK_Life360/OMIDAdSession.h>
 
 @interface PBMOpenMeasurementSession ()
 
-@property (nonatomic, strong) OMIDPrebidorgAdSession *session;
+@property (nonatomic, strong) OMIDLife360AdSession *session;
 
 @property (nonatomic, strong) id<PBMEventTrackerProtocol> eventTracker;
 
@@ -34,8 +34,8 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithContext:(OMIDPrebidorgAdSessionContext *)context
-                  configuration:(OMIDPrebidorgAdSessionConfiguration *)configuration {
+- (instancetype)initWithContext:(OMIDLife360AdSessionContext *)context
+                  configuration:(OMIDLife360AdSessionConfiguration *)configuration {
     self = [super init];
     if (self) {
         if ([self initializeOMSessionWithContext:context configuration:configuration]) {
@@ -116,10 +116,10 @@
 
 #pragma mark - Internal Methods
 
-- (BOOL)initializeOMSessionWithContext:(OMIDPrebidorgAdSessionContext *)context
-                         configuration:(OMIDPrebidorgAdSessionConfiguration *)configuration {
+- (BOOL)initializeOMSessionWithContext:(OMIDLife360AdSessionContext *)context
+                         configuration:(OMIDLife360AdSessionConfiguration *)configuration {
     NSError *sessionError;
-    self.session = [[OMIDPrebidorgAdSession alloc] initWithConfiguration:configuration
+    self.session = [[OMIDLife360AdSession alloc] initWithConfiguration:configuration
                                                     adSessionContext:context
                                                                error:&sessionError];
     if (sessionError) {
