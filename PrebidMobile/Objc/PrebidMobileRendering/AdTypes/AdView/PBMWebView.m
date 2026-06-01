@@ -354,8 +354,9 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
     }
     
     //Prevent malicious auto-clicking
-    // TODO: some cookie-sync urls are trying to fire here. Should they get through?
-    if(navigationAction.targetFrame.isMainFrame) {
+    BOOL isMainFrame = navigationAction.targetFrame != nil && navigationAction.targetFrame.isMainFrame;
+    BOOL isLinkActivated = navigationAction.navigationType == WKNavigationTypeLinkActivated;
+    if (isMainFrame || isLinkActivated) {
         if ([self wasRecentlyTapped]) {
             //Open clickthrough
             @weakify(self);
@@ -367,12 +368,9 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
         } else {
             PBMLogWarn(@"User has not recently tapped. Auto-click suppression is preventing navigation to: %@", url);
         }
-    }
-        
-    if (navigationAction.targetFrame.isMainFrame) {
         decisionHandler(WKNavigationActionPolicyCancel);
     } else {
-        // Allow navigation within iframes
+        // Allow iframe navigations that aren't user-initiated link taps
         decisionHandler(WKNavigationActionPolicyAllow);
     }
 }
