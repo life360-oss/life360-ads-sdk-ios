@@ -110,7 +110,7 @@
     }
     
     for (PBMORTBImp *rtbImp in bidRequest.imp) {
-        rtbImp.displaymanager = self.adConfiguration.isOriginalAPI ? nil : @"prebid-mobile";
+        rtbImp.displaymanager = self.adConfiguration.isOriginalAPI ? nil : PrebidConstants.SDK_NAME;
         rtbImp.displaymanagerver = self.adConfiguration.isOriginalAPI ? nil : self.sdkVersion;
         
         rtbImp.instl = @(self.adConfiguration.presentAsInterstitial ? 1 : 0);

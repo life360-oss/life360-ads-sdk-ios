@@ -1,3 +1,10 @@
+import Foundation
+
+@objc public final class NativoMRAIDDebugBridge: NSObject {
+    @objc public static func script() -> String {
+        return mraidDebugScript
+    }
+}
 
 public let mraidDebugScript: String = """
     function sendMessageToLogHandler(message) {
@@ -11,7 +18,7 @@ public let mraidDebugScript: String = """
 
         const keepLogsToConsole = true
 
-        const logMRAIDToConsole = false
+        const logMRAIDToConsole = true
         const logMRAIDToHandler = true
 
         if (logMRAIDToConsole || logMRAIDToHandler) {

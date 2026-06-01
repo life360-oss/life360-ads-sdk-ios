@@ -18,7 +18,7 @@ import Foundation
 import XCTest
 import CoreFoundation
 
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class PBMVastLoaderCheckForAds : XCTestCase {
     

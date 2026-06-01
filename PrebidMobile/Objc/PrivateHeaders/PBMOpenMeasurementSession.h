@@ -18,8 +18,8 @@
 
 #import "SwiftImport.h"
 
-@class OMIDPrebidorgAdSessionContext;
-@class OMIDPrebidorgAdSessionConfiguration;
+@class OMIDLife360AdSessionContext;
+@class OMIDLife360AdSessionConfiguration;
 @class PBMVideoVerificationParameters;
 @protocol PBMEventTrackerProtocol;
 @protocol PBMOMSession;
@@ -29,8 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) id<PBMEventTrackerProtocol> eventTracker;
 
-- (nonnull)initWithContext:(OMIDPrebidorgAdSessionContext *)context
-             configuration:(OMIDPrebidorgAdSessionConfiguration *)configuration;
+- (nonnull)initWithContext:(OMIDLife360AdSessionContext *)context
+             configuration:(OMIDLife360AdSessionConfiguration *)configuration;
 
 #pragma mark - PBMOpenMeasurementSessionProtocol
 

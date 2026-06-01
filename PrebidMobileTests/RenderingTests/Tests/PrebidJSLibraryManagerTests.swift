@@ -14,7 +14,7 @@
   */
 
 import XCTest
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class PrebidJSLibraryManagerTests: XCTestCase {
     
@@ -37,7 +37,7 @@ class PrebidJSLibraryManagerTests: XCTestCase {
     func testOMSDKLibrary() {
         let library = PrebidJSLibraryManager.shared.omsdkLibrary
         XCTAssertTrue(library.name == "omsdk")
-        XCTAssert(library.downloadURLString?.contains("omsdk.js") == true)
+        XCTAssertNil(library.downloadURLString)
     }
     
     func testSaveLibrary_FetchCached() {

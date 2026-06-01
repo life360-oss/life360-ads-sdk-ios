@@ -14,7 +14,7 @@ limitations under the License.
 */
 
 import XCTest
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class NativeRequestTests: XCTestCase {
     

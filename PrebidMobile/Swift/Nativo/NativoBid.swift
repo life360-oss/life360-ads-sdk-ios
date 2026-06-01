@@ -33,11 +33,11 @@ public class NativoBid: Bid {
 
     // Force plugin renderer selection to Nativo
     public override var pluginRendererName: String? {
-        return NativoPrebidRendererInternal.NAME
+        return NativoRendererInternal.NAME
     }
 
     public override var pluginRendererVersion: String? {
-        return NativoPrebidRendererInternal.VERSION
+        return NativoRendererInternal.VERSION
     }
 
     // Not used for rendering; return nil for Nativo

@@ -8,7 +8,7 @@
 
 import Foundation
 
-@testable @_spi(PBMInternal) import NativoPrebidSDK
+@testable @_spi(PBMInternal) import Life360AdsSDK
 
 public class RawSampleCustomRendererBidFabricator {
     static func makeSampleCustomRendererBid(

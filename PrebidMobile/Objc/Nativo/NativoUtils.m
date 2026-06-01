@@ -1,6 +1,6 @@
 //
 //  NativoUtils.m
-//  NativoPrebidSDK
+//  Life360AdsSDK
 //
 //  Created by Matthew Murray on 12/11/25.
 //

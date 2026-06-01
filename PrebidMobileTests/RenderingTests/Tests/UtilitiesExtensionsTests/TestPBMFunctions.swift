@@ -15,7 +15,7 @@
 
 import UIKit
 import XCTest
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class TestPBMFunctions: XCTestCase {
     

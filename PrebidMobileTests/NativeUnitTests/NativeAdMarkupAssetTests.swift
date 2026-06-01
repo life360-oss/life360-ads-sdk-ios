@@ -15,7 +15,7 @@
 
 import Foundation
 import XCTest
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 import Foundation
 import XCTest

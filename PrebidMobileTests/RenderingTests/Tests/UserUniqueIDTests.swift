@@ -14,20 +14,20 @@
   */
 
 import XCTest
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class UserUniqueIDTests: XCTestCase {
     
     func testInitialization() {
-        let userUniqueID = UserUniqueID(id: "uid1", aType: 1, ext: ["key": "value"])
+        let userUniqueID = UserUniqueID(uniqueId: "uid1", aType: 1, ext: ["key": "value"])
         
-        XCTAssertEqual(userUniqueID.id, "uid1")
+        XCTAssertEqual(userUniqueID.uniqueId, "uid1")
         XCTAssertEqual(userUniqueID.aType, 1)
         XCTAssertEqual(userUniqueID.ext as? NSDictionary, ["key": "value"] as NSDictionary)
     }
     
     func testToJSONDictionary() {
-        let userUniqueID = UserUniqueID(id: "uid1", aType: 1, ext: ["key": "value"])
+        let userUniqueID = UserUniqueID(uniqueId: "uid1", aType: 1, ext: ["key": "value"])
         let json = userUniqueID.toJSONDictionary()
         
         XCTAssertEqual(json["id"] as? String, "uid1")

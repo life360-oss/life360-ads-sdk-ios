@@ -18,7 +18,7 @@ import XCTest
 
 import UIKit
 
-@testable @_spi(PBMInternal) import NativoPrebidSDK
+@testable @_spi(PBMInternal) import Life360AdsSDK
 
 class ModalManagerTestDisplayInInterstitial: XCTestCase {
     

@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "60D792FA217E229B0080F428"
-               BuildableName = "PrebidMobileTests.xctest"
-               BlueprintName = "NativoPrebidSDKTests"
+               BuildableName = "Life360PrebidSDKTests.xctest"
+               BlueprintName = "Life360AdsSDKTests"
                ReferencedContainer = "container:PrebidMobile.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,8 +43,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "60D792FA217E229B0080F428"
-               BuildableName = "PrebidMobileTests.xctest"
-               BlueprintName = "NativoPrebidSDKTests"
+               BuildableName = "Life360PrebidSDKTests.xctest"
+               BlueprintName = "Life360AdsSDKTests"
                ReferencedContainer = "container:PrebidMobile.xcodeproj">
             </BuildableReference>
             <SkippedTests>
@@ -92,8 +92,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "60D792FA217E229B0080F428"
-            BuildableName = "PrebidMobileTests.xctest"
-            BlueprintName = "NativoPrebidSDKTests"
+            BuildableName = "Life360PrebidSDKTests.xctest"
+            BlueprintName = "Life360AdsSDKTests"
             ReferencedContainer = "container:PrebidMobile.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

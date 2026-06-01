@@ -14,7 +14,7 @@
   */
 
 import XCTest
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class LogTest: XCTestCase {
 
@@ -223,7 +223,7 @@ class LogTest: XCTestCase {
             log("WHEREAMI", logLevel: .info, filename: filename, line: line, function: function)
         }
         
-        func log(_ object: Any, logLevel: NativoPrebidSDK.LogLevel, filename: String, line: Int, function: String) {
+        func log(_ object: Any, logLevel: Life360AdsSDK.LogLevel, filename: String, line: Int, function: String) {
             let finalMessage = "\(logLevel.stringValue) \(object): TESTLOG"
             print(finalMessage)
             Log.serialWriteToLog(finalMessage)

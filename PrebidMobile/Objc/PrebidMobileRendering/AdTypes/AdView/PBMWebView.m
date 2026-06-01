@@ -115,6 +115,7 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
     //Setup MRAID-required properties
     //see section '8.4 Video' (page 68) of MRAID 3.0 specification
     WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
+    configuration.websiteDataStore = [WKWebsiteDataStore nonPersistentDataStore];
     configuration.allowsInlineMediaPlayback = YES;
     if (@available(iOS 10.0, *)) {
         configuration.mediaTypesRequiringUserActionForPlayback = WKAudiovisualMediaTypeNone;
@@ -353,20 +354,25 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
     }
     
     //Prevent malicious auto-clicking
-    // TODO: some cookie-sync urls are trying to fire here. Should they get through?
-    if ([self wasRecentlyTapped]) {
-        //Open clickthrough
-        @weakify(self);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            @strongify(self);
-            if (!self) { return; }
-            [self.delegate webView:self receivedClickthroughLink:url];
-        });
+    BOOL isMainFrame = navigationAction.targetFrame != nil && navigationAction.targetFrame.isMainFrame;
+    BOOL isLinkActivated = navigationAction.navigationType == WKNavigationTypeLinkActivated;
+    if (isMainFrame || isLinkActivated) {
+        if ([self wasRecentlyTapped]) {
+            //Open clickthrough
+            @weakify(self);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                @strongify(self);
+                if (!self) { return; }
+                [self.delegate webView:self receivedClickthroughLink:url];
+            });
+        } else {
+            PBMLogWarn(@"User has not recently tapped. Auto-click suppression is preventing navigation to: %@", url);
+        }
+        decisionHandler(WKNavigationActionPolicyCancel);
     } else {
-        PBMLogWarn(@"User has not recently tapped. Auto-click suppression is preventing navigation to: %@", url);
+        // Allow iframe navigations that aren't user-initiated link taps
+        decisionHandler(WKNavigationActionPolicyAllow);
     }
-    
-    decisionHandler(WKNavigationActionPolicyCancel);
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
@@ -497,9 +503,16 @@ static PBMError *extracted(NSString *errorMessage) {
 #pragma mark - MRAID Injection
 
 - (BOOL)injectMRAIDForExpandContent:(BOOL)isForExpandContent error:(NSError **)error {
+    
+#if REMOTE_DEBUGGING
+    // DEBUG MRAID
+    NSString *mraidScript = [NativoMRAIDDebugBridge script];
+#else
     NSString *mraidScript = [self.libraryManager getMRAIDLibrary];
+#endif
+        
     if (!mraidScript) {
-        [PBMError createError:error message:@"Could not load mraid.js from library manager" type:PBMErrorType.internalError];
+        [PBMError createError:error message:@"Could not load mraid.js debug script" type:PBMErrorType.internalError];
         return false;
     }
     
@@ -565,7 +578,7 @@ static PBMError *extracted(NSString *errorMessage) {
     };
     [s appendString:@"window.MRAID_ENV = {"];
     nextFeed(); [s appendString:@"version: '3.0'"];
-    nextFeed(); [s appendString:@"sdk: 'prebid-mobile-sdk'"];
+    nextFeed(); [s appendFormat:@"sdk: '%@'", PrebidConstants.SDK_NAME];
     nextFeed(); [s appendFormat:@"sdkVersion: '%@'", [PBMFunctions sdkVersion]];
     nextFeed(); [s appendFormat:@"appId: '%@'", [NSBundle mainBundle].bundleIdentifier];
     nextFeed(); [s appendFormat:@"ifa: '%@'", [ASIdentifierManager.sharedManager advertisingIdentifier].UUIDString];

@@ -14,7 +14,7 @@
  */
 
 import XCTest
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 fileprivate class DummyView: UIView {}
 fileprivate class DummyViewController: UIViewController {}

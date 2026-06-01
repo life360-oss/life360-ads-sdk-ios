@@ -15,7 +15,7 @@
 
 import Foundation
 import XCTest
-@testable @_spi(PBMInternal) import NativoPrebidSDK
+@testable @_spi(PBMInternal) import Life360AdsSDK
 
 class PBMVideoCreativeTestCloseDelay : XCTestCase {
     

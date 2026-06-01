@@ -15,7 +15,7 @@
 
 import Foundation
 import GoogleMobileAds
-import NativoPrebidSDK
+import Life360AdsSDK
 
 @objcMembers
 public class GAMInterstitialEventHandler :

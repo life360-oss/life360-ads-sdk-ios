@@ -15,7 +15,7 @@
 
 import Foundation
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 
 public let MockMediationAdUnitBidKey           = "PBM_BID"
 public let MockMediationConfigIdKey            = "PBM_CONFIG_ID"

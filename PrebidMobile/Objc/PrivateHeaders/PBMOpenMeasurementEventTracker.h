@@ -17,8 +17,8 @@
 
 #import "SwiftImport.h"
 
-@class OMIDPrebidorgAdSession;
-@class OMIDPrebidorgVASTProperties;
+@class OMIDLife360AdSession;
+@class OMIDLife360VASTProperties;
 
 /**
     Implements PBMEventTrackerProtocol according to the OM specification.
@@ -26,7 +26,7 @@
 NS_ASSUME_NONNULL_BEGIN
 @interface PBMOpenMeasurementEventTracker : NSObject <PBMEventTrackerProtocol>
 
-- (instancetype)initWithSession:(OMIDPrebidorgAdSession *)session;
+- (instancetype)initWithSession:(OMIDLife360AdSession *)session;
 
 #if DEBUG
 // This method declared in PBMEventTrackerProtocol is not visible in Swift

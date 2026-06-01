@@ -15,7 +15,7 @@
 
 import Foundation
 import XCTest
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class PBMHTMLCreativeTest_NoMRAID : PBMHTMLCreativeTest_Base {
     

@@ -15,7 +15,7 @@
 
 import XCTest
 import UIKit
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class MediationUtilsTest: XCTestCase {
     func testServerParameterChecking() {

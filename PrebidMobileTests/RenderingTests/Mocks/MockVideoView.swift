@@ -14,7 +14,7 @@
   */
 
 import Foundation
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class MockVideoView: PBMVideoView {
     

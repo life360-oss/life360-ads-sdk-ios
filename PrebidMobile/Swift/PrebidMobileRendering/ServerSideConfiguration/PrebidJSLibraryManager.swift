@@ -18,7 +18,6 @@ import Foundation
 fileprivate let PBMJSLibraryFileDirectory = "PBMJSLibraries"
 
 fileprivate let mraidLibraryURL = "https://cdn.jsdelivr.net/gh/prebid/prebid-mobile-ios@master/js/mraid.js"
-fileprivate let omsdkLibraryURL = "https://cdn.jsdelivr.net/gh/prebid/prebid-mobile-ios@master/js/omsdk.js"
 
 public typealias PrebidJSLibraryContentsCallback = (String?) -> ()
 
@@ -32,7 +31,7 @@ public class PrebidJSLibraryManager: NSObject {
     }()
     
     var omsdkLibrary: PrebidJSLibrary = {
-        PrebidJSLibrary(name: "omsdk", downloadURLString: omsdkLibraryURL)
+        PrebidJSLibrary(name: "omsdk")
     }()
     
     private var connection: PrebidServerConnection
@@ -43,14 +42,12 @@ public class PrebidJSLibraryManager: NSObject {
     }
     
     public func downloadLibraries() {
-        for library in [mraidLibrary, omsdkLibrary] {
-            if checkIfCached(library.name) == false {
-                downloadJSLibrary(
-                    libraryName: library.name,
-                    downloadURLString: library.downloadURLString,
-                    with: connection
-                )
-            }
+        if checkIfCached(mraidLibrary.name) == false {
+            downloadJSLibrary(
+                libraryName: mraidLibrary.name,
+                downloadURLString: mraidLibrary.downloadURLString,
+                with: connection
+            )
         }
     }
     
@@ -59,7 +56,12 @@ public class PrebidJSLibraryManager: NSObject {
     }
     
     public func getOMSDKLibrary() -> String? {
-        fetchLibrary(omsdkLibrary)
+        guard let path = Bundle(for: PrebidJSLibraryManager.self).path(forResource: "omsdk", ofType: "js"),
+              let contents = try? String(contentsOfFile: path, encoding: .utf8) else {
+            Log.error("Could not load bundled omsdk.js")
+            return nil
+        }
+        return contents
     }
     
     func fetchLibrary(_ jsLibrary: PrebidJSLibrary) -> String? {

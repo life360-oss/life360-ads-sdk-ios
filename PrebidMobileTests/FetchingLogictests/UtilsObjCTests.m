@@ -14,7 +14,7 @@ limitations under the License.
 */
 
 #import <XCTest/XCTest.h>
-#import "NativoPrebidSDK/NativoPrebidSDK.h"
+#import "Life360AdsSDK/Life360AdsSDK.h"
 
 @interface UtilsObjCTests : XCTestCase
 

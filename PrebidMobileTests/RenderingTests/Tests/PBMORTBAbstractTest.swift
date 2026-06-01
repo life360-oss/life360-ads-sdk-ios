@@ -16,7 +16,7 @@
 import Foundation
 import XCTest
 
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 class PBMORTBAbstractTest : XCTestCase {
     
