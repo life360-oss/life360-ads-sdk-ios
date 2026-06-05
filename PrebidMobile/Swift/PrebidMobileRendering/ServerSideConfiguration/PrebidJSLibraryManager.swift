@@ -56,12 +56,16 @@ public class PrebidJSLibraryManager: NSObject {
     }
     
     public func getOMSDKLibrary() -> String? {
-        guard let path = Bundle(for: PrebidJSLibraryManager.self).path(forResource: "omsdk", ofType: "js"),
-              let contents = try? String(contentsOfFile: path, encoding: .utf8) else {
-            Log.error("Could not load bundled omsdk.js")
+        do {
+            return try NativoUtils.loadBundledText(
+                name: "omsdk",
+                extension: "js",
+                additionalBundle: nil
+            )
+        } catch {
+            Log.error("OMSDK load failed: \(error.localizedDescription)")
             return nil
         }
-        return contents
     }
     
     func fetchLibrary(_ jsLibrary: PrebidJSLibrary) -> String? {

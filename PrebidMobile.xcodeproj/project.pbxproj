@@ -53,6 +53,7 @@
 		3A6D7AF22ED53AD6001099B1 /* NativoBidResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AF12ED53AD6001099B1 /* NativoBidResponse.swift */; };
 		3A6D7AF42ED65676001099B1 /* NativoBid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AF32ED65676001099B1 /* NativoBid.swift */; };
 		3A8E19112F60C12400720D1B /* NativoPrebidRendererInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8E19102F60C12400720D1B /* NativoPrebidRendererInternal.swift */; };
+		3AED93342FD34398007E2C44 /* NativoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED93332FD34398007E2C44 /* NativoUtils.swift */; };
 		3AFDF6452EC808D600FC7AA2 /* NativoBidRequester.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AFDF6422EC808D600FC7AA2 /* NativoBidRequester.h */; };
 		3AFDF6462EC808D600FC7AA2 /* NativoBidRequester.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFDF6432EC808D600FC7AA2 /* NativoBidRequester.m */; };
 		3AFDF6522ECD1DE500FC7AA2 /* NativoParameterBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFDF6512ECD1DE500FC7AA2 /* NativoParameterBuilder.m */; };
@@ -928,6 +929,7 @@
 		3A6D7AF32ED65676001099B1 /* NativoBid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBid.swift; sourceTree = "<group>"; };
 		3A826B132F61E42800EB10C0 /* NativoRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoRenderer.swift; sourceTree = "<group>"; };
 		3A8E19102F60C12400720D1B /* NativoPrebidRendererInternal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoPrebidRendererInternal.swift; sourceTree = "<group>"; };
+		3AED93332FD34398007E2C44 /* NativoUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoUtils.swift; sourceTree = "<group>"; };
 		3AFDF6422EC808D600FC7AA2 /* NativoBidRequester.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativoBidRequester.h; sourceTree = "<group>"; };
 		3AFDF6432EC808D600FC7AA2 /* NativoBidRequester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativoBidRequester.m; sourceTree = "<group>"; };
 		3AFDF6502ECD1DE500FC7AA2 /* NativoParameterBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativoParameterBuilder.h; sourceTree = "<group>"; };
@@ -1803,6 +1805,7 @@
 				3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtNativo.swift */,
 				744E60F09562467414158B98 /* NativoAdType.swift */,
 				5A51286FB5526C0F52FF4556 /* BidAdTypeExtention.swift */,
+				3AED93332FD34398007E2C44 /* NativoUtils.swift */,
 				B6DA79F1C9609A18EC09622A /* NativoGAMUtils.swift */,
 			);
 			path = Nativo;
@@ -4517,6 +4520,7 @@
 				2FCEAF460A636FBFDFBFB2AF /* NativoGeoLocationParameterBuilder.m in Sources */,
 				3A46AA322EF5D5410010B2A6 /* NativoUtils.m in Sources */,
 				5AF5EB512E13580F002D80C1 /* PBMExternalURLOpenCallbacks.m in Sources */,
+				3AED93342FD34398007E2C44 /* NativoUtils.swift in Sources */,
 				5AF5EB522E13580F002D80C1 /* PBMMRAIDController.m in Sources */,
 				5AF5EB532E13580F002D80C1 /* PBMORTBParameterBuilder.m in Sources */,
 				5AF5EB542E13580F002D80C1 /* PBMMRAIDCommand.m in Sources */,
