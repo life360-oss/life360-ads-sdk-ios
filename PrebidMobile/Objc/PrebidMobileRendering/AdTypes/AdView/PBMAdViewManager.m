@@ -82,10 +82,12 @@
     if (![self isAbleToShowCurrentCreative]) {
         return;
     }
-    
+
     UIViewController* viewController = [self.adViewManagerDelegate viewControllerForModalPresentation];
     if (!viewController) {
-        PBMLogError(@"viewControllerForModalPresentation is nil. Check the implementation of Ad View Delegate.");
+        NSString *message = @"viewControllerForModalPresentation is nil. Check the implementation of Ad View Delegate.";
+        PBMLogError(@"%@", message);
+        [self.adViewManagerDelegate failedToLoad:[PBMError errorWithDescription:message]];
         return;
     }
     
@@ -252,19 +254,20 @@
 }
 
 - (void)creativeViewWasClicked:(id<PBMAbstractCreative>)creative {
-    // POTENTIAL BUG: if publisher did not provide the controller for modal presentation
-    // and we did not check it before 'show'
-    // the video will disappear from UI and won't appear in the interstitial controller.
     if ([self isAbleToShowCurrentCreative] && !self.adConfiguration.presentAsInterstitial) {
+        if (![self.adViewManagerDelegate viewControllerForModalPresentation]) {
+            PBMLogError(@"viewControllerForModalPresentation is nil. Cannot expand video ad.");
+            return;
+        }
+
         // IMPORTANT: we have to remove PBMVideoAdView from super view before invoking the show method.
         // Otherwise, the video won't be displayed.
-        
         [self.currentCreative.view removeFromSuperview];
-        
+
         self.adConfiguration.forceInterstitialPresentation = @(YES);
         [self.currentCreative.eventManager trackEvent:PBMTrackingEventExpand];
         [self show];
-        
+
         [self.adViewManagerDelegate adViewWasClicked];
     }
 }
