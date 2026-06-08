@@ -1,11 +1,11 @@
 # Life360 Ads SDK (iOS)
 
-The Life360 Ads SDK is an extension of the open-source [Prebid Mobile iOS](https://github.com/prebid/prebid-mobile-ios) project. It adds Nativo as a competing demand source alongside Prebid, with the winning bid sent to Google Ad Manager (GAM) for final decisioning. For base Prebid Mobile concepts and API documentation, visit the [Prebid documentation](https://docs.prebid.org/prebid-mobile/pbm-api/ios/code-integration-ios.html)
+The Life360 Ads SDK is an extension of the open-source [Prebid Mobile iOS](https://github.com/prebid/prebid-mobile-ios) project. It adds Nativo as a competing demand source alongside Prebid Server, with the winning bid sent to Google Ad Manager (GAM) for final decisioning. For base Prebid Mobile concepts and API documentation, visit the [Prebid documentation](https://docs.prebid.org/prebid-mobile/pbm-api/ios/code-integration-ios.html)
 
 ## Features
 
 ### Nativo Ad Request Pipeline
-An additional bid request is sent to Nativo as a demand source competing alongside Prebid. The SDK compares all bids and sends the winning bid to GAM.
+An additional bid request is sent to Nativo as a demand source competing alongside Prebid Server. The SDK compares all bids and sends the winning bid to GAM.
 
 ### Owned & Operated Ads
 Direct ad campaigns are supported via an `isOwnedOperated` flag. When set, the ad bypasses the auction and is rendered immediately without going through Prebid Server or GAM.
@@ -14,13 +14,13 @@ Direct ad campaigns are supported via an `isOwnedOperated` flag. When set, the a
 Rendering support for all unique Nativo ad formats.
 
 ### Full-width Ad Rendering
-The `NativoRenderer` plugin handles dynamic expansion of ad creatives to full width/height using constraint-based layout, ensuring correct display across varying screen sizes.
+The rendering plugin handles dynamic expansion of ad creatives to full width/height using constraint-based layout, ensuring correct display across varying screen sizes.
 
 ### Geo/Location Data with Nativo
 When a developer sets `shareGeoLocationWithNativo` to `true` and the user grants location permission, the SDK conditionally appends ORTB `geo` parameters to the Nativo bid request.
 
-### GAM Click Attribution with Prebid Rendering
-Clicks originating from Nativo or Prebid rendered ads are tracked back into the GAM platform, ensuring accurate click attribution and reporting.
+### GAM Click Attribution for 3rd party ads (Nativo & Prebid)
+When using GAM as the ad server, clicks within a Nativo or Prebid ad are tracked back into the GAM platform, ensuring accurate click attribution and reporting.
 
 ## Improvements & Bug Fixes
 
@@ -28,9 +28,10 @@ Relative to upstream Prebid Mobile, this SDK includes the following fixes and im
 
 - **Viewability Tracking** — Scroll-based viewability tracking replacing the upstream poll-based approach, for more accurate measurement
 - **MRAID Expand** — Improved MRAID expand support with better animations and no glitching
+- **iframe Handling** — Within expanded ad content, fix to allow iframes to load
 - **Ad Refresh Handling** — Fix for ad refresh lifecycle management
 - **bURL Tracker** — Fix for auction macro replacement in billing URL tracking
-- **Rendering** — `PBMWebView` background color fixes
+- **Rendering** — Set `PBMWebView` background color to match system dark/light default
 - **GAM Event Handlers** — Click and impression callbacks for GAM-rendered ads
 
 ## Ad Request Flow
@@ -49,14 +50,12 @@ The SDK orchestrates the following 9-step flow for each ad request:
 
 ## Use SPM?
 
-Starting from version `3.1.0`, PrebidMobile supports Swift Package Manager (SPM), making integration much easier and more maintainable compared to manual setups or CocoaPods.
-
 To [add the Life360 Ads SDK package dependency](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app#Add-a-package-dependency) using SPM, follow these steps:
 
 1. In Xcode, install the Life360 Ads SDK by navigating to File > Add Package Dependencies...
 2. In the prompt that appears, search for the Life360 Ads SDK GitHub repository:
     ```
-    https://github.com/life360-oss/nativo-prebid-sdk-ios.git
+    https://github.com/life360-oss/life360-ads-sdk-ios.git
     ```
 3. Select the version of the Life360 Ads SDK you want to use. For new projects, we recommend using the Up to Next Major Version.
 4. In the package selection screen, make sure to check the modules you need for your integration and link it to your application target.
@@ -69,7 +68,7 @@ Easily include the Life360 Ads SDK for your primary ad server in your Podfile/
 platform :ios, '13.0'
 
 target 'MyAmazingApp' do 
-    pod 'NativoPrebidSDK'
+    pod 'Life360AdsSDK'
 end
 ```
 

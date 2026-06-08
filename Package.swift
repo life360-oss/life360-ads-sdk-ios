@@ -38,7 +38,10 @@ let package = Package(
         .target(
             name: "Life360AdsSDK",
             path: "PrebidMobile",
-            sources: ["Swift"]
+            sources: ["Swift"],
+            resources: [
+                .process("Resources")
+            ]
         ),
         .target(
             name: "__PrebidMobileInternal",

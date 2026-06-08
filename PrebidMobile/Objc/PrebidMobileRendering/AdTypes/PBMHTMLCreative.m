@@ -133,8 +133,12 @@
     
     self.prebidWebView.delegate = self;
     self.view = self.prebidWebView;
-    
-    [self loadHTMLToWebView];
+
+    // Signal readiness to the creative factory immediately. HTML is loaded lazily
+    // in displayWithRootViewController:, once the view has been added to the hierarchy,
+    // so that third-party JS inside the ad markup cannot fire impression trackers
+    // before the ad is actually visible.
+    [self onResolutionCompleted];
 }
 
 - (BOOL)hasVastTag:(NSString *)html {
@@ -150,6 +154,11 @@
  }
 
 - (void)displayWithRootViewController:(UIViewController*)viewController {
+    // Load HTML now that the view is in the hierarchy (addSubview: is always called
+    // before displayWithRootViewController: in PBMAdViewManager). This ensures
+    // third-party JS in the ad markup only executes once the ad is actually being shown.
+    [self loadHTMLToWebView];
+
     //Either these constraints are redundant or the initWithFrame is.
     [self.prebidWebView PBMAddCropAndCenterConstraintsWithInitialWidth:self.prebidWebView.frame.size.width initialHeight:self.prebidWebView.frame.size.height];
     [self.prebidWebView prepareForMRAIDWithRootViewController:viewController];
