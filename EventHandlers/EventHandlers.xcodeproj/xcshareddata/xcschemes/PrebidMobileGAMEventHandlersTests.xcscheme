@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3405F944250A555800268A77"
-               BuildableName = "NativoPrebidSDKGAMEventHandlersTests.xctest"
-               BlueprintName = "NativoPrebidSDKGAMEventHandlersTests"
+               BuildableName = "Life360AdsSDKGAMEventHandlersTests.xctest"
+               BlueprintName = "Life360AdsSDKGAMEventHandlersTests"
                ReferencedContainer = "container:EventHandlers.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,8 +34,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3405F944250A555800268A77"
-               BuildableName = "NativoPrebidSDKGAMEventHandlersTests.xctest"
-               BlueprintName = "NativoPrebidSDKGAMEventHandlersTests"
+               BuildableName = "Life360AdsSDKGAMEventHandlersTests.xctest"
+               BlueprintName = "Life360AdsSDKGAMEventHandlersTests"
                ReferencedContainer = "container:EventHandlers.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3405F944250A555800268A77"
-            BuildableName = "NativoPrebidSDKGAMEventHandlersTests.xctest"
-            BlueprintName = "NativoPrebidSDKGAMEventHandlersTests"
+            BuildableName = "Life360AdsSDKGAMEventHandlersTests.xctest"
+            BlueprintName = "Life360AdsSDKGAMEventHandlersTests"
             ReferencedContainer = "container:EventHandlers.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

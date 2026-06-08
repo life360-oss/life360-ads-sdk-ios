@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -85,6 +85,10 @@
 		0012D9142E215435007013F3 /* PrebidMobileMAXAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 0012D9132E215435007013F3 /* PrebidMobileMAXAdapters */; };
 		0012D9262E2159C0007013F3 /* GoogleInteractiveMediaAds in Frameworks */ = {isa = PBXBuildFile; productRef = 0012D9252E2159C0007013F3 /* GoogleInteractiveMediaAds */; };
 		2235279D5C42ED56993F7486 /* Pods_PrebidDemoObjectiveC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B36D91CB781AAC3B2E9CED /* Pods_PrebidDemoObjectiveC.framework */; };
+		3AED93562FD764A0007E2C44 /* Life360AdsSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 3AED93552FD764A0007E2C44 /* Life360AdsSDK */; };
+		3AED93582FD764A0007E2C44 /* Life360AdsSDKAdMobAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 3AED93572FD764A0007E2C44 /* Life360AdsSDKAdMobAdapters */; };
+		3AED935A2FD764A0007E2C44 /* Life360AdsSDKGAMEventHandlers in Frameworks */ = {isa = PBXBuildFile; productRef = 3AED93592FD764A0007E2C44 /* Life360AdsSDKGAMEventHandlers */; };
+		3AED935C2FD764A0007E2C44 /* Life360AdsSDKMAXAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 3AED935B2FD764A0007E2C44 /* Life360AdsSDKMAXAdapters */; };
 		3B91139C2351AB73A1FCAA3D /* Pods_PrebidDemoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD5DAB24E3A731BAE7B7F4F /* Pods_PrebidDemoSwift.framework */; };
 		4A202872DBC83DC8657AD22A /* Pods_PrebidDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D15B7407C160BC5C35E9AD7 /* Pods_PrebidDemoTests.framework */; };
 		53072B562921021B00228462 /* GAMOriginalAPIDisplayInterstitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53072B552921021B00228462 /* GAMOriginalAPIDisplayInterstitialViewController.swift */; };
@@ -314,8 +318,6 @@
 /* Begin PBXFileReference section */
 		0012D90A2E214EBE007013F3 /* PrebidDemoSPM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrebidDemoSPM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0012D9152E21544E007013F3 /* PrebidDemoSPM-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PrebidDemoSPM-Info.plist"; sourceTree = "<group>"; };
-		0B32F72A9BBDBE997EFFDDA4 /* Pods-PrebidDemoSwift_Old.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidDemoSwift_Old.debug.xcconfig"; path = "Target Support Files/Pods-PrebidDemoSwift_Old/Pods-PrebidDemoSwift_Old.debug.xcconfig"; sourceTree = "<group>"; };
-		27A91CDC4C1E50EB4FC1CD46 /* Pods-PrebidDemoSwift_Old.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidDemoSwift_Old.release.xcconfig"; path = "Target Support Files/Pods-PrebidDemoSwift_Old/Pods-PrebidDemoSwift_Old.release.xcconfig"; sourceTree = "<group>"; };
 		383E9CE325712AC3006FA6F4 /* PrebidDemoTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PrebidDemoTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		53072B552921021B00228462 /* GAMOriginalAPIDisplayInterstitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GAMOriginalAPIDisplayInterstitialViewController.swift; sourceTree = "<group>"; };
 		53072B572921023E00228462 /* InterstitialBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstitialBaseViewController.swift; sourceTree = "<group>"; };
@@ -553,7 +555,6 @@
 		5BA4CF6C273AE27E00197C62 /* PrebidMobileGAMEventHandlers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PrebidMobileGAMEventHandlers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BD98F0B273EC0D00030ACC3 /* PrebidMobileGAMEventHandlers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PrebidMobileGAMEventHandlers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CA527E4B4E05598C6D7B462 /* Pods-PrebidDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidDemoTests.debug.xcconfig"; path = "Target Support Files/Pods-PrebidDemoTests/Pods-PrebidDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
-		640E75E2C6EB2A7268230D2A /* Pods-PrebidDemoObjectiveC_Old.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidDemoObjectiveC_Old.release.xcconfig"; path = "Target Support Files/Pods-PrebidDemoObjectiveC_Old/Pods-PrebidDemoObjectiveC_Old.release.xcconfig"; sourceTree = "<group>"; };
 		71D584CFFA6132CB2B6B74A6 /* Pods-PrebidDemoObjectiveC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidDemoObjectiveC.debug.xcconfig"; path = "Target Support Files/Pods-PrebidDemoObjectiveC/Pods-PrebidDemoObjectiveC.debug.xcconfig"; sourceTree = "<group>"; };
 		725E7FE27DFBC5E532A78D55 /* Pods-PrebidDemoObjectiveC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidDemoObjectiveC.release.xcconfig"; path = "Target Support Files/Pods-PrebidDemoObjectiveC/Pods-PrebidDemoObjectiveC.release.xcconfig"; sourceTree = "<group>"; };
 		9205E49027B561A9003DCCCC /* TestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestExtensions.swift; sourceTree = "<group>"; };
@@ -565,7 +566,6 @@
 		92F438C52768982700FDC950 /* PrebidMobileAdMobAdapters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PrebidMobileAdMobAdapters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92F438C82768B23100FDC950 /* PrebidMobileAdMobAdapters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PrebidMobileAdMobAdapters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D15B7407C160BC5C35E9AD7 /* Pods_PrebidDemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PrebidDemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A9A4A80EA5AE7DC6151531C0 /* Pods-PrebidDemoObjectiveC_Old.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidDemoObjectiveC_Old.debug.xcconfig"; path = "Target Support Files/Pods-PrebidDemoObjectiveC_Old/Pods-PrebidDemoObjectiveC_Old.debug.xcconfig"; sourceTree = "<group>"; };
 		B7B36D91CB781AAC3B2E9CED /* Pods_PrebidDemoObjectiveC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PrebidDemoObjectiveC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2C237381964CC29C2EC365 /* Pods-PrebidDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrebidDemoTests.release.xcconfig"; path = "Target Support Files/Pods-PrebidDemoTests/Pods-PrebidDemoTests.release.xcconfig"; sourceTree = "<group>"; };
 		C324CF5929350A1F008DAA20 /* BannerVideoAdsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerVideoAdsTest.swift; sourceTree = "<group>"; };
@@ -603,10 +603,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AED935A2FD764A0007E2C44 /* Life360AdsSDKGAMEventHandlers in Frameworks */,
 				530E7210292F8DC30025B44D /* PrebidMobile.framework in Frameworks */,
 				530E7215292F8DC60025B44D /* PrebidMobileGAMEventHandlers.framework in Frameworks */,
 				530E7217292F8DC70025B44D /* PrebidMobileMAXAdapters.framework in Frameworks */,
 				530E7213292F8DC40025B44D /* PrebidMobileAdMobAdapters.framework in Frameworks */,
+				3AED93582FD764A0007E2C44 /* Life360AdsSDKAdMobAdapters in Frameworks */,
+				3AED93562FD764A0007E2C44 /* Life360AdsSDK in Frameworks */,
+				3AED935C2FD764A0007E2C44 /* Life360AdsSDKMAXAdapters in Frameworks */,
 				3B91139C2351AB73A1FCAA3D /* Pods_PrebidDemoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -648,10 +652,6 @@
 				725E7FE27DFBC5E532A78D55 /* Pods-PrebidDemoObjectiveC.release.xcconfig */,
 				5CA527E4B4E05598C6D7B462 /* Pods-PrebidDemoTests.debug.xcconfig */,
 				BA2C237381964CC29C2EC365 /* Pods-PrebidDemoTests.release.xcconfig */,
-				A9A4A80EA5AE7DC6151531C0 /* Pods-PrebidDemoObjectiveC_Old.debug.xcconfig */,
-				640E75E2C6EB2A7268230D2A /* Pods-PrebidDemoObjectiveC_Old.release.xcconfig */,
-				0B32F72A9BBDBE997EFFDDA4 /* Pods-PrebidDemoSwift_Old.debug.xcconfig */,
-				27A91CDC4C1E50EB4FC1CD46 /* Pods-PrebidDemoSwift_Old.release.xcconfig */,
 				53708327CFCDBB5409DDDECD /* Pods-PrebidDemoSwift.debug.xcconfig */,
 				C9DBC625BEAFC3D135666E04 /* Pods-PrebidDemoSwift.release.xcconfig */,
 			);
@@ -1464,8 +1464,8 @@
 			);
 			mainGroup = FA12E452231E9C5900CAA05B;
 			packageReferences = (
-				0012D90C2E215435007013F3 /* XCRemoteSwiftPackageReference "prebid-mobile-ios-adapters" */,
 				0012D9242E2159C0007013F3 /* XCRemoteSwiftPackageReference "swift-package-manager-google-interactive-media-ads-ios" */,
+				3AED93542FD764A0007E2C44 /* XCLocalSwiftPackageReference "nativo-prebid-sdk-ios" */,
 			);
 			productRefGroup = FA12E45C231E9C5900CAA05B /* Products */;
 			projectDirPath = "";
@@ -2434,6 +2434,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		3AED93542FD764A0007E2C44 /* XCLocalSwiftPackageReference "nativo-prebid-sdk-ios" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../../nativo-prebid-sdk-ios";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		0012D90C2E215435007013F3 /* XCRemoteSwiftPackageReference "prebid-mobile-ios-adapters" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -2478,6 +2485,22 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0012D9242E2159C0007013F3 /* XCRemoteSwiftPackageReference "swift-package-manager-google-interactive-media-ads-ios" */;
 			productName = GoogleInteractiveMediaAds;
+		};
+		3AED93552FD764A0007E2C44 /* Life360AdsSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Life360AdsSDK;
+		};
+		3AED93572FD764A0007E2C44 /* Life360AdsSDKAdMobAdapters */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Life360AdsSDKAdMobAdapters;
+		};
+		3AED93592FD764A0007E2C44 /* Life360AdsSDKGAMEventHandlers */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Life360AdsSDKGAMEventHandlers;
+		};
+		3AED935B2FD764A0007E2C44 /* Life360AdsSDKMAXAdapters */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Life360AdsSDKMAXAdapters;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 import GoogleInteractiveMediaAds
 
 class PrebidOriginalAPIVideoInstreamViewController:

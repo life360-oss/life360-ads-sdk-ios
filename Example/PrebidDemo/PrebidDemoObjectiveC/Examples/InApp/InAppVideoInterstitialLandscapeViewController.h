@@ -15,7 +15,7 @@
 
 #import "InterstitialBaseViewController.h"
 
-@import NativoPrebidSDK;
+@import Life360AdsSDK;
 
 NS_ASSUME_NONNULL_BEGIN
 

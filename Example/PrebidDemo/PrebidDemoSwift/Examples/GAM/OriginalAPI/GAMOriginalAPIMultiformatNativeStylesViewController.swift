@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 import GoogleMobileAds
 
 fileprivate let storedPrebidImpressions = ["prebid-demo-banner-300-250", "prebid-demo-video-outstream-original-api", "prebid-demo-banner-native-styles"]

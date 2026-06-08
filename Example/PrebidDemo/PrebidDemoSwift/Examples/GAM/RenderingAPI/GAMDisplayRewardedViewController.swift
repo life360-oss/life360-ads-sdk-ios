@@ -15,8 +15,8 @@
 
 import UIKit
 import GoogleMobileAds
-import NativoPrebidSDK
-import NativoPrebidSDKGAMEventHandlers
+import Life360AdsSDK
+import Life360AdsSDKGAMEventHandlers
 
 fileprivate let storedImpDisplayRewarded = "prebid-demo-banner-rewarded-time"
 fileprivate let gamAdUnitBannerRewardedRendering = "/21808260008/prebid_oxb_rewarded_video_test"

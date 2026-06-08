@@ -15,8 +15,8 @@
 
 import UIKit
 import GoogleMobileAds
-import NativoPrebidSDK
-import NativoPrebidSDKGAMEventHandlers
+import Life360AdsSDK
+import Life360AdsSDKGAMEventHandlers
 
 class PrebidGAMInterstitialController: NSObject, AdaptedController, PrebidConfigurableController, InterstitialAdUnitDelegate {
     
@@ -24,7 +24,7 @@ class PrebidGAMInterstitialController: NSObject, AdaptedController, PrebidConfig
     var storedAuctionResponse: String?
 
     var gamAdUnitId = ""
-    var adFormats: Set<PrebidMobile.AdFormat>?
+    var adFormats: Set<Life360AdsSDK.AdFormat>?
     
     private var interstitialController : InterstitialRenderingAdUnit?
     

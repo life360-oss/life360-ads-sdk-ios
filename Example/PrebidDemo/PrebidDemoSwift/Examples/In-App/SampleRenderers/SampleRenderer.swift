@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 
 /// A custom implementation of the renderer.
 public class SampleRenderer: NSObject, PrebidMobilePluginRenderer {

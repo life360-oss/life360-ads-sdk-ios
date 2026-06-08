@@ -16,7 +16,7 @@
 #import "GAMOriginalAPIMultiformatBannerViewController.h"
 #import "PrebidDemoMacros.h"
 
-@import NativoPrebidSDK;
+@import Life360AdsSDK;
 @import GoogleMobileAds;
 
 NSArray<NSString *> * const storedImpsBanner = @[@"prebid-demo-banner-300-250", @"prebid-demo-video-outstream-original-api"];

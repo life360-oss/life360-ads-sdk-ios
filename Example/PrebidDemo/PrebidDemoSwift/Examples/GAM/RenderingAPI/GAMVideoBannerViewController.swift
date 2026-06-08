@@ -15,16 +15,16 @@
 
 import UIKit
 import GoogleMobileAds
-import NativoPrebidSDK
-import NativoPrebidSDKGAMEventHandlers
+import Life360AdsSDK
+import Life360AdsSDKGAMEventHandlers
 
 fileprivate let storedImpVideoBanner = "prebid-demo-video-outstream"
 fileprivate let gamAdUnitVideoBannerRendering = "/21808260008/prebid_oxb_300x250_banner"
 
-class GAMVideoBannerViewController: BannerBaseViewController, PrebidMobile.BannerViewDelegate {
+class GAMVideoBannerViewController: BannerBaseViewController, Life360AdsSDK.BannerViewDelegate {
     
     // Prebid
-    private var prebidBannerView: PrebidMobile.BannerView!
+    private var prebidBannerView: Life360AdsSDK.BannerView!
     
     override func loadView() {
         super.loadView()
@@ -66,19 +66,19 @@ class GAMVideoBannerViewController: BannerBaseViewController, PrebidMobile.Banne
         self
     }
     
-    func bannerViewDidDisplay(_ bannerView: PrebidMobile.BannerView) {
+    func bannerViewDidDisplay(_ bannerView: Life360AdsSDK.BannerView) {
         PrebidDemoLogger.shared.info("Banner view did display (impression recorded)")
     }
     
-    func bannerViewWillLeaveApplication(_ bannerView: PrebidMobile.BannerView) {
+    func bannerViewWillLeaveApplication(_ bannerView: Life360AdsSDK.BannerView) {
         PrebidDemoLogger.shared.info("Banner view will leave application (click recorded)")
     }
 
-    func bannerViewWillPresentModal(_ bannerView: PrebidMobile.BannerView) {
+    func bannerViewWillPresentModal(_ bannerView: Life360AdsSDK.BannerView) {
         PrebidDemoLogger.shared.info("Banner view will present modal (click recorded)")
     }
 
-    func bannerView(_ bannerView: PrebidMobile.BannerView, didFailToReceiveAdWith error: Error) {
+    func bannerView(_ bannerView: Life360AdsSDK.BannerView, didFailToReceiveAdWith error: Error) {
         PrebidDemoLogger.shared.error("Banner view did fail to receive ad with error: \(error)")
     }
 }

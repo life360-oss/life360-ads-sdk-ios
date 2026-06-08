@@ -18,10 +18,10 @@ import CoreLocation
 import GoogleMobileAds
 import AppLovinSDK
 
-import NativoPrebidSDK
-import NativoPrebidSDKAdMobAdapters
-import NativoPrebidSDKGAMEventHandlers
-import NativoPrebidSDKMAXAdapters
+import Life360AdsSDK
+import Life360AdsSDKAdMobAdapters
+import Life360AdsSDKGAMEventHandlers
+import Life360AdsSDKMAXAdapters
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

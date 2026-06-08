@@ -16,8 +16,8 @@
 #import "BannerBaseViewController.h"
 
 @import AppLovinSDK;
-@import NativoPrebidSDK;
-@import NativoPrebidSDKMAXAdapters;
+@import Life360AdsSDK;
+@import Life360AdsSDKMAXAdapters;
 
 NS_ASSUME_NONNULL_BEGIN
 

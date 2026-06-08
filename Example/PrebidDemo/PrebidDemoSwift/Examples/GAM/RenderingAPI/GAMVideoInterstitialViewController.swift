@@ -15,8 +15,8 @@
 
 import UIKit
 import GoogleMobileAds
-import NativoPrebidSDK
-import NativoPrebidSDKGAMEventHandlers
+import Life360AdsSDK
+import Life360AdsSDKGAMEventHandlers
 
 fileprivate let storedImpVideoInterstitial = "prebid-demo-video-interstitial-320-480"
 fileprivate let gamAdUnitVideoInterstitialRendering = "/21808260008/prebid_oxb_interstitial_video"

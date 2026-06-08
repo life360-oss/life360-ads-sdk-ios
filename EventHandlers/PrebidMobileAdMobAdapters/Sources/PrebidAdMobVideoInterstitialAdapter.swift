@@ -15,7 +15,7 @@
 
 import Foundation
 import GoogleMobileAds
-import NativoPrebidSDK
+import Life360AdsSDK
 
 @objc(PrebidAdMobVideoInterstitialAdapter)
 public class PrebidAdMobVideoInterstitialAdapter:

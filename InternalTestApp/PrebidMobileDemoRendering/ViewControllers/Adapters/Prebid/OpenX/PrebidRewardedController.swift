@@ -15,7 +15,7 @@
 
 import UIKit
 import GoogleMobileAds
-import NativoPrebidSDK
+import Life360AdsSDK
 
 class PrebidRewardedController: NSObject, AdaptedController, RewardedAdUnitDelegate {
     

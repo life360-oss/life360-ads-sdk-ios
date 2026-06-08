@@ -15,8 +15,8 @@
 
 import UIKit
 import GoogleMobileAds
-import NativoPrebidSDK
-import NativoPrebidSDKAdMobAdapters
+import Life360AdsSDK
+import Life360AdsSDKAdMobAdapters
 import Alamofire
 
 enum GADAdSizeType {
@@ -37,7 +37,7 @@ class PrebidAdMobBannerViewController:
     var adMobAdUnitId = ""
     var adUnitSize = CGSize()
     var additionalAdSizes = [CGSize]()
-    var adFormat: PrebidMobile.AdFormat?
+    var adFormat: Life360AdsSDK.AdFormat?
     
     var request = Request()
     

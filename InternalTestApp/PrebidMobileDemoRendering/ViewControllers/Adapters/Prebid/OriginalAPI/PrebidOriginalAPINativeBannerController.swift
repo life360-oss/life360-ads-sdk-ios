@@ -14,8 +14,8 @@
   */
 
 import UIKit
-import NativoPrebidSDK
-import NativoPrebidSDKAdMobAdapters
+import Life360AdsSDK
+import Life360AdsSDKAdMobAdapters
 import GoogleMobileAds
 
 class PrebidOriginalAPINativeBannerController:

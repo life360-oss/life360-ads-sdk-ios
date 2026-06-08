@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 
 fileprivate let storedImpDisplayRewarded = "prebid-demo-banner-rewarded-time"
 

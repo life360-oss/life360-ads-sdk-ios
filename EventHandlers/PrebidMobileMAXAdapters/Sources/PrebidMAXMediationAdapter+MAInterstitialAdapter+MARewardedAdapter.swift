@@ -13,7 +13,7 @@
   limitations under the License.
   */
 
-import NativoPrebidSDK
+import Life360AdsSDK
 import AppLovinSDK
 
 extension PrebidMAXMediationAdapter: MAInterstitialAdapter,

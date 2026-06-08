@@ -15,7 +15,7 @@
 
 import UIKit
 import Eureka
-import NativoPrebidSDK
+import Life360AdsSDK
 
 final class PrebidMobileXSDKConfigurationController : FormViewController {
     

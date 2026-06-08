@@ -15,8 +15,8 @@
 
 import UIKit
 import GoogleMobileAds
-import NativoPrebidSDK
-import NativoPrebidSDKGAMEventHandlers
+import Life360AdsSDK
+import Life360AdsSDKGAMEventHandlers
 
 class PrebidGAMNativeAdFeedController: NSObject, PrebidConfigurableController {
     

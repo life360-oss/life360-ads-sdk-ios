@@ -16,8 +16,8 @@
 import UIKit
 
 import GoogleMobileAds
-import NativoPrebidSDK
-import NativoPrebidSDKGAMEventHandlers
+import Life360AdsSDK
+import Life360AdsSDKGAMEventHandlers
 
 class FeedGAMAdTableViewCell: UITableViewCell {
     
@@ -29,7 +29,7 @@ class FeedGAMAdTableViewCell: UITableViewCell {
     public var eventTrackers: [NativeEventTracker]?
     
     private var adUnit: NativeRequest?
-    private var theNativeAd: PrebidMobile.NativeAd?
+    private var theNativeAd: Life360AdsSDK.NativeAd?
     
     private let nativeAdViewBox = NativeAdViewBox()
     

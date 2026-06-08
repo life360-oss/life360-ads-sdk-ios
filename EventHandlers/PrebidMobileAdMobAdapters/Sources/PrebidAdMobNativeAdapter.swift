@@ -15,7 +15,7 @@
 
 import Foundation
 import GoogleMobileAds
-import NativoPrebidSDK
+import Life360AdsSDK
 
 @objc(PrebidAdMobNativeAdapter)
 public class PrebidAdMobNativeAdapter:
@@ -55,7 +55,7 @@ public class PrebidAdMobNativeAdapter:
     
     public var extraAssets: [String: Any]?
     
-    var prebidNativeAd: NativoPrebidSDK.NativeAd?
+    var prebidNativeAd: Life360AdsSDK.NativeAd?
     
     public weak var delegate: GoogleMobileAds.MediationNativeAdEventDelegate?
     var completionHandler: GADMediationNativeLoadCompletionHandler?
@@ -126,18 +126,18 @@ public class PrebidAdMobNativeAdapter:
     
     // MARK: - NativeAdEventDelegate
     
-    public func adDidExpire(ad: NativoPrebidSDK.NativeAd) {
+    public func adDidExpire(ad: Life360AdsSDK.NativeAd) {
         let error = AdMobAdaptersError.adExpired
         if let handler = completionHandler {
            delegate = handler(nil, error)
         }
     }
     
-    public func adWasClicked(ad: NativoPrebidSDK.NativeAd) {
+    public func adWasClicked(ad: Life360AdsSDK.NativeAd) {
         delegate?.reportClick()
     }
     
-    public func adDidLogImpression(ad: NativoPrebidSDK.NativeAd) {
+    public func adDidLogImpression(ad: Life360AdsSDK.NativeAd) {
         delegate?.reportImpression()
     }
     

@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 
 protocol NativeAdViewBoxProtocol: AnyObject {
     func setUpDummyValues()

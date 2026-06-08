@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 import GoogleMobileAds
 
 fileprivate let storedPrebidImpressions = ["prebid-demo-banner-300-250", "prebid-demo-video-outstream-original-api", "prebid-demo-banner-native-styles"]
@@ -24,13 +24,13 @@ class GAMOriginalAPIMultiformatInAppNativeViewController:
     MultiformatBaseViewController,
     AdManagerBannerAdLoaderDelegate,
     GoogleMobileAds.CustomNativeAdLoaderDelegate,
-    PrebidMobile.NativeAdDelegate {
+    Life360AdsSDK.NativeAdDelegate {
     
     // Prebid
     private var adUnit: PrebidAdUnit!
     private var configId = ""
     
-    private var nativeAd: PrebidMobile.NativeAd!
+    private var nativeAd: Life360AdsSDK.NativeAd!
     
     private var nativeAssets: [NativeAsset] {
         let image = NativeAssetImage(minimumWidth: 200, minimumHeight: 50, required: true)
@@ -147,7 +147,7 @@ class GAMOriginalAPIMultiformatInAppNativeViewController:
     
     // MARK: - NativeAdDelegate
     
-    func nativeAdLoaded(ad: PrebidMobile.NativeAd) {
+    func nativeAdLoaded(ad: Life360AdsSDK.NativeAd) {
         nativeView.isHidden = false
         bannerView.isHidden = true
         

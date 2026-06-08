@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 
 fileprivate let storedImpVideoInterstitialLandscape = "prebid-demo-video-interstitial-landscape-with-end-card"
 

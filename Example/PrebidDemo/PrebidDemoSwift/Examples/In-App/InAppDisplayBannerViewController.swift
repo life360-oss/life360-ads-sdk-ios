@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 
 fileprivate let storedImpDisplayBanner = "prebid-demo-banner-320-50"
 

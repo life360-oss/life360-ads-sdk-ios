@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 import GoogleInteractiveMediaAds
 
 fileprivate let videoContentURL = "https://storage.googleapis.com/gvabox/media/samples/stock.mp4"

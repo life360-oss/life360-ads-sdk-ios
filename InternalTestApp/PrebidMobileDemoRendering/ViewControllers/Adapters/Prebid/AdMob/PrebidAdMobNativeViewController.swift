@@ -14,8 +14,8 @@
   */
 
 import UIKit
-import NativoPrebidSDK
-import NativoPrebidSDKAdMobAdapters
+import Life360AdsSDK
+import Life360AdsSDKAdMobAdapters
 import GoogleMobileAds
 
 class PrebidAdMobNativeViewController:
@@ -33,7 +33,7 @@ class PrebidAdMobNativeViewController:
     private weak var rootController: AdapterViewController?
     
     private var admobNativeAdView: AdMobNativeAdView?
-    private var thePrebidNativeAd: PrebidMobile.NativeAd?
+    private var thePrebidNativeAd: Life360AdsSDK.NativeAd?
     private var adLoader: AdLoader?
     private var gadRequest = Request()
 

@@ -15,7 +15,7 @@
 
 import UIKit
 import CoreLocation
-import NativoPrebidSDK
+import Life360AdsSDK
 
 class TestCasesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, CLLocationManagerDelegate {
     

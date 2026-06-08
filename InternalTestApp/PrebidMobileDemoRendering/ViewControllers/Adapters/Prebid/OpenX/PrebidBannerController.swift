@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 
 class PrebidBannerController: NSObject, AdaptedController, PrebidConfigurableBannerController, BannerViewDelegate, BannerViewVideoPlaybackDelegate {
     
@@ -169,23 +169,23 @@ class PrebidBannerController: NSObject, AdaptedController, PrebidConfigurableBan
     
     // MARK: - BannerViewVideoPlaybackDelegate
     
-    func videoPlaybackDidPause(_ banner: PrebidMobile.BannerView) {
+    func videoPlaybackDidPause(_ banner: Life360AdsSDK.BannerView) {
         videoPlaybackDidPauseButton.isEnabled = true
     }
     
-    func videoPlaybackDidResume(_ banner: PrebidMobile.BannerView) {
+    func videoPlaybackDidResume(_ banner: Life360AdsSDK.BannerView) {
         videoPlaybackDidResumeButton.isEnabled = true
     }
     
-    func videoPlaybackWasMuted(_ banner: PrebidMobile.BannerView) {
+    func videoPlaybackWasMuted(_ banner: Life360AdsSDK.BannerView) {
         videoPlaybackWasMutedButton.isEnabled = true
     }
     
-    func videoPlaybackWasUnmuted(_ banner: PrebidMobile.BannerView) {
+    func videoPlaybackWasUnmuted(_ banner: Life360AdsSDK.BannerView) {
         videoPlaybackWasUnmutedButton.isEnabled = true
     }
     
-    func videoPlaybackDidComplete(_ banner: PrebidMobile.BannerView) {
+    func videoPlaybackDidComplete(_ banner: Life360AdsSDK.BannerView) {
         videoPlaybackDidCompleteButton.isEnabled = true
     }
     

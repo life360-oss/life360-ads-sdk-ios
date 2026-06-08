@@ -14,7 +14,7 @@
  */
 
 import UIKit
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 extension UIWindow {
     static var key: UIWindow? {

@@ -17,8 +17,8 @@ import Foundation
 import XCTest
 
 import GoogleMobileAds
-import NativoPrebidSDK
-@testable import NativoPrebidSDKAdMobAdapters
+import Life360AdsSDK
+@testable import Life360AdsSDKAdMobAdapters
 
 class AdMobMediationUtilsTest: XCTestCase {
     

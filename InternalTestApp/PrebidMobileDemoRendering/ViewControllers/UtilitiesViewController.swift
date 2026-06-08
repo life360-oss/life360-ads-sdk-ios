@@ -17,7 +17,7 @@ import AppTrackingTransparency
 import UIKit
 import Eureka
 
-import NativoPrebidSDK
+import Life360AdsSDK
 
 class UtilitiesViewController: FormViewController {
     

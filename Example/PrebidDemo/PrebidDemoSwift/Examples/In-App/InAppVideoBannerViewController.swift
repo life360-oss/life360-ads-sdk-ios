@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 
 fileprivate let storedImpVideoBanner = "prebid-demo-video-outstream"
 

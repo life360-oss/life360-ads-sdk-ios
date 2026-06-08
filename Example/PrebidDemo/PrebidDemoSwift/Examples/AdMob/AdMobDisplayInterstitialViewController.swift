@@ -14,9 +14,9 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 import GoogleMobileAds
-import NativoPrebidSDKAdMobAdapters
+import Life360AdsSDKAdMobAdapters
 
 fileprivate let storedImpDisplayInterstitial = "prebid-demo-display-interstitial-320-480"
 fileprivate let adMobAdUnitDisplayInterstitial = "ca-app-pub-5922967660082475/3383099861"

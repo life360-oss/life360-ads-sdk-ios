@@ -15,13 +15,13 @@
 
 #import <UIKit/UIKit.h>
 
-@import NativoPrebidSDK;
+@import Life360AdsSDK;
 @import GoogleMobileAds;
 @import AppLovinSDK;
 
-@import NativoPrebidSDKGAMEventHandlers;
-@import NativoPrebidSDKAdMobAdapters;
-@import NativoPrebidSDKMAXAdapters;
+@import Life360AdsSDKGAMEventHandlers;
+@import Life360AdsSDKAdMobAdapters;
+@import Life360AdsSDKMAXAdapters;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

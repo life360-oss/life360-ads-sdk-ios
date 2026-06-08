@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 import GoogleMobileAds
 
 fileprivate let storedImpVideoInterstitial = "prebid-demo-video-interstitial-320-480-original-api"

@@ -15,7 +15,7 @@
 
 import XCTest
 import GoogleMobileAds
-@testable import NativoPrebidSDKGAMEventHandlers
+@testable import Life360AdsSDKGAMEventHandlers
 
 class GAMInterstitialAdWrapperTest: XCTestCase {
     

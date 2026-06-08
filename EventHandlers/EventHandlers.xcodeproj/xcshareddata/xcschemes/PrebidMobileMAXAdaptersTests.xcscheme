@@ -17,8 +17,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "92C1346127FC6B4900F96387"
-               BuildableName = "NativoPrebidSDKMAXAdaptersTests.xctest"
-               BlueprintName = "NativoPrebidSDKMAXAdaptersTests"
+               BuildableName = "Life360AdsSDKMAXAdaptersTests.xctest"
+               BlueprintName = "Life360AdsSDKMAXAdaptersTests"
                ReferencedContainer = "container:EventHandlers.xcodeproj">
             </BuildableReference>
          </TestableReference>
