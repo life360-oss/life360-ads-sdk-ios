@@ -65,6 +65,7 @@ Pod::Spec.new do |s|
     core.private_header_files = [
       'PrebidMobile/Objc/PrivateHeaders/*.h'
     ]
+    core.resources = ['PrebidMobile/Resources/omsdk.js']
     core.vendored_frameworks = 'Frameworks/OMSDK_Life360.xcframework'
   end
 
