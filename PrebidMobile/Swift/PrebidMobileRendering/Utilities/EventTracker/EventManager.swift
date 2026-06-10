@@ -51,7 +51,9 @@ public class EventManager: NSObject, EventTrackerProtocol {
     // MARK: - EventTrackerProtocol
     
     public func trackEvent(_ event: TrackingEvent) {
-        trackers.forEach { $0.trackEvent(event) }
+        trackers.forEach {
+            $0.trackEvent(event)
+        }
     }
     
     public func trackVideoAdLoaded(_ parameters: VideoVerificationParameters) {
