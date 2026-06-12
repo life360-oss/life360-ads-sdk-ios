@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Life360AdsSDKGAMEventHandlers"
-  s.version      = "3.3.1"
+  s.version      = "1.0.0-alpha.1"
   s.summary      = "The bridge between Life360 Ads SDK and GMA SDK."
 
   s.description  = "GAM Event Handlers manages rendering of Prebid or GAM ads respectively to the winning bid."
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
 
 
   s.license      = { :type => "Apache License, Version 2.0", :text => <<-LICENSE
-    Copyright 2018-2025 Life360, Inc.
+    Copyright 2018-2026 Life360, Inc.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   s.author		= { "Life360, Inc." => "info@life360.com" }
   s.platform     	= :ios, "13.0"
   s.swift_version 	= '5.0'
-  s.source       	= { :git => "git@github.com:life360-oss/nativo-prebid-sdk-ios.git", :tag => "#{s.version}" }
+  s.source       	= { :git => "https://github.com/life360-oss/life360-ads-sdk-ios.git", :tag => "v#{s.version}" }
   s.xcconfig 		= { :LIBRARY_SEARCH_PATHS => '$(inherited)',
   			    :OTHER_CFLAGS => '$(inherited)',
 			    :OTHER_LDFLAGS => '$(inherited)',
@@ -39,7 +39,7 @@ Pod::Spec.new do |s|
   s.source_files = 'EventHandlers/PrebidMobileGAMEventHandlers/**/*.{h,m,swift}'
   s.static_framework = true
 
-  s.dependency 'Life360AdsSDK', '>= 3.3.1'
+  s.dependency 'Life360AdsSDK', '1.0.0-alpha.1'
   s.dependency 'Google-Mobile-Ads-SDK', '>= 13.0.0'
 
   s.pod_target_xcconfig = {
