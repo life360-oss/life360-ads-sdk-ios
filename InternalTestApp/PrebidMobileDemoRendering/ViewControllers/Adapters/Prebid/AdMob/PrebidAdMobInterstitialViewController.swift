@@ -15,8 +15,8 @@
 
 import UIKit
 import GoogleMobileAds
-import NativoPrebidSDK
-import NativoPrebidSDKAdMobAdapters
+import Life360AdsSDK
+import Life360AdsSDKAdMobAdapters
 
 class PrebidAdMobInterstitialViewController:
         NSObject,
@@ -29,7 +29,7 @@ class PrebidAdMobInterstitialViewController:
 
     var adMobAdUnitId = ""
     
-    var adFormats: Set<PrebidMobile.AdFormat>?
+    var adFormats: Set<Life360AdsSDK.AdFormat>?
     
     private weak var adapterViewController: AdapterViewController?
     

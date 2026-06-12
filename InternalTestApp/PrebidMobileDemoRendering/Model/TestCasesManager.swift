@@ -17,9 +17,9 @@ import Foundation
 import UIKit
 
 import GoogleMobileAds
-import NativoPrebidSDKGAMEventHandlers
+import Life360AdsSDKGAMEventHandlers
 
-import NativoPrebidSDK
+import Life360AdsSDK
 
 let nativeStylesCreative = """
 <html><body>

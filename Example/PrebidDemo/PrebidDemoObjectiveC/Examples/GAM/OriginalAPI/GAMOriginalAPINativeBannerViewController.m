@@ -16,7 +16,7 @@
 #import "GAMOriginalAPINativeBannerViewController.h"
 #import "PrebidDemoMacros.h"
 
-@import NativoPrebidSDK;
+@import Life360AdsSDK;
 
 NSString * const nativeStoredBannerImpression = @"prebid-demo-banner-native-styles";
 NSString * const gamAdUnit = @"/21808260008/prebid-demo-original-native-styles";

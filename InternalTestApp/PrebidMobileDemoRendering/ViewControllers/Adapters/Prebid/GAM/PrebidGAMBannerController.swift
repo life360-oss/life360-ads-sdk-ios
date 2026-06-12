@@ -15,14 +15,14 @@
 
 import Foundation
 import GoogleMobileAds
-import NativoPrebidSDK
-import NativoPrebidSDKGAMEventHandlers
+import Life360AdsSDK
+import Life360AdsSDKGAMEventHandlers
 
 class PrebidGAMBannerController:
         NSObject,
         AdaptedController,
         PrebidConfigurableBannerController,
-        PrebidMobile.BannerViewDelegate,
+        Life360AdsSDK.BannerViewDelegate,
         PrebidConfigurableController {
     
     var refreshInterval: TimeInterval = 0
@@ -31,9 +31,9 @@ class PrebidGAMBannerController:
 
     var gamAdUnitId = ""
     var validAdSizes = [AdSize]()
-    var adFormat: PrebidMobile.AdFormat?
+    var adFormat: Life360AdsSDK.AdFormat?
     
-    var adBannerView: PrebidMobile.BannerView?
+    var adBannerView: Life360AdsSDK.BannerView?
     
     weak var rootController: AdapterViewController?
     
@@ -114,7 +114,7 @@ class PrebidGAMBannerController:
         return rootController
     }
     
-    func bannerView(_ bannerView: PrebidMobile.BannerView, didReceiveAdWithAdSize adSize: CGSize) {
+    func bannerView(_ bannerView: Life360AdsSDK.BannerView, didReceiveAdWithAdSize adSize: CGSize) {
         resetEvents()
         reloadButton.isEnabled = true
         adViewDidReceiveAdButton.isEnabled = true
@@ -131,25 +131,25 @@ class PrebidGAMBannerController:
         setBannerSize(adSize)
     }
     
-    func bannerView(_ bannerView: PrebidMobile.BannerView, didFailToReceiveAdWith error: Error) {
+    func bannerView(_ bannerView: Life360AdsSDK.BannerView, didFailToReceiveAdWith error: Error) {
         resetEvents()
         reloadButton.isEnabled = true
         adViewDidFailToLoadAdButton.isEnabled = true
     }
     
-    func bannerViewDidDisplay(_ bannerView: PrebidMobile.BannerView) {
+    func bannerViewDidDisplay(_ bannerView: Life360AdsSDK.BannerView) {
         adViewDidDisplayButton.isEnabled = true
     }
     
-    func bannerViewWillPresentModal(_ bannerView: PrebidMobile.BannerView) {
+    func bannerViewWillPresentModal(_ bannerView: Life360AdsSDK.BannerView) {
         adViewWillPresentScreenButton.isEnabled = true
     }
     
-    func bannerViewDidDismissModal(_ bannerView: PrebidMobile.BannerView) {
+    func bannerViewDidDismissModal(_ bannerView: Life360AdsSDK.BannerView) {
         adViewDidDismissScreenButton.isEnabled = true
     }
     
-    func bannerViewWillLeaveApplication(_ bannerView: PrebidMobile.BannerView) {
+    func bannerViewWillLeaveApplication(_ bannerView: Life360AdsSDK.BannerView) {
         adViewWillLeaveApplicationButton.isEnabled = true
     }
     

@@ -16,8 +16,8 @@
 #import "BannerBaseViewController.h"
 
 @import GoogleMobileAds;
-@import NativoPrebidSDK;
-@import NativoPrebidSDKAdMobAdapters;
+@import Life360AdsSDK;
+@import Life360AdsSDKAdMobAdapters;
 
 NS_ASSUME_NONNULL_BEGIN
 

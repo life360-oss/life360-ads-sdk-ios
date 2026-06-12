@@ -15,8 +15,8 @@
 
 import UIKit
 import AppLovinSDK
-import NativoPrebidSDK
-import NativoPrebidSDKMAXAdapters
+import Life360AdsSDK
+import Life360AdsSDKMAXAdapters
 
 class PrebidMAXBannerController: NSObject, AdaptedController, PrebidConfigurableBannerController {
     

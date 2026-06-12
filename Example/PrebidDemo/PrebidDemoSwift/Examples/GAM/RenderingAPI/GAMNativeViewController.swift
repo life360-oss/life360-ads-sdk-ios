@@ -15,8 +15,8 @@
 
 import UIKit
 import GoogleMobileAds
-import NativoPrebidSDK
-import NativoPrebidSDKGAMEventHandlers
+import Life360AdsSDK
+import Life360AdsSDKGAMEventHandlers
 
 fileprivate let nativeStoredImpression = "prebid-demo-banner-native-styles"
 fileprivate let gamRenderingNativeAdUnitId = "/21808260008/apollo_custom_template_native_ad_unit"
@@ -25,7 +25,7 @@ class GAMNativeViewController: NativeBaseViewController, CustomNativeAdLoaderDel
     
     // Prebid
     private var nativeUnit: NativeRequest!
-    private weak var nativeAd: PrebidMobile.NativeAd?
+    private weak var nativeAd: Life360AdsSDK.NativeAd?
     
     private var nativeRequestAssets: [NativeAsset] {
         let image = NativeAssetImage(minimumWidth: 200, minimumHeight: 50, required: true)

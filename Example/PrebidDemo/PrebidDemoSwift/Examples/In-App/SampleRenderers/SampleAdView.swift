@@ -15,7 +15,7 @@
 
 import UIKit
 import WebKit
-import NativoPrebidSDK
+import Life360AdsSDK
 
 /// An example showcasing the implementation of the `PrebidMobileDisplayViewProtocol`.
 /// A sample view that is used for rendering ads.

@@ -14,8 +14,8 @@
  */
 
 import UIKit
-import NativoPrebidSDK
-import NativoPrebidSDKMAXAdapters
+import Life360AdsSDK
+import Life360AdsSDKMAXAdapters
 import AppLovinSDK
 
 fileprivate let storedImpVideoInterstitial = "prebid-demo-video-interstitial-320-480"

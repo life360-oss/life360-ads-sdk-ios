@@ -15,8 +15,8 @@
 
 import XCTest
 import GoogleMobileAds
-import NativoPrebidSDK
-@testable import NativoPrebidSDKGAMEventHandlers
+import Life360AdsSDK
+@testable import Life360AdsSDKGAMEventHandlers
 
 final class GMATests: XCTestCase {
     

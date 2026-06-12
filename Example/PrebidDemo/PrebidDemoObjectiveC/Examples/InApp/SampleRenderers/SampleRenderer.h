@@ -17,7 +17,7 @@
 #import "SampleAdView.h"
 #import "SampleInterstitialController.h"
 
-@import NativoPrebidSDK;
+@import Life360AdsSDK;
 
 NS_ASSUME_NONNULL_BEGIN
 

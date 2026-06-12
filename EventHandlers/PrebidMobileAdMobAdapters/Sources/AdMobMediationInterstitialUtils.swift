@@ -14,7 +14,7 @@
   */
 
 import Foundation
-import NativoPrebidSDK
+import Life360AdsSDK
 import GoogleMobileAds
 
 @objcMembers

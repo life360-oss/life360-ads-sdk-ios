@@ -16,7 +16,7 @@
 import UIKit
 import GoogleMobileAds
 
-import NativoPrebidSDK
+import Life360AdsSDK
 
 class NativeAdViewBox: NativeAdViewBoxProtocol {
     let titleLabel = UILabel()
@@ -122,7 +122,7 @@ extension NativeAdViewBox {
 
 extension NativeAdViewBox {
     
-    func renderNativeAd(_ nativeAd: PrebidMobile.NativeAd) {
+    func renderNativeAd(_ nativeAd: Life360AdsSDK.NativeAd) {
         textLabel.text = nativeAd.text
         ctaButton.setTitle(nativeAd.callToAction, for: .normal)
         brandLabel.text = nativeAd.sponsoredBy
@@ -138,7 +138,7 @@ extension NativeAdViewBox {
         textLabel.numberOfLines = 0
     }
     
-    func registerViews(_ nativeAd: PrebidMobile.NativeAd) {
+    func registerViews(_ nativeAd: Life360AdsSDK.NativeAd) {
         nativeAd.registerView(view: contentView, clickableViews: [ctaButton, iconImage, brandLabel])
     }
 }

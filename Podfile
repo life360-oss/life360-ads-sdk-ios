@@ -1,6 +1,6 @@
 platform :ios, '13.0'
 
-workspace 'NativoPrebidSDK'
+workspace 'Life360AdsSDK'
 
 project 'PrebidMobile.xcodeproj'
 project 'EventHandlers/EventHandlers.xcodeproj'
@@ -39,33 +39,33 @@ def internalTestApp_pods
   gma_pods
 end
 
-target 'NativoPrebidSDKGAMEventHandlers' do
+target 'Life360AdsSDKGAMEventHandlers' do
   event_handlers_project
   gma_pods
 end
 
-target 'NativoPrebidSDKGAMEventHandlersTests' do
+target 'Life360AdsSDKGAMEventHandlersTests' do
   event_handlers_project
   gma_pods
 end
 
-target 'NativoPrebidSDKAdMobAdapters' do
+target 'Life360AdsSDKAdMobAdapters' do
   event_handlers_project
   gma_pods
-  
+
 end
 
-target 'NativoPrebidSDKAdMobAdaptersTests' do
+target 'Life360AdsSDKAdMobAdaptersTests' do
   event_handlers_project
   gma_pods
 end
 
-target 'NativoPrebidSDKMAXAdapters' do
+target 'Life360AdsSDKMAXAdapters' do
   event_handlers_project
   applovin_pods
 end
 
-target 'NativoPrebidSDKMAXAdaptersTests' do
+target 'Life360AdsSDKMAXAdaptersTests' do
   event_handlers_project
   applovin_pods
 end

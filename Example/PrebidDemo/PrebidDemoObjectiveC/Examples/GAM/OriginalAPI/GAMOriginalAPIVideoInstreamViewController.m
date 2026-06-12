@@ -16,7 +16,7 @@
 #import "GAMOriginalAPIVideoInstreamViewController.h"
 #import "PrebidDemoMacros.h"
 
-@import NativoPrebidSDK;
+@import Life360AdsSDK;
 
 NSString * const videoContentURL = @"https://storage.googleapis.com/gvabox/media/samples/stock.mp4";
 NSString * const storedImpVideo = @"prebid-demo-video-interstitial-320-480-original-api";

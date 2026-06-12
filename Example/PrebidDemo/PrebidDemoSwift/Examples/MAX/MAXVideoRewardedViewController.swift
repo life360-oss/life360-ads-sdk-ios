@@ -14,8 +14,8 @@
  */
 
 import UIKit
-import NativoPrebidSDK
-import NativoPrebidSDKMAXAdapters
+import Life360AdsSDK
+import Life360AdsSDKMAXAdapters
 import AppLovinSDK
 
 fileprivate let storedImpVideoRewarded = "prebid-demo-video-rewarded-endcard-time"

@@ -15,7 +15,7 @@
 
 import UIKit
 import WebKit
-import NativoPrebidSDK
+import Life360AdsSDK
 import SafariServices
 
 class SampleAdView: UIView, PrebidMobileDisplayViewProtocol {

@@ -14,7 +14,7 @@
   */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 import GoogleMobileAds
 
 class PrebidOriginalAPINativeController:
@@ -34,7 +34,7 @@ class PrebidOriginalAPINativeController:
     private var nativeAdViewBox: NativeAdViewBoxProtocol?
     
     private var nativeUnit: NativeRequest!
-    private var nativeAd: PrebidMobile.NativeAd?
+    private var nativeAd: Life360AdsSDK.NativeAd?
     
     private var adLoader: AdLoader!
     
@@ -152,10 +152,10 @@ class PrebidOriginalAPINativeController:
     }
 }
 
-extension PrebidOriginalAPINativeController: PrebidMobile.NativeAdDelegate,
-                                                PrebidMobile.NativeAdEventDelegate {
+extension PrebidOriginalAPINativeController: Life360AdsSDK.NativeAdDelegate,
+                                                Life360AdsSDK.NativeAdEventDelegate {
     
-    func nativeAdLoaded(ad: PrebidMobile.NativeAd) {
+    func nativeAdLoaded(ad: Life360AdsSDK.NativeAd) {
         DispatchQueue.main.async {
             self.nativeAdLoadedButton.isEnabled = true
         }
@@ -177,19 +177,19 @@ extension PrebidOriginalAPINativeController: PrebidMobile.NativeAdDelegate,
         }
     }
     
-    func adDidExpire(ad: PrebidMobile.NativeAd) {
+    func adDidExpire(ad: Life360AdsSDK.NativeAd) {
         DispatchQueue.main.async {
             self.adDidExpireButton.isEnabled = true
         }
     }
     
-    func adDidLogImpression(ad: PrebidMobile.NativeAd) {
+    func adDidLogImpression(ad: Life360AdsSDK.NativeAd) {
         DispatchQueue.main.async {
             self.adDidLogImpressionButton.isEnabled = true
         }
     }
     
-    func adWasClicked(ad: PrebidMobile.NativeAd) {
+    func adWasClicked(ad: Life360AdsSDK.NativeAd) {
         DispatchQueue.main.async {
             self.adWasClickedButton.isEnabled = true
         }

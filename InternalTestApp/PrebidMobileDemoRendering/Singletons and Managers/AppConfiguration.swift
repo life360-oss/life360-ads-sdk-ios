@@ -15,7 +15,7 @@
 
 import UIKit
 import RxSwift
-import NativoPrebidSDK
+import Life360AdsSDK
 
 final class AppConfiguration: NSObject {
    

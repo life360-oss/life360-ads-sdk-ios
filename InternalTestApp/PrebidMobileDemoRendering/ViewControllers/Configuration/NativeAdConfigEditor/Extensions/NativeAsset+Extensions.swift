@@ -14,7 +14,7 @@
  */
 
 import Foundation
-import NativoPrebidSDK
+import Life360AdsSDK
 
 extension Array where Self.Element == NativeAsset {
     static var defaultNativeRequestAssets: [NativeAsset] {

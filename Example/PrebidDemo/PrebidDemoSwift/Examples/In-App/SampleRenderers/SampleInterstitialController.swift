@@ -15,7 +15,7 @@
 
 import UIKit
 import WebKit
-import NativoPrebidSDK
+import Life360AdsSDK
 
 /// An example showcasing the implementation of the `PrebidMobileInterstitialControllerProtocol`.
 /// A sample controller that is used for rendering ads.

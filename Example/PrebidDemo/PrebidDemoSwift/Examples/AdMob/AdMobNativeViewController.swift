@@ -14,9 +14,9 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 import GoogleMobileAds
-import NativoPrebidSDKAdMobAdapters
+import Life360AdsSDKAdMobAdapters
 
 fileprivate let nativeStoredImpression = "prebid-demo-banner-native-styles"
 fileprivate let admobRenderingNativeAdUnitId = "ca-app-pub-5922967660082475/8634069303"
@@ -24,7 +24,7 @@ fileprivate let admobRenderingNativeAdUnitId = "ca-app-pub-5922967660082475/8634
 class AdMobNativeViewController: NativeBaseViewController, NativeAdLoaderDelegate {
     
     // Prebid
-    private var nativeAd: PrebidMobile.NativeAd?
+    private var nativeAd: Life360AdsSDK.NativeAd?
     private var mediationDelegate: AdMobMediationNativeUtils!
     private var admobMediationNativeAdUnit: MediationNativeAdUnit!
     

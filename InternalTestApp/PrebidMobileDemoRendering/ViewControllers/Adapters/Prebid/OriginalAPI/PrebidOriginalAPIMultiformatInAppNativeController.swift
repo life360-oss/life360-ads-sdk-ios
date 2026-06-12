@@ -14,7 +14,7 @@
   */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 import GoogleMobileAds
 
 fileprivate let bannerConfigId = "prebid-ita-banner-300-250"
@@ -27,8 +27,8 @@ class PrebidOriginalAPIMultiformatInAppNativeController:
     PrebidConfigurableBannerController,
     AdManagerBannerAdLoaderDelegate,
     CustomNativeAdLoaderDelegate,
-    PrebidMobile.NativeAdDelegate,
-    PrebidMobile.NativeAdEventDelegate {
+    Life360AdsSDK.NativeAdDelegate,
+    Life360AdsSDK.NativeAdEventDelegate {
     
     var refreshInterval: TimeInterval = 30000
     var prebidConfigId = ""
@@ -50,7 +50,7 @@ class PrebidOriginalAPIMultiformatInAppNativeController:
     
     // Prebid
     private var adUnit: PrebidAdUnit!
-    private var nativeAd: PrebidMobile.NativeAd?
+    private var nativeAd: Life360AdsSDK.NativeAd?
     
     private var nativeAssets: [NativeAsset] {
         let image = NativeAssetImage(minimumWidth: 200, minimumHeight: 50, required: true)
@@ -202,7 +202,7 @@ class PrebidOriginalAPIMultiformatInAppNativeController:
     
     // MARK: - NativeAdDelegate
     
-    func nativeAdLoaded(ad: PrebidMobile.NativeAd) {
+    func nativeAdLoaded(ad: Life360AdsSDK.NativeAd) {
         nativeAd = ad
         nativeAd?.delegate = self
         nativeAdViewBox?.renderNativeAd(ad)

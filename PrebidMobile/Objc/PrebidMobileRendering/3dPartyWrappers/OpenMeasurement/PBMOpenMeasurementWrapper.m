@@ -50,6 +50,10 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
 
 #pragma mark - Initialization
 
++ (void)load {
+    (void)[PBMOpenMeasurementWrapper shared];
+}
+
 + (instancetype)shared {
     static PBMOpenMeasurementWrapper *shared;
     

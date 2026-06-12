@@ -15,7 +15,7 @@
 
 import UIKit
 import WebKit
-import NativoPrebidSDK
+import Life360AdsSDK
 
 class SampleInterstitialController: NSObject, PrebidMobileInterstitialControllerProtocol {
     

@@ -17,7 +17,7 @@ import Foundation
 import UIKit
 import Eureka
 
-import NativoPrebidSDK
+import Life360AdsSDK
 
 protocol RowBuildHelpConsumer: FormViewController {
     associatedtype DataContainer

@@ -51,6 +51,11 @@
 @property (nonatomic, strong) PBMRewardedConfig *rewardedConfig;
 @property (nonatomic, strong, nullable) PBMBackgroundAwareTimer *backgroundAwareTimer;
 
+// Used to prevent race conditions where the impression fires before the OM Session has been started.
+@property (nonatomic, assign) BOOL openMeasurementSessionHasStarted;
+@property (nonatomic, assign) BOOL needsOpenMeasurementSync;
+@property (nonatomic, assign) BOOL webviewFailedToLoad;
+
 @end
 
 #pragma mark - Implementation
@@ -179,10 +184,17 @@
 }
 
 - (void)onAdDisplayed {
+    // If OM session hasn't started, hold the impression and other display tracking until the
+    // session exists — otherwise super would fire the impression before the OM SDK can record it.
+    if (!self.openMeasurementSessionHasStarted && !self.webviewFailedToLoad) {
+        self.needsOpenMeasurementSync = YES;
+        return;
+    }
+
     [super onAdDisplayed];
     [self setupDisplayTimer];
     [self setupRewardTimerIfNeeded];
-    
+
     // For html ads, we definitely don't need to keep polling viewability after this point.
     // TODO: For other types of ads I'm not so sure yet
     [self.viewabilityTracker stop];
@@ -297,19 +309,38 @@
 }
 
 
-// The session must be created only after WebView finishes loading
+// Per the IAB OM SDK integration guide, the OMIDAdSession must not be created until the WebView
+// has finished loading the injected OM SDK JS — creating it sooner leaves verification scripts
+// unable to receive impression and other events. The transaction requests session creation as
+// soon as the creative is built, which is before the HTML (and its injected OM JS) is loaded
+// lazily in displayWithRootViewController:. So if the WebView hasn't finished loading yet, defer
+// creation to its didFinishNavigation: equivalent, webViewReadyToDisplay:.
 - (void)createOpenMeasurementSession {
-    
+
     if (!NSThread.currentThread.isMainThread) {
         PBMLogError(@"Open Measurement session can only be created on the main thread");
         return;
     }
-                    
+
+    // Web view must be loaded before we can start the session
+    if (self.prebidWebView.state == PBMWebViewStateLoaded) {
+        [self setupOpenMeasurementSession];
+    }
+}
+
+- (void)setupOpenMeasurementSession {
     self.transaction.measurementSession = [self.transaction.measurementWrapper initializeWebViewSession:self.prebidWebView.internalWebView
                                                                                              contentUrl:@""];
     if (self.transaction.measurementSession && [self.transaction.measurementSession isKindOfClass:PBMOpenMeasurementSession.class]) {
         [self.prebidWebView addFriendlyObstructionsToMeasurementSession:self.transaction.measurementSession];
         [self.transaction.measurementSession start];
+    }
+
+    self.openMeasurementSessionHasStarted = YES;
+
+    if (self.needsOpenMeasurementSync) {
+        self.needsOpenMeasurementSync = NO;
+        [self onAdDisplayed];
     }
 }
 
@@ -338,12 +369,23 @@
 
 - (void)webViewReadyToDisplay:(PBMWebView *)webView {
     PBMLogInfo(@"PBMWebView is ready to display");
-    
+
+    // The WebView has now loaded the injected OM SDK JS, so it is finally safe to create the
+    // OMIDAdSession that was deferred in createOpenMeasurementSession.
+    if (!self.openMeasurementSessionHasStarted) {
+        [self setupOpenMeasurementSession];
+    }
+
     [self onResolutionCompleted];
 }
 
 - (void)webView:(PBMWebView *)webView failedToLoadWithError:(NSError *)error {
     PBMLogError(@"%@", error.localizedDescription);
+    self.webviewFailedToLoad = YES;
+    if (self.needsOpenMeasurementSync) {
+        self.needsOpenMeasurementSync = NO;
+        [self onAdDisplayed];
+    }
 }
 
 - (void)webView:(PBMWebView *)webView receivedClickthroughLink:(NSURL *)url {

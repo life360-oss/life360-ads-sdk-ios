@@ -20,9 +20,9 @@ import Eureka
 
 import GoogleMobileAds
 
-import NativoPrebidSDK
-import NativoPrebidSDKGAMEventHandlers
-import NativoPrebidSDKAdMobAdapters
+import Life360AdsSDK
+import Life360AdsSDKGAMEventHandlers
+import Life360AdsSDKAdMobAdapters
 
 class AboutViewController : FormViewController {
     

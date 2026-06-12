@@ -15,7 +15,7 @@
 
 import XCTest
 import GoogleMobileAds
-@testable import NativoPrebidSDK
+@testable import Life360AdsSDK
 
 final class PrebidGMASDKTests: XCTestCase {
     

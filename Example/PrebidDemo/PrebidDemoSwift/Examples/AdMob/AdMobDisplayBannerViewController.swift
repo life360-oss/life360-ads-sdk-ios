@@ -14,9 +14,9 @@
  */
 
 import UIKit
-import NativoPrebidSDK
+import Life360AdsSDK
 import GoogleMobileAds
-import NativoPrebidSDKAdMobAdapters
+import Life360AdsSDKAdMobAdapters
 
 fileprivate let storedImpDisplayBanner = "prebid-demo-banner-320-50"
 fileprivate let adMobAdUnitDisplayBannerRendering = "ca-app-pub-5922967660082475/9483570409"

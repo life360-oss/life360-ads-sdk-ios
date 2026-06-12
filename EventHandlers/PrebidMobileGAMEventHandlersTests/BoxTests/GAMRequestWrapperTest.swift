@@ -14,7 +14,7 @@
  */
 
 import XCTest
-@testable import NativoPrebidSDKGAMEventHandlers
+@testable import Life360AdsSDKGAMEventHandlers
 
 class GAMRequestWrapperTest: XCTestCase {
     
