@@ -7,26 +7,18 @@
 
 import UIKit
 
-import GoogleMobileAds
-import MoPubSDK
-
-import PrebidMobileRendering
+// Core module: exercises the renamed Life360AdsSDK pod's public initializer so a
+// missing or misnamed module fails the build here rather than at integration time.
+import Life360AdsSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        PrebidRenderingConfig.initializeRenderingModule()
-        
-        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers =  [ (kGADSimulatorID ), "cc7ca766f86b43ab6cdc92bed424069b"]
-        GADMobileAds.sharedInstance().start()
-        let sdkConfig = MPMoPubConfiguration(adUnitIdForAppInitialization: "a935eac11acd416f92640411234fbba6")
-        sdkConfig.globalMediationSettings = []
 
-        MoPub.sharedInstance().initializeSdk(with: sdkConfig)
-        
+        try? Prebid.initializeSDK(serverURL: "https://prebid-server.example.com/openrtb2/auction")
+
         return true
     }
 
@@ -39,4 +31,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
     }
 }
-
