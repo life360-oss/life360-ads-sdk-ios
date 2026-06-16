@@ -15,7 +15,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "PrebidMobileTests-Swift.h"
+#import "Life360AdsSDKTests-Swift.h"
 
 @interface PBMMRAIDControllerObjCTest: XCTestCase
 @end

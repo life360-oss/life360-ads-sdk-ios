@@ -156,7 +156,7 @@ class PBMRewardedVideoViewTest: XCTestCase, CreativeResolutionDelegate, Creative
     func creativeDidSendRewardedEvent(_ creative: AbstractCreative) {}
     
     // MARK: - Helper Methods
-    private func setupVideoCreative(videoFileURL:String = "http://get_video/small.mp4", localVideoFileName:String = "small.mp4") {
+    private func setupVideoCreative(videoFileURL:String = UtilitiesForTesting.testVideoURLString, localVideoFileName:String = "small.mp4") {
         let rule = MockServerRule(urlNeedle: videoFileURL, mimeType: MockServerMimeType.MP4.rawValue, connectionID: connection.internalID, fileName: localVideoFileName)
         MockServer.shared.resetRules([rule])
         
@@ -173,11 +173,17 @@ class PBMRewardedVideoViewTest: XCTestCase, CreativeResolutionDelegate, Creative
         downloader.downloadData(for: url, maxSize: PBMVideoCreative.maxSizeForPreRenderContent, completionClosure: { (data:Data?, error:Error?) in
             
             DispatchQueue.main.async {
+                // Fail this test cleanly instead of crashing the whole suite if the download yields no data.
+                guard let data = data else {
+                    XCTFail("Failed to download video from \(model.videoFileURL ?? "nil"): \(error?.localizedDescription ?? "no data returned")")
+                    self.expectationDownloadCompleted?.fulfill()
+                    return
+                }
                 //Create and start creative
-                self.videoCreative = PBMVideoCreative(creativeModel:model, transaction:UtilitiesForTesting.createEmptyTransaction(), videoData: data!)
+                self.videoCreative = PBMVideoCreative(creativeModel:model, transaction:UtilitiesForTesting.createEmptyTransaction(), videoData: data)
                 self.videoCreative.creativeResolutionDelegate = self
                 self.videoCreative.creativeViewDelegate = self
-                
+
                 self.expectationDownloadCompleted?.fulfill()
             }
         })

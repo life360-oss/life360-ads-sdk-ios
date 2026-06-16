@@ -14,7 +14,7 @@
  */
 
 import UIKit
-import PrebidMobile
+import Life360AdsSDK
 
 fileprivate let storedImpDisplayBanner = "prebid-demo-display-banner-320-50-custom-ad-view-renderer"
 

@@ -14,7 +14,7 @@
  */
 
 import XCTest
-@testable @_spi(PBMInternal) import PrebidMobile
+@testable @_spi(PBMInternal) import Life360AdsSDK
 
 class FunctionsTests: XCTestCase {
 

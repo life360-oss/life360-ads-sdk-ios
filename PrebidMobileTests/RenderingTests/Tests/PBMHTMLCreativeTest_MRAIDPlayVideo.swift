@@ -14,6 +14,7 @@
   */
 
 import XCTest
+@testable @_spi(PBMInternal) import Life360AdsSDK
 
 class PBMHTMLCreativeTest_MRAIDPlayVideo: PBMHTMLCreativeTest_Base {
     
@@ -80,10 +81,10 @@ class PBMHTMLCreativeTest_MRAIDPlayVideo: PBMHTMLCreativeTest_Base {
     
     func testSuccess() {
         
-        let strVideoURL = "http://get_video/small.mp4"
+        let strVideoURL = UtilitiesForTesting.testVideoURLString
         
         MockServer.shared.reset()
-        let rule = MockServerRule(urlNeedle: strVideoURL, mimeType:  MockServerMimeType.MP4.rawValue, connectionID: UUID(), fileName: "small.mp4")
+        let rule = MockServerRule(urlNeedle: strVideoURL, mimeType:  MockServerMimeType.MP4.rawValue, connectionID: serverConnection.internalID, fileName: "small.mp4")
         MockServer.shared.resetRules([rule])
         
         let expectationModalPushed = self.expectation(description: "Modal should be pushed")

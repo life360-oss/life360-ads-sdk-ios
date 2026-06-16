@@ -93,7 +93,7 @@ class ParameterBuilderServiceTest : XCTestCase {
         
         //Verify PBMBasicParameterBuilder
         PBMAssertEq(bidRequest.imp.count, 1)
-        PBMAssertEq(bidRequest.imp.first?.displaymanager, "prebid-mobile")
+        PBMAssertEq(bidRequest.imp.first?.displaymanager, "life360-ads-sdk")
         PBMAssertEq(bidRequest.imp.first?.displaymanagerver, "MOCK_SDK_VERSION")
         PBMAssertEq(bidRequest.imp.first?.secure, 1)
         
@@ -153,7 +153,7 @@ class ParameterBuilderServiceTest : XCTestCase {
         }
         
         let expectedOrtb = """
-        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"keywords\":\"appKeyword1,appKeyword2\",\"name\":\"MockBundleDisplayName\",\"publisher\":{\"name\":\"Publisher\"},\"storeurl\":\"https:\\/\\/openx.com\"},\"device\":{\(carrier)\"connectiontype\":2,\(deviceExt)\"geo\":{\"lat\":34.149335,\"lon\":-118.1328249,\"type\":1},\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\(mccmnc)\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"prebid-mobile\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":1,\"ext\":{\"gdpr\":0}},\"user\":{\"ext\":{\"consent\":\"consentstring\"},\"keywords\":\"keyword1,keyword2\"}}
+        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"keywords\":\"appKeyword1,appKeyword2\",\"name\":\"MockBundleDisplayName\",\"publisher\":{\"name\":\"Publisher\"},\"storeurl\":\"https:\\/\\/openx.com\"},\"device\":{\(carrier)\"connectiontype\":2,\(deviceExt)\"geo\":{\"lat\":34.149335,\"lon\":-118.1328249,\"type\":1},\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\(mccmnc)\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"life360-ads-sdk\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":1,\"ext\":{\"gdpr\":0}},\"user\":{\"ext\":{\"consent\":\"consentstring\"},\"keywords\":\"keyword1,keyword2\"}}
         """
         PBMAssertEq(strORTB, expectedOrtb)
     }
@@ -228,7 +228,7 @@ class ParameterBuilderServiceTest : XCTestCase {
         }
 
         let expectedOrtb = """
-        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"geo\":{\"lat\":34.15,\"lon\":-118.13,\"type\":1},\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"prebid-mobile\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0}}
+        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"geo\":{\"lat\":34.15,\"lon\":-118.13,\"type\":1},\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"life360-ads-sdk\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0}}
         """
         
         PBMAssertEq(strORTB, expectedOrtb)
@@ -305,7 +305,7 @@ class ParameterBuilderServiceTest : XCTestCase {
         }
 
         let expectedOrtb = """
-        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"prebid-mobile\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0},\"user\":{\"geo\":{\"lat\":34.15,\"lon\":-118.13}}}
+        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"life360-ads-sdk\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0},\"user\":{\"geo\":{\"lat\":34.15,\"lon\":-118.13}}}
         """
         
         PBMAssertEq(strORTB, expectedOrtb)
@@ -382,7 +382,7 @@ class ParameterBuilderServiceTest : XCTestCase {
         }
 
         let expectedOrtb = """
-        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"prebid-mobile\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0},\"user\":{\"geo\":{\"lat\":34.149335,\"lon\":-118.1328249}}}
+        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"life360-ads-sdk\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0},\"user\":{\"geo\":{\"lat\":34.149335,\"lon\":-118.1328249}}}
         """
         
         PBMAssertEq(strORTB, expectedOrtb)
@@ -459,7 +459,7 @@ class ParameterBuilderServiceTest : XCTestCase {
         }
 
         let expectedOrtb = """
-        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"prebid-mobile\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0},\"user\":{\"geo\":{\"lat\":34.149335,\"lon\":-118.1328249}}}
+        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"life360-ads-sdk\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0},\"user\":{\"geo\":{\"lat\":34.149335,\"lon\":-118.1328249}}}
         """
         
         PBMAssertEq(strORTB, expectedOrtb)
@@ -536,7 +536,7 @@ class ParameterBuilderServiceTest : XCTestCase {
         }
 
         let expectedOrtb = """
-        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"prebid-mobile\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0},\"user\":{\"geo\":{\"lat\":34,\"lon\":-118}}}
+        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"life360-ads-sdk\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0},\"user\":{\"geo\":{\"lat\":34,\"lon\":-118}}}
         """
         
         PBMAssertEq(strORTB, expectedOrtb)
@@ -612,7 +612,7 @@ class ParameterBuilderServiceTest : XCTestCase {
         }
 
         let expectedOrtb = """
-        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"prebid-mobile\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0}}
+        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"life360-ads-sdk\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0}}
         """
         
         PBMAssertEq(strORTB, expectedOrtb)
@@ -688,7 +688,7 @@ class ParameterBuilderServiceTest : XCTestCase {
         }
 
         let expectedOrtb = """
-        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"prebid-mobile\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0}}
+        {\"app\":{\"bundle\":\"Mock.Bundle.Identifier\",\"name\":\"MockBundleDisplayName\"},\"device\":{\"connectiontype\":2,\(deviceExt)\"h\":200,\"hwv\":\"iPhone1,1\",\"ifa\":\"abc123\",\"language\":\"ml\",\"lmt\":0,\"make\":\"MockMake\",\"model\":\"MockModel\",\"os\":\"MockOS\",\"osv\":\"1.2.3\",\"w\":100},\"imp\":[{\"clickbrowser\":1,\"displaymanager\":\"life360-ads-sdk\",\"displaymanagerver\":\"MOCK_SDK_VERSION\",\"ext\":{\"dlp\":1},\"instl\":0,\"secure\":1}],\"regs\":{\"coppa\":0}}
         """
         
         PBMAssertEq(strORTB, expectedOrtb)

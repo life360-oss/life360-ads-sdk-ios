@@ -20,7 +20,12 @@ import XCTest
 typealias JsonDictionary = [String:Any]
 
 @objc class UtilitiesForTesting : NSObject {
-    
+
+    /// Sentinel video URL shared by the rendering video tests. It is never fetched over the network —
+    /// MockServer matches it as a `urlNeedle` and serves the bundled `small.mp4`. A fake host (not a real
+    /// URL) keeps the tests offline and fails fast if the mock is ever misconfigured.
+    static let testVideoURLString = "http://get_video/small.mp4"
+
     //Gets the bundle for the Unit Test Target (We keep JSON files and other test resources there)
     class func testBundle() -> Bundle {
         return Bundle(for: UtilitiesForTesting.self)

@@ -226,10 +226,10 @@ class TestPBMFunctions: XCTestCase {
         
         //Basic tests
         var result = PBMFunctions.infoPlistValue("CFBundleExecutable")
-        XCTAssert(result?.PBMdoesMatch("PrebidMobile") == true, "Got \(String(describing: result))")
-        
+        XCTAssert(result?.PBMdoesMatch("Life360AdsSDK") == true, "Got \(String(describing: result))")
+
         result = PBMFunctions.infoPlistValue("CFBundleIdentifier")
-        XCTAssert(result?.PBMdoesMatch("org.prebid.mobile") == true, "Got \(String(describing: result))")
+        XCTAssert(result?.PBMdoesMatch("com.life360.ads") == true, "Got \(String(describing: result))")
         
         //Version number should start and end with an unbroken string of numbers or periods.
         result = PBMFunctions.infoPlistValue("CFBundleShortVersionString")

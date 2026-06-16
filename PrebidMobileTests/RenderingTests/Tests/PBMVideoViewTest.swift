@@ -101,7 +101,7 @@ class PBMVideoViewTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDele
     func testVideoDuration() {
         // Expected duration of video small.mp4 is 6 sec
         let expectedVideoDuration = 6.0
-        setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         self.videoCreative.creativeModel.displayDurationInSeconds = 10 // VAST Duration
         
         setupVideoDurationTest(expectedDuration: expectedVideoDuration)
@@ -110,7 +110,7 @@ class PBMVideoViewTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDele
     func testPauseVideo() {
         // Expected duration of video small.mp4 is 6 sec
         let expectedVideoDuration = 6.0
-        setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         self.videoCreative.creativeModel.displayDurationInSeconds = expectedVideoDuration as NSNumber
         
         //Wait for creativeReady
@@ -146,7 +146,7 @@ class PBMVideoViewTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDele
         let expectedVideoDuration = 6.0
         let expectedPausedTime = 3.0
         
-        setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         self.videoCreative.creativeModel.displayDurationInSeconds = expectedVideoDuration as NSNumber
         
         //Wait for creativeReady
@@ -188,7 +188,7 @@ class PBMVideoViewTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDele
         let expectedVideoDuration = 6.0
         let expectedStoppedDely = 3.0
         
-        setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         self.videoCreative.creativeModel.displayDurationInSeconds = expectedVideoDuration as NSNumber
         
         //Wait for creativeReady
@@ -225,7 +225,7 @@ class PBMVideoViewTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDele
         let expectedStoppedDely = 1.0
         let event = TrackingEvent.closeLinear
         
-        setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         self.videoCreative.creativeModel.displayDurationInSeconds = expectedVideoDuration as NSNumber
         
         //Wait for creativeReady
@@ -263,7 +263,7 @@ class PBMVideoViewTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDele
         // Expected duration of video small.mp4 is 6 sec
         let expectedVideoDuration = 6.0
         
-        setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         self.videoCreative.creativeModel.displayDurationInSeconds = expectedVideoDuration as NSNumber
         
         //Wait for creativeReady
@@ -279,7 +279,7 @@ class PBMVideoViewTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDele
     }
     
     func testSetupSkipButton() {
-        setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         guard let videoView = self.videoCreative.videoView else {
             XCTFail()
             return
@@ -293,7 +293,7 @@ class PBMVideoViewTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDele
     
     func testHandleSkipDelay() {
         let expectation = expectation(description: "Test Skip Button Active")
-        setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         
         guard let videoView = self.videoCreative.videoView else {
             XCTFail()
@@ -575,7 +575,7 @@ class PBMVideoViewTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDele
     
     // MARK: - Helper Methods
     
-    private func setupVideoCreative(videoFileURL:String = "http://get_video/small.mp4", localVideoFileName:String = "small.mp4", adConfiguration: AdConfiguration = AdConfiguration()) {
+    private func setupVideoCreative(videoFileURL:String = UtilitiesForTesting.testVideoURLString, localVideoFileName:String = "small.mp4", adConfiguration: AdConfiguration = AdConfiguration()) {
         let rule = MockServerRule(urlNeedle: videoFileURL, mimeType: MockServerMimeType.MP4.rawValue, connectionID: connection.internalID, fileName: localVideoFileName)
         MockServer.shared.resetRules([rule])
         
@@ -590,11 +590,17 @@ class PBMVideoViewTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDele
         downloader.downloadData(for: url, maxSize: PBMVideoCreative.maxSizeForPreRenderContent, completionClosure: { (data:Data?, error:Error?) in
             
             DispatchQueue.main.async {
+                // Fail this test cleanly instead of crashing the whole suite if the download yields no data.
+                guard let data = data else {
+                    XCTFail("Failed to download video from \(model.videoFileURL ?? "nil"): \(error?.localizedDescription ?? "no data returned")")
+                    self.expectationDownloadCompleted?.fulfill()
+                    return
+                }
                 //Create and start creative
-                self.videoCreative = PBMVideoCreative(creativeModel:model, transaction:UtilitiesForTesting.createEmptyTransaction(), videoData: data!)
+                self.videoCreative = PBMVideoCreative(creativeModel:model, transaction:UtilitiesForTesting.createEmptyTransaction(), videoData: data)
                 self.videoCreative.creativeResolutionDelegate = self
                 self.videoCreative.creativeViewDelegate = self
-                
+
                 self.expectationDownloadCompleted?.fulfill()
             }
         })

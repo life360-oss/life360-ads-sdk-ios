@@ -865,7 +865,7 @@ class PBMWebViewTest : XCTestCase, PBMWebViewDelegate {
         
         let expectedMraidEnv = [
             "version": "3.0",
-            "sdk": "prebid-mobile-sdk",
+            "sdk": "life360-ads-sdk",
             "sdkVersion": PBMFunctions.sdkVersion(),
             "appId": "com.apple.dt.xctest.tool",
             "ifa": ASIdentifierManager.shared().advertisingIdentifier.uuidString,

@@ -14,7 +14,7 @@
   */
 #import <XCTest/XCTest.h>
 #import "PBMWebView.h"
-#import "PrebidMobileTests-Swift.h"
+#import "Life360AdsSDKTests-Swift.h"
 
 @interface PBMWebView (Testable)
 
