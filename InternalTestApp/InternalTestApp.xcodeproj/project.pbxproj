@@ -131,13 +131,13 @@
 		53ED301529798104007D13EE /* AppSettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC41ACC2444EADB00B9A3A7 /* AppSettingsKeys.swift */; };
 		53ED301729798104007D13EE /* NativeEventTracker+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4E60C27A2F6D700738370 /* NativeEventTracker+Extensions.swift */; };
 		53ED301829798104007D13EE /* PrebidRewardedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA95FF249CC118006AE372 /* PrebidRewardedController.swift */; };
-		53ED301A29798104007D13EE /* PrebidMobileAdMobAdapters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C833DC27B3CA8E00B99AC6 /* PrebidMobileAdMobAdapters.framework */; };
-		53ED301B29798104007D13EE /* PrebidMobileGAMEventHandlers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C833D827B3CA8000B99AC6 /* PrebidMobileGAMEventHandlers.framework */; };
+		53ED301A29798104007D13EE /* Life360AdsSDKAdMobAdapters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C833DC27B3CA8E00B99AC6 /* Life360AdsSDKAdMobAdapters.framework */; };
+		53ED301B29798104007D13EE /* Life360AdsSDKGAMEventHandlers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C833D827B3CA8000B99AC6 /* Life360AdsSDKGAMEventHandlers.framework */; };
 		53ED301C29798104007D13EE /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5830AE20B43727002B2596 /* WatchConnectivity.framework */; };
 		53ED301D29798104007D13EE /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD84734252F23E70092AF74 /* CoreServices.framework */; };
 		53ED301E29798104007D13EE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5830AC20B4371F002B2596 /* WebKit.framework */; };
-		53ED301F29798104007D13EE /* PrebidMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCCF236273420690046CCFC /* PrebidMobile.framework */; };
-		53ED302029798104007D13EE /* PrebidMobileMAXAdapters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924F662E27FECD9000C8DAF7 /* PrebidMobileMAXAdapters.framework */; };
+		53ED301F29798104007D13EE /* Life360AdsSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCCF236273420690046CCFC /* Life360AdsSDK.framework */; };
+		53ED302029798104007D13EE /* Life360AdsSDKMAXAdapters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924F662E27FECD9000C8DAF7 /* Life360AdsSDKMAXAdapters.framework */; };
 		53ED302129798104007D13EE /* OpenXMockServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D086806B2398088A00E70E60 /* OpenXMockServer.framework */; };
 		53ED302229798104007D13EE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5830AA20B43717002B2596 /* SystemConfiguration.framework */; };
 		53ED302329798104007D13EE /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5830A620B43703002B2596 /* Social.framework */; };
@@ -159,11 +159,11 @@
 		53ED303529798104007D13EE /* FeedGAMAdTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC812BF42600E5E400370A33 /* FeedGAMAdTableViewCell.xib */; };
 		53ED303629798104007D13EE /* UnifiedNativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3459DF0725E8D3FB004EC761 /* UnifiedNativeAdView.xib */; };
 		53ED303729798104007D13EE /* DummyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8EB5EE22676914003CC15C /* DummyTableViewCell.xib */; };
-		53ED303A29798104007D13EE /* PrebidMobileGAMEventHandlers.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCCF239273420710046CCFC /* PrebidMobileGAMEventHandlers.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		53ED303A29798104007D13EE /* Life360AdsSDKGAMEventHandlers.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCCF239273420710046CCFC /* Life360AdsSDKGAMEventHandlers.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		53ED303B29798104007D13EE /* OpenXMockServer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D086806B2398088A00E70E60 /* OpenXMockServer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		53ED303C29798104007D13EE /* PrebidMobile.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCCF236273420690046CCFC /* PrebidMobile.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		53ED303D29798104007D13EE /* PrebidMobileAdMobAdapters.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 92F438B62768953100FDC950 /* PrebidMobileAdMobAdapters.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		53ED303E29798104007D13EE /* PrebidMobileMAXAdapters.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 924F662E27FECD9000C8DAF7 /* PrebidMobileMAXAdapters.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		53ED303C29798104007D13EE /* Life360AdsSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCCF236273420690046CCFC /* Life360AdsSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		53ED303D29798104007D13EE /* Life360AdsSDKAdMobAdapters.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 92F438B62768953100FDC950 /* Life360AdsSDKAdMobAdapters.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		53ED303E29798104007D13EE /* Life360AdsSDKMAXAdapters.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 924F662E27FECD9000C8DAF7 /* Life360AdsSDKMAXAdapters.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		53ED305229798DBC007D13EE /* Info-Skadn.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53ED305129798DBC007D13EE /* Info-Skadn.plist */; };
 		5B03D44624F5455F002F2B35 /* PBMGAMBannerEventHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B03D44524F5455F002F2B35 /* PBMGAMBannerEventHandlerTests.swift */; };
 		5B1BDB7F2100D59000B46B43 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1BDB7A2100D59000B46B43 /* LaunchScreen.xib */; };
@@ -213,8 +213,8 @@
 		92102C7327B11DE1003F12B2 /* PrebidNativeAdFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF3557F25CD8C3000B9C8E5 /* PrebidNativeAdFeedController.swift */; };
 		92221CE12804AF5B005DF671 /* PrebidMAXInterstitialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92221CE02804AF5B005DF671 /* PrebidMAXInterstitialController.swift */; };
 		92221CE52804BBB6005DF671 /* PrebidMAXRewardedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92221CE42804BBB6005DF671 /* PrebidMAXRewardedController.swift */; };
-		924F662F27FECD9000C8DAF7 /* PrebidMobileMAXAdapters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924F662E27FECD9000C8DAF7 /* PrebidMobileMAXAdapters.framework */; };
-		924F663027FECD9000C8DAF7 /* PrebidMobileMAXAdapters.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 924F662E27FECD9000C8DAF7 /* PrebidMobileMAXAdapters.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		924F662F27FECD9000C8DAF7 /* Life360AdsSDKMAXAdapters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924F662E27FECD9000C8DAF7 /* Life360AdsSDKMAXAdapters.framework */; };
+		924F663027FECD9000C8DAF7 /* Life360AdsSDKMAXAdapters.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 924F662E27FECD9000C8DAF7 /* Life360AdsSDKMAXAdapters.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9262A8AC27720DE6009441A3 /* OpenXMockServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D086806B2398088A00E70E60 /* OpenXMockServer.framework */; };
 		926CBF20278C8CD200E07BF2 /* PrebidAdMobInterstitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926CBF1F278C8CD200E07BF2 /* PrebidAdMobInterstitialViewController.swift */; };
 		92700C7D273C029F0006E9FA /* PrebidMRAID3UITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92700C67273C029F0006E9FA /* PrebidMRAID3UITest.swift */; };
@@ -246,14 +246,14 @@
 		92C475122796FF8400C26E27 /* PrebidAdMobNativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C475112796FF8400C26E27 /* PrebidAdMobNativeViewController.swift */; };
 		92C4E60B27A2F5D900738370 /* NativeAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6E80C264D121A009324AC /* NativeAsset+Extensions.swift */; };
 		92C4E60D27A2F6D700738370 /* NativeEventTracker+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4E60C27A2F6D700738370 /* NativeEventTracker+Extensions.swift */; };
-		92C833D127B3C95400B99AC6 /* PrebidMobileGAMEventHandlers.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCCF239273420710046CCFC /* PrebidMobileGAMEventHandlers.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		92C833D627B3C9EA00B99AC6 /* PrebidMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCCF236273420690046CCFC /* PrebidMobile.framework */; };
-		92C833D727B3C9EA00B99AC6 /* PrebidMobile.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCCF236273420690046CCFC /* PrebidMobile.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		92C833D927B3CA8000B99AC6 /* PrebidMobileGAMEventHandlers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C833D827B3CA8000B99AC6 /* PrebidMobileGAMEventHandlers.framework */; };
-		92C833DD27B3CA8E00B99AC6 /* PrebidMobileAdMobAdapters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C833DC27B3CA8E00B99AC6 /* PrebidMobileAdMobAdapters.framework */; };
+		92C833D127B3C95400B99AC6 /* Life360AdsSDKGAMEventHandlers.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCCF239273420710046CCFC /* Life360AdsSDKGAMEventHandlers.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		92C833D627B3C9EA00B99AC6 /* Life360AdsSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCCF236273420690046CCFC /* Life360AdsSDK.framework */; };
+		92C833D727B3C9EA00B99AC6 /* Life360AdsSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCCF236273420690046CCFC /* Life360AdsSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		92C833D927B3CA8000B99AC6 /* Life360AdsSDKGAMEventHandlers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C833D827B3CA8000B99AC6 /* Life360AdsSDKGAMEventHandlers.framework */; };
+		92C833DD27B3CA8E00B99AC6 /* Life360AdsSDKAdMobAdapters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C833DC27B3CA8E00B99AC6 /* Life360AdsSDKAdMobAdapters.framework */; };
 		92DDA440278EF42B0035F03E /* PrebidAdMobRewardedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DDA43F278EF42A0035F03E /* PrebidAdMobRewardedViewController.swift */; };
 		92E92502276B299F002B57F3 /* PrebidAdMobBannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E92501276B299F002B57F3 /* PrebidAdMobBannerViewController.swift */; };
-		92F438B82768954400FDC950 /* PrebidMobileAdMobAdapters.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 92F438B62768953100FDC950 /* PrebidMobileAdMobAdapters.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		92F438B82768954400FDC950 /* Life360AdsSDKAdMobAdapters.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 92F438B62768953100FDC950 /* Life360AdsSDKAdMobAdapters.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		92F9A5D027A15BB6007B0B17 /* NativeAdViewBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3461835425A6020500783A2C /* NativeAdViewBox.swift */; };
 		92F9A5D127A15BD1007B0B17 /* NativeAdViewBoxProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4F254A25E0112C0095C601 /* NativeAdViewBoxProtocol.swift */; };
 		92F9A5D227A15D04007B0B17 /* NativeAdViewBoxLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4F253825DFF6300095C601 /* NativeAdViewBoxLinks.swift */; };
@@ -333,11 +333,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				53ED303A29798104007D13EE /* PrebidMobileGAMEventHandlers.framework in Embed Frameworks */,
+				53ED303A29798104007D13EE /* Life360AdsSDKGAMEventHandlers.framework in Embed Frameworks */,
 				53ED303B29798104007D13EE /* OpenXMockServer.framework in Embed Frameworks */,
-				53ED303C29798104007D13EE /* PrebidMobile.framework in Embed Frameworks */,
-				53ED303D29798104007D13EE /* PrebidMobileAdMobAdapters.framework in Embed Frameworks */,
-				53ED303E29798104007D13EE /* PrebidMobileMAXAdapters.framework in Embed Frameworks */,
+				53ED303C29798104007D13EE /* Life360AdsSDK.framework in Embed Frameworks */,
+				53ED303D29798104007D13EE /* Life360AdsSDKAdMobAdapters.framework in Embed Frameworks */,
+				53ED303E29798104007D13EE /* Life360AdsSDKMAXAdapters.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,11 +348,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				92C833D127B3C95400B99AC6 /* PrebidMobileGAMEventHandlers.framework in Embed Frameworks */,
+				92C833D127B3C95400B99AC6 /* Life360AdsSDKGAMEventHandlers.framework in Embed Frameworks */,
 				929638FB27AC27FC00D30F3D /* OpenXMockServer.framework in Embed Frameworks */,
-				92C833D727B3C9EA00B99AC6 /* PrebidMobile.framework in Embed Frameworks */,
-				92F438B82768954400FDC950 /* PrebidMobileAdMobAdapters.framework in Embed Frameworks */,
-				924F663027FECD9000C8DAF7 /* PrebidMobileMAXAdapters.framework in Embed Frameworks */,
+				92C833D727B3C9EA00B99AC6 /* Life360AdsSDK.framework in Embed Frameworks */,
+				92F438B82768954400FDC950 /* Life360AdsSDKAdMobAdapters.framework in Embed Frameworks */,
+				924F663027FECD9000C8DAF7 /* Life360AdsSDKMAXAdapters.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,8 +455,8 @@
 		5B8EB5ED22676914003CC15C /* DummyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyTableViewCell.swift; sourceTree = "<group>"; };
 		5B8EB5EE22676914003CC15C /* DummyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DummyTableViewCell.xib; sourceTree = "<group>"; };
 		5BCCA3D52136D2E800DA3B5A /* ConfigurableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableViewController.swift; sourceTree = "<group>"; };
-		5BCCF236273420690046CCFC /* PrebidMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PrebidMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5BCCF239273420710046CCFC /* PrebidMobileGAMEventHandlers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PrebidMobileGAMEventHandlers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BCCF236273420690046CCFC /* Life360AdsSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Life360AdsSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BCCF239273420710046CCFC /* Life360AdsSDKGAMEventHandlers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Life360AdsSDKGAMEventHandlers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BCCF23C2734207A0046CCFC /* PrebidMobileMoPubAdapters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PrebidMobileMoPubAdapters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BD84734252F23E70092AF74 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		5C11D97034E668BBFDD0DDCA /* Pods_InternalTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InternalTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -466,7 +466,7 @@
 		80D8C2A2F2A9FA388C535AB0 /* Pods-InternalTestApp-Skadn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InternalTestApp-Skadn.debug.xcconfig"; path = "Target Support Files/Pods-InternalTestApp-Skadn/Pods-InternalTestApp-Skadn.debug.xcconfig"; sourceTree = "<group>"; };
 		92221CE02804AF5B005DF671 /* PrebidMAXInterstitialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidMAXInterstitialController.swift; sourceTree = "<group>"; };
 		92221CE42804BBB6005DF671 /* PrebidMAXRewardedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidMAXRewardedController.swift; sourceTree = "<group>"; };
-		924F662E27FECD9000C8DAF7 /* PrebidMobileMAXAdapters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PrebidMobileMAXAdapters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		924F662E27FECD9000C8DAF7 /* Life360AdsSDKMAXAdapters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Life360AdsSDKMAXAdapters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		926CBF1F278C8CD200E07BF2 /* PrebidAdMobInterstitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidAdMobInterstitialViewController.swift; sourceTree = "<group>"; };
 		92700C67273C029F0006E9FA /* PrebidMRAID3UITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrebidMRAID3UITest.swift; sourceTree = "<group>"; };
 		92700C68273C029F0006E9FA /* XCTestCaseExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTestCaseExt.swift; sourceTree = "<group>"; };
@@ -496,12 +496,12 @@
 		92ABD58B279DA7E200AFDFF6 /* AdMobNativeAdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdMobNativeAdView.xib; sourceTree = "<group>"; };
 		92C475112796FF8400C26E27 /* PrebidAdMobNativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidAdMobNativeViewController.swift; sourceTree = "<group>"; };
 		92C4E60C27A2F6D700738370 /* NativeEventTracker+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NativeEventTracker+Extensions.swift"; sourceTree = "<group>"; };
-		92C833D827B3CA8000B99AC6 /* PrebidMobileGAMEventHandlers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PrebidMobileGAMEventHandlers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		92C833D827B3CA8000B99AC6 /* Life360AdsSDKGAMEventHandlers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Life360AdsSDKGAMEventHandlers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C833DA27B3CA8700B99AC6 /* PrebidMobileMoPubAdapters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PrebidMobileMoPubAdapters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		92C833DC27B3CA8E00B99AC6 /* PrebidMobileAdMobAdapters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PrebidMobileAdMobAdapters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		92C833DC27B3CA8E00B99AC6 /* Life360AdsSDKAdMobAdapters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Life360AdsSDKAdMobAdapters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92DDA43F278EF42A0035F03E /* PrebidAdMobRewardedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidAdMobRewardedViewController.swift; sourceTree = "<group>"; };
 		92E92501276B299F002B57F3 /* PrebidAdMobBannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidAdMobBannerViewController.swift; sourceTree = "<group>"; };
-		92F438B62768953100FDC950 /* PrebidMobileAdMobAdapters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PrebidMobileAdMobAdapters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		92F438B62768953100FDC950 /* Life360AdsSDKAdMobAdapters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Life360AdsSDKAdMobAdapters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93FED9C31A376EFE009A6E9F /* InternalTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InternalTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB5BF7E0D8CDA704D2B8D60A /* Pods_InternalTestAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InternalTestAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC23A0CC251B932000983ABF /* PrebidBannerConfigurationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidBannerConfigurationController.swift; sourceTree = "<group>"; };
@@ -549,13 +549,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53ED301A29798104007D13EE /* PrebidMobileAdMobAdapters.framework in Frameworks */,
-				53ED301B29798104007D13EE /* PrebidMobileGAMEventHandlers.framework in Frameworks */,
+				53ED301A29798104007D13EE /* Life360AdsSDKAdMobAdapters.framework in Frameworks */,
+				53ED301B29798104007D13EE /* Life360AdsSDKGAMEventHandlers.framework in Frameworks */,
 				53ED301C29798104007D13EE /* WatchConnectivity.framework in Frameworks */,
 				53ED301D29798104007D13EE /* CoreServices.framework in Frameworks */,
 				53ED301E29798104007D13EE /* WebKit.framework in Frameworks */,
-				53ED301F29798104007D13EE /* PrebidMobile.framework in Frameworks */,
-				53ED302029798104007D13EE /* PrebidMobileMAXAdapters.framework in Frameworks */,
+				53ED301F29798104007D13EE /* Life360AdsSDK.framework in Frameworks */,
+				53ED302029798104007D13EE /* Life360AdsSDKMAXAdapters.framework in Frameworks */,
 				53ED302129798104007D13EE /* OpenXMockServer.framework in Frameworks */,
 				53ED302229798104007D13EE /* SystemConfiguration.framework in Frameworks */,
 				53ED302329798104007D13EE /* Social.framework in Frameworks */,
@@ -584,13 +584,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92C833DD27B3CA8E00B99AC6 /* PrebidMobileAdMobAdapters.framework in Frameworks */,
-				92C833D927B3CA8000B99AC6 /* PrebidMobileGAMEventHandlers.framework in Frameworks */,
+				92C833DD27B3CA8E00B99AC6 /* Life360AdsSDKAdMobAdapters.framework in Frameworks */,
+				92C833D927B3CA8000B99AC6 /* Life360AdsSDKGAMEventHandlers.framework in Frameworks */,
 				5B5830AF20B43727002B2596 /* WatchConnectivity.framework in Frameworks */,
 				5BD84735252F23E80092AF74 /* CoreServices.framework in Frameworks */,
 				5B5830AD20B4371F002B2596 /* WebKit.framework in Frameworks */,
-				92C833D627B3C9EA00B99AC6 /* PrebidMobile.framework in Frameworks */,
-				924F662F27FECD9000C8DAF7 /* PrebidMobileMAXAdapters.framework in Frameworks */,
+				92C833D627B3C9EA00B99AC6 /* Life360AdsSDK.framework in Frameworks */,
+				924F662F27FECD9000C8DAF7 /* Life360AdsSDKMAXAdapters.framework in Frameworks */,
 				9262A8AC27720DE6009441A3 /* OpenXMockServer.framework in Frameworks */,
 				5B5830AB20B43717002B2596 /* SystemConfiguration.framework in Frameworks */,
 				5B5830A720B43704002B2596 /* Social.framework in Frameworks */,
@@ -773,14 +773,14 @@
 		5B2ECE432072637900A4FB48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				924F662E27FECD9000C8DAF7 /* PrebidMobileMAXAdapters.framework */,
-				92C833DC27B3CA8E00B99AC6 /* PrebidMobileAdMobAdapters.framework */,
+				924F662E27FECD9000C8DAF7 /* Life360AdsSDKMAXAdapters.framework */,
+				92C833DC27B3CA8E00B99AC6 /* Life360AdsSDKAdMobAdapters.framework */,
 				92C833DA27B3CA8700B99AC6 /* PrebidMobileMoPubAdapters.framework */,
-				92C833D827B3CA8000B99AC6 /* PrebidMobileGAMEventHandlers.framework */,
-				92F438B62768953100FDC950 /* PrebidMobileAdMobAdapters.framework */,
+				92C833D827B3CA8000B99AC6 /* Life360AdsSDKGAMEventHandlers.framework */,
+				92F438B62768953100FDC950 /* Life360AdsSDKAdMobAdapters.framework */,
 				5BCCF23C2734207A0046CCFC /* PrebidMobileMoPubAdapters.framework */,
-				5BCCF239273420710046CCFC /* PrebidMobileGAMEventHandlers.framework */,
-				5BCCF236273420690046CCFC /* PrebidMobile.framework */,
+				5BCCF239273420710046CCFC /* Life360AdsSDKGAMEventHandlers.framework */,
+				5BCCF236273420690046CCFC /* Life360AdsSDK.framework */,
 				5BD84734252F23E70092AF74 /* CoreServices.framework */,
 				5B5830AE20B43727002B2596 /* WatchConnectivity.framework */,
 				5B5830AC20B4371F002B2596 /* WebKit.framework */,
