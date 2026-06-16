@@ -337,8 +337,8 @@ class PrebidTest: XCTestCase {
         let serverURL = "https://prebid-server-test-j.prebid.org/openrtb2/auction"
         try XCTUnwrap(Prebid.initializeSDK(serverURL: serverURL))
         
-        XCTAssertTrue(PrebidMobilePluginRegister.shared.getAllPlugins().count == 1)
-        XCTAssertTrue(PrebidMobilePluginRegister.shared.getAllPlugins().first?.name == PREBID_MOBILE_RENDERER_NAME)
+        XCTAssertTrue(PrebidMobilePluginRegister.shared.getAllPlugins().count == 2)
+        XCTAssertEqual(PrebidMobilePluginRegister.shared.getAllPlugins().first?.name, PREBID_MOBILE_RENDERER_NAME)
     }
     
     // MARK: - Private Methods

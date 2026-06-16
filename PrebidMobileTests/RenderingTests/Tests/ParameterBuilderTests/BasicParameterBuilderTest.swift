@@ -120,7 +120,7 @@ class PBMBasicParameterBuilderTest: XCTestCase {
             return
         }
         
-        PBMAssertEq(imp.displaymanager, "prebid-mobile")
+        PBMAssertEq(imp.displaymanager, "life360-ads-sdk")
         PBMAssertEq(imp.displaymanagerver, "MOCK_SDK_VERSION")
     }
     

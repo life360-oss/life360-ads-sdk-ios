@@ -79,7 +79,7 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
     }
     */
     func testCreativeDisplayabilityDelegate() {
-        self.setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        self.setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         self.expectationDownloadCompleted = self.expectation(description: "expectationCreativeReady")
 
         DispatchQueue.main.async {
@@ -93,7 +93,7 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
     //As testCreativeDisplayabilityDelegate, but isInterstitial is set to true.
     //This causes the video to pre-load.
     func testCreativeDisplayabilityDelegatePreload() {
-        self.setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        self.setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         self.expectationDownloadCompleted = self.expectation(description: "expectationCreativeReady")
 
         self.videoCreative.creativeModel.adConfiguration!.isInterstitialAd = true
@@ -115,7 +115,7 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
 
         //Create model
         let model = CreativeModel(adConfiguration:AdConfiguration())
-        model.videoFileURL = "http://get_video/small.mp4"
+        model.videoFileURL = UtilitiesForTesting.testVideoURLString
         
         //Create PBMVideoCreative and start
         self.videoCreative = PBMVideoCreative(creativeModel:model, transaction:UtilitiesForTesting.createEmptyTransaction(), videoData: Data())
@@ -136,7 +136,7 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
         let expectedVideoDuration = 6.0
         let expectedStoppedDely = 1.0
         
-        setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         self.videoCreative.creativeModel.displayDurationInSeconds = expectedVideoDuration as NSNumber
         
         //Wait for creativeReady
@@ -173,7 +173,7 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
         let expectedVideoDuration = 6.0
         let expectedStoppedDely = 1.0
         
-        setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         self.videoCreative.creativeModel.displayDurationInSeconds = expectedVideoDuration as NSNumber
         
         //Wait for creativeReady
@@ -318,7 +318,7 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
         
         let expectation = self.expectation(description:"expectation background")
         
-        setupVideoCreative(videoFileURL: "http://get_video/small.mp4", localVideoFileName: "small.mp4")
+        setupVideoCreative(videoFileURL: UtilitiesForTesting.testVideoURLString, localVideoFileName: "small.mp4")
         
         logToFile = .init()
 
@@ -495,7 +495,7 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
     }
     
     // MARK: - Helper Methods
-    private func setupVideoCreative(videoFileURL:String = "http://get_video/small.mp4", localVideoFileName:String = "small.mp4") {
+    private func setupVideoCreative(videoFileURL:String = UtilitiesForTesting.testVideoURLString, localVideoFileName:String = "small.mp4") {
         let rule = MockServerRule(urlNeedle: videoFileURL, mimeType: MockServerMimeType.MP4.rawValue, connectionID: connection.internalID, fileName: localVideoFileName)
         MockServer.shared.resetRules([rule])
         

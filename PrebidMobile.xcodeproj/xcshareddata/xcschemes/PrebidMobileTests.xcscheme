@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "60D792FA217E229B0080F428"
-               BuildableName = "Life360PrebidSDKTests.xctest"
+               BuildableName = "Life360AdsSDKTests.xctest"
                BlueprintName = "Life360AdsSDKTests"
                ReferencedContainer = "container:PrebidMobile.xcodeproj">
             </BuildableReference>
@@ -29,11 +29,11 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:PrebidMobileTests/PrebidMobileTests.xctestplan"
-            default = "YES">
+            reference = "container:PrebidMobileTests/PrebidMobileTests.xctestplan">
          </TestPlanReference>
          <TestPlanReference
-            reference = "container:PrebidMobileTests/PrebidMobilePRTests.xctestplan">
+            reference = "container:PrebidMobileTests/PrebidMobilePRTests.xctestplan"
+            default = "YES">
          </TestPlanReference>
       </TestPlans>
       <Testables>
@@ -43,7 +43,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "60D792FA217E229B0080F428"
-               BuildableName = "Life360PrebidSDKTests.xctest"
+               BuildableName = "Life360AdsSDKTests.xctest"
                BlueprintName = "Life360AdsSDKTests"
                ReferencedContainer = "container:PrebidMobile.xcodeproj">
             </BuildableReference>
@@ -92,7 +92,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "60D792FA217E229B0080F428"
-            BuildableName = "Life360PrebidSDKTests.xctest"
+            BuildableName = "Life360AdsSDKTests.xctest"
             BlueprintName = "Life360AdsSDKTests"
             ReferencedContainer = "container:PrebidMobile.xcodeproj">
          </BuildableReference>

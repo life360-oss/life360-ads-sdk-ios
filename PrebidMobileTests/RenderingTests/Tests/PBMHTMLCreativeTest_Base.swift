@@ -30,14 +30,16 @@ class PBMHTMLCreativeTest_Base: XCTestCase, CreativeViewDelegate {
     var mockModalManager: MockModalManager!
     var mockWebView: MockPBMWebView!
     var mockViewController: MockViewController!
-    
+    // Exposed so subclasses can register MockServer rules against this connection's internalID.
+    var serverConnection: PrebidServerConnection!
+
     override func setUp() {
         
         super.setUp()
         mockViewController = MockViewController()
         
         //Set up MockServer
-        let serverConnection = PrebidServerConnection(userAgentService: MockUserAgentService())
+        serverConnection = PrebidServerConnection(userAgentService: MockUserAgentService())
         serverConnection.protocolClasses.append(MockServerURLProtocol.self)
         
         //Set up creative model
@@ -82,6 +84,7 @@ class PBMHTMLCreativeTest_Base: XCTestCase, CreativeViewDelegate {
         mockModalManager = nil
         mockWebView = nil
         mockViewController = nil
+        serverConnection = nil
         super.tearDown()
     }
     
