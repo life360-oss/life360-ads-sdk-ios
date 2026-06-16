@@ -48,6 +48,10 @@ The SDK orchestrates the following 9-step flow for each ad request:
 8. If a Prebid or Nativo bid wins, GAM serves a passback creative signaling the SDK to take over rendering
 9. The SDK rendering module renders the winning bid
 
+## Migrating from Prebid Mobile?
+
+Already using Prebid Mobile iOS? See the [Migration Guide](MIGRATION.md) — for most apps it's a mechanical dependency + import rename.
+
 ## Use SPM?
 
 To [add the Life360 Ads SDK package dependency](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app#Add-a-package-dependency) using SPM, follow these steps:
