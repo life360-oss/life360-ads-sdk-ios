@@ -99,6 +99,25 @@ class PrebidServerStatusRequesterTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
+    func testRequestStatus_ServerlessSkipped() {
+        // Serverless init sets no Host URL; the status check must be skipped (not warned)
+        // and must not hit the network.
+        Prebid.shared.prebidServerEnabled = false
+
+        let requester = PrebidServerStatusRequester()
+        XCTAssertNil(requester.serverEndpoint)
+
+        var didComplete = false
+        requester.requestStatus { status, error in
+            // Completes synchronously, before any network request.
+            didComplete = true
+            XCTAssertEqual(status, .serverStatusSkipped)
+            XCTAssertNil(error)
+        }
+
+        XCTAssertTrue(didComplete, "requestStatus should complete synchronously without a network call.")
+    }
+
     func testRequestSkipStatusCheck_Skipped() {
         Prebid.shared.shouldDisableStatusCheck = true
         

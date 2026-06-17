@@ -54,6 +54,7 @@
 		3A6D7AF42ED65676001099B1 /* NativoBid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AF32ED65676001099B1 /* NativoBid.swift */; };
 		3A8E19112F60C12400720D1B /* NativoPrebidRendererInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8E19102F60C12400720D1B /* NativoPrebidRendererInternal.swift */; };
 		3AED93342FD34398007E2C44 /* NativoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED93332FD34398007E2C44 /* NativoUtils.swift */; };
+		3AED94A52FE1E89E007E2C44 /* AdLoadFlowControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D5DAA2737C4F600A8A2B5 /* AdLoadFlowControllerTest.swift */; };
 		3AFDF6452EC808D600FC7AA2 /* NativoBidRequester.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AFDF6422EC808D600FC7AA2 /* NativoBidRequester.h */; };
 		3AFDF6462EC808D600FC7AA2 /* NativoBidRequester.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFDF6432EC808D600FC7AA2 /* NativoBidRequester.m */; };
 		3AFDF6522ECD1DE500FC7AA2 /* NativoParameterBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFDF6512ECD1DE500FC7AA2 /* NativoParameterBuilder.m */; };
@@ -4183,6 +4184,7 @@
 				929638C127AB224400D30F3D /* NativeEventTrackerResponseTests.swift in Sources */,
 				53CDA48D2D11AFD5004766F8 /* MediationBannerAdUnitTest.swift in Sources */,
 				53CDA48E2D11AFD5004766F8 /* MockMediationUtils.swift in Sources */,
+				3AED94A52FE1E89E007E2C44 /* AdLoadFlowControllerTest.swift in Sources */,
 				53CDA48F2D11AFD5004766F8 /* MediationInterstitialAdUnitTest.swift in Sources */,
 				53CDA4902D11AFD5004766F8 /* MediationUtilsTest.swift in Sources */,
 				53CDA4912D11AFD5004766F8 /* MediationRewardedAdUnitTest.swift in Sources */,

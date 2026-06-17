@@ -17,6 +17,14 @@ import XCTest
 
 @testable @_spi(PBMInternal) import Life360AdsSDK
 
+/// Synchronous Nativo requester stub: returns no bid so the flow proceeds past the Nativo step
+/// deterministically, without hitting the live `exchange.postrelease.com` endpoint.
+private class StubNativoBidRequester: NSObject, BidRequesterProtocol {
+    func requestBids(completion: @escaping (BidResponse?, Error?) -> Void) {
+        completion(nil, nil)
+    }
+}
+
 class AdLoadFlowControllerTest_CompositeMock {
     enum ExpectedCall {
         typealias BidRequestCall = (requesterOffset: Int, call: MockBidRequester.ExpectedCall)
@@ -34,6 +42,7 @@ class AdLoadFlowControllerTest_CompositeMock {
     let mockAdLoader: AdLoaderProtocol
     let mockPrimaryAdRequester: PrimaryAdRequesterProtocol
     let mockRequesterFactory: (AdUnitConfig)->BidRequesterProtocol
+    let mockNativoRequesterFactory: (AdUnitConfig)->BidRequesterProtocol = { _ in StubNativoBidRequester() }
     let mockConfigValidator: AdUnitConfigValidationBlock
     
     let getProgress: ()->(done: Int, total: Int)
