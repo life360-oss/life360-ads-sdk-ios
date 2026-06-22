@@ -23,12 +23,19 @@
 
 @interface NativoParameterBuilder ()
 @property (nonatomic, strong, nonnull, readonly) AdUnitConfig *adConfiguration;
+@property (nonatomic, strong, nonnull, readonly) id<PBMBundleProtocol> bundle;
 @end
 
 @implementation NativoParameterBuilder
 
 - (instancetype)initWithAdConfiguration:(AdUnitConfig *)adConfiguration {
+    return [self initWithAdConfiguration:adConfiguration bundle:NSBundle.mainBundle];
+}
+
+- (instancetype)initWithAdConfiguration:(AdUnitConfig *)adConfiguration
+                                 bundle:(id<PBMBundleProtocol>)bundle {
     _adConfiguration = adConfiguration;
+    _bundle = bundle;
     return self;
 }
 
@@ -39,10 +46,17 @@
                                 initWithJsonDictionary:[bidRequest.device toJsonDictionary]];
     //device.ip = @"108.214.18.218";
     bidRequest.device = device;
-    
+
     // Set tagid
     for (PBMORTBImp *nextImp in bidRequest.imp) {
         nextImp.tagid = self.adConfiguration.configId;
+    }
+
+    // Nativo demand matches on the app bundle identifier, so always send it here —
+    // overriding any itunesID the shared pipeline placed in app.bundle for Prebid.
+    NSString *bundleIdentifier = self.bundle.bundleIdentifier;
+    if (bundleIdentifier) {
+        bidRequest.app.bundle = bundleIdentifier;
     }
 }
 
