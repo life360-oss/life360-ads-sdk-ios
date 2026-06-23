@@ -82,7 +82,7 @@ class PrebidSDKInitializer {
         }
         
         if currentGAMVersion.0 >= gamVersion.0 || currentGAMVersion.1 >= gamVersion.1 || currentGAMVersion.2 >= gamVersion.2 {
-            Log.warn("Please, use `initializeSDK(gadMobileAdsVersion:, _ completion:)` method in order to initialize Prebid SDK.")
+            Log.warn("Please, use `initializeSDK(gadMobileAdsVersion:, _ completion:)` method in order to initialize Life360 Ads SDK.")
         }
     }
 }

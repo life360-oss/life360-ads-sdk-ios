@@ -55,7 +55,7 @@ class PrebidServerStatusRequester {
         }
         
         guard let serverEndpoint = serverEndpoint else {
-            completion(.serverStatusWarning, PBMError.error(description: "Prebid SDK failed to get Prebid Server status endpoint."))
+            completion(.serverStatusWarning, PBMError.error(description: "Life360 Ads SDK failed to get Prebid Server status endpoint."))
             return
         }
         
