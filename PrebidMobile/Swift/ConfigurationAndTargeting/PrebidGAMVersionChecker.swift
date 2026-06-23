@@ -18,7 +18,7 @@ import Foundation
 class PrebidGAMVersionChecker {
     
     var latestTestedGMAVersion: (Int, Int, Int) {
-        (13, 3, 0)
+        (13, 5, 0)
     }
     
     var currentGMAVersion: (Int, Int, Int)?
@@ -65,10 +65,15 @@ class PrebidGAMVersionChecker {
             return
         }
         
-        if latestTestedGMAVersion.0 < currentGAMVersion.0 ||
-            latestTestedGMAVersion.1 < currentGAMVersion.1 ||
-            latestTestedGMAVersion.2 < currentGAMVersion.2 {
-            Log.warn("The current version of Prebid SDK is not validated with the latest version of GMA SDK. Please update the Prebid SDK or post a ticket on the github.")
+        let (lMaj, lMin, lPatch) = latestTestedGMAVersion
+        let (cMaj, cMin, cPatch) = currentGAMVersion
+
+        let isNewer = cMaj > lMaj ||
+            (cMaj == lMaj && cMin > lMin) ||
+            (cMaj == lMaj && cMin == lMin && cPatch > lPatch)
+
+        if isNewer {
+            Log.warn("The current version of Life360 Ads SDK is not validated with the latest version of GMA SDK.")
         }
     }
 }
