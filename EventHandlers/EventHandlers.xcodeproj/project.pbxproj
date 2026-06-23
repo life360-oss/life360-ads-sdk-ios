@@ -1213,7 +1213,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9740DE927A8E8C513A463E55 /* Pods-Life360AdsSDKGAMEventHandlers.debug.xcconfig */;
 			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -1283,7 +1283,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3A711F3A1A388C6367F841F /* Pods-Life360AdsSDKMAXAdapters.debug.xcconfig */;
 			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1395,7 +1395,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DB87AEE7597F848F3F07BAF9 /* Pods-Life360AdsSDKAdMobAdapters.debug.xcconfig */;
 			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
