@@ -2429,7 +2429,7 @@
 /* Begin XCLocalSwiftPackageReference section */
 		3AED93542FD764A0007E2C44 /* XCLocalSwiftPackageReference "nativo-prebid-sdk-ios" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../../nativo-prebid-sdk-ios";
+			relativePath = "../..";
 		};
 /* End XCLocalSwiftPackageReference section */
 

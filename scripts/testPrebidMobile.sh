@@ -33,6 +33,12 @@ done
 
 set -e
 
+# CocoaPods crashes with an Encoding::CompatibilityError when the locale is not
+# UTF-8 (Ruby falls back to US-ASCII). Force a UTF-8 locale so `pod install` runs
+# regardless of the inherited environment.
+export LANG="${LANG:-en_US.UTF-8}"
+export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
@@ -58,7 +64,7 @@ if [ "$run_only_with_latest_ios" != "YES" ]
 then
  echo -e "\n${GREEN}Running some unit tests for iOS 13${NC} \n"
  xcodebuild test \
-    -workspace PrebidMobile.xcworkspace \
+    -workspace Life360AdsSDK.xcworkspace \
     -scheme "PrebidMobileTests" \
     -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.7' \
     -only-testing PrebidMobileTests/RequestBuilderTests/testPostData
@@ -82,7 +88,7 @@ fi
 echo -e "\n${GREEN}Running PrebidMobile unit tests${NC} \n"
 
 xcodebuild \
-    -workspace PrebidMobile.xcworkspace \
+    -workspace Life360AdsSDK.xcworkspace \
     -scheme PrebidMobileTests \
     -sdk iphonesimulator \
     -configuration Debug \
@@ -91,7 +97,7 @@ xcodebuild \
     build-for-testing
 
 xcodebuild \
-    -workspace PrebidMobile.xcworkspace \
+    -workspace Life360AdsSDK.xcworkspace \
     -scheme PrebidMobileTests \
     -sdk iphonesimulator \
     -testPlan "${TESTPLAN}" \

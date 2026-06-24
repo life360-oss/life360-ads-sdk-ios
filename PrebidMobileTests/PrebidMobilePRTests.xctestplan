@@ -497,6 +497,7 @@
         "PBMWebViewTest\/testWindowOpenTargets()",
         "PBMWebViewTest\/testsGestureRecognizerDelegate()",
         "PrebidEventDelegateTests",
+        "PrebidServerStatusRequesterTests\/testRequestStatus_Success()",
         "RewardedAdUnitTest",
         "RewardedAdUnitTest\/testSetAdPosition()",
         "RewardedVideoEventsTest",

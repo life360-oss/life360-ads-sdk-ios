@@ -73,7 +73,7 @@ class PrebidGAMVersionChecker {
             (cMaj == lMaj && cMin == lMin && cPatch > lPatch)
 
         if isNewer {
-            Log.warn("The current version of Life360 Ads SDK is not validated with the latest version of GMA SDK.")
+            Log.warn("The current version of Life360 Ads SDK is not validated with the latest version of GMA SDK. Please update the Life360 Ads SDK or post a ticket on the github.")
         }
     }
 }
