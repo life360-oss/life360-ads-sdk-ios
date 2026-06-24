@@ -381,6 +381,8 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
     // Noticable performance improvements if we call this earlier and load in content sooner
 //    [self pollForDocumentReadyState];
     self.state = PBMWebViewStateLoaded;
+
+    [self.delegate webViewDidFinishNavigation:self];
 }
 
 - (void)pollForDocumentReadyState {

@@ -122,7 +122,7 @@
 #pragma mark - Tracking Methods
 
 - (void)trackImpression {
-    NSError *impError;
+    NSError *impError = nil;
     [self.adEvents impressionOccurredWithError:&impError];
     if (impError) {
         PBMLogError(@"Open Measurement can't track impression with error: %@", [impError localizedDescription]);
