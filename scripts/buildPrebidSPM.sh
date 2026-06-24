@@ -9,7 +9,7 @@ echo -e "\n${GREEN}Creating simulator${NC} \n"
 xcrun simctl create iPhone-16-Pro-PrebidMobile com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro
 
 xcodebuild \
-    -workspace PrebidMobile.xcworkspace \
+    -workspace Life360AdsSDK.xcworkspace \
     -scheme PrebidDemoSPM \
     -destination 'platform=iOS Simulator,name=iPhone-16-Pro-PrebidMobile,OS=latest'
 

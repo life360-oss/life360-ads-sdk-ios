@@ -29,7 +29,7 @@ final class PrebidGAMVersionCheckerTest: XCTestCase {
         let checker = PrebidGAMVersionChecker()
         
         let warningMessage = """
-        The current version of Prebid SDK is not validated with the latest version of GMA SDK. Please update the Prebid SDK or post a ticket on the github.
+        The current version of Life360 Ads SDK is not validated with the latest version of GMA SDK. Please update the Life360 Ads SDK or post a ticket on the github.
         """
         logToFile = .init()
         
@@ -70,7 +70,7 @@ final class PrebidGAMVersionCheckerTest: XCTestCase {
         let checker = PrebidGAMVersionChecker()
         
         let warningMessage = """
-        The current version of Prebid SDK is not validated with the latest version of GMA SDK. Please update the Prebid SDK or post a ticket on the github.
+        The current version of Life360 Ads SDK is not validated with the latest version of GMA SDK. Please update the Life360 Ads SDK or post a ticket on the github.
         """
         logToFile = .init()
         

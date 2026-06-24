@@ -24,6 +24,7 @@ pod install --repo-update
 echo -e "\n\n${GREEN}RUN PREBID MOBILE ADAPTER TESTS${NC}\n\n"
 
 echo -e "\n${GREEN}Creating simulator${NC} \n"
+xcrun simctl delete "iPhone-16-Pro-PrebidMobile" 2>/dev/null || true
 xcrun simctl create iPhone-16-Pro-PrebidMobile com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro
 
 echo -e "\n${GREEN}Clean build\n"
@@ -33,7 +34,7 @@ function testAdapters () {
   local SCHEME="$1"
 
     xcodebuild \
-        -workspace PrebidMobile.xcworkspace \
+        -workspace Life360AdsSDK.xcworkspace \
         -scheme "${SCHEME}" \
         -sdk iphonesimulator \
         -configuration Debug \
@@ -42,7 +43,7 @@ function testAdapters () {
         build-for-testing
 
     xcodebuild \
-        -workspace PrebidMobile.xcworkspace \
+        -workspace Life360AdsSDK.xcworkspace \
         -scheme "${SCHEME}" \
         -sdk iphonesimulator \
         -destination 'platform=iOS Simulator,name=iPhone-16-Pro-PrebidMobile,OS=latest' \

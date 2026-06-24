@@ -152,7 +152,12 @@ public class Prebid: NSObject {
      * if the PBS endpoint is always live and handled client side
      */
     public var shouldDisableStatusCheck: Bool = false
-    
+
+    /// False when the SDK was initialized without a Prebid Server (see `initializeWithoutPrebid(_:)`).
+    /// In that mode the ad load flow skips the Prebid Server bid request and the init-time
+    /// PBS status check, running only the Nativo request + event handler request.
+    public internal(set) var prebidServerEnabled = true
+
     /// Serial dispatch queue for thread-safe custom header access
     private let customHeaderQueue = DispatchQueue(label: "com.prebid.customHeaderQ")
 
@@ -328,9 +333,22 @@ public class Prebid: NSObject {
             try Host.shared.setHostURL(serverURL, nonTrackingURLString: nonTrackingURLString)
             PrebidSDKInitializer.initializeSDK(completion)
     }
-    
+
+    /// Initializes PrebidMobile SDK without a Prebid Server.
+    ///
+    /// Use this when you only want Nativo demand plus your own ad server (event handler).
+    /// The SDK skips the Prebid Server status check, and the ad load flow skips the Prebid
+    /// Server bid request — only the Nativo request and the event handler request run.
+    ///
+    /// There is no completion callback: with no Prebid Server there is no status check to
+    /// report and nothing in this path can fail.
+    public static func initializeWithoutPrebid() {
+        Prebid.shared.prebidServerEnabled = false
+        PrebidSDKInitializer.initializeSDK()
+    }
+
     // MARK: - Private Methods
-    
+
     override init() {
         timeoutMillis = defaultTimeoutMillis
         timeoutMillisDynamic = NSNumber(value: timeoutMillis)

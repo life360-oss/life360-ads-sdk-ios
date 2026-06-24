@@ -37,7 +37,7 @@ final class PrebidGMASDKTests: XCTestCase {
         
         XCTAssertTrue(
             log.isEmpty,
-            "The current version of Prebid SDK is not validated with the latest version of GMA SDK."
+            "The current version of Life360 Ads SDK is not validated with the latest version of GMA SDK."
         )
     }
 }

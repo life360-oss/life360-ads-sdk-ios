@@ -27,6 +27,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
     // MARK: - Properties
 
     private let bidRequesterFactory: (AdUnitConfig) -> BidRequesterProtocol
+    private let nativoBidRequesterFactory: (AdUnitConfig) -> BidRequesterProtocol
     private var adLoader: AdLoaderProtocol?
     private var bannerEventDelegate: BannerEventLoadingDelegate?
     private weak var delegate: AdLoadFlowControllerDelegate?
@@ -52,9 +53,19 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
          adLoader: AdLoaderProtocol,
          adUnitConfig: AdUnitConfig,
          delegate: AdLoadFlowControllerDelegate,
-         configValidationBlock: @escaping AdUnitConfigValidationBlock) {
+         configValidationBlock: @escaping AdUnitConfigValidationBlock,
+         // Defaulted so production callers are unaffected; tests inject a stub to avoid the live Nativo request.
+         nativoBidRequesterFactory: @escaping (AdUnitConfig) -> BidRequesterProtocol = { adUnitConfig in
+            Factory.createNativoBidRequester(
+                connection: PrebidServerConnection.shared,
+                sdkConfiguration: Prebid.shared,
+                targeting: Targeting.shared,
+                adUnitConfiguration: adUnitConfig
+            )
+         }) {
 
         self.bidRequesterFactory = bidRequesterFactory
+        self.nativoBidRequesterFactory = nativoBidRequesterFactory
         self.adLoader = adLoader
         
         // Inconvenient logic needed to unwrap the BannerAdLoader, which is the same object as adLoader
@@ -181,12 +192,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
     }
     
     private func sendNativoBidRequest() {
-        nativoRequester = Factory.createNativoBidRequester(
-            connection: PrebidServerConnection.shared,
-            sdkConfiguration: Prebid.shared,
-            targeting: Targeting.shared,
-            adUnitConfiguration: savedAdUnitConfig
-        )
+        nativoRequester = nativoBidRequesterFactory(savedAdUnitConfig)
         nativoRequester?.requestBids { [weak self] (nativoResponse: BidResponse?, err: Error?) in
             self?.enqueueGatedBlock { [weak self] in
                 self?.handleNativoResponse(response: nativoResponse, error: err)
@@ -207,6 +213,10 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
             self.bidRequester = nil
             adLoader?.flowDelegate = self
             self.loadPrebidDisplayView(bidResponse: response)
+        } else if !Prebid.shared.prebidServerEnabled {
+            // No Prebid Server: skip the bid request; Nativo is the only programmatic demand.
+            flowState = .demandReceived
+            moveToNextLoadingStep()
         } else {
             // Continue request flow
             flowState = .bidRequest

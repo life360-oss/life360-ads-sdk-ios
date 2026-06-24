@@ -33,7 +33,7 @@ fi
 echo -e "\n\n${GREEN}Building ${SCHEME} for testing${NC}\n\n"
 
 xcodebuild \
-    -workspace PrebidMobile.xcworkspace \
+    -workspace Life360AdsSDK.xcworkspace \
     -scheme $SCHEME \
     -sdk iphonesimulator \
     -configuration Debug \
@@ -44,7 +44,7 @@ xcodebuild \
 echo -e "\n\n${GREEN}Testing ${SCHEME}${NC}\n\n"
 
 xcodebuild \
-    -workspace PrebidMobile.xcworkspace \
+    -workspace Life360AdsSDK.xcworkspace \
     -scheme $SCHEME \
     -sdk iphonesimulator \
     -destination 'platform=iOS Simulator,name=iPhone-16-Pro-PrebidMobile,OS=latest' \

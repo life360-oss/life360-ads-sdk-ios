@@ -3,7 +3,7 @@ output: docs
 clean: true
 xcodebuild_arguments:
 - -workspace
-- PrebidMobile.xcworkspace
+- Life360AdsSDK.xcworkspace
 - -scheme
 - Lib-PrebidMobile
 - CODE_SIGNING_ALLOWED = NO

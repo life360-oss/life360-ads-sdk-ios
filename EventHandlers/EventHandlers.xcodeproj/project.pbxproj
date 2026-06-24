@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		030337004753D7E373C8CB4F /* Pods_Life360AdsSDKGAMEventHandlersTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C82AF04602136E77E743188B /* Pods_Life360AdsSDKGAMEventHandlersTests.framework */; };
+		3A46AA382EF5E2D60010B2A6 /* Life360AdsSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A46AA372EF5E2D60010B2A6 /* Life360AdsSDK.framework */; };
+		3A46AA392EF5E2D60010B2A6 /* Life360AdsSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A46AA372EF5E2D60010B2A6 /* Life360AdsSDK.framework */; };
+		3A46AA3A2EF5E2D60010B2A6 /* Life360AdsSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A46AA372EF5E2D60010B2A6 /* Life360AdsSDK.framework */; };
 		202950A08F817FA68FC4BD64 /* Pods_Life360AdsSDKGAMEventHandlers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5353DAFDC63ECDA90C36EEE /* Pods_Life360AdsSDKGAMEventHandlers.framework */; };
 		3405F94A250A555800268A77 /* Life360AdsSDKGAMEventHandlers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34B64D5C24F7E41600FDD9F4 /* Life360AdsSDKGAMEventHandlers.framework */; };
 		3405F951250A55AE00268A77 /* GAMBannerViewWrapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3405F950250A55AE00268A77 /* GAMBannerViewWrapperTest.swift */; };
@@ -191,6 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A46AA382EF5E2D60010B2A6 /* Life360AdsSDK.framework in Frameworks */,
 				202950A08F817FA68FC4BD64 /* Pods_Life360AdsSDKGAMEventHandlers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -199,6 +203,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A46AA392EF5E2D60010B2A6 /* Life360AdsSDK.framework in Frameworks */,
 				67272820D875268C6F4D3305 /* Pods_Life360AdsSDKMAXAdapters.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,6 +221,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A46AA3A2EF5E2D60010B2A6 /* Life360AdsSDK.framework in Frameworks */,
 				6E727C73DFF88D12B8DBA283 /* Pods_Life360AdsSDKAdMobAdapters.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1213,7 +1219,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9740DE927A8E8C513A463E55 /* Pods-Life360AdsSDKGAMEventHandlers.debug.xcconfig */;
 			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -1283,7 +1289,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3A711F3A1A388C6367F841F /* Pods-Life360AdsSDKMAXAdapters.debug.xcconfig */;
 			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1353,6 +1359,7 @@
 			baseConfigurationReference = F10A9449C5D0F289D4168C89 /* Pods-Life360AdsSDKMAXAdaptersTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1375,6 +1382,7 @@
 			baseConfigurationReference = AFB375A488F3FBE71292B253 /* Pods-Life360AdsSDKMAXAdaptersTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1395,7 +1403,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DB87AEE7597F848F3F07BAF9 /* Pods-Life360AdsSDKAdMobAdapters.debug.xcconfig */;
 			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1465,6 +1473,7 @@
 			baseConfigurationReference = F9F4025870EA93B8277C1EF4 /* Pods-Life360AdsSDKAdMobAdaptersTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1493,6 +1502,7 @@
 			baseConfigurationReference = AC156C6842A290B0715A6676 /* Pods-Life360AdsSDKAdMobAdaptersTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;

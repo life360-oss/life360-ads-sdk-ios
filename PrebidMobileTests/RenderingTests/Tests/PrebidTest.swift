@@ -338,7 +338,8 @@ class PrebidTest: XCTestCase {
         try XCTUnwrap(Prebid.initializeSDK(serverURL: serverURL))
         
         XCTAssertTrue(PrebidMobilePluginRegister.shared.getAllPlugins().count == 2)
-        XCTAssertEqual(PrebidMobilePluginRegister.shared.getAllPlugins().first?.name, PREBID_MOBILE_RENDERER_NAME)
+        XCTAssertEqual(PrebidMobilePluginRegister.shared.getAllPlugins().contains(where: { $0.name == PREBID_MOBILE_RENDERER_NAME }), true)
+        XCTAssertEqual(PrebidMobilePluginRegister.shared.getAllPlugins().contains(where: { $0.name == NativoRendererInternal.NAME }), true)
     }
     
     // MARK: - Private Methods

@@ -44,13 +44,18 @@ class PrebidServerStatusRequester {
     // MARK: - Internal Methods
     
     func requestStatus(_ completion: @escaping PrebidInitializationCallback) {
+        guard Prebid.shared.prebidServerEnabled else {
+            completion(.serverStatusSkipped, nil)
+            return
+        }
+
         guard !Prebid.shared.shouldDisableStatusCheck else {
             completion(.serverStatusSkipped, nil)
             return
         }
         
         guard let serverEndpoint = serverEndpoint else {
-            completion(.serverStatusWarning, PBMError.error(description: "Prebid SDK failed to get Prebid Server status endpoint."))
+            completion(.serverStatusWarning, PBMError.error(description: "Life360 Ads SDK failed to get Prebid Server status endpoint."))
             return
         }
         

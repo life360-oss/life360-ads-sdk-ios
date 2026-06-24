@@ -127,6 +127,9 @@
 #import "PBMBidResponseTransformer.h"
 #import "PBMPrebidParameterBuilder.h"
 
+// Nativo
+#import "NativoParameterBuilder.h"
+
 #import "UIView+PBMViewExposure.h"
 
 #import "MediationInterstitialAdUnit+TestExtension.h"
