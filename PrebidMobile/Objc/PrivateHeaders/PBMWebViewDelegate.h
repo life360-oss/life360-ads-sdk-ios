@@ -24,6 +24,7 @@
 - (void)webView:(nonnull PBMWebView *)webView receivedClickthroughLink:(nonnull NSURL *)url;
 - (void)webView:(nonnull PBMWebView *)webView receivedMRAIDLink:(nonnull NSURL *)url;
 - (void)webView:(nonnull PBMWebView *)webView receivedRewardedEventLink:(nonnull NSURL *)url;
+- (void)webViewDidFinishNavigation:(nonnull PBMWebView *)webView;
 
 @end
 
