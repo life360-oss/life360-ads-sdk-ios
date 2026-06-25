@@ -3,7 +3,8 @@ import WebKit
 import ObjectiveC.runtime
 
 /// Extracts the GAM click URL from the GAM banner's internal WKWebView.
-/// The click URL is in an anchor tag: `<a id="exchange-ping-url" href="https://adclick.g.doubleclick.net/pcs/click?...">`
+/// The click URL lives in the `href` of the anchor element with id `exchange-ping-url`
+/// (for example, `https://adclick.g.doubleclick.net/pcs/click?...`).
 @objcMembers
 public class NativoGAMUtils: NSObject {
     
@@ -39,8 +40,7 @@ public class NativoGAMUtils: NSObject {
         config.timeoutIntervalForRequest = 10
         let session = URLSession(configuration: config, delegate: delegate, delegateQueue: nil)
 
-        session.dataTask(with: url) { _, response, error in
-            let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+        session.dataTask(with: url) { _, _, _ in
             session.invalidateAndCancel()
         }.resume()
     }

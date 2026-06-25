@@ -16,7 +16,7 @@
 
 import Foundation
 
-class PbWebViewSearchError: NSError {
+class PbWebViewSearchError: NSError, @unchecked Sendable {
     convenience init(code: Int, userInfo dict: [String : Any]? = nil) {
         self.init()
     }
