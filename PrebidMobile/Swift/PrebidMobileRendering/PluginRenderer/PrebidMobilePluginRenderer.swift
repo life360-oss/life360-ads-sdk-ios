@@ -57,7 +57,7 @@ public protocol PrebidMobilePluginRenderer: AnyObject {
         adConfiguration: AdUnitConfig,
         loadingDelegate: DisplayViewLoadingDelegate,
         interactionDelegate: DisplayViewInteractionDelegate
-    ) -> (UIView & PrebidMobileDisplayViewProtocol)?
+    ) -> PrebidMobileDisplayViewProtocol?
     
     /// Creates and returns an implementation of `PrebidMobileInterstitialControllerProtocol` for a given bid response.
     /// Returns nil in the case of an internal error or if no renderer is provided.
@@ -74,6 +74,10 @@ public protocol PrebidMobilePluginRenderer: AnyObject {
         interactionDelegate: InterstitialControllerInteractionDelegate
     ) -> PrebidMobileInterstitialControllerProtocol?
     
-    /// Notifies that the ad view has been injected into the banner view.
+    /// Notifies the plugin renderer that an ad view has been injected into the banner view.
+    ///
+    /// - Parameters:
+    ///   - view: The ad view that was injected.
+    ///   - bannerView: The banner view into which the ad view was injected.
     @objc optional func didInjectView(_ view: UIView, into bannerView: UIView)
 }

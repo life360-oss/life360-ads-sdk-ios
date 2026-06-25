@@ -112,15 +112,17 @@
             return;
         }
         
-        @weakify(self);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            @strongify(self);
-            if (!self) { return; }
-            
-            [[self.adViewManagerDelegate displayView] addSubview:creativeView];
-            [self.currentCreative displayWithRootViewController:viewController];
-            [self.adViewManagerDelegate adLoaded:[self.currentTransaction getAdDetails]];
-        });
+        if (NSThread.isMainThread) {
+            [self displayCreativeView:creativeView rootViewController:viewController];
+        } else {
+            @weakify(self);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                @strongify(self);
+                if (!self) { return; }
+                
+                [self displayCreativeView:creativeView rootViewController:viewController];
+            });
+        }
     }
 }
 
@@ -263,11 +265,11 @@
         // IMPORTANT: we have to remove PBMVideoAdView from super view before invoking the show method.
         // Otherwise, the video won't be displayed.
         [self.currentCreative.view removeFromSuperview];
-
+        
         self.adConfiguration.forceInterstitialPresentation = @(YES);
         [self.currentCreative.eventManager trackEvent:PBMTrackingEventExpand];
         [self show];
-
+        
         [self.adViewManagerDelegate adViewWasClicked];
     }
 }
@@ -346,6 +348,11 @@
 
 #pragma mark - Internal Methods
 
+- (void)displayCreativeView:(UIView *)creativeView rootViewController:(UIViewController *)viewController {
+    [[self.adViewManagerDelegate displayView] addSubview:creativeView];
+    [self.currentCreative displayWithRootViewController:viewController];
+}
+
 - (void)onTransactionIsReady:(id<PBMTransaction>)transaction {
     for ( id<PBMAbstractCreative> creative in transaction.creatives) {
         creative.modalManager = self.modalManager;
@@ -365,6 +372,8 @@
         
         //Otherwise attempt to show the creative.
         [self setupCreative:[transaction getFirstCreative]];
+        
+        [self.adViewManagerDelegate adLoaded:[transaction getAdDetails]];
     });
 }
 
