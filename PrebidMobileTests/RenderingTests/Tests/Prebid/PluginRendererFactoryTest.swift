@@ -14,7 +14,7 @@
   */
 
 import XCTest
-@testable import PrebidMobile
+@testable import Life360AdsSDK
 
 // MARK: - Tests
 

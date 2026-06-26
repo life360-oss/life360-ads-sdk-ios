@@ -1056,7 +1056,9 @@ class PBMWebViewTest : XCTestCase, PBMWebViewDelegate {
     }
     
     func webView(_ webView: PBMWebView, receivedRewardedEventLink url: URL) {}
-    
+
+    func webViewDidFinishNavigation(_ webView: PBMWebView) {}
+
     // MARK: - Check methods
     
     private func checkJSEvaluating( webView: PBMWebView,
