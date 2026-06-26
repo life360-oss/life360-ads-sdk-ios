@@ -58,7 +58,7 @@ public class ModalViewController: UIViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        preferAppStatusBarHidden = !UIApplication.shared.isStatusBarHidden
+        preferAppStatusBarHidden = !(view.window?.windowScene?.statusBarManager?.isStatusBarHidden ?? false)
         
         setNeedsStatusBarAppearanceUpdate()
     }

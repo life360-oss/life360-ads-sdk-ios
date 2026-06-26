@@ -17,6 +17,7 @@
 #import "PBMFunctions+Private.h"
 #import "PBMFunctions+Testing.h"
 #import "Log+Extensions.h"
+#import "UIWindow+PBMExtensions.h"
 
 #import "SwiftImport.h"
 
@@ -268,11 +269,7 @@ static NSString * const PBMPlistExt = @"plist";
 }
 
 + (UIEdgeInsets)safeAreaInsets {
-    if (@available(iOS 11.0, *)) {
-        return UIApplication.sharedApplication.keyWindow.safeAreaInsets;
-    } else {
-        return (UIEdgeInsets){.left = 0, .top = 0, .right = 0, .bottom = 0};
-    }
+    return [UIWindow pbmKeyWindow].safeAreaInsets;
 }
 
 #pragma mark - Device Info

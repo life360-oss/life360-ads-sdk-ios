@@ -52,6 +52,7 @@ class ModalManager: NSObject, ModalViewControllerDelegate {
         }
     }
     
+    @discardableResult
     @objc public func pushModal(_ state: ModalState,
                                 fromRootViewController: UIViewController,
                                 animated: Bool,
