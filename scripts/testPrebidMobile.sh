@@ -42,6 +42,34 @@ export LC_ALL="${LC_ALL:-en_US.UTF-8}"
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+# --- Ephemeral test simulator -------------------------------------------------
+# These own the purge/create/delete strategy; callers pass only the device name and
+# type, and pair provision with `trap remove_test_simulator EXIT`.
+
+# Creates a fresh simulator and publishes its UDID as $SIMULATOR_ID. A run that aborts
+# before cleanup leaves its simulator behind, and duplicate same-named devices make
+# xcodebuild's -destination ambiguous ("multiple devices matched") — so purge any
+# leftovers first. Target the new device by UDID, never by name.
+provision_test_simulator() {
+    local name="$1"
+    local device_type="$2"
+
+    for leaked_id in $(xcrun simctl list devices | grep "$name" | grep -oE '[0-9A-F-]{36}'); do
+        xcrun simctl delete "$leaked_id" || true
+    done
+
+    echo -e "\n${GREEN}Creating simulator${NC} \n"
+    SIMULATOR_ID=$(xcrun simctl create "$name" "$device_type")
+}
+
+# Deletes the provisioned simulator. Registered as an EXIT trap *at top level* so it
+# fires when a build/test step aborts under `set -e` — top level because zsh runs an
+# in-function EXIT trap on function return, not on shell exit.
+remove_test_simulator() {
+    echo -e "\n${GREEN}Removing simulator${NC} \n"
+    xcrun simctl delete "$SIMULATOR_ID" >/dev/null 2>&1 || true
+}
+
 echo -e "\n\n${GREEN}INSTALL PODS${NC}\n\n"
 
 cd ..
@@ -52,8 +80,8 @@ pod install --repo-update
 
 echo -e "\n\n${GREEN}RUN PREBID MOBILE TESTS${NC}\n\n"
 
-echo -e "\n${GREEN}Creating simulator${NC} \n"
-xcrun simctl create iPhone-16-Pro-PrebidMobile com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro
+provision_test_simulator "iPhone-16-Pro-PrebidMobile" "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro"
+trap remove_test_simulator EXIT
 
 if [ "$run_only_PR_tests" != "YES" ]; then
     echo -e "\n${GREEN}Clean build\n"
@@ -92,7 +120,7 @@ xcodebuild \
     -scheme PrebidMobileTests \
     -sdk iphonesimulator \
     -configuration Debug \
-    -destination 'platform=iOS Simulator,name=iPhone-16-Pro-PrebidMobile,OS=latest' \
+    -destination "id=$SIMULATOR_ID" \
     -destination-timeout 60 \
     build-for-testing
 
@@ -101,7 +129,7 @@ xcodebuild \
     -scheme PrebidMobileTests \
     -sdk iphonesimulator \
     -testPlan "${TESTPLAN}" \
-    -destination 'platform=iOS Simulator,name=iPhone-16-Pro-PrebidMobile,OS=latest' \
+    -destination "id=$SIMULATOR_ID" \
     -destination-timeout 60 \
     -retry-tests-on-failure \
     test-without-building
@@ -113,8 +141,7 @@ else
     exit 1
 fi
 
-echo -e "\n${GREEN}Removing simulator${NC} \n"
-xcrun simctl delete iPhone-16-Pro-PrebidMobile
+# Simulator cleanup is handled by the EXIT trap registered after creation.
 
 # echo -e "\n${GREEN}Running swiftlint tests${NC} \n"
 # swiftlint --config .swiftlint.yml
