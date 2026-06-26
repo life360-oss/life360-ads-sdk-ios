@@ -88,14 +88,7 @@
     }
     
     UIView *backgroundView = [[UIView alloc] initWithFrame:self.window.bounds];
-    UIActivityIndicatorViewStyle indicatorStyle;
-    if (@available(iOS 13.0, *)) {
-        indicatorStyle = UIActivityIndicatorViewStyleLarge;
-    } else {
-        indicatorStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    
-    }
-    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:indicatorStyle];
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
     [activityIndicatorView startAnimating];
     
     [backgroundView addSubview:activityIndicatorView];

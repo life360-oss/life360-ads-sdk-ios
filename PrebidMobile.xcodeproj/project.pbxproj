@@ -812,6 +812,8 @@
 		A908694429E05ED500B37479 /* PrebidMobilePluginRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A908694329E05ED500B37479 /* PrebidMobilePluginRenderer.swift */; };
 		A908694629E05F7900B37479 /* PrebidRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A908694529E05F7900B37479 /* PrebidRenderer.swift */; };
 		E557D4B72ED219CB00E5580A /* UserAgentPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E557D4B62ED219CB00E5580A /* UserAgentPersistence.swift */; };
+		E5D79CAE2FAE93BF00C0C44A /* PluginRendererFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D79CAD2FAE93BF00C0C44A /* PluginRendererFactory.swift */; };
+		E5D79CB02FAE951C00C0C44A /* PluginRendererFactoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D79CAF2FAE951C00C0C44A /* PluginRendererFactoryTest.swift */; };
 		E5D88C022F4517FA00E801C3 /* ViewExposureCheckerSystemUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D88C012F4517FA00E801C3 /* ViewExposureCheckerSystemUITests.swift */; };
 		F2024739341E397628C487E9 /* NativoGeoLocationParameterBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 300092CED1FCEADB7E16B18F /* NativoGeoLocationParameterBuilder.h */; };
 		F271AB277F15E7BB4DC4FD29 /* NativoBidResponseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8FE9E7076E1528CD4EE3E3 /* NativoBidResponseTest.swift */; };
@@ -1723,6 +1725,8 @@
 		B6DA79F1C9609A18EC09622A /* NativoGAMUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoGAMUtils.swift; sourceTree = "<group>"; };
 		C2C4D48A4D7937F085F698A3 /* NativoGeoLocationParameterBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativoGeoLocationParameterBuilder.m; sourceTree = "<group>"; };
 		E557D4B62ED219CB00E5580A /* UserAgentPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgentPersistence.swift; sourceTree = "<group>"; };
+		E5D79CAD2FAE93BF00C0C44A /* PluginRendererFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRendererFactory.swift; sourceTree = "<group>"; };
+		E5D79CAF2FAE951C00C0C44A /* PluginRendererFactoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRendererFactoryTest.swift; sourceTree = "<group>"; };
 		E5D88C012F4517FA00E801C3 /* ViewExposureCheckerSystemUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExposureCheckerSystemUITests.swift; sourceTree = "<group>"; };
 		F9F0999C2C78CC8A007DB464 /* SDKConsoleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKConsoleLogger.swift; sourceTree = "<group>"; };
 		FA12590120260425000000A2 /* FunctionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionsTests.swift; sourceTree = "<group>"; };
@@ -3336,6 +3340,7 @@
 				53514CC52D01B5AF00A480C0 /* InterstitialRenderingAdUnitTest.swift */,
 				53514CC72D01B5F200A480C0 /* RewardedAdUnitTest.swift */,
 				533135C5282A869800AA1E4D /* BidTest.swift */,
+				E5D79CAF2FAE951C00C0C44A /* PluginRendererFactoryTest.swift */,
 				4C8FE9E7076E1528CD4EE3E3 /* NativoBidResponseTest.swift */,
 				5DC1298A0000000000000002 /* NativoBundleFieldTest.swift */,
 			);
@@ -3527,6 +3532,7 @@
 				A908694129E05EAF00B37479 /* PrebidMobilePluginRegister.swift */,
 				A908694329E05ED500B37479 /* PrebidMobilePluginRenderer.swift */,
 				53BFCD302CFE435D00A3287A /* PrebidMobilePluginRenderer+Extensions.swift */,
+				E5D79CAD2FAE93BF00C0C44A /* PluginRendererFactory.swift */,
 			);
 			path = PluginRenderer;
 			sourceTree = "<group>";
@@ -4026,6 +4032,7 @@
 				922AFD2B2737258200732C53 /* PBMCreativeViewabilityTrackerTest.swift in Sources */,
 				922AFCF927370B9800732C53 /* LogObjCTest.m in Sources */,
 				9720387C2358771600F8025A /* NativeRequestTests.swift in Sources */,
+				E5D79CB02FAE951C00C0C44A /* PluginRendererFactoryTest.swift in Sources */,
 				922AFD372737281D00732C53 /* PBMHTMLCreativeTest_Base.swift in Sources */,
 				925D5E462737F0ED00A8A2B5 /* TestPBMFunctions.swift in Sources */,
 				922AFC9727352DDB00732C53 /* MockPBMAdModelEventTracker.swift in Sources */,
@@ -4647,6 +4654,7 @@
 				92C3A83827F98B9700DC05E9 /* AdConfiguration.swift in Sources */,
 				53842BB829E561750069A4B7 /* PrebidImagesRepository.swift in Sources */,
 				53BFCD312CFE435D00A3287A /* PrebidMobilePluginRenderer+Extensions.swift in Sources */,
+				E5D79CAE2FAE93BF00C0C44A /* PluginRendererFactory.swift in Sources */,
 				53BFCD112CF9156000A3287A /* PrebidMobileInterstitialControllerProtocol.swift in Sources */,
 				92C85D5A27A96AC50080BAC5 /* NativeTitle.swift in Sources */,
 				5A8448022DB7117400446F70 /* CreativeModel.swift in Sources */,

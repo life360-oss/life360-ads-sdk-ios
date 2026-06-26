@@ -58,15 +58,15 @@ public class SDKConsoleLogger: NSObject, PrebidLogger {
     // MARK: - Private methods
     
     private func isLoggingEnabled(for currentLevel: LogLevel) -> Bool {
-        #if !(DEBUG)
-        return false
-        #endif
-        
+        #if DEBUG
         if currentLevel.rawValue < Log.logLevel.rawValue {
             return false
         }
-        
+
         return true
+        #else
+        return false
+        #endif
     }
 }
 

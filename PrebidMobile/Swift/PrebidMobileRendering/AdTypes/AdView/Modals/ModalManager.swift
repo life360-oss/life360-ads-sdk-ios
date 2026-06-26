@@ -52,6 +52,7 @@ class ModalManager: NSObject, ModalViewControllerDelegate {
         }
     }
     
+    @discardableResult
     @objc public func pushModal(_ state: ModalState,
                                 fromRootViewController: UIViewController,
                                 animated: Bool,
@@ -235,7 +236,7 @@ class ModalManager: NSObject, ModalViewControllerDelegate {
             } else {
                 // If modalViewController doesn't exist, create one and show it
                 
-                if let modalViewControllerClass = self.modalViewControllerClass {
+                if self.modalViewControllerClass != nil {
                     modalViewController = ModalViewController()
                 } else if state.mraidState == .resized {
                     modalViewController = NonModalViewController(

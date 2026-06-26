@@ -24,7 +24,7 @@ public protocol InterstitialAd: PrimaryAdRequesterProtocol {
     
     /**
      @abstract PBM SDK calls this method to show the interstitial ad from the ad server SDK
-     @param controller view controller to be used for presenting the interstitial ad
+     @param viewController view controller to be used for presenting the interstitial ad
      */
     @objc(showFromViewController:)
     func show(from viewController: UIViewController?)

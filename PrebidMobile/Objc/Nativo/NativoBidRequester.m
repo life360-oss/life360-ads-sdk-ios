@@ -1,3 +1,8 @@
+// SwiftImport.h pulls in the generated Swift header that defines
+// @objc(PBMBidRequesterProtocol). It must precede NativoBidRequester.h so the
+// protocol is fully defined where the @interface declares conformance to it.
+#import "SwiftImport.h"
+
 #import "NativoBidRequester.h"
 
 #import "PBMBidResponseTransformer.h"
@@ -6,7 +11,6 @@
 #import "NativoParameterBuilder.h"
 #import "NativoGeoLocationParameterBuilder.h"
 #import "Log+Extensions.h"
-#import "SwiftImport.h"
 #import "PBMMacros.h"
 
 @interface NativoBidRequester () <PBMBidRequester>

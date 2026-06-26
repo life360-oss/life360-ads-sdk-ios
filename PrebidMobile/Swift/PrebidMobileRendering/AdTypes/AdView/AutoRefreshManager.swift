@@ -68,7 +68,7 @@ final class AutoRefreshManager: NSObject {
         let destinationQueue: DispatchQueue
         let rawBlock: VoidBlock
 
-        if let lockProvider = lockProvider, let lockingQueue = lockingQueue {
+        if lockProvider != nil, let lockingQueue = lockingQueue {
             destinationQueue = lockingQueue
             rawBlock = { [weak self] in
                 self?.acquireLockAndRefresh()

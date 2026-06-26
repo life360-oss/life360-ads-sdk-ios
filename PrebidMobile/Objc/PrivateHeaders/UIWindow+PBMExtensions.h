@@ -20,6 +20,11 @@
 
 + (nullable UIViewController *)appVisibleViewController;
 
+/// Returns the app's key window by scanning connected window scenes, replacing the
+/// deprecated `UIApplication.keyWindow` (which returned a key window across all
+/// connected scenes). Equivalent behavior for single-scene apps.
++ (nullable UIWindow *)pbmKeyWindow;
+
 - (nullable UIViewController *)visibleViewController;
 
 @end

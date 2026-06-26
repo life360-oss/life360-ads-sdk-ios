@@ -24,7 +24,7 @@ public class NativoRendererInternal: NSObject, PrebidMobilePluginRenderer, Displ
         adConfiguration: AdUnitConfig,
         loadingDelegate: DisplayViewLoadingDelegate,
         interactionDelegate: DisplayViewInteractionDelegate
-    ) -> (UIView & PrebidMobileDisplayViewProtocol)? {
+    ) -> PrebidMobileDisplayViewProtocol? {
         
         let displayView = DisplayView(
             frame: frame,

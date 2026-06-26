@@ -18,10 +18,23 @@
 @implementation UIWindow (PBMExtensions)
 
 + (nullable UIViewController *)appVisibleViewController {
-    UIWindow *win = UIApplication.sharedApplication.keyWindow;
+    UIWindow *win = [UIWindow pbmKeyWindow];
     UIViewController *ret = [win visibleViewController];
-    
+
     return ret;
+}
+
++ (nullable UIWindow *)pbmKeyWindow {
+    for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+        if ([scene isKindOfClass:UIWindowScene.class]) {
+            for (UIWindow *window in ((UIWindowScene *)scene).windows) {
+                if (window.isKeyWindow) {
+                    return window;
+                }
+            }
+        }
+    }
+    return nil;
 }
 
 - (nullable UIViewController *)visibleViewController {

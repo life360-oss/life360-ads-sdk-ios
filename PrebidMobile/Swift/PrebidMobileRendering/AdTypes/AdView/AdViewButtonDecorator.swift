@@ -72,8 +72,15 @@ public class AdViewButtonDecorator: NSObject {
         button.superview?.addConstraints(activeConstraints ?? [])
     }
     
+    /// The interface orientation from the button's window scene, replacing the
+    /// deprecated `UIApplication.statusBarOrientation`. Falls back to portrait when
+    /// the button isn't attached to a window yet.
+    private var isInterfacePortrait: Bool {
+        button.window?.windowScene?.interfaceOrientation.isPortrait ?? true
+    }
+
     public func getButtonConstraintConstant() -> CGFloat {
-        let screenWidth = UIApplication.shared.statusBarOrientation.isPortrait ? UIScreen.main.bounds.width : UIScreen.main.bounds.height
+        let screenWidth = isInterfacePortrait ? UIScreen.main.bounds.width : UIScreen.main.bounds.height
         var btnConstraintConstant = (screenWidth * buttonArea) / 2
         
         if btnConstraintConstant > 30 || btnConstraintConstant < 5 {
@@ -84,7 +91,7 @@ public class AdViewButtonDecorator: NSObject {
     }
     
     public func getButtonSize() -> CGSize {
-        let screenWidth = UIApplication.shared.statusBarOrientation.isPortrait ? UIScreen.main.bounds.width : UIScreen.main.bounds.height
+        let screenWidth = isInterfacePortrait ? UIScreen.main.bounds.width : UIScreen.main.bounds.height
         let btnSizeValue = screenWidth * buttonArea
         return CGSize(width: btnSizeValue, height: btnSizeValue)
     }

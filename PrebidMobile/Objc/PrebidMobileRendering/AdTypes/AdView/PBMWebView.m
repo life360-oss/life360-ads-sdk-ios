@@ -164,10 +164,16 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
     [self setupTapRecognizer];
 
     //Note: this observer is here and not in initNewWebView because it observes an application-level change, not a webview-level change.
+    // UIApplicationDidChangeStatusBarFrameNotification is deprecated (iOS 13), but the suggested
+    // replacement (viewWillTransitionToSize:) doesn't apply to a UIView observing app-level
+    // orientation changes. Suppress the deprecation here to preserve the existing behavior.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(observer_UIApplicationDidChangeStatusBarOrientationNotification)
                                                name:UIApplicationDidChangeStatusBarFrameNotification
                                              object:nil];
+#pragma clang diagnostic pop
     
     return self;
 }
@@ -817,7 +823,7 @@ static PBMError *extracted(NSString *errorMessage) {
 }
 
 - (void)MRAID_updateCurrentAppOrientationIsLocked:(BOOL)locked {
-    BOOL isPortrait = UIInterfaceOrientationIsPortrait(UIApplication.sharedApplication.statusBarOrientation);
+    BOOL isPortrait = UIInterfaceOrientationIsPortrait(self.window.windowScene.interfaceOrientation);
     [self evaluateJavaScript:[PBMMRAIDJavascriptCommands updateCurrentAppOrientation:(isPortrait ? @"portrait" : @"landscape") locked:locked]];
 }
 
@@ -984,7 +990,7 @@ static PBMError *extracted(NSString *errorMessage) {
 #pragma mark - Orientation changing support
 
 - (void)onStatusBarOrientationChanged {    
-    NSString *isPortrait = UIApplication.sharedApplication.statusBarOrientation == UIInterfaceOrientationPortrait ? @"true" : @"false";
+    NSString *isPortrait = self.window.windowScene.interfaceOrientation == UIInterfaceOrientationPortrait ? @"true" : @"false";
     PBMLogInfo(@"Orientation is portrait: %@", isPortrait);
     
     self.internalWebView.scrollView.contentOffset = CGPointMake(0.0, 0.0);

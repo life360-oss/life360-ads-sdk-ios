@@ -55,22 +55,22 @@ public class MediationInterstitialAdUnit: MediationBaseInterstitialAdUnit {
     
     // MARK: - Public Methods
     
-    /// Convenience initializer for the mediation interstitial ad unit.
+    /// Initializes a new mediation interstitial ad unit with the specified configuration ID and mediation delegate.
     /// - Parameters:
     ///   - configId: The unique identifier for the ad unit configuration.
     ///   - mediationDelegate: The delegate for handling mediation.
-    public override convenience init(configId: String, mediationDelegate: PrebidMediationDelegate) {
-        self.init(configId: configId, minSizePercentage: nil, mediationDelegate: mediationDelegate)
+    public override init(configId: String, mediationDelegate: PrebidMediationDelegate) {
+        super.init(configId: configId, mediationDelegate: mediationDelegate)
     }
-    
+
     /// Initializes a new mediation interstitial ad unit with the specified configuration ID, minimum size percentage, and mediation delegate.
     /// - Parameters:
     ///   - configId: The unique identifier for the ad unit configuration.
     ///   - minSizePercentage: The minimum size percentage for the ad.
     ///   - mediationDelegate: The delegate for handling mediation.
-    public init(configId: String, minSizePercentage: CGSize?, mediationDelegate: PrebidMediationDelegate) {
-        super.init(configId: configId, mediationDelegate: mediationDelegate)
-        
+    public convenience init(configId: String, minSizePercentage: CGSize?, mediationDelegate: PrebidMediationDelegate) {
+        self.init(configId: configId, mediationDelegate: mediationDelegate)
+
         if let size = minSizePercentage {
             adUnitConfig.minSizePerc = NSValue(cgSize: size)
         }
