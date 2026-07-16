@@ -32,7 +32,7 @@ static NSString * const PBMPlistExt = @"plist";
 @implementation PBMFunctions
 
 + (nonnull NSString *)sdkVersion {
-    NSString *version = PrebidConstants.PREBID_VERSION;
+    NSString *version = PrebidConstants.VERSION;
     return version ? version : @"";
 }
 
