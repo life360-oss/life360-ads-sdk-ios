@@ -84,8 +84,13 @@ public class Prebid: NSObject {
     /// The singleton instance of the `Prebid` class.
     public static let shared = Prebid()
     
-    /// The version of the PrebidMobile SDK.
+    /// The version of the Life360 Ads SDK
     public var version: String {
+        PrebidConstants.VERSION
+    }
+    
+    /// Last merged version of the PrebidMobile SDK
+    public var prebidVersion: String {
         PrebidConstants.PREBID_VERSION
     }
     
