@@ -20,7 +20,7 @@ show_current() {
     constants="$ROOT_DIR/PrebidMobile/Swift/Constants.swift"
     checker="$ROOT_DIR/PrebidMobile/Swift/ConfigurationAndTargeting/PrebidGAMVersionChecker.swift"
 
-    sdk_version="$(sed -n 's/.*public static let PREBID_VERSION[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' "$constants" | head -1)"
+    sdk_version="$(sed -n 's/.*public static let VERSION[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' "$constants" | head -1)"
     gam_version="$(sed -n -E '/latestTestedGMAVersion/,/}/ s/^[[:space:]]*\(([0-9]+),[[:space:]]*([0-9]+),[[:space:]]*([0-9]+)\)[[:space:]]*$/\1.\2.\3/p' "$checker" | head -1)"
 
     echo "  Current:  ${sdk_version:-unknown}"
@@ -97,7 +97,7 @@ if [[ -n "$NEW_VERSION" ]]; then
 
     # --- Constants.swift ---
     CONSTANTS="$ROOT_DIR/PrebidMobile/Swift/Constants.swift"
-    sed -i '' 's/\(public static let PREBID_VERSION[[:space:]]*=[[:space:]]*"\)[^"]*"/\1'"$NEW_VERSION"'"/' "$CONSTANTS"
+    sed -i '' 's/\(public static let VERSION[[:space:]]*=[[:space:]]*"\)[^"]*"/\1'"$NEW_VERSION"'"/' "$CONSTANTS"
     echo "  Updated: PrebidMobile/Swift/Constants.swift"
 
     # --- CocoaPods podspecs ---
