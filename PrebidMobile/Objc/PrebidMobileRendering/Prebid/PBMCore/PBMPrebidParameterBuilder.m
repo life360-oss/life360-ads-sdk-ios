@@ -306,9 +306,11 @@
         if (!appExtPrebid.source) {
             appExtPrebid.source = PrebidConstants.SDK_NAME;
         }
-        
+
         if (!appExtPrebid.version) {
-            appExtPrebid.version = Prebid.shared.version;
+            // The version sent to Prebid Server / downstream bidders is our Life360 Ads SDK version,
+            // not the underlying Prebid version. 
+            appExtPrebid.version = PrebidConstants.VERSION;
         }
     }
 }

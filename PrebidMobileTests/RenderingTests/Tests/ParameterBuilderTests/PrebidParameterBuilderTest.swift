@@ -1015,8 +1015,24 @@ class PrebidParameterBuilderTest: XCTestCase {
         XCTAssertTrue(banner.format.contains { $0.w == 320 && $0.h == 460 })
     }
 
+    // Regression guard: the version sent to Prebid Server / downstream bidders in
+    // app.ext.prebid must be OUR SDK version (PrebidConstants.VERSION), not the underlying
+    // Prebid version. 
+    func testAppExtPrebidVersionIsSDKVersion() {
+        let configId = "b6260e2b-bc4c-4d10-bdb5-f7bdd62f5ed4"
+        let adUnitConfig = AdUnitConfig(configId: configId, size: CGSize(width: 320, height: 50))
+        adUnitConfig.adFormats = [.banner]
+
+        let bidRequest = buildBidRequest(with: adUnitConfig)
+
+        XCTAssertEqual(bidRequest.app.ext.prebid.source, PrebidConstants.SDK_NAME)
+        XCTAssertEqual(bidRequest.app.ext.prebid.version, PrebidConstants.VERSION)
+        XCTAssertNotEqual(bidRequest.app.ext.prebid.version, PrebidConstants.PREBID_VERSION)
+        XCTAssertNotEqual(bidRequest.app.ext.prebid.version, "MOCK_SDK_VERSION")
+    }
+
     // MARK: - Helpers
-    
+
     func buildBidRequest(with adUnitConfig: AdUnitConfig) -> PBMORTBBidRequest {
         let bidRequest = PBMORTBBidRequest()
         PBMBasicParameterBuilder(
