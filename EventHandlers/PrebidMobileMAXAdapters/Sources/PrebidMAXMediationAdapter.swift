@@ -48,7 +48,7 @@ public class PrebidMAXMediationAdapter: ALMediationAdapter {
     }
     
     public override var sdkVersion: String {
-        return Prebid.shared.version
+        return Life360Ads.shared.version
     }
     
     public override var adapterVersion: String {

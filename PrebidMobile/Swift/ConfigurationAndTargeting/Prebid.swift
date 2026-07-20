@@ -72,9 +72,6 @@ public class Prebid: NSObject {
     /// This property is set by the developer when he is willing to share the location for better ad targeting
     public var shareGeoLocation = false
 
-    /// Set when willing to share precise location with Nativo for better ad targeting
-    public var shareGeoLocationWithNativo = false
-    
     /// Set the desidered verbosity of the logs
     public var logLevel: LogLevel {
         get { Log.logLevel }
@@ -84,16 +81,12 @@ public class Prebid: NSObject {
     /// The singleton instance of the `Prebid` class.
     public static let shared = Prebid()
     
-    /// The version of the Life360 Ads SDK
+    /// The version of the upstream Prebid SDK.
+    /// Life360 Ads SDK version lives on `Life360Ads.shared.version`.
     public var version: String {
-        PrebidConstants.VERSION
-    }
-    
-    /// Last merged version of the PrebidMobile SDK
-    public var prebidVersion: String {
         PrebidConstants.PREBID_VERSION
     }
-    
+
     /// The version of the OM SDK.
     public var omsdkVersion: String {
         Factory.OMSDKVersionProviderType.omSDKVersionString
@@ -157,11 +150,6 @@ public class Prebid: NSObject {
      * if the PBS endpoint is always live and handled client side
      */
     public var shouldDisableStatusCheck: Bool = false
-
-    /// False when the SDK was initialized without a Prebid Server (see `initializeWithoutPrebid(_:)`).
-    /// In that mode the ad load flow skips the Prebid Server bid request and the init-time
-    /// PBS status check, running only the Nativo request + event handler request.
-    public internal(set) var prebidServerEnabled = true
 
     /// Serial dispatch queue for thread-safe custom header access
     private let customHeaderQueue = DispatchQueue(label: "com.prebid.customHeaderQ")
@@ -337,19 +325,6 @@ public class Prebid: NSObject {
         _ completion: PrebidInitializationCallback? = nil) throws {
             try Host.shared.setHostURL(serverURL, nonTrackingURLString: nonTrackingURLString)
             PrebidSDKInitializer.initializeSDK(completion)
-    }
-
-    /// Initializes PrebidMobile SDK without a Prebid Server.
-    ///
-    /// Use this when you only want Nativo demand plus your own ad server (event handler).
-    /// The SDK skips the Prebid Server status check, and the ad load flow skips the Prebid
-    /// Server bid request — only the Nativo request and the event handler request run.
-    ///
-    /// There is no completion callback: with no Prebid Server there is no status check to
-    /// report and nothing in this path can fail.
-    public static func initializeWithoutPrebid() {
-        Prebid.shared.prebidServerEnabled = false
-        PrebidSDKInitializer.initializeSDK()
     }
 
     // MARK: - Private Methods
