@@ -25,7 +25,10 @@ class MockServerConnection: NSObject, PrebidServerConnectionProtocol {
     
     let defaultContentType = "application/json" // Note: Must be equivalent to PBMContentTypeVal
     
-    let userAgentService = UserAgentService.shared
+    // Stub rather than the shared service so tests never spin up a WKWebView to fetch the
+    // real user agent — that fetch is slow to launch on a cold CI simulator and races the
+    // per-test expectation timeout, producing flaky, order-dependent failures.
+    let userAgentService: UserAgentService = MockUserAgentService()
     
     private(set) var onFireAndForget: [FireAndForgetHandler]
     private(set) var onHead: [GetHandler]
