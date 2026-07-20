@@ -5,8 +5,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 usage() {
-    echo "Usage: updateVersion.sh [<version>] [--gam-version <X.Y.Z>]"
-    echo "  version            App release version, e.g. 1.0.0 or 1.0.0-alpha.1"
+    echo "Usage: updateVersion.sh [<version>] [--prebid-version <X.Y.Z>] [--gam-version <X.Y.Z>]"
+    echo "  version            Life360 Ads SDK release version, e.g. 1.0.0 or 1.0.0-alpha.1"
+    echo "  --prebid-version   Underlying Prebid Mobile SDK version we are forked from, e.g. 3.3.1"
     echo "  --gam-version      Latest tested Google Mobile Ads (GMA) SDK version, e.g. 13.5.0"
     echo
     show_current
@@ -16,14 +17,16 @@ usage() {
 # Print the versions currently declared in the sources, so the script can answer
 # "what are we on?" without having to grep through the Swift files by hand.
 show_current() {
-    local constants checker sdk_version gam_version
+    local constants checker sdk_version prebid_version gam_version
     constants="$ROOT_DIR/PrebidMobile/Swift/Constants.swift"
     checker="$ROOT_DIR/PrebidMobile/Swift/ConfigurationAndTargeting/PrebidGAMVersionChecker.swift"
 
     sdk_version="$(sed -n 's/.*public static let VERSION[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' "$constants" | head -1)"
+    prebid_version="$(sed -n 's/.*public static let PREBID_VERSION[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' "$constants" | head -1)"
     gam_version="$(sed -n -E '/latestTestedGMAVersion/,/}/ s/^[[:space:]]*\(([0-9]+),[[:space:]]*([0-9]+),[[:space:]]*([0-9]+)\)[[:space:]]*$/\1.\2.\3/p' "$checker" | head -1)"
 
     echo "  Current:  ${sdk_version:-unknown}"
+    echo "  Prebid:   ${prebid_version:-unknown}"
     echo "  GAM:      ${gam_version:-unknown}"
 }
 
@@ -70,10 +73,13 @@ if [[ $# -eq 0 ]]; then
 fi
 
 NEW_VERSION=""
+PREBID_VERSION=""
 GAM_VERSION=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
+        --prebid-version)    PREBID_VERSION="${2:-}"; shift 2 ;;
+        --prebid-version=*)  PREBID_VERSION="${1#*=}"; shift ;;
         --gam-version)       GAM_VERSION="${2:-}"; shift 2 ;;
         --gam-version=*)     GAM_VERSION="${1#*=}"; shift ;;
         -h|--help)           usage ;;
@@ -88,12 +94,12 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-[[ -z "$NEW_VERSION" && -z "$GAM_VERSION" ]] && usage
+[[ -z "$NEW_VERSION" && -z "$PREBID_VERSION" && -z "$GAM_VERSION" ]] && usage
 
 # --- App release version ---
 if [[ -n "$NEW_VERSION" ]]; then
     validate_semver "$NEW_VERSION"
-    echo "Updating version to: $NEW_VERSION"
+    echo "Updating Life360 Ads SDK version to: $NEW_VERSION"
 
     # --- Constants.swift ---
     CONSTANTS="$ROOT_DIR/PrebidMobile/Swift/Constants.swift"
@@ -120,6 +126,23 @@ if [[ -n "$NEW_VERSION" ]]; then
     echo "  Updated: PrebidMobile.xcodeproj/project.pbxproj"
 
     echo "Done. Version is now $NEW_VERSION"
+fi
+
+# --- Underlying Prebid Mobile version ---
+# This is the version of upstream Prebid Mobile we are forked from. It is bumped when we
+# merge a new prebid/master, independently of the Life360 release version above. It only
+# lives in Constants.swift (PREBID_VERSION) — it does not drive the podspecs or the Xcode
+# project version, which track the Life360 release version.
+if [[ -n "$PREBID_VERSION" ]]; then
+    validate_semver "$PREBID_VERSION"
+    echo "Updating Prebid Mobile version to: $PREBID_VERSION"
+
+    CONSTANTS="$ROOT_DIR/PrebidMobile/Swift/Constants.swift"
+    sed -i '' 's/\(public static let PREBID_VERSION[[:space:]]*=[[:space:]]*"\)[^"]*"/\1'"$PREBID_VERSION"'"/' "$CONSTANTS"
+    assert_contains "$CONSTANTS" "\"$PREBID_VERSION\""
+    echo "  Updated: PrebidMobile/Swift/Constants.swift"
+
+    echo "Done. Prebid Mobile version is now $PREBID_VERSION"
 fi
 
 # --- Latest tested GMA SDK version ---

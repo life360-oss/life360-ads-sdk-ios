@@ -44,7 +44,7 @@ class PrebidServerStatusRequester {
     // MARK: - Internal Methods
     
     func requestStatus(_ completion: @escaping PrebidInitializationCallback) {
-        guard Prebid.shared.prebidServerEnabled else {
+        guard Life360Ads.shared.prebidServerEnabled else {
             completion(.serverStatusSkipped, nil)
             return
         }

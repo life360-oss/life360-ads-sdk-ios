@@ -33,7 +33,7 @@ public class PrebidAdMobMediationBaseAdapter: NSObject, GoogleMobileAds.Mediatio
     }
     
     public static func adSDKVersion() -> GoogleMobileAds.VersionNumber {
-        let sdkVersionComponents = Prebid
+        let sdkVersionComponents = Life360Ads
             .shared
             .version
             .components(separatedBy: ".")

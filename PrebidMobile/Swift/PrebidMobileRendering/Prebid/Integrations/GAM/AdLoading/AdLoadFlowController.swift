@@ -213,7 +213,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
             self.bidRequester = nil
             adLoader?.flowDelegate = self
             self.loadPrebidDisplayView(bidResponse: response)
-        } else if !Prebid.shared.prebidServerEnabled {
+        } else if !Life360Ads.shared.prebidServerEnabled {
             // No Prebid Server: skip the bid request; Nativo is the only programmatic demand.
             flowState = .demandReceived
             moveToNextLoadingStep()

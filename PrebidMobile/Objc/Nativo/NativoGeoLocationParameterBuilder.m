@@ -34,7 +34,7 @@
 }
 
 - (void)buildBidRequest:(PBMORTBBidRequest *)bidRequest {
-    if (!Prebid.shared.shareGeoLocationWithNativo) {
+    if (!Life360Ads.shared.shareGeoLocationWithNativo) {
         return;
     }
     if (!(self.locationManager && bidRequest)) {
