@@ -869,7 +869,7 @@ class AdLoadFlowControllerTest: XCTestCase {
     // skip the Prebid Server bid request entirely — the bid requester factory is never invoked —
     // and proceed straight from the Nativo response to the primary ad (event handler) request.
     func testServerless_skipsBidRequest_goesToPrimaryAd() {
-        Prebid.shared.prebidServerEnabled = false
+        Life360Ads.shared.prebidServerEnabled = false
 
         let adUnitConfig = AdUnitConfig(configId: "configID")
 

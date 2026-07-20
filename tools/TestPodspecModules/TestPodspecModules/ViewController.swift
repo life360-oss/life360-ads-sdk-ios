@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         projectVersionLabel.text = version
 
         // Life360AdsSDK (core)
-        renderingVersionLabel.text = Prebid.shared.version
+        renderingVersionLabel.text = Life360Ads.shared.version
 
         // Life360AdsSDKGAMEventHandlers
         gamVersionLabel.text = String(describing: GAMUtils.shared)

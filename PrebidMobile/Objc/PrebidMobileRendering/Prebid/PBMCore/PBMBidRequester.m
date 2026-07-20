@@ -52,7 +52,11 @@
 
 - (void)requestBidsWithCompletion:(void (^)(BidResponse *, NSError *))completion {
     @weakify(self);
-    [PBMUserAgentService.shared fetchUserAgentWithCompletion:^(NSString * _Nonnull userAgent) {
+    // Warm the same UA service the request body reads from (see -getRTBRequest) rather than the
+    // shared singleton, so the service is injectable via the connection — this lets tests supply a
+    // stub and avoids spinning up a real WKWebView. In production the connection's service defaults
+    // to UserAgentService.shared, so behavior is unchanged.
+    [self.connection.userAgentService fetchUserAgentWithCompletion:^(NSString * _Nonnull userAgent) {
         @strongify(self);
         [self makeRequestWithCompletion:completion];
     }];

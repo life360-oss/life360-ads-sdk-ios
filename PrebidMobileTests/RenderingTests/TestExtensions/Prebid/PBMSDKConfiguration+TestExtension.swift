@@ -30,7 +30,7 @@ extension Prebid {
         Prebid.shared.prebidServerAccountId = ""
         Prebid.shared.auctionSettingsId = nil
         Prebid.shared.shouldDisableStatusCheck = false
-        Prebid.shared.prebidServerEnabled = true
+        Life360Ads.shared.prebidServerEnabled = true
 
         Host.shared.reset()
         

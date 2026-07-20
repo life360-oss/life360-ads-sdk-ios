@@ -102,7 +102,7 @@ class PrebidServerStatusRequesterTests: XCTestCase {
     func testRequestStatus_ServerlessSkipped() {
         // Serverless init sets no Host URL; the status check must be skipped (not warned)
         // and must not hit the network.
-        Prebid.shared.prebidServerEnabled = false
+        Life360Ads.shared.prebidServerEnabled = false
 
         let requester = PrebidServerStatusRequester()
         XCTAssertNil(requester.serverEndpoint)
