@@ -23,6 +23,9 @@ public enum OpenMeasurementFriendlyObstructionPurpose: UInt {
     case modalViewControllerClose
     case videoViewLearnMoreButton
     case videoViewProgressBar
+    // A view overlapping the ad that draws no opaque content — OMID would otherwise treat it as an
+    // occluder. Maps to OMIDFriendlyObstructionNotVisible ("seems to obstruct but does not").
+    case transparentOverlay
     case purposesCount
 }
 

@@ -1005,6 +1005,13 @@ static PBMError *extracted(NSString *errorMessage) {
 #pragma mark - Open Measurement
 
 - (void)addFriendlyObstructionsToMeasurementSession:(PBMOpenMeasurementSession *)session {
+    if (!session || !self.exposureChecker) {
+        return;
+    }
+    // OMID would count these transparent overlays as occluders; tell it to discount them.
+    for (UIView *obstruction in [self.exposureChecker friendlyObstructionViews]) {
+        [session addFriendlyObstruction:obstruction purpose:PBMOpenMeasurementFriendlyObstructionPurposeTransparentOverlay];
+    }
 }
 
 #pragma mark - Utilities

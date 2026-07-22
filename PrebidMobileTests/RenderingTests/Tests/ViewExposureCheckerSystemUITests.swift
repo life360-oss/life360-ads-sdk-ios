@@ -355,3 +355,158 @@ class PBMViewExposureCheckerSystemUITests: XCTestCase {
         return CGFloat(checker.exposure.exposureFactor)
     }
 }
+
+/// Verifies `NativoViewExposureChecker.friendlyObstructionViews` — the set of overlapping views whose
+/// entire subtree paints nothing over the ad, which the OM path registers as OMID friendly obstructions
+/// so transparent overlays stop eroding measured viewability.
+class NativoFriendlyObstructionTests: XCTestCase {
+
+    var window: UIWindow!
+    var viewController: UIViewController!
+    var adView: UIView!
+
+    override func setUp() {
+        super.setUp()
+
+        window = UIWindow(frame: CGRect(x: 0, y: 0, width: 375, height: 667))
+        window.makeKeyAndVisible()
+
+        viewController = UIViewController()
+        viewController.view.backgroundColor = .white
+        window.rootViewController = viewController
+
+        adView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 250))
+        adView.backgroundColor = .red
+        viewController.view.addSubview(adView)
+    }
+
+    override func tearDown() {
+        window.isHidden = true
+        window = nil
+        viewController = nil
+        adView = nil
+        super.tearDown()
+    }
+
+    // MARK: - Helpers
+
+    private func friendlyObstructions() -> [UIView] {
+        viewController.view.layoutIfNeeded()
+        window.layoutIfNeeded()
+        let checker = NativoViewExposureChecker(view: adView, onExposureChange: nil)
+        return checker.friendlyObstructionViews()
+    }
+
+    private func addOverlay(_ view: UIView, frame: CGRect = CGRect(x: 0, y: 0, width: 100, height: 100)) {
+        view.frame = frame
+        viewController.view.addSubview(view) // added after adView -> drawn on top
+    }
+
+    private func assertFriendly(_ view: UIView, _ friendly: [UIView], file: StaticString = #file, line: UInt = #line) {
+        XCTAssertTrue(friendly.contains { $0 === view }, "expected view to be a friendly obstruction", file: file, line: line)
+    }
+
+    private func assertNotFriendly(_ view: UIView, _ friendly: [UIView], file: StaticString = #file, line: UInt = #line) {
+        XCTAssertFalse(friendly.contains { $0 === view }, "expected view NOT to be a friendly obstruction", file: file, line: line)
+    }
+
+    // MARK: - Tests
+
+    func testTransparentOverlayIsFriendly() {
+        let overlay = UIView()
+        overlay.backgroundColor = .clear
+        addOverlay(overlay)
+
+        assertFriendly(overlay, friendlyObstructions())
+    }
+
+    func testOverlayWithNoBackgroundColorIsFriendly() {
+        // A gesture/tap-catching overlay with no background at all still overlaps but draws nothing.
+        let overlay = UIView()
+        overlay.backgroundColor = nil
+        addOverlay(overlay)
+
+        assertFriendly(overlay, friendlyObstructions())
+    }
+
+    func testOpaqueBackgroundOverlayIsNotFriendly() {
+        let overlay = UIView()
+        overlay.backgroundColor = .blue
+        addOverlay(overlay)
+
+        assertNotFriendly(overlay, friendlyObstructions())
+    }
+
+    func testLabelWithTextIsNotFriendly() {
+        let label = UILabel()
+        label.text = "Sponsored"
+        label.textColor = .black
+        addOverlay(label)
+
+        assertNotFriendly(label, friendlyObstructions())
+    }
+
+    func testImageViewWithImageIsNotFriendly() {
+        let imageView = UIImageView()
+        imageView.image = UIImage()
+        addOverlay(imageView)
+
+        assertNotFriendly(imageView, friendlyObstructions())
+    }
+
+    func testHiddenOverlayIsNotFriendly() {
+        let overlay = UIView()
+        overlay.backgroundColor = .clear
+        overlay.isHidden = true
+        addOverlay(overlay)
+
+        assertNotFriendly(overlay, friendlyObstructions())
+    }
+
+    func testNonOverlappingOverlayIsNotFriendly() {
+        let overlay = UIView()
+        overlay.backgroundColor = .clear
+        addOverlay(overlay, frame: CGRect(x: 0, y: 400, width: 100, height: 100)) // below the ad
+
+        assertNotFriendly(overlay, friendlyObstructions())
+    }
+
+    func testViewBelowAdInZOrderIsNotConsidered() {
+        // Inserted beneath the ad view; OMID only counts views drawn on top, so it must not appear.
+        let underlay = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        underlay.backgroundColor = .clear
+        viewController.view.insertSubview(underlay, belowSubview: adView)
+
+        assertNotFriendly(underlay, friendlyObstructions())
+    }
+
+    func testTransparentContainerWithOpaqueChildIsNotFriendly() {
+        // Container itself is transparent, but a child paints over the ad -> the subtree occludes, so
+        // neither the container nor the opaque child may be registered.
+        let container = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        container.backgroundColor = .clear
+        let opaqueChild = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        opaqueChild.backgroundColor = .green
+        container.addSubview(opaqueChild)
+        addOverlay(container, frame: container.frame)
+
+        let friendly = friendlyObstructions()
+        assertNotFriendly(container, friendly)
+        assertNotFriendly(opaqueChild, friendly)
+    }
+
+    func testFullyTransparentContainerIsFriendlyAtRoot() {
+        // Container and child both transparent -> the container root covers the whole subtree, and the
+        // child is not listed separately.
+        let container = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        container.backgroundColor = .clear
+        let transparentChild = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        transparentChild.backgroundColor = .clear
+        container.addSubview(transparentChild)
+        addOverlay(container, frame: container.frame)
+
+        let friendly = friendlyObstructions()
+        assertFriendly(container, friendly)
+        assertNotFriendly(transparentChild, friendly)
+    }
+}

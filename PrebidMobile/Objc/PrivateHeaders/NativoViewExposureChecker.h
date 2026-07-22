@@ -15,6 +15,11 @@ typedef void(^NativoExposureChangeHandler)(id<PBMViewExposure> exposure, NSError
 
 - (instancetype)initWithView:(UIView *)view onExposureChange:(nullable NativoExposureChangeHandler)onExposureChange;
 
+/// OMID flags any overlapping alpha>0/!hidden view as an occluder, ignoring transparent backgrounds
+/// and non-drawing children. This surfaces the views whose entire subtree paints nothing over the ad
+/// so callers can register them as OMID friendly obstructions and keep viewability accurate.
+- (NSArray<UIView *> *)friendlyObstructionViews;
+
 @end
 
 NS_ASSUME_NONNULL_END
