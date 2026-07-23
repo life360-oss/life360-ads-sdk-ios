@@ -71,6 +71,7 @@
 #import "PBMInterstitialLayoutConfigurator.h"
 #import "PBMSKAdNetworksParameterBuilder.h"
 #import "PBMViewExposureChecker.h"
+#import "NativoViewExposureChecker.h"
 
 // Extensions
 #import "NSException+PBMExtensions.h"

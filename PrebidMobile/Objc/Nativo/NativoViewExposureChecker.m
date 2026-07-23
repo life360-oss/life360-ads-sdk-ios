@@ -45,6 +45,12 @@
 
 @end
 
+typedef NS_ENUM(NSInteger, OcclusionType) {
+    OcclusionTypeNone = 0,    // hidden, or does not overlap the ad
+    OcclusionTypeTransparent, // overlaps the ad but paints nothing over it
+    OcclusionTypeOpaque,      // paints opaque content over the ad somewhere in the subtree
+};
+
 @implementation NativoViewExposureChecker {
     id<PBMViewExposure> _exposure;
 }
@@ -405,42 +411,122 @@ static const CGFloat kAlphaEpsilon = 0.01;
     return YES;
 }
 
-// Optimized traversal: compute conversion/intersection once per node and thread current clip down
-- (void)collectObstructionsFrom:(UIView *)view withClip:(CGRect)currentClipInTestedCoords {
-    // Basic hidden/alpha/zero/window checks
+// Single traversal shared by the exposure calculation and OMID friendly-obstruction detection: it
+// makes one opacity decision per view and reports through two optional channels. `obstructions`
+// receives the intersecting rect of every view that paints opaque content over the ad (drives the
+// exposure factor). `friendly` receives the maximal roots of subtrees that paint nothing over the ad
+// — OMID would otherwise count these transparent overlays as occluders, so callers register them as
+// friendly obstructions. The return value tells the parent whether this subtree occludes, which it
+// uses to decide whether a fully-transparent child is itself a maximal friendly root.
+- (OcclusionType)collectObstructionsFrom:(UIView *)view
+                                  withClip:(CGRect)currentClipInTestedCoords
+                              obstructions:(NSMutableArray<NSValue *> *)obstructions
+                                  friendly:(NSMutableArray<UIView *> *)friendly {
+    // Basic hidden/alpha/zero/window checks. OMID likewise ignores hidden/transparent views.
     if ([self isEffectivelyHidden:view]) {
-        return;
+        return OcclusionTypeNone;
     }
-    
-    // Compute this view's rect in testedView coordinates once
+
+    // Compute this view's rect in testedView coordinates once, then intersect with the current clip.
     CGRect viewRectInTested = [self.testedView convertRect:view.bounds fromView:view];
-    // Intersect with the current clip
     CGRect intersection = CGRectIntersection(currentClipInTestedCoords, viewRectInTested);
     if (CGRectIsEmpty(intersection)) {
-        return;
+        return OcclusionTypeNone; // doesn't overlap the ad
     }
-    
-    // If the view contributes opaque content, add its intersecting rect as an obstruction.
-    // Convert intersection to the view's own coordinate space so that sublayer frames
-    // (which live in that same space) can be compared directly inside the check.
+
+    // Convert intersection to the view's own coordinate space so that sublayer frames (which live in
+    // that same space) can be compared directly inside the opacity check.
     CGRect intersectionInViewBounds = [view convertRect:intersection fromView:self.testedView];
-    if ([self viewHasOpaqueVisualContent:view inBoundsRect:intersectionInViewBounds]) {
-        [self.obstructions addObject:@(intersection)];
+    BOOL selfOccludes = [self viewHasOpaqueVisualContent:view inBoundsRect:intersectionInViewBounds];
+    if (selfOccludes) {
+        [obstructions addObject:@(intersection)]; // no-op when obstructions is nil (friendly pass)
         if (view.clipsToBounds) {
-            return;
+            // A clipping opaque view hides its subtree from both measurements: its rect already
+            // accounts for the occluded region, and any transparent descendant sits behind it, so
+            // registering that descendant as friendly could not change OMID's result.
+            return OcclusionTypeOpaque;
         }
     }
-    
-    // Recurse into children
+
     CGRect nextClip = view.clipsToBounds ? intersection : currentClipInTestedCoords;
+    BOOL subtreeOccludes = selfOccludes;
+    NSMutableArray<UIView *> *transparentChildren = nil;
     for (UIView *subView in view.subviews) {
-        [self collectObstructionsFrom:subView withClip:nextClip];
+        OcclusionType childResult = [self collectObstructionsFrom:subView
+                                                           withClip:nextClip
+                                                       obstructions:obstructions
+                                                           friendly:friendly];
+        if (childResult == OcclusionTypeOpaque) {
+            subtreeOccludes = YES; // maximal roots inside this child were already appended to friendly
+        } else if (childResult == OcclusionTypeTransparent && friendly) {
+            // Defer: promote this transparent child to a friendly root only if some other part of the
+            // subtree occludes. Otherwise `view` itself becomes the single maximal root below.
+            if (!transparentChildren) {
+                transparentChildren = [[NSMutableArray alloc] init];
+            }
+            [transparentChildren addObject:subView];
+        }
     }
+
+    if (subtreeOccludes) {
+        // Boundary between occluding and transparent regions: each fully-transparent overlapping child
+        // is a maximal friendly root.
+        [friendly addObjectsFromArray:transparentChildren];
+        return OcclusionTypeOpaque;
+    }
+
+    // The whole subtree is transparent; let the caller register `view` as the single maximal root.
+    return OcclusionTypeTransparent;
 }
 
-// Backwards-compatible shim for existing callers
+// Backwards-compatible shims for the exposure calculation, which only needs obstruction rects.
+- (void)collectObstructionsFrom:(UIView *)view withClip:(CGRect)currentClipInTestedCoords {
+    [self collectObstructionsFrom:view withClip:currentClipInTestedCoords obstructions:self.obstructions friendly:nil];
+}
+
 - (void)collectObstructionsFrom:(UIView *)view {
     [self collectObstructionsFrom:view withClip:self.clippedRect];
+}
+
+#pragma mark - Friendly obstructions (OMID)
+
+// OMID's native occlusion detection treats every overlapping !hidden/alpha>0 view as an occluder,
+// even when the view (and its whole subtree) paints nothing over the ad. This surfaces the on-top
+// views whose entire subtree is transparent over the ad so callers can register them as OMID friendly
+// obstructions and stop those overlays from eroding the measured viewable area.
+- (NSArray<UIView *> *)friendlyObstructionViews {
+    // No foreground gate: the only caller (OM session setup) is already foreground, and which
+    // overlapping views are transparent is independent of app state.
+    NSMutableArray<UIView *> *result = [[NSMutableArray alloc] init];
+    if (!self.testedView || self.testedView.superview == nil) {
+        return result;
+    }
+
+    // OMID measures within the ad's own bounds, and only views drawn on top of the ad (the same set
+    // visitParent:fromChild: walks) can occlude it, so clip to the ad bounds and iterate later siblings
+    // up the ancestor chain.
+    CGRect const adClip = self.testedView.bounds;
+    UIView *child = self.testedView;
+    UIView *parent = child.superview;
+    while (parent != nil) {
+        if (parent.isHidden) {
+            break;
+        }
+        NSArray<UIView *> *subViews = [parent subviews];
+        for (NSUInteger i = [subViews indexOfObject:child] + 1, n = subViews.count; i < n; i++) {
+            UIView *sibling = subViews[i];
+            OcclusionType siblingResult = [self collectObstructionsFrom:sibling
+                                                                 withClip:adClip
+                                                             obstructions:nil
+                                                                 friendly:result];
+            if (siblingResult == OcclusionTypeTransparent) {
+                [result addObject:sibling]; // whole sibling subtree transparent -> maximal root
+            }
+        }
+        child = parent;
+        parent = parent.superview;
+    }
+    return result;
 }
 
 // return 'YES' if resulted in non-empty rect

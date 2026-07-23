@@ -25,6 +25,8 @@
             return OMIDFriendlyObstructionCloseAd;
         case PBMOpenMeasurementFriendlyObstructionPurposeVideoViewProgressBar:
             return OMIDFriendlyObstructionMediaControls;
+        case PBMOpenMeasurementFriendlyObstructionPurposeTransparentOverlay:
+            return OMIDFriendlyObstructionNotVisible;
         default:
             return OMIDFriendlyObstructionOther;
     }
@@ -49,6 +51,8 @@
             return @"Learn More  button";
         case PBMOpenMeasurementFriendlyObstructionPurposeVideoViewProgressBar:
             return @"Video playback Progress Bar";
+        case PBMOpenMeasurementFriendlyObstructionPurposeTransparentOverlay:
+            return @"Transparent overlapping view";
         default:
             return nil;
     }
