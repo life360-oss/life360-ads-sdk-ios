@@ -81,4 +81,12 @@ The fork does **not rename or remove** any existing Prebid Mobile public type or
 
 Within the Prebid configuration there is a new API to allow sharing a user's location with Nativo. Use `Prebid.shared.shareGeoLocationWithNativo = true`. Continue to use `Prebid.shared.shareGeoLocation` for sharing with Prebid Server & partners.
 
+`NativoBannerViewDelegate` extends `BannerViewDelegate` with a Nativo-specific load callback:
+
+```swift
+func bannerView(_ bannerView: BannerView, didReceiveNativoAdWithSize adSize: CGSize)
+```
+
+Conform your `BannerView` delegate to `NativoBannerViewDelegate` if you want to distinguish a Nativo win from a regular display win — when a Nativo-rendered ad loads, this callback fires *instead of* `bannerView(_:didReceiveAdWithAdSize:)`. Nativo `standardDisplay` bids go through the regular display path and keep reporting via `bannerView(_:didReceiveAdWithAdSize:)`. Delegates that stay on plain `BannerViewDelegate` need no changes: they receive `bannerView(_:didReceiveAdWithAdSize:)` for every win, Nativo or not.
+
 For base Prebid Mobile API documentation, see the [Prebid docs](https://docs.prebid.org/prebid-mobile/pbm-api/ios/code-integration-ios.html).

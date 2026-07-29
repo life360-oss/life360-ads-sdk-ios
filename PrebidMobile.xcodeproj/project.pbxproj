@@ -804,6 +804,8 @@
 		92D8BEB22747B464006BD78E /* MediationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D8BEB12747B464006BD78E /* MediationConstants.swift */; };
 		92EE5A0D27F9D292003D7691 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EE5A0C27F9D292003D7691 /* Position.swift */; };
 		92F6720827F252E500EA3B8D /* BaseInterstitialAdUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F6720727F252E500EA3B8D /* BaseInterstitialAdUnitTest.swift */; };
+		5DC1298B0000000000000001 /* NativoBannerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1298B0000000000000002 /* NativoBannerViewDelegate.swift */; };
+		5DC1298C0000000000000001 /* NativoBannerViewDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1298C0000000000000002 /* NativoBannerViewDelegateTest.swift */; };
 		93FABAF0BAC33DE239EFED1D /* NativoAdType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744E60F09562467414158B98 /* NativoAdType.swift */; };
 		9720387C2358771600F8025A /* NativeRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9720387B2358771600F8025A /* NativeRequestTests.swift */; };
 		9743CB84235F1CDB002E2CAA /* NativeAssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743CB83235F1CDB002E2CAA /* NativeAssetTests.swift */; };
@@ -1504,6 +1506,8 @@
 		60C0382B2204BB190082B32C /* PrebidMobileTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PrebidMobileTest-Bridging-Header.h"; sourceTree = "<group>"; };
 		60D792FB217E229B0080F428 /* Life360AdsSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Life360AdsSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D79302217E229B0080F428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5DC1298B0000000000000002 /* NativoBannerViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBannerViewDelegate.swift; sourceTree = "<group>"; };
+		5DC1298C0000000000000002 /* NativoBannerViewDelegateTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBannerViewDelegateTest.swift; sourceTree = "<group>"; };
 		744E60F09562467414158B98 /* NativoAdType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoAdType.swift; sourceTree = "<group>"; };
 		92028EA527F0D89E00783470 /* NativeAdConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeAdConfiguration.swift; sourceTree = "<group>"; };
 		920E8D6C28084BF200E6313B /* VideoControlsConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlsConfigTests.swift; sourceTree = "<group>"; };
@@ -1815,6 +1819,7 @@
 				3A6D7AF12ED53AD6001099B1 /* NativoBidResponse.swift */,
 				3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtNativo.swift */,
 				744E60F09562467414158B98 /* NativoAdType.swift */,
+				5DC1298B0000000000000002 /* NativoBannerViewDelegate.swift */,
 				5A51286FB5526C0F52FF4556 /* BidAdTypeExtention.swift */,
 				3AED93332FD34398007E2C44 /* NativoUtils.swift */,
 				3AED93352FD34398007E2C44 /* Life360Ads.swift */,
@@ -3346,6 +3351,7 @@
 				E5D79CAF2FAE951C00C0C44A /* PluginRendererFactoryTest.swift */,
 				4C8FE9E7076E1528CD4EE3E3 /* NativoBidResponseTest.swift */,
 				5DC1298A0000000000000002 /* NativoBundleFieldTest.swift */,
+				5DC1298C0000000000000002 /* NativoBannerViewDelegateTest.swift */,
 			);
 			path = Prebid;
 			sourceTree = "<group>";
@@ -4252,6 +4258,7 @@
 				533135C6282A869800AA1E4D /* BidTest.swift in Sources */,
 				F271AB277F15E7BB4DC4FD29 /* NativoBidResponseTest.swift in Sources */,
 				5DC1298A0000000000000001 /* NativoBundleFieldTest.swift in Sources */,
+				5DC1298C0000000000000001 /* NativoBannerViewDelegateTest.swift in Sources */,
 				539897A12CE498A20075234B /* InterstitialObserverTests.swift in Sources */,
 				922AFC9127352C9B00732C53 /* MockPBMWebView.swift in Sources */,
 				922AFCEE2736FC8600732C53 /* XCTest.swift in Sources */,
@@ -4564,6 +4571,7 @@
 				5ADC1EB12DB9A90E00EA6477 /* AdViewManagerDelegate.swift in Sources */,
 				3A6D7AF02ED52DCB001099B1 /* ORTBBidExtNativo.swift in Sources */,
 				93FABAF0BAC33DE239EFED1D /* NativoAdType.swift in Sources */,
+				5DC1298B0000000000000001 /* NativoBannerViewDelegate.swift in Sources */,
 				FDC2FDF2C1018D2D033A591B /* BidAdTypeExtention.swift in Sources */,
 				978A82F58FD9C612F99D1C0B /* NativoGAMUtils.swift in Sources */,
 				5AA8F4152DB26445008A7702 /* BidRequesterProtocol.swift in Sources */,
