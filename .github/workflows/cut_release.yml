@@ -1,0 +1,169 @@
+name: Cut release (bump version + tag)
+
+# Runs scripts/updateVersion.sh on develop to bump the Life360 Ads SDK version
+# (Constants.swift, the four podspecs, and CURRENT_PROJECT_VERSION), commits the
+# result, and pushes a matching v<version> tag. Stops there: publishing the
+# GitHub Release from that tag is a manual step.
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Semver part to bump (ignored if "version" is set)
+        type: choice
+        default: patch
+        options: [patch, minor, major, prerelease]
+      version:
+        description: Exact version override, e.g. 1.3.0 or 1.3.0-alpha.1 (leave blank to use bump)
+        required: false
+        type: string
+
+concurrency:
+  group: cut-release
+  cancel-in-progress: false
+
+jobs:
+  cut-release:
+    # macOS runner: updateVersion.sh edits in place with BSD sed (`sed -i ''`),
+    # which GNU sed on ubuntu-latest rejects.
+    runs-on: macos-15
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          fetch-depth: 0
+          # PAT (owned by a user whose role is on the ruleset bypass list) so the
+          # commit/tag push to protected develop bypasses the ruleset. Without this
+          # the push authenticates as the default token and is rejected.
+          token: ${{ secrets.RELEASE_BOT_TOKEN }}
+
+      - name: Compute next version
+        id: ver
+        run: |
+          set -euo pipefail
+          CONSTANTS="PrebidMobile/Swift/Constants.swift"
+          CURRENT=$(sed -n 's/.*public static let VERSION[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' "$CONSTANTS" | head -1)
+          if [ -z "$CURRENT" ]; then
+            echo "::error::Could not read VERSION from $CONSTANTS."
+            exit 1
+          fi
+          echo "Current VERSION: $CURRENT"
+
+          # Split current into its x.y.z core and optional -prerelease suffix.
+          CORE="${CURRENT%%-*}"
+          if [ "$CURRENT" = "$CORE" ]; then PRE=""; else PRE="${CURRENT#*-}"; fi
+
+          OVERRIDE="${{ inputs.version }}"
+          if [ -n "$OVERRIDE" ]; then
+            NEW="${OVERRIDE#v}"
+          elif [ "${{ inputs.bump }}" = "prerelease" ]; then
+            # Bump the trailing numeric identifier, e.g. 1.3.0-alpha.4 -> 1.3.0-alpha.5.
+            if ! [[ "$PRE" =~ ^(.*\.)([0-9]+)$ ]]; then
+              echo "::error::Current version '$CURRENT' has no numeric pre-release suffix to bump; pass an explicit 'version' input (e.g. ${CORE%.*}.$(( ${CORE##*.} + 1 ))-alpha.1)."
+              exit 1
+            fi
+            NEW="$CORE-${BASH_REMATCH[1]}$(( BASH_REMATCH[2] + 1 ))"
+          else
+            if ! [[ "$CURRENT" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "::error::Current version '$CURRENT' is not plain x.y.z; use bump=prerelease or pass an explicit 'version' input."
+              exit 1
+            fi
+            IFS='.' read -r MA MI PA <<< "$CORE"
+            case "${{ inputs.bump }}" in
+              major) MA=$((MA + 1)); MI=0; PA=0 ;;
+              minor) MI=$((MI + 1)); PA=0 ;;
+              patch) PA=$((PA + 1)) ;;
+            esac
+            NEW="$MA.$MI.$PA"
+          fi
+
+          if ! [[ "$NEW" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]]; then
+            echo "::error::Computed version '$NEW' is not a valid semver."
+            exit 1
+          fi
+          if [ "$NEW" = "$CURRENT" ]; then
+            echo "::error::New version '$NEW' equals current version; nothing to release."
+            exit 1
+          fi
+
+          # Guard against accidental downgrade. sort -V does not order pre-release
+          # suffixes per semver, so compare the x.y.z cores and handle the
+          # equal-core case (a pre-release of an already-released version) separately.
+          NEW_CORE="${NEW%%-*}"
+          GREATER=$(printf '%s\n%s\n' "$CORE" "$NEW_CORE" | sort -V | tail -n1)
+          if [ "$GREATER" != "$NEW_CORE" ]; then
+            echo "::error::New version '$NEW' is older than current '$CURRENT'."
+            exit 1
+          fi
+          if [ "$NEW_CORE" = "$CORE" ] && [ -z "$PRE" ] && [ "$NEW" != "$NEW_CORE" ]; then
+            echo "::error::'$CURRENT' is already released; '$NEW' would be a pre-release of it."
+            exit 1
+          fi
+
+          if git rev-parse -q --verify "refs/tags/v$NEW" >/dev/null; then
+            echo "::error::Tag v$NEW already exists."
+            exit 1
+          fi
+
+          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+          echo "new=$NEW" >> "$GITHUB_OUTPUT"
+          echo "Next version: $NEW"
+
+      - name: Bump version
+        run: ./scripts/updateVersion.sh "${{ steps.ver.outputs.new }}"
+
+      # updateVersion.sh does not assert its own edits for the release version, so
+      # a source-format change could otherwise leave a stale version in the commit.
+      - name: Verify the bump took
+        run: |
+          set -euo pipefail
+          NEW="${{ steps.ver.outputs.new }}"
+
+          check() {
+            local file="$1" expr="$2" actual
+            actual="$(sed -n "$expr" "$file" | head -1)"
+            if [ "$actual" != "$NEW" ]; then
+              echo "::error file=$file::Version is '${actual:-<not found>}', expected '$NEW'."
+              exit 1
+            fi
+          }
+
+          check PrebidMobile/Swift/Constants.swift \
+            's/.*public static let VERSION[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p'
+          for podspec in Life360AdsSDK.podspec Life360AdsSDKAdMobAdapters.podspec \
+                         Life360AdsSDKGAMEventHandlers.podspec Life360AdsSDKMAXAdapters.podspec; do
+            check "$podspec" 's/.*s\.version[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p'
+          done
+          if git diff --quiet; then
+            echo "::error::updateVersion.sh produced no changes."
+            exit 1
+          fi
+          git diff --stat
+
+      - name: Commit, tag, and push
+        run: |
+          set -euo pipefail
+          NEW="${{ steps.ver.outputs.new }}"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Release v${NEW}"
+          git tag -a "v${NEW}" -m "Release v${NEW}"
+          git push origin develop
+          git push origin "v${NEW}"
+
+      - name: Summary
+        run: |
+          NEW="${{ steps.ver.outputs.new }}"
+          REPO="${{ github.server_url }}/${{ github.repository }}"
+          {
+            echo "### Release cut: v${NEW}"
+            echo ""
+            echo "- Bumped SDK version ${{ steps.ver.outputs.current }} → **${NEW}** on \`develop\` via \`scripts/updateVersion.sh\`"
+            echo "- Pushed tag \`v${NEW}\`"
+            echo ""
+            echo "**Next step (manual):** publish the GitHub Release for \`v${NEW}\`:"
+            echo ""
+            echo "[Create the release →](${REPO}/releases/new?tag=v${NEW})"
+          } >> "$GITHUB_STEP_SUMMARY"
