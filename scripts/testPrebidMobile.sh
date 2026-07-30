@@ -8,13 +8,16 @@ fi
 #                       Do not use this flag locally to keep everything updated.
 # --quick:              run only quick set of tests for PR.
 #                       It is needed for the GitHub Actions builds on every PR to avoid running all tests.
+# --concurrency:        run only the concurrency suites, under Thread Sanitizer, with retries disabled.
+#                       Kept separate because TSan runs 5-15x slower.
 
 run_only_with_latest_ios="NO"
 run_only_PR_tests="NO"
+run_concurrency_tests="NO"
 
 usage() {
   cat <<'USAGE'
-Usage: testPrebidMobile.sh [--latest] [--quick]
+Usage: testPrebidMobile.sh [--latest] [--quick] [--concurrency]
 USAGE
 }
 
@@ -23,6 +26,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --latest)         run_only_with_latest_ios="YES"; shift ;;
     --quick)          run_only_PR_tests="YES"; shift ;;
+    --concurrency)    run_concurrency_tests="YES"; shift ;;
     -h|--help)        usage; exit 0 ;;
     --)               shift; break ;;
     -*)               echo "Unknown option: $1" >&2; usage; exit 2 ;;
@@ -106,14 +110,24 @@ then
 fi
 
 TESTPLAN=""
+SANITIZER_ARGS=()
+RETRY_ARGS=(-retry-tests-on-failure)
 
-if [ "$run_only_PR_tests" != "YES" ]; then
+if [ "$run_concurrency_tests" == "YES" ]; then
+    TESTPLAN="PrebidMobileConcurrencyTests"
+    # Thread Sanitizer must be on for build-for-testing as well. Instrumenting only the test run
+    # leaves the binary uninstrumented, and the run reports nothing.
+    SANITIZER_ARGS=(-enableThreadSanitizer YES)
+    # No retries here. A concurrency regression is intermittent by nature, so a retry that happens to
+    # pass would report green and hide exactly what this plan exists to catch.
+    RETRY_ARGS=()
+elif [ "$run_only_PR_tests" != "YES" ]; then
     TESTPLAN="PrebidMobileTests"
 else
     TESTPLAN="PrebidMobilePRTests"
 fi
 
-echo -e "\n${GREEN}Running PrebidMobile unit tests${NC} \n"
+echo -e "\n${GREEN}Running PrebidMobile unit tests (${TESTPLAN})${NC} \n"
 
 xcodebuild \
     -workspace Life360AdsSDK.xcworkspace \
@@ -122,6 +136,7 @@ xcodebuild \
     -configuration Debug \
     -destination "id=$SIMULATOR_ID" \
     -destination-timeout 60 \
+    "${SANITIZER_ARGS[@]}" \
     build-for-testing
 
 xcodebuild \
@@ -131,7 +146,8 @@ xcodebuild \
     -testPlan "${TESTPLAN}" \
     -destination "id=$SIMULATOR_ID" \
     -destination-timeout 60 \
-    -retry-tests-on-failure \
+    "${SANITIZER_ARGS[@]}" \
+    "${RETRY_ARGS[@]}" \
     test-without-building
 
 if [[ ${PIPESTATUS[0]} == 0 ]]; then

@@ -730,6 +730,7 @@
 		925D5E092737DF5F00A8A2B5 /* BannerViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D5E082737DF5F00A8A2B5 /* BannerViewTest.swift */; };
 		925D5E0E2737DFCC00A8A2B5 /* RawWinningBidFabricator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D5E0D2737DFCC00A8A2B5 /* RawWinningBidFabricator.swift */; };
 		9D1C4E97CACE02124141B989 /* NativoBidFabricator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93218C248E91B48AF57BF342 /* NativoBidFabricator.swift */; };
+		C50998AB4D4510855D165FD8 /* SharedConfigConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E4357C8FBA77B115CDE1A2 /* SharedConfigConcurrencyTest.swift */; };
 		AC9A963A535DC13CCD6C9B94 /* BannerViewLoadCycleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B3E9B9D07159E391C4D935 /* BannerViewLoadCycleTest.swift */; };
 		E413804CB7ACF038826CFFA5 /* NativoBidRequesterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D1CA153AE935DFAB789B1B /* NativoBidRequesterTest.swift */; };
 		E2ED07D1301D026BF48EFFA4 /* NativoAdLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FDBE5844F46A8326B59A8B /* NativoAdLayoutTest.swift */; };
@@ -1650,6 +1651,7 @@
 		925D5E082737DF5F00A8A2B5 /* BannerViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewTest.swift; sourceTree = "<group>"; };
 		925D5E0D2737DFCC00A8A2B5 /* RawWinningBidFabricator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawWinningBidFabricator.swift; sourceTree = "<group>"; };
 		93218C248E91B48AF57BF342 /* NativoBidFabricator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBidFabricator.swift; sourceTree = "<group>"; };
+		90E4357C8FBA77B115CDE1A2 /* SharedConfigConcurrencyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedConfigConcurrencyTest.swift; sourceTree = "<group>"; };
 		46B3E9B9D07159E391C4D935 /* BannerViewLoadCycleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewLoadCycleTest.swift; sourceTree = "<group>"; };
 		60D1CA153AE935DFAB789B1B /* NativoBidRequesterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBidRequesterTest.swift; sourceTree = "<group>"; };
 		82FDBE5844F46A8326B59A8B /* NativoAdLayoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoAdLayoutTest.swift; sourceTree = "<group>"; };
@@ -3370,6 +3372,7 @@
 				533135C5282A869800AA1E4D /* BidTest.swift */,
 				E5D79CAF2FAE951C00C0C44A /* PluginRendererFactoryTest.swift */,
 				4C8FE9E7076E1528CD4EE3E3 /* NativoBidResponseTest.swift */,
+				90E4357C8FBA77B115CDE1A2 /* SharedConfigConcurrencyTest.swift */,
 						46B3E9B9D07159E391C4D935 /* BannerViewLoadCycleTest.swift */,
 				60D1CA153AE935DFAB789B1B /* NativoBidRequesterTest.swift */,
 				82FDBE5844F46A8326B59A8B /* NativoAdLayoutTest.swift */,
@@ -4181,6 +4184,7 @@
 				925D5E0E2737DFCC00A8A2B5 /* RawWinningBidFabricator.swift in Sources */,
 				9D1C4E97CACE02124141B989 /* NativoBidFabricator.swift in Sources */,
 				AC9A963A535DC13CCD6C9B94 /* BannerViewLoadCycleTest.swift in Sources */,
+				C50998AB4D4510855D165FD8 /* SharedConfigConcurrencyTest.swift in Sources */,
 				E413804CB7ACF038826CFFA5 /* NativoBidRequesterTest.swift in Sources */,
 				E2ED07D1301D026BF48EFFA4 /* NativoAdLayoutTest.swift in Sources */,
 				CD27BAF44B996C6F0CF4073B /* BannerViewConcurrencyTest.swift in Sources */,
