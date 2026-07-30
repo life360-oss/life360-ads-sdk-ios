@@ -408,14 +408,15 @@ public class BannerView:
 
     private func reportNativoLoadingSuccess(with size: CGSize) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self,
-                  let delegate = self.delegate,
-                  delegate.responds(to: #selector(BannerViewDelegate.bannerView(_:didReceiveNativoAdWithSize:)))
-            else {
-                self?.reportLoadingSuccess(with: size)
+            guard let self = self else { return }
+
+            // Hosts that haven't opted into the Nativo callback still expect the standard one.
+            guard let nativoDelegate = self.delegate as? NativoBannerViewDelegate else {
+                self.reportLoadingSuccess(with: size)
                 return
             }
-            delegate.bannerView?(self, didReceiveNativoAdWithSize: size)
+
+            nativoDelegate.bannerView(self, didReceiveNativoAdWithSize: size)
         }
     }
     
