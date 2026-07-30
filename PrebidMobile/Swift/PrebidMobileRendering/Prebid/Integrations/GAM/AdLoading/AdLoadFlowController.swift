@@ -34,9 +34,23 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
     private let configValidationBlock: AdUnitConfigValidationBlock
     private let savedAdUnitConfig: AdUnitConfig
 
-    var bidResponse: BidResponse?
+    // Read from the main thread as well as this controller's own queue — BannerView consults
+    // hasFailedLoading and lastBidResponse while deciding whether to auto-refresh — so both need to
+    // be atomic rather than merely serialised behind the queue.
+    var bidResponse: BidResponse? {
+        get { _bidResponse.value }
+        set { _bidResponse.value = newValue }
+    }
+
+    var flowState: AdLoadFlowState {
+        get { _flowState.value }
+        set { _flowState.value = newValue }
+    }
+
+    private let _bidResponse = SynchronizedValue<BidResponse?>(nil)
+    private let _flowState = SynchronizedValue<AdLoadFlowState>(.idle)
+
     var nativoBidResponse: BidResponse?
-    var flowState: AdLoadFlowState = .idle
     private var bidRequestError: Error?
     private var bidRequester: BidRequesterProtocol?
     private var nativoRequester: BidRequesterProtocol?

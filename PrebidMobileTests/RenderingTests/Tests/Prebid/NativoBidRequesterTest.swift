@@ -77,6 +77,20 @@ class NativoBidRequesterTest: XCTestCase {
         XCTAssertEqual(firstCompletionCount, 1)
     }
 
+    /// `timeoutMillis` is milliseconds, but `PrebidServerConnection` applies its `timeout` to
+    /// `URLRequest.timeoutInterval`, which is seconds. Passing the millisecond value through gives the
+    /// request a deadline 1000x too long, so a lost response never surfaces as an error.
+    func testRequestTimeout_isExpressedInSeconds() {
+        Prebid.shared.timeoutMillis = 2000
+        let requester = makeRequester()
+        requester.requestBids { _, _ in }
+
+        XCTAssertTrue(connection.postWasCalled)
+        XCTAssertEqual(connection.capturedTimeout, 2.0, "2000 ms must reach the connection as 2 seconds")
+
+        connection.fireStoredCallback()
+    }
+
     // MARK: - Helpers
 
     private func makeRequester() -> BidRequesterProtocol {
@@ -95,6 +109,7 @@ class NativoBidRequesterTest: XCTestCase {
 final class DoubleFiringConnection: NSObject, PrebidServerConnectionProtocol {
 
     private(set) var postWasCalled = false
+    private(set) var capturedTimeout: TimeInterval?
     private var storedCallback: PrebidServerResponseCallback?
 
     var userAgentService: UserAgentService { .shared }
@@ -116,6 +131,7 @@ final class DoubleFiringConnection: NSObject, PrebidServerConnectionProtocol {
         callback: @escaping PrebidServerResponseCallback
     ) {
         postWasCalled = true
+        capturedTimeout = timeout
         storedCallback = callback
     }
 

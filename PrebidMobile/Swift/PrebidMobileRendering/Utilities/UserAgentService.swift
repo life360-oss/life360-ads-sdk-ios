@@ -19,14 +19,22 @@ import WebKit
 public class UserAgentService: NSObject {
     
     public static let shared = UserAgentService()
-    
-    public private(set) lazy var userAgent: String = store.userAgent ?? ""
-    
+
+    /// Read while assembling bid requests, so read from every ad unit's request queue, while the web
+    /// view below resolves it on the main thread. Backed by a lock rather than a `lazy var`, whose
+    /// initialisation is not synchronised.
+    public var userAgent: String {
+        _userAgent.value
+    }
+
+    private let _userAgent: SynchronizedValue<String>
     private var store: UserAgentPersistence
     private var webViews = [WKWebView]()
 
     required init(store: UserAgentPersistence? = nil) {
-        self.store = store ?? UserAgentDefaults()
+        let resolvedStore = store ?? UserAgentDefaults()
+        self.store = resolvedStore
+        self._userAgent = SynchronizedValue(resolvedStore.userAgent ?? "")
         super.init()
         fetchUserAgent()
     }
@@ -48,9 +56,14 @@ public class UserAgentService: NSObject {
                     Log.error(error.localizedDescription)
                 }
                 
-                if let result = result, self.userAgent.isEmpty  {
-                    self.userAgent = "\(result)"
-                    store.userAgent = self.userAgent
+                // Claim-and-set in one step, so two in-flight fetches cannot both persist a value.
+                let claimed: String? = self._userAgent.mutate { current in
+                    guard current.isEmpty, let result else { return nil }
+                    current = "\(result)"
+                    return current
+                }
+                if let claimed {
+                    store.userAgent = claimed
                 }
                 
                 self.webViews.removeAll(where: { $0 == webView })

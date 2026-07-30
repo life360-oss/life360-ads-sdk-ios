@@ -163,10 +163,13 @@ public class BannerView:
         
         autoRefreshManager = AutoRefreshManager(
             prefetchTime: PrebidConstants.AD_PREFETCH_TIME,
-            lockingQueue: adLoadFlowController?.dispatchQueue,
-            lockProvider: { [weak self] in
-                self?.adLoadFlowController?.mutationLock
-            },
+            // The refresh timer runs on the main queue and does not hold the flow controller's lock.
+            // `refreshBlock` reaches the controller through `refresh()`, which already serialises on
+            // that controller's own queue, and `mayRefreshNowBlock` reads UIKit state that belongs on
+            // main. Handing the timer the controller's queue and lock instead would mean acquiring the
+            // lock on one thread and releasing it on another.
+            lockingQueue: nil,
+            lockProvider: nil,
             refreshDelayBlock: { [weak self] in
                 if let interval = self?.adUnitConfig.refreshInterval {
                     return NSNumber(value: interval)
@@ -222,9 +225,9 @@ public class BannerView:
         )
     }
     
-    deinit {
-        Prebid.shared.storedAuctionResponse = nil
-    }
+    // No deinit clears `Prebid.shared.storedAuctionResponse`: it is process-wide configuration, and one
+    // ad unit going away must not strip the override out of every other ad unit's pending request.
+    // Callers that set it own clearing it.
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

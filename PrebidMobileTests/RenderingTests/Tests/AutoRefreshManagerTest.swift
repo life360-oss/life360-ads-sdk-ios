@@ -18,6 +18,7 @@ import XCTest
 @testable @_spi(PBMInternal) import Life360AdsSDK
 
 class AutoRefreshManagerTest: XCTestCase {
+
     func testNoTimerAutoStart() {
         let callbackExpectation = expectation(description: "callback called")
         callbackExpectation.isInverted = true
@@ -347,6 +348,68 @@ class AutoRefreshManagerTest: XCTestCase {
         XCTAssertEqual(refreshTimes.count, expectedRefreshTimes.count)
         for i in 0..<min(refreshTimes.count, expectedRefreshTimes.count) {
             XCTAssertLessThanOrEqual(abs(refreshTimes[i] - expectedRefreshTimes[i]), extraTimeToFinish)
+        }
+    }
+}
+
+
+/// Covers `AutoRefreshManager`'s locking path, which `AutoRefreshManagerTest` never exercises — every
+/// case there passes `lockingQueue: nil, lockProvider: nil`.
+///
+/// Deliberately a separate class: the PR test plan skips `AutoRefreshManagerTest` wholesale for its
+/// multi-second timer waits, and these need to gate a PR.
+///
+/// Whoever takes the lock has to give it back. The queue it guards is serial, so a lock left held
+/// blocks every block queued behind it for the rest of the process.
+class AutoRefreshManagerLockTest: XCTestCase {
+
+    /// Cancelling the pending refresh must still release the caller's lock.
+    func testCancelDuringPendingRefresh_releasesTheLock() {
+        let lock = NSLock()
+        let lockingQueue = DispatchQueue(label: "AutoRefreshManagerTest.locking")
+
+        let refreshed = expectation(description: "refresh is skipped after cancellation")
+        refreshed.isInverted = true
+
+        let manager = AutoRefreshManager(prefetchTime: 0,
+                                         lockingQueue: lockingQueue,
+                                         lockProvider: { lock },
+                                         refreshDelayBlock: { 1 },
+                                         mayRefreshNowBlock: { true },
+                                         refreshBlock: refreshed.fulfill)
+        withExtendedLifetime(manager) {
+            manager.setupRefreshTimer()
+
+            // Let the timer fire and hand the unlock to the main queue, then cancel before the main
+            // queue drains. `wait` below is what drains it.
+            Thread.sleep(forTimeInterval: 1.3)
+            manager.cancelRefreshTimer()
+
+            waitForExpectations(timeout: 2)
+
+            XCTAssertTrue(lock.try(), "the lock was never released, so the guarded queue is wedged")
+            lock.unlock()
+        }
+    }
+
+    /// The ordinary path: the refresh runs and the lock comes back.
+    func testRefreshThroughLockingQueue_releasesTheLock() {
+        let lock = NSLock()
+        let lockingQueue = DispatchQueue(label: "AutoRefreshManagerTest.locking")
+
+        let refreshed = expectation(description: "refresh runs")
+        let manager = AutoRefreshManager(prefetchTime: 0,
+                                         lockingQueue: lockingQueue,
+                                         lockProvider: { lock },
+                                         refreshDelayBlock: { 1 },
+                                         mayRefreshNowBlock: { true },
+                                         refreshBlock: refreshed.fulfill)
+        withExtendedLifetime(manager) {
+            manager.setupRefreshTimer()
+            waitForExpectations(timeout: 4)
+
+            XCTAssertTrue(lock.try(), "the lock was never released after a successful refresh")
+            lock.unlock()
         }
     }
 }
