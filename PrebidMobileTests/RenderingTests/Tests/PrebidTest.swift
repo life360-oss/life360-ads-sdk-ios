@@ -53,11 +53,27 @@ class PrebidTest: XCTestCase {
         try XCTUnwrap(Prebid.initializeSDK(serverURL: serverURL))
     }
     
+    // A host can start Nativo-only and add Prebid Server demand later in the session, so every
+    // `initializeSDK` overload has to re-arm the flag `initializeWithoutPrebid()` cleared.
+    func testInitializeSDK_reArmsPrebidServerDemand() throws {
+        // Keeps the status check off the network; this test only cares about the flag.
+        Prebid.shared.shouldDisableStatusCheck = true
+
+        Life360Ads.initializeWithoutPrebid()
+        XCTAssertFalse(Life360Ads.shared.prebidServerEnabled)
+
+        let serverURL = "https://prebid-server-test-j.prebid.org/openrtb2/auction"
+        try XCTUnwrap(Prebid.initializeSDK(serverURL: serverURL))
+
+        XCTAssertTrue(Life360Ads.shared.prebidServerEnabled)
+        XCTAssertTrue(AdUnitConfig(configId: "after-reinit").prebidServerEnabled)
+    }
+
     func testInitializeSDK() throws {
-        
+
         let serverURL = "https://prebid-server-test-j.prebid.org/openrtb2/auction"
         let expectation = expectation(description: "Expected successful initialization")
-        
+
         try XCTUnwrap(
             Prebid.initializeSDK(serverURL: serverURL) { status, error in
                 if case .succeeded = status {

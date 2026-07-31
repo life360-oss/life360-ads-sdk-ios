@@ -25,8 +25,17 @@ public class Life360Ads: NSObject {
         PrebidConstants.SDK_NAME
     }
 
-    /// False when the SDK was initialized without a Prebid Server (see `initializeWithoutPrebid()`).
-    public internal(set) var prebidServerEnabled = true
+    /// Whether ad units created from this point on may request Prebid Server demand.
+    public internal(set) var prebidServerEnabled: Bool {
+        get { prebidServerEnabledLock.withLock { _prebidServerEnabled } }
+        set { prebidServerEnabledLock.withLock { _prebidServerEnabled = newValue } }
+    }
+
+    /// Guards `_prebidServerEnabled`, which is written from whichever thread calls an initializer and
+    /// read whenever an ad unit is created — which for auto-refreshing ad units is not the main thread.
+    private let prebidServerEnabledLock = NSLock()
+
+    private var _prebidServerEnabled = true
 
     /// Set when willing to share precise location with Nativo for better ad targeting.
     /// Will not send to Prebid Server. This is separate from `Prebid.shared.shareGeoLocation`.

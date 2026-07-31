@@ -118,6 +118,30 @@ class PrebidServerStatusRequesterTests: XCTestCase {
         XCTAssertTrue(didComplete, "requestStatus should complete synchronously without a network call.")
     }
 
+    // `initializeWithoutPrebid()` sets no host, so a requester built then has no endpoint. A later
+    // `Prebid.initializeSDK(serverURL:)` supplies one to that same long-lived requester, which must
+    // pick it up rather than stay pinned to nil.
+    func testStatusEndpoint_ResolvedAfterHostSetLater() {
+        let requester = PrebidServerStatusRequester()
+        XCTAssertNil(requester.serverEndpoint)
+
+        let testHost = "https://unique-prebid-server-host.org"
+        try? Host.shared.setHostURL("\(testHost)/openrtb2/auction", nonTrackingURLString: nil)
+
+        XCTAssertEqual(requester.serverEndpoint, "\(testHost)/status/")
+    }
+
+    // A custom endpoint stays in force even if the host changes afterwards.
+    func testStatusEndpoint_CustomEndpointOutranksHost() {
+        let requester = PrebidServerStatusRequester()
+        let custom = "https://custom-status.prebid.org/status"
+        requester.setCustomStatusEndpoint(custom)
+
+        try? Host.shared.setHostURL("https://some-other-host.org/openrtb2/auction", nonTrackingURLString: nil)
+
+        XCTAssertEqual(requester.serverEndpoint, custom)
+    }
+
     func testRequestSkipStatusCheck_Skipped() {
         Prebid.shared.shouldDisableStatusCheck = true
         

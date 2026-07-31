@@ -43,6 +43,14 @@ public class AdUnitConfig: NSObject, NSCopying {
 
     public var nativeAdConfiguration: NativeAdConfiguration?
 
+    /// Whether this ad unit may request Prebid Server demand, captured from
+    /// `Life360Ads.shared.prebidServerEnabled` when the ad unit is created.
+    ///
+    /// Captured rather than read live so an ad unit built while the SDK was Nativo-only keeps that
+    /// behaviour for its whole lifetime, including auto-refresh cycles that run after a later
+    /// `Prebid.initializeSDK` call. Ad units created after that call request Prebid Server demand.
+    public var prebidServerEnabled = Life360Ads.shared.prebidServerEnabled
+
     // MARK: - Computed Properties
     
     public var additionalSizes: [CGSize]? {
@@ -126,6 +134,9 @@ public class AdUnitConfig: NSObject, NSCopying {
         let clone = AdUnitConfig(configId: self.configId, size: self.adSize)
         
         clone.adFormats = self.adFormats
+        // Copied explicitly: the clone's initializer captured whatever the global flag says now, which
+        // for a copy made after `Prebid.initializeSDK` is not what the original ad unit was built with.
+        clone.prebidServerEnabled = self.prebidServerEnabled
         clone.nativeAdConfiguration = self.nativeAdConfiguration
         clone.adConfiguration.bannerParameters = self.adConfiguration.bannerParameters
         clone.adConfiguration.videoParameters = self.adConfiguration.videoParameters
