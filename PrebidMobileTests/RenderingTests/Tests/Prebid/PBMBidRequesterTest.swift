@@ -56,7 +56,69 @@ class PBMBidRequesterTest: XCTestCase {
         
         waitForExpectations(timeout: 5)
     }
-    
+
+    /// `timeoutMillis` and `timeoutMillisDynamic` are milliseconds, but `PrebidServerConnection`
+    /// applies its `timeout` to `URLRequest.timeoutInterval`, which is seconds. Handing the
+    /// millisecond value straight through gives every bid request a deadline 1000x too long.
+    func testBidRequestTimeout_isExpressedInSeconds() {
+        sdkConfiguration.timeoutMillis = 2000
+
+        var capturedTimeout: TimeInterval?
+        let requested = expectation(description: "the request reaches the connection")
+        let connection = MockServerConnection(onPost: [{ (url, data, timeout, callback) in
+            capturedTimeout = timeout
+            requested.fulfill()
+            callback(PBMBidResponseTransformer.someValidResponse)
+        }])
+
+        makeRequester(connection).requestBids { _, _ in }
+
+        wait(for: [requested], timeout: 5)
+        XCTAssertEqual(capturedTimeout, 2.0, "2000 ms must reach the connection as 2 seconds")
+    }
+
+    /// The dynamic timeout is the value actually used in production, since `timeoutMillis`' setter
+    /// populates it on every assignment.
+    func testBidRequestTimeout_convertsDynamicTimeoutFromMilliseconds() {
+        sdkConfiguration.timeoutMillisDynamic = NSNumber(value: 1500)
+
+        var capturedTimeout: TimeInterval?
+        let requested = expectation(description: "the request reaches the connection")
+        let connection = MockServerConnection(onPost: [{ (url, data, timeout, callback) in
+            capturedTimeout = timeout
+            requested.fulfill()
+            callback(PBMBidResponseTransformer.someValidResponse)
+        }])
+
+        makeRequester(connection).requestBids { _, _ in }
+
+        wait(for: [requested], timeout: 5)
+        XCTAssertEqual(capturedTimeout, 1.5)
+    }
+
+    /// The server-driven adjustment computes in seconds but stores into the millisecond-typed
+    /// `timeoutMillisDynamic`, so it must scale on the way in or it poisons every later read.
+    /// A `tmaxrequest` far above the app's budget makes `MIN` settle on the app timeout exactly,
+    /// keeping the expected value free of round-trip jitter.
+    func testDynamicTimeout_isStoredInMilliseconds() {
+        sdkConfiguration.timeoutMillis = 2000
+        // The adjustment only runs when there is no dynamic value yet; `timeoutMillis`' setter
+        // just populated one, so clear it.
+        sdkConfiguration.timeoutMillisDynamic = nil
+
+        let completed = expectation(description: "the bid request completes")
+        let connection = MockServerConnection(onPost: [{ (url, data, timeout, callback) in
+            callback(PBMBidResponseTransformer.makeValidResponseWithTmax(bidPrice: 0.1, tmaxRequest: 5000))
+        }])
+
+        makeRequester(connection).requestBids { _, _ in completed.fulfill() }
+
+        wait(for: [completed], timeout: 5)
+        XCTAssertEqual(sdkConfiguration.timeoutMillisDynamic?.doubleValue, 2000,
+                       "the app's 2000 ms budget must be stored back as milliseconds, not 2")
+        XCTAssertTrue(sdkConfiguration.timeoutUpdated)
+    }
+
     func testBanner_invalidAccountID_noRequest() {
         let configId = "b6260e2b-bc4c-4d10-bdb5-f7bdd62f5ed4"
         let adUnitConfig = AdUnitConfig(configId: configId, size: CGSize(width: 300, height: 250))
@@ -331,5 +393,15 @@ class PBMBidRequesterTest: XCTestCase {
         callbackLock.unlock()
 
         XCTAssertEqual(finalCount, 1, "Completion should be called exactly once even with concurrent callbacks, but was called \(finalCount) times")
+    }
+
+    // MARK: - Helpers
+
+    private func makeRequester(_ connection: PrebidServerConnectionProtocol) -> BidRequester {
+        Factory.createBidRequester(connection: connection,
+                                   sdkConfiguration: sdkConfiguration,
+                                   targeting: targeting,
+                                   adUnitConfiguration: AdUnitConfig(configId: "b6260e2b-bc4c-4d10-bdb5-f7bdd62f5ed4",
+                                                                     size: CGSize(width: 300, height: 250)))
     }
 }
