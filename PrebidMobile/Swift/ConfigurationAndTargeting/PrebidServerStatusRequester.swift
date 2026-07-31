@@ -17,28 +17,35 @@ import Foundation
 
 class PrebidServerStatusRequester {
     
-    var serverEndpoint: String?
-    
-    init() {
-        // Default status endpoint
-        if let hostString = try? Host.shared.getHostURL(),
-           let host = URL(string: hostString)?.host,
-           let generatedStatusEndpoint = PathBuilder.buildURL(for: host, path: PrebidConstants.SERVER_ENDPOINTS_STATUS) {
-            
-            serverEndpoint = generatedStatusEndpoint
+    /// Resolved per call rather than cached
+    /// This enables users to switch between Life360Ads.initializeWithoutPrebid()
+    /// and Prebid.initializeSDK() at runtime
+    var serverEndpoint: String? {
+        if let customStatusEndpoint {
+            return customStatusEndpoint
         }
+
+        guard let hostString = try? Host.shared.getHostURL(),
+              let host = URL(string: hostString)?.host else {
+            return nil
+        }
+
+        return PathBuilder.buildURL(for: host, path: PrebidConstants.SERVER_ENDPOINTS_STATUS)
     }
-    
+
+    /// Takes precedence over the host-derived endpoint once set.
+    private var customStatusEndpoint: String?
+
     func setCustomStatusEndpoint(_ customStatusEndpoint: String?) {
-        if let customStatusEndpoint = customStatusEndpoint {
-            
-            if customStatusEndpoint.isValidURL() {
-                serverEndpoint = customStatusEndpoint
-            } else {
-                let endpointMessage = serverEndpoint == nil ? "There is no status endpoint to use." : "The '\(serverEndpoint ?? "")' endpoint will be used."
-                Log.warn("The provided Prebid Server custom status endpoint is not valid. \(endpointMessage)")
-            }
+        guard let customStatusEndpoint = customStatusEndpoint else { return }
+
+        guard customStatusEndpoint.isValidURL() else {
+            let endpointMessage = serverEndpoint == nil ? "There is no status endpoint to use." : "The '\(serverEndpoint ?? "")' endpoint will be used."
+            Log.warn("The provided Prebid Server custom status endpoint is not valid. \(endpointMessage)")
+            return
         }
+
+        self.customStatusEndpoint = customStatusEndpoint
     }
     
     // MARK: - Internal Methods

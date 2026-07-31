@@ -32,10 +32,38 @@ class PBMAdUnitConfigTest: XCTestCase {
     }
     
     // MARK: - The Prebid Ad Slot
-    
-    func testSetPbAdSlot() {        
+
+    func testSetPbAdSlot() {
         XCTAssertNil(adUnitConfig.getPbAdSlot())
         adUnitConfig.setPbAdSlot("test-ad-slot")
         XCTAssertEqual("test-ad-slot", adUnitConfig.getPbAdSlot())
+    }
+
+    // MARK: - Prebid Server demand
+
+    override func tearDown() {
+        super.tearDown()
+
+        Prebid.reset()
+    }
+
+    func testPrebidServerEnabled_capturedAtCreation() {
+        Life360Ads.shared.prebidServerEnabled = false
+        XCTAssertFalse(AdUnitConfig(configId: "serverless").prebidServerEnabled)
+
+        Life360Ads.shared.prebidServerEnabled = true
+        XCTAssertTrue(AdUnitConfig(configId: "with-prebid").prebidServerEnabled)
+    }
+
+    // The clone's own initializer captures whatever the global flag says at copy time, so `copy(with:)`
+    // has to carry the original's value over explicitly.
+    func testPrebidServerEnabled_survivesCopy_whenGlobalFlagHasChanged() {
+        Life360Ads.shared.prebidServerEnabled = false
+        let serverless = AdUnitConfig(configId: "serverless")
+
+        Life360Ads.shared.prebidServerEnabled = true
+        let clone = serverless.copy() as! AdUnitConfig
+
+        XCTAssertFalse(clone.prebidServerEnabled)
     }
 }

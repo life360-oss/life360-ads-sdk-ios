@@ -221,8 +221,7 @@ public class Prebid: NSObject {
         serverURL: String,
         _ gadMobileAdsObject: AnyObject? = nil,
         _ completion: PrebidInitializationCallback? = nil) throws {
-            try Host.shared.setHostURL(serverURL, nonTrackingURLString: nil)
-            PrebidSDKInitializer.initializeSDK(completion)
+            try setHostAndInitialize(serverURL: serverURL, nonTrackingURLString: nil, completion)
             PrebidSDKInitializer.checkGMAVersion(gadObject: gadMobileAdsObject)
             PrebidSDKInitializer.logInitializerWarningIfNeeded()
     }
@@ -243,8 +242,7 @@ public class Prebid: NSObject {
         nonTrackingURLString: String,
         _ gadMobileAdsObject: AnyObject? = nil,
         _ completion: PrebidInitializationCallback? = nil) throws {
-            try Host.shared.setHostURL(serverURL, nonTrackingURLString: nonTrackingURLString)
-            PrebidSDKInitializer.initializeSDK(completion)
+            try setHostAndInitialize(serverURL: serverURL, nonTrackingURLString: nonTrackingURLString, completion)
             PrebidSDKInitializer.checkGMAVersion(gadObject: gadMobileAdsObject)
             PrebidSDKInitializer.logInitializerWarningIfNeeded()
     }
@@ -265,8 +263,7 @@ public class Prebid: NSObject {
         serverURL: String,
         gadMobileAdsVersion: String? = nil,
         _ completion: PrebidInitializationCallback? = nil) throws {
-            try Host.shared.setHostURL(serverURL, nonTrackingURLString: nil)
-            PrebidSDKInitializer.initializeSDK(completion)
+            try setHostAndInitialize(serverURL: serverURL, nonTrackingURLString: nil, completion)
             PrebidSDKInitializer.checkGMAVersion(gadVersion: gadMobileAdsVersion)
     }
     
@@ -288,8 +285,7 @@ public class Prebid: NSObject {
         nonTrackingURLString: String,
         gadMobileAdsVersion: String? = nil,
         _ completion: PrebidInitializationCallback? = nil) throws {
-            try Host.shared.setHostURL(serverURL, nonTrackingURLString: nonTrackingURLString)
-            PrebidSDKInitializer.initializeSDK(completion)
+            try setHostAndInitialize(serverURL: serverURL, nonTrackingURLString: nonTrackingURLString, completion)
             PrebidSDKInitializer.checkGMAVersion(gadVersion: gadMobileAdsVersion)
     }
     
@@ -305,8 +301,7 @@ public class Prebid: NSObject {
     public static func initializeSDK(
         serverURL: String,
         _ completion: PrebidInitializationCallback? = nil) throws {
-            try Host.shared.setHostURL(serverURL, nonTrackingURLString: nil)
-            PrebidSDKInitializer.initializeSDK(completion)
+            try setHostAndInitialize(serverURL: serverURL, nonTrackingURLString: nil, completion)
     }
     
     /// Initializes PrebidMobile SDK.
@@ -323,11 +318,27 @@ public class Prebid: NSObject {
         serverURL: String,
         nonTrackingURLString: String,
         _ completion: PrebidInitializationCallback? = nil) throws {
-            try Host.shared.setHostURL(serverURL, nonTrackingURLString: nonTrackingURLString)
-            PrebidSDKInitializer.initializeSDK(completion)
+            try setHostAndInitialize(serverURL: serverURL, nonTrackingURLString: nonTrackingURLString, completion)
     }
 
     // MARK: - Private Methods
+
+    /// Shared body of every `initializeSDK` overload, which differ only in how they report the GMA
+    /// version. Factored out so re-arming Prebid Server demand cannot be forgotten on one of them.
+    private static func setHostAndInitialize(
+        serverURL: String,
+        nonTrackingURLString: String?,
+        _ completion: PrebidInitializationCallback?
+    ) throws {
+        try Host.shared.setHostURL(serverURL, nonTrackingURLString: nonTrackingURLString)
+
+        // Re-arms Prebid Server demand, which `Life360Ads.initializeWithoutPrebid()` may have cleared
+        // earlier in the session. Only affects ad units created from here on; existing ones captured
+        // the old value and keep running Nativo-only.
+        Life360Ads.shared.prebidServerEnabled = true
+
+        PrebidSDKInitializer.initializeSDK(completion)
+    }
 
     override init() {
         timeoutMillis = defaultTimeoutMillis

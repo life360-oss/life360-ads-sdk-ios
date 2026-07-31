@@ -935,6 +935,155 @@ class AdLoadFlowControllerTest: XCTestCase {
         compositeMock.checkIsFinished()
     }
 
+    // An ad unit built while the SDK was serverless keeps skipping the Prebid Server bid request for
+    // its whole lifetime, even once a later `Prebid.initializeSDK` re-arms the global flag. Its
+    // auto-refresh cycles must not silently change mode partway through.
+    func testServerless_adUnitCreatedBeforeReinit_keepsSkippingBidRequest() {
+        Life360Ads.shared.prebidServerEnabled = false
+        let adUnitConfig = AdUnitConfig(configId: "configID")
+        XCTAssertFalse(adUnitConfig.prebidServerEnabled, "Ad unit should capture the flag at creation.")
+
+        // Stands in for a later `Prebid.initializeSDK(serverURL:)`.
+        Life360Ads.shared.prebidServerEnabled = true
+
+        var flowController: AdLoadFlowController!
+        var fakeAd: NSObject?
+        var fakeAdSize: NSValue?
+        var compositeMock: CompositeMock!
+
+        let successReported = expectation(description: "success reported")
+
+        // No `.makeBidRequester` / `.bidRequester` calls — invoking the factory would trip the
+        // composite mock's out-of-order check, proving the Prebid Server request was still skipped.
+        compositeMock = CompositeMock(expectedCalls: [
+            .configValidation(call: { (adConfig, renderWithPrebid) in
+                XCTAssertFalse(renderWithPrebid)
+                return true
+            }),
+            .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
+                XCTAssertIdentical(loader, flowController)
+            })),
+            .flowControllerDelegate(call: .shouldContinue(handler: { loader in
+                XCTAssertIdentical(loader, flowController)
+                return true
+            })),
+            .flowControllerDelegate(call: .willRequestPrimaryAd(handler: { loader in
+                XCTAssertIdentical(loader, flowController)
+            })),
+            .adLoader(call: .setFlowDelegate(handler: { delegate in
+                XCTAssertIdentical(delegate, flowController)
+            })),
+            .adLoader(call: .primaryAdRequester(provider: { compositeMock.mockPrimaryAdRequester })),
+            .primaryAdRequester(call: { bidResponse in
+                fakeAd = NSObject()
+                fakeAdSize = NSValue(cgSize: CGSize(width: 320, height: 480))
+                flowController?.adLoader(compositeMock.mockAdLoader,
+                                        loadedPrimaryAd: fakeAd!,
+                                        adSize: fakeAdSize)
+            }),
+            .flowControllerDelegate(call: .shouldContinue(handler: { loader in
+                XCTAssertIdentical(loader, flowController)
+                return true
+            })),
+            .adLoader(call: .reportSuccess(handler: { (ad, size) in
+                XCTAssertIdentical(ad, fakeAd)
+                XCTAssertEqual(size, fakeAdSize)
+                successReported.fulfill()
+            })),
+        ])
+
+        flowController = AdLoadFlowController(bidRequesterFactory: compositeMock.mockRequesterFactory,
+                                                      adLoader: compositeMock.mockAdLoader,
+                                                      adUnitConfig: adUnitConfig,
+                                                      delegate: compositeMock.mockFlowControllerDelegate,
+                                                      configValidationBlock: compositeMock.mockConfigValidator,
+                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+
+        flowController.refresh()
+        waitForExpectations(timeout: 1)
+
+        XCTAssertFalse(flowController.hasFailedLoading)
+        XCTAssertEqual(flowController.flowState, .idle)
+        compositeMock.checkIsFinished()
+    }
+
+    // The mirror of the above: an ad unit built while Prebid Server demand was enabled keeps bidding
+    // even if the global flag is cleared afterwards, so one ad unit cannot mute another.
+    func testAdUnitCreatedBeforeServerless_keepsSendingBidRequest() {
+        let adUnitConfig = AdUnitConfig(configId: "configID")
+        XCTAssertTrue(adUnitConfig.prebidServerEnabled, "Ad unit should capture the flag at creation.")
+
+        Life360Ads.shared.prebidServerEnabled = false
+
+        var flowController: AdLoadFlowController!
+        var fakeAd: NSObject?
+        var fakeAdSize: NSValue?
+        var compositeMock: CompositeMock!
+
+        let successReported = expectation(description: "success reported")
+
+        compositeMock = CompositeMock(expectedCalls: [
+            .configValidation(call: { (adConfig, renderWithPrebid) in
+                XCTAssertFalse(renderWithPrebid)
+                return true
+            }),
+            .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
+                XCTAssertIdentical(loader, flowController)
+            })),
+            .flowControllerDelegate(call: .shouldContinue(handler: { loader in
+                XCTAssertIdentical(loader, flowController)
+                return true
+            })),
+            // The Prebid Server request still happens — this is what the serverless flow skips.
+            .makeBidRequester(handler: { config, mockRequester in mockRequester }),
+            .bidRequester(call: (requesterOffset: 0, { completion in
+                let bidResponse = try! PBMBidResponseTransformer.transform(PBMBidResponseTransformer.someValidResponse)
+                completion(bidResponse, nil)
+            })),
+            .flowControllerDelegate(call: .shouldContinue(handler: { loader in
+                XCTAssertIdentical(loader, flowController)
+                return true
+            })),
+            .flowControllerDelegate(call: .willRequestPrimaryAd(handler: { loader in
+                XCTAssertIdentical(loader, flowController)
+            })),
+            .adLoader(call: .setFlowDelegate(handler: { delegate in
+                XCTAssertIdentical(delegate, flowController)
+            })),
+            .adLoader(call: .primaryAdRequester(provider: { compositeMock.mockPrimaryAdRequester })),
+            .primaryAdRequester(call: { bidResponse in
+                fakeAd = NSObject()
+                fakeAdSize = NSValue(cgSize: CGSize(width: 320, height: 480))
+                flowController?.adLoader(compositeMock.mockAdLoader,
+                                        loadedPrimaryAd: fakeAd!,
+                                        adSize: fakeAdSize)
+            }),
+            .flowControllerDelegate(call: .shouldContinue(handler: { loader in
+                XCTAssertIdentical(loader, flowController)
+                return true
+            })),
+            .adLoader(call: .reportSuccess(handler: { (ad, size) in
+                XCTAssertIdentical(ad, fakeAd)
+                XCTAssertEqual(size, fakeAdSize)
+                successReported.fulfill()
+            })),
+        ])
+
+        flowController = AdLoadFlowController(bidRequesterFactory: compositeMock.mockRequesterFactory,
+                                                      adLoader: compositeMock.mockAdLoader,
+                                                      adUnitConfig: adUnitConfig,
+                                                      delegate: compositeMock.mockFlowControllerDelegate,
+                                                      configValidationBlock: compositeMock.mockConfigValidator,
+                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+
+        flowController.refresh()
+        waitForExpectations(timeout: 1)
+
+        XCTAssertFalse(flowController.hasFailedLoading)
+        XCTAssertEqual(flowController.flowState, .idle)
+        compositeMock.checkIsFinished()
+    }
+
     func testPrebidAd_happyPath_freezeOnShouldContinue() throws {
         // Skipped: same pre-existing refresh re-entrancy as testPrebidAd_happyPath_spamRefresh.
         // The bid-requester closure calls refresh() before completion, so `moveToNextLoadingStep`
