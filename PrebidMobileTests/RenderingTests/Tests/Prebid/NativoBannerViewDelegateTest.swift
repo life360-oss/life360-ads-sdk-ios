@@ -203,7 +203,22 @@ class NativoBannerViewDelegateTest: XCTestCase {
 
     private func simulateAdLoaded(on bannerView: BannerView) {
         let adLoader = BannerAdLoader(delegate: bannerView)
-        bannerView.bannerAdLoader(adLoader, loadedAdView: UIView(), adSize: adSize)
+        bannerView.bannerAdLoader(adLoader, loadedAdView: renderedView(for: bannerView), adSize: adSize)
+    }
+
+    /// The view a Nativo win actually deploys.
+    ///
+    /// Nativo demand is rendered by `NativoRendererInternal`, which returns a `DisplayView` carrying the
+    /// winning bid, and that bid is what identifies the demand — the flow controller's `bidResponse` is
+    /// reassigned part-way through a load, so it can describe a later cycle or another ad unit. A plain
+    /// `UIView` means the ad server won, and the ad server never renders Nativo demand.
+    private func renderedView(for bannerView: BannerView) -> UIView {
+        guard let bid = bannerView.lastBidResponse?.winningBid else {
+            return UIView()
+        }
+        return DisplayView(frame: CGRect(origin: .zero, size: adSize),
+                           bid: bid,
+                           adConfiguration: bannerView.adUnitConfig)
     }
 
     // Processes all pending main-queue work queued before this call.
