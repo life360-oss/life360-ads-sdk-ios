@@ -397,13 +397,18 @@ public class BannerView:
         }
     }
     
-    private func nativoDidRenderBid() -> Bool {
-        guard let response = adLoadFlowController?.bidResponse,
-              response is NativoBidResponse,
-              let adType = response.winningBid?.nativoAdType else {
+    /// Whether Nativo's own renderer expanded this view, which the publisher is told about through a
+    /// separate delegate callback.
+    ///
+    /// `usesNativoRendering` is the same condition the renderer expands on, so the callback the publisher
+    /// gets cannot disagree with whether the view was actually expanded. Resolving the renderer through
+    /// `PrebidMobilePluginRegister` would be more direct but depends on the register being populated, which
+    /// only happens once the SDK has been initialised.
+    private func nativoDidRenderBid(for adView: UIView) -> Bool {
+        guard let bid = (adView as? DisplayView)?.bid, bid is NativoBid else {
             return false
         }
-        return adType != .standardDisplay
+        return bid.usesNativoRendering
     }
 
     private func reportNativoLoadingSuccess(with size: CGSize) {
@@ -468,11 +473,15 @@ public class BannerView:
     // MARK: Renderer notification
     
     private func notifyRendererDidInjectView(_ injectedView: UIView) {
-        guard let bid = lastBidResponse?.winningBid else {
+        // Resolve the renderer from the bid the injected view carries. `lastBidResponse` reads the flow
+        // controller's response, which is reassigned part-way through a load and so can name a
+        // different bid by the time this view is deployed. Fall back to it only for renderers that
+        // return a plain UIView.
+        guard let bid = (injectedView as? DisplayView)?.bid ?? lastBidResponse?.winningBid else {
             Log.debug("Failed to find last bid. Skipped final rendering phase.")
             return
         }
-        
+
         // Notify plugin if it implements this method
         let plugin = PrebidMobilePluginRegister.shared.getPluginForPreferredRenderer(bid: bid)
         plugin.didInjectView?(injectedView, into: self)
@@ -516,10 +525,14 @@ extension BannerView : AdLoadFlowControllerDelegate, BannerAdLoaderDelegate {
     ) {
         deployView(adView)
 
-        if nativoDidRenderBid() {
-            reportNativoLoadingSuccess(with: adSize)
+        // Report the size of the bid this view carries. `adSize` comes from the flow controller's
+        // `winningAdSize`, which persists across load cycles and so can describe an earlier bid.
+        let reportedSize = (adView as? DisplayView)?.bid.size ?? adSize
+
+        if nativoDidRenderBid(for: adView) {
+            reportNativoLoadingSuccess(with: reportedSize)
         } else {
-            reportLoadingSuccess(with: adSize)
+            reportLoadingSuccess(with: reportedSize)
         }
     }
     

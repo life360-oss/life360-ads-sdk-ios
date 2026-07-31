@@ -1,23 +1,25 @@
 import UIKit
-import WebKit
 
 /**
  Nativo's custom Prebid renderer
- 
+
  Ideally we want one single NativoRenderer that both Life360AdsSDK and PrebidMobile can use.
  However since SPM doesn't allow overlapping source targets or conditional dependencies,
  we are forced to have two separate implementations in NativoRenderer and NativoRendererInternal.
  One internal to Life360AdsSDK, and another external that depends on PrebidMobile.
+
+ Keep this type stateless. `PrebidMobilePluginRegister` stores renderers by name, so one instance
+ serves every ad unit in the process, including ones loading concurrently. Per-load state belongs on
+ the `DisplayView`, which is per-slot.
  */
-public class NativoRendererInternal: NSObject, PrebidMobilePluginRenderer, DisplayViewLoadingDelegate {
+public class NativoRendererInternal: NSObject, PrebidMobilePluginRenderer {
 
     public static let NAME = "NativoRenderer"
     public static let VERSION = "1.0.0"
     public let name = NativoRendererInternal.NAME
     public let version = NativoRendererInternal.VERSION
     public var data: [String: Any]?
-    var bannerLoadingDelegate: DisplayViewLoadingDelegate?
-    
+
     public func createBannerView(
         with frame: CGRect,
         bid: Bid,
@@ -25,17 +27,16 @@ public class NativoRendererInternal: NSObject, PrebidMobilePluginRenderer, Displ
         loadingDelegate: DisplayViewLoadingDelegate,
         interactionDelegate: DisplayViewInteractionDelegate
     ) -> PrebidMobileDisplayViewProtocol? {
-        
+
         let displayView = DisplayView(
             frame: frame,
             bid: bid,
             adConfiguration: adConfiguration
         )
-        
-        self.bannerLoadingDelegate = loadingDelegate
+
         displayView.interactionDelegate = interactionDelegate
-        displayView.loadingDelegate = self
-        
+        displayView.loadingDelegate = loadingDelegate
+
         return displayView
     }
     
@@ -64,119 +65,38 @@ public class NativoRendererInternal: NSObject, PrebidMobilePluginRenderer, Displ
         }
         
         let bid = prebidDisplayView.bid
-        if (shouldRenderForBid(from: bid)) {
+        if bid.usesNativoRendering {
             renderNativoAd(prebidDisplayView, into: bannerView, with: bid)
         }
     }
-    
-    // Differenciate between Nativo ad rendering or a standard banner ad
-    private func shouldRenderForBid(from bid: Bid) -> Bool {
-        if let adType = bid.nativoAdType {
-            // Only avoid Nativo rendering for standard display;
-            // render for all other Nativo types
-            return adType != .standardDisplay
-        } else {
-            // fallback
-            let adm = bid.adm ?? ""
-            let isNativoRendering = adm.range(of: "load.js", options: .caseInsensitive) != nil
-            return isNativoRendering
-        }
-    }
-    
+
     private func renderNativoAd(_ displayView: DisplayView, into bannerView: UIView, with bid: Bid) {
         DispatchQueue.main.async {
-            self.expandFullWidth(bannerView)
-            self.expandFullHeight(bannerView)
-            self.expandChildren(displayView, to: bannerView, withMinimum:bid.size.height)
+            let result = NativoAdLayout.applyNativoExpansion(
+                displayView: displayView,
+                in: bannerView,
+                minimumHeight: bid.size.height
+            )
+            if case .failure(.missingCreativeSubview) = result {
+                Log.error(
+                    "Nativo expansion skipped: DisplayView has no creative subview yet, so the ad will "
+                        + "stay at the raw bid size. The view was deployed before its creative loaded.",
+                    filename: #file,
+                    line: #line,
+                    function: #function
+                )
+            }
             self.setModalBackground(bid: bid, displayView: displayView)
         }
     }
-    
-    
-    // MARK: - DisplayViewLoadingDelegate
-    
-    public func displayViewDidLoadAd(_ displayView: UIView) {
-        self.bannerLoadingDelegate?.displayViewDidLoadAd(displayView)
-    }
-    
-    public func displayView(_ displayView: UIView, didFailWithError error: any Error) {
-        self.bannerLoadingDelegate?.displayView(displayView, didFailWithError: error)
-    }
-    
+
     // MARK: - Private functions
-    
+
     private func setModalBackground(bid: Bid, displayView: DisplayView) {
         if bid.nativoAdType == .story
             || bid.nativoAdType == .ctpVideo
             || bid.nativoAdType == .stpVideo {
             displayView.interstitialDisplayProperties.modalBackgroundColor = .black
-        }
-    }
-    
-    private func expandFullWidth(_ view: UIView) {
-        if let parentView = view.superview {
-            // Remove any constraints we don't need
-            let constraints = parentView.constraints
-            let widthConstraints = constraints.filter({ constraint in
-                (constraint.firstItem as? UIView) === view && constraint.firstAttribute == .width
-                || (constraint.secondItem as? UIView) === view && constraint.secondAttribute == .width
-            })
-            NSLayoutConstraint.deactivate(widthConstraints)
-            
-            view.widthAnchor.constraint(equalTo: parentView.widthAnchor).isActive = true
-        }
-    }
-    
-    private func expandFullHeight(_ view: UIView) {
-        if let parentView = view.superview {
-            // Remove any constraints we don't need
-            let constraints = parentView.constraints
-            let heightConstraints = constraints.filter({ constraint in
-                (constraint.firstItem as? UIView) === view && constraint.firstAttribute == .height
-                || (constraint.secondItem as? UIView) === view && constraint.secondAttribute == .height
-            })
-            NSLayoutConstraint.deactivate(heightConstraints)
-            
-            view.heightAnchor.constraint(equalTo: parentView.heightAnchor).isActive = true
-        }
-    }
-    
-    private func expandChildren(_ view: UIView, to parentView: UIView, withMinimum height: CGFloat) {
-        let minHeight = view.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
-        let width = view.widthAnchor.constraint(equalTo: parentView.widthAnchor)
-        let height = view.heightAnchor.constraint(equalTo: parentView.heightAnchor)
-        height.priority = .defaultHigh
-        NSLayoutConstraint.activate([
-            width,
-            height,
-            minHeight
-        ])
-        
-        guard let childView = view.subviews.first else {
-            let error = NSError(
-                domain: "NativoRenderer", code: 1,
-                userInfo: [NSLocalizedDescriptionKey: "Nativo renderer expected a subview on DisplayView, but none was found."]
-            )
-            print("\(error)")
-            return
-        }
-        
-        walkFirstChildChain(from: childView, stopAtType: WKWebView.self) { subview in
-            expandFullWidth(subview)
-            expandFullHeight(subview)
-        }
-    }
-    
-    private func walkFirstChildChain<T: UIView>(
-        from view: UIView,
-        stopAtType: T.Type,
-        withAction: (UIView) -> Void
-    ) {
-        var current: UIView? = view
-        while let v = current {
-            withAction(v)
-            if v.subviews.first is T { break }
-            current = v.subviews.first
         }
     }
 }
