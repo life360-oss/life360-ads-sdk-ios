@@ -605,6 +605,7 @@
 		5BC37AE8271F2D0F00444D5E /* NativeImageAssetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC377DD271F1CFF00444D5E /* NativeImageAssetType.swift */; };
 		5BC37AF9271F2D3500444D5E /* NativeDataAssetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC37804271F1CFF00444D5E /* NativeDataAssetType.swift */; };
 		5DC1298A0000000000000001 /* NativoBundleFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1298A0000000000000002 /* NativoBundleFieldTest.swift */; };
+		5DC1298E0000000000000001 /* NativoBidRequesterTimeoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1298E0000000000000002 /* NativoBidRequesterTimeoutTest.swift */; };
 		600CF0702208963500C95176 /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600CF06F2208963500C95176 /* UtilsTests.swift */; };
 		6013E3F82215C82900FEE2B1 /* CLLocationManager+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6013E3F72215C82900FEE2B1 /* CLLocationManager+Swizzle.swift */; };
 		6013E3FA2215C92C00FEE2B1 /* MockCLLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6013E3F92215C92C00FEE2B1 /* MockCLLocationManager.swift */; };
@@ -1502,6 +1503,7 @@
 		5BC37AE3271F1D4500444D5E /* Life360AdsSDKSwiftHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Life360AdsSDKSwiftHeaders.h; sourceTree = "<group>"; };
 		5BD67815271DF9E5004D334E /* Life360AdsSDK.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = Life360AdsSDK.modulemap; sourceTree = "<group>"; };
 		5DC1298A0000000000000002 /* NativoBundleFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBundleFieldTest.swift; sourceTree = "<group>"; };
+		5DC1298E0000000000000002 /* NativoBidRequesterTimeoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBidRequesterTimeoutTest.swift; sourceTree = "<group>"; };
 		600CF06F2208963500C95176 /* UtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTests.swift; sourceTree = "<group>"; };
 		6013E3F72215C82900FEE2B1 /* CLLocationManager+Swizzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Swizzle.swift"; sourceTree = "<group>"; };
 		6013E3F92215C92C00FEE2B1 /* MockCLLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCLLocationManager.swift; sourceTree = "<group>"; };
@@ -3365,6 +3367,7 @@
 				0E88FCD794CEBF3EB4BFEFC6 /* BannerViewConcurrencyTest.swift */,
 				79165FCD86E9813EAC2682C6 /* NativoRendererConcurrencyTest.swift */,
 				5DC1298A0000000000000002 /* NativoBundleFieldTest.swift */,
+				5DC1298E0000000000000002 /* NativoBidRequesterTimeoutTest.swift */,
 				5DC1298C0000000000000002 /* NativoBannerViewDelegateTest.swift */,
 			);
 			path = Prebid;
@@ -4277,6 +4280,7 @@
 				533135C6282A869800AA1E4D /* BidTest.swift in Sources */,
 				F271AB277F15E7BB4DC4FD29 /* NativoBidResponseTest.swift in Sources */,
 				5DC1298A0000000000000001 /* NativoBundleFieldTest.swift in Sources */,
+				5DC1298E0000000000000001 /* NativoBidRequesterTimeoutTest.swift in Sources */,
 				5DC1298C0000000000000001 /* NativoBannerViewDelegateTest.swift in Sources */,
 				539897A12CE498A20075234B /* InterstitialObserverTests.swift in Sources */,
 				922AFC9127352C9B00732C53 /* MockPBMWebView.swift in Sources */,

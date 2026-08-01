@@ -59,7 +59,11 @@
 
     const NSInteger rawTimeoutMS = self.sdkConfiguration.timeoutMillis;
     NSNumber * const dynamicTimeout = self.sdkConfiguration.timeoutMillisDynamic;
-    const NSTimeInterval postTimeout = (dynamicTimeout ? dynamicTimeout.doubleValue : (rawTimeoutMS / 1000.0));
+
+    // Both sources hold milliseconds; the connection wants seconds.
+    const NSTimeInterval postTimeout = (dynamicTimeout
+                                        ? dynamicTimeout.doubleValue / 1000.0
+                                        : rawTimeoutMS / 1000.0);
 
     // Fixed Nativo endpoint
     NSString * const nativoURL = @"https://exchange.postrelease.com/esi.json?ntv_epid=54";
