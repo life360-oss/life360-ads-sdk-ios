@@ -20,9 +20,11 @@
 @property (nonatomic, strong, nonnull, readonly) Targeting *targeting;
 @property (nonatomic, strong, nonnull, readonly) AdUnitConfig *adUnitConfiguration;
 
+/// Guarded by `@synchronized(self)`; take it through `-claimCompletion` rather than reading directly.
 @property (nonatomic, copy, nullable) void (^completion)(BidResponse *, NSError *);
 
 - (void)makeRequestWithCompletion:(void (^)(BidResponse *, NSError *))completion;
+- (nullable void (^)(BidResponse *, NSError *))claimCompletion;
 
 @end
 
@@ -54,17 +56,21 @@
 }
 
 - (void)makeRequestWithCompletion:(void (^)(BidResponse * _Nullable, NSError * _Nullable))completion {
-    if (self.completion) {
-        completion(nil, [PBMError requestInProgress]);
-        return;
+    // Claim the completion slot atomically, so two callers cannot both believe they own this request.
+    @synchronized(self) {
+        if (self.completion) {
+            completion(nil, [PBMError requestInProgress]);
+            return;
+        }
+        self.completion = completion ?: ^(BidResponse *r, NSError *e) {};
     }
-    self.completion = completion ?: ^(BidResponse *r, NSError *e) {};
 
     NSString * const requestString = [self buildORTBRequestString];
     if (requestString.length == 0) {
-        void (^ const done)(BidResponse *, NSError *) = self.completion;
-        self.completion = nil;
-        done(nil, [PBMError errorWithDescription:@"Failed to build ORTB request"]);
+        void (^ const done)(BidResponse *, NSError *) = [self claimCompletion];
+        if (done) {
+            done(nil, [PBMError errorWithDescription:@"Failed to build ORTB request"]);
+        }
         return;
     }
 
@@ -85,8 +91,13 @@
         @strongify(self);
         if (!self) { return; }
 
-        void (^ const done)(BidResponse *, NSError *) = self.completion;
-        self.completion = nil;
+        void (^ const done)(BidResponse *, NSError *) = [self claimCompletion];
+        if (!done) {
+            // Redirects, retries and network-stack bugs can fire this callback more than once. The
+            // completion advances the ad load flow state machine, so it must run exactly once.
+            PBMLogInfo(@"Nativo bid callback invoked more than once. Ignoring the duplicate.");
+            return;
+        }
 
         if (serverResponse.statusCode == 204) {
             done(nil, [PBMError blankResponse]);
@@ -102,6 +113,16 @@
         NativoBidResponse * const bidResponse = [[NativoBidResponse alloc] initWithJsonDictionary:serverResponse.jsonDict];
         done(bidResponse, transformError);
     }];
+}
+
+/// Takes ownership of the pending completion, or returns nil if it has already been taken.
+/// The caller owns the returned block and must invoke it exactly once.
+- (nullable void (^)(BidResponse *, NSError *))claimCompletion {
+    @synchronized(self) {
+        void (^ const done)(BidResponse *, NSError *) = self.completion;
+        self.completion = nil;
+        return done;
+    }
 }
 
 - (NSString *)buildORTBRequestString {
