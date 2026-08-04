@@ -22,6 +22,8 @@
 
 @property (nonatomic, copy, nullable) void (^completion)(BidResponse *, NSError *);
 
+- (void)makeRequestWithCompletion:(void (^)(BidResponse *, NSError *))completion;
+
 @end
 
 @implementation NativoBidRequester
@@ -41,6 +43,17 @@
 }
 
 - (void)requestBidsWithCompletion:(void (^)(BidResponse * _Nullable, NSError * _Nullable))completion {
+    @weakify(self);
+    // Warm the same UA service the request body reads from (see -buildORTBRequestString) before
+    // building it. The service resolves the user agent through a web view on the main thread, so
+    // building first puts an empty device.ua on the first request of a session.
+    [self.connection.userAgentService fetchUserAgentWithCompletion:^(NSString * _Nonnull userAgent) {
+        @strongify(self);
+        [self makeRequestWithCompletion:completion];
+    }];
+}
+
+- (void)makeRequestWithCompletion:(void (^)(BidResponse * _Nullable, NSError * _Nullable))completion {
     if (self.completion) {
         completion(nil, [PBMError requestInProgress]);
         return;
