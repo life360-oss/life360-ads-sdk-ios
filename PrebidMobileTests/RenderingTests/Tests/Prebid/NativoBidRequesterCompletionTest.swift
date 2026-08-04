@@ -93,6 +93,13 @@ class NativoBidRequesterCompletionTest: XCTestCase {
 
 // MARK: - Test doubles
 
+/// Pre-populated so `UserAgentService` resolves without a web view.
+private class SeededUserAgentPersistence: UserAgentPersistence {
+    var userAgent: String?
+
+    required init(osVersion: String? = nil) {}
+}
+
 /// Captures the requester's callback so a test can deliver the same response more than once.
 ///
 /// File-private and distinctly named on purpose: sibling suites define their own connection doubles,
@@ -102,8 +109,16 @@ private final class TwiceFiringConnection: NSObject, PrebidServerConnectionProto
     private(set) var postWasCalled = false
     private var storedCallback: PrebidServerResponseCallback?
 
-    /// The real service, resolved eagerly by its own initialiser; this suite does not assert on it.
-    var userAgentService: UserAgentService { .shared }
+    /// A service seeded with a user agent, so the requester's warm-up completes synchronously.
+    ///
+    /// Never `.shared`: on a fresh simulator its user agent is empty, so the warm-up would go async
+    /// through a `WKWebView` that cannot resolve in a host-less `xctest`, and the request would never
+    /// be built. A cached user agent in `UserDefaults` masks that locally.
+    let userAgentService: UserAgentService = {
+        let store = SeededUserAgentPersistence(osVersion: nil)
+        store.userAgent = "Mozilla/5.0 (test) NativoBidRequesterCompletionTest"
+        return UserAgentService(store: store)
+    }()
 
     func fireStoredCallback() {
         storedCallback?(Self.blankResponse())
