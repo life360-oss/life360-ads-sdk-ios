@@ -7,7 +7,17 @@ public class NativoBidResponse: BidResponse {
         super.init(rawBidResponse: rawBidResponse)
     }
     
-    // Create bid using NativoBid
+    /// Builds `NativoBid`s and picks the highest-priced one as the winner. A zero price never wins.
+    ///
+    /// This cannot use the superclass's rule, which selects the first bid whose `isWinning` is true.
+    /// `isWinning` requires `hb_pb` and `hb_bidder` targeting, and Nativo demand arrives without any —
+    /// `NativoBid.targetingInfo` returns nil and this method synthesises the targeting below — so
+    /// `isWinning` is false for every Nativo bid and price is the only signal of a usable one.
+    ///
+    /// That is also why the zero-price exclusion stays. Upstream lets a zero-priced bid win because
+    /// `isWinning` still gates the choice there; with no such gate, admitting a zero price would make an
+    /// empty bid win. Revisit only with confirmation that the Nativo exchange returns a renderable bid
+    /// at price 0, and change `NativoBidResponseTest.testTargetingPriceZeroDoesNotWin` with it.
     override func createBids(rawBidResponse: RawBidResponse) {
         var allBids: [Bid] = []
         if let seatbid = rawBidResponse.seatbid {

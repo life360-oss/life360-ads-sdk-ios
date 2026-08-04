@@ -34,6 +34,9 @@
 
 - (instancetype)initWithAdConfiguration:(AdUnitConfig *)adConfiguration
                                  bundle:(id<PBMBundleProtocol>)bundle {
+    if (!(self = [super init])) {
+        return nil;
+    }
     _adConfiguration = adConfiguration;
     _bundle = bundle;
     return self;

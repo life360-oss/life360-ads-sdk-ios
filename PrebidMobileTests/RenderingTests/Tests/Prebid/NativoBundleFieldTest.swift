@@ -59,6 +59,26 @@ class NativoBundleFieldTest: XCTestCase {
         PBMAssertEq(bidRequest.app.bundle, mockBundle.mockBundleIdentifier)
     }
 
+    /// Nativo maps a request to a placement by `imp.tagid`, so the builder must copy the ad unit's
+    /// config id into every imp. Without it the exchange cannot tell which placement is asking.
+    func testNativoSetsTagidFromTheConfigId() {
+        let bidRequest = buildBidRequest(bundle: MockBundle(), includeNativoBuilder: true)
+
+        XCTAssertFalse(bidRequest.imp.isEmpty, "the pipeline should produce at least one imp")
+        for imp in bidRequest.imp {
+            PBMAssertEq(imp.tagid, "config-id")
+        }
+    }
+
+    /// The shared pipeline alone leaves `tagid` unset — it is the Nativo builder that populates it.
+    func testPrebidLeavesTagidUnset() {
+        let bidRequest = buildBidRequest(bundle: MockBundle(), includeNativoBuilder: false)
+
+        for imp in bidRequest.imp {
+            XCTAssertNil(imp.tagid)
+        }
+    }
+
     // MARK: - Prebid server
 
     /// When `Targeting.shared.itunesID` is set, Prebid server requests send it in `app.bundle`.

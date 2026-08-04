@@ -69,8 +69,13 @@ class NativoBidResponseTest: XCTestCase {
         XCTAssertEqual(response.targetingInfo?["hb_pb_nativo"], "3.46")
     }
 
-    /// Verifies a zero-price bid does not become the winning bid (0 is not > 0),
-    /// so no targeting info is set.
+    /// A zero-price bid never wins, so no targeting is synthesised for it.
+    ///
+    /// This is a deliberate divergence from the superclass, which lets a zero-priced bid win because
+    /// `isWinning` gates the choice there. Nativo bids carry no `hb_pb`/`hb_bidder` targeting, so
+    /// `isWinning` is always false and price is the only signal of a usable bid — see
+    /// `NativoBidResponse.createBids`. Changing this needs confirmation that the Nativo exchange
+    /// returns a renderable bid at price 0.
     func testTargetingPriceZeroDoesNotWin() {
         let response = makeNativoBidResponse(price: 0.0, width: 320, height: 50)
 
