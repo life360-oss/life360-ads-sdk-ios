@@ -73,8 +73,10 @@ public class PrebidMobilePluginRegister: NSObject {
         _ pluginEventDelegate: PluginEventDelegate,
         adUnitConfigFingerprint: String
     ) {
-        queue.async(flags: .barrier) { [plugins] in
-            plugins
+        // `plugins` has to be read inside the barrier. A capture list is evaluated on the caller's
+        // thread, which leaves the read unsynchronised against registerPlugin.
+        queue.async(flags: .barrier) { [weak self] in
+            self?.plugins
                 .values
                 .forEach {
                     $0.registerEventDelegate?(
@@ -90,8 +92,8 @@ public class PrebidMobilePluginRegister: NSObject {
         _ pluginEventDelegate: PluginEventDelegate,
         adUnitConfigFingerprint: String
     ) {
-        queue.async(flags: .barrier) { [plugins] in
-            plugins
+        queue.async(flags: .barrier) { [weak self] in
+            self?.plugins
                 .values
                 .forEach {
                     $0.unregisterEventDelegate?(

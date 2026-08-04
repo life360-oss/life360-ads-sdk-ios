@@ -35,6 +35,9 @@
             reference = "container:PrebidMobileTests/PrebidMobilePRTests.xctestplan"
             default = "YES">
          </TestPlanReference>
+         <TestPlanReference
+            reference = "container:PrebidMobileTests/PrebidMobileConcurrencyTests.xctestplan">
+         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference

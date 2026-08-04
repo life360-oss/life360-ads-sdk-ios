@@ -34,9 +34,23 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
     private let configValidationBlock: AdUnitConfigValidationBlock
     private let savedAdUnitConfig: AdUnitConfig
 
-    var bidResponse: BidResponse?
+    // Read from the main thread as well as this controller's own queue — BannerView consults
+    // hasFailedLoading and lastBidResponse while deciding whether to auto-refresh — so both need to
+    // be atomic rather than merely serialised behind the queue.
+    var bidResponse: BidResponse? {
+        get { _bidResponse.value }
+        set { _bidResponse.value = newValue }
+    }
+
+    var flowState: AdLoadFlowState {
+        get { _flowState.value }
+        set { _flowState.value = newValue }
+    }
+
+    private let _bidResponse = SynchronizedValue<BidResponse?>(nil)
+    private let _flowState = SynchronizedValue<AdLoadFlowState>(.idle)
+
     var nativoBidResponse: BidResponse?
-    var flowState: AdLoadFlowState = .idle
     private var bidRequestError: Error?
     private var bidRequester: BidRequesterProtocol?
     private var nativoRequester: BidRequesterProtocol?
@@ -149,9 +163,16 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
 
     @objc func enqueueGatedBlock(_ block: @escaping VoidBlock) {
         dispatchQueue.async { [weak self] in
-            self?.mutationLock.lock()
+            guard let self else {
+                // Nothing left to serialise; the block's own weak captures make it a no-op.
+                block()
+                return
+            }
+            // The strong reference and the defer together guarantee the unlock runs. Releasing this
+            // controller mid-block would otherwise strand the lock and wedge the queue for good.
+            self.mutationLock.lock()
+            defer { self.mutationLock.unlock() }
             block()
-            self?.mutationLock.unlock()
         }
     }
 
@@ -210,7 +231,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
         let isOwnedOperated: Bool = bid?.bid.ext?.nativo?.isOwnedOperated ?? false
         if (isOwnedOperated) {
             // Render O&O demand via adLoader Nativo flow
-            self.bidRequester = nil
+            self.nativoRequester = nil
             adLoader?.flowDelegate = self
             self.loadPrebidDisplayView(bidResponse: response)
         } else if !savedAdUnitConfig.prebidServerEnabled {
@@ -231,6 +252,12 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
             reportLoadingFailedWithError(error)
             return
         }
+
+        // Each cycle produces its own ad object and size. Carrying them over would let a cycle deploy
+        // the previous cycle's view, or report a size that belongs to an earlier bid.
+        primaryAdObject = nil
+        prebidAdObject = nil
+        winningAdSize = nil
 
         delegate?.adLoadFlowControllerWillSendBidRequest(self)
         
@@ -330,8 +357,16 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
     }
 
     private func deployPendingViewAndSendSuccessReport() {
+        // Reaching this step with nothing to deploy has to surface as a failure. Returning to .idle
+        // would leave the caller with neither a success nor an error and no further work queued.
+        guard let adObject = primaryAdObject ?? prebidAdObject else {
+            let error = PBMError.error(message: "Ad is ready to deploy but no ad object was produced.",
+                                       type: .internalError)
+            reportLoadingFailedWithError(error)
+            return
+        }
+
         flowState = .idle
-        guard let adObject = primaryAdObject ?? prebidAdObject else { return }
         adLoader?.reportSuccess(with: adObject,
                                 adSize: winningAdSize)
     }

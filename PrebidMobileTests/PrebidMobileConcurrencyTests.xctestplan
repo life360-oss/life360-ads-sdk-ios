@@ -1,0 +1,34 @@
+{
+  "configurations": [
+    {
+      "id": "6F1B4C7A-9D2E-4A83-B5C1-7E0A3D45F912",
+      "name": "Thread Sanitizer",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {
+    "codeCoverage": false,
+    "testTimeoutsEnabled": true,
+    "threadSanitizerEnabled": true
+  },
+  "testTargets": [
+    {
+      "parallelizable": false,
+      "selectedTests": [
+        "AutoRefreshManagerLockTest",
+        "BannerViewConcurrencyTest",
+        "BannerViewLoadCycleTest",
+        "NativoRendererConcurrencyTest",
+        "PBMBidRequesterTest\/testConcurrentDuplicateCallbacks_ShouldBeThreadSafe()",
+        "PBMBidRequesterTest\/testDuplicateCallback_ShouldNotCrash()",
+        "SharedConfigConcurrencyTest"
+      ],
+      "target": {
+        "containerPath": "container:PrebidMobile.xcodeproj",
+        "identifier": "60D792FA217E229B0080F428",
+        "name": "Life360AdsSDKTests"
+      }
+    }
+  ],
+  "version": 1
+}

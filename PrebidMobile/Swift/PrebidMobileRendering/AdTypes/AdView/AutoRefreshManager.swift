@@ -106,14 +106,19 @@ final class AutoRefreshManager: NSObject {
 
         lock.lock()
 
-        let block = DispatchWorkItem { [weak self] in
-            guard let self = self else { return }
-            self.refresh()
-            lock.unlock()
+        // The unlock is deliberately outside the cancellable work item and outside the `guard let
+        // self`. `cancelRefreshTimer()` cancels whatever is in `delayedBlock`, and this manager can be
+        // released while the item is queued — either would otherwise leave the caller's lock held for
+        // the rest of the process, blocking every later block on the queue it guards.
+        let refreshItem = DispatchWorkItem { [weak self] in
+            self?.refresh()
         }
+        delayedBlock = refreshItem
 
-        delayedBlock = block
-        DispatchQueue.main.async(execute: block)
+        DispatchQueue.main.async {
+            defer { lock.unlock() }
+            refreshItem.perform()
+        }
 
         delayedBlockLock.unlock()
     }

@@ -61,7 +61,10 @@ public class Prebid: NSObject {
     }
     
     /// Stored bid responses identified by bidder names.
-    public var storedBidResponses: [String: String] = [:]
+    public var storedBidResponses: [String: String] {
+        get { _storedBidResponses.value }
+        set { _storedBidResponses.value = newValue }
+    }
     
 	/// Optional Delegate which returns Request and Response Data for further processing
     public weak var eventDelegate: PrebidEventDelegate?
@@ -103,16 +106,24 @@ public class Prebid: NSObject {
     
     /// Timeout for Prebid requests in milliseconds.
     public var timeoutMillis: Int {
-        didSet {
-            timeoutMillisDynamic = NSNumber(value: timeoutMillis)
+        get { _timeoutMillis.value }
+        set {
+            _timeoutMillis.value = newValue
+            timeoutMillisDynamic = NSNumber(value: newValue)
         }
     }
     
-    /// Dynamic timeout value.
-    public var timeoutMillisDynamic: NSNumber?
+    /// Dynamic timeout value, in milliseconds.
+    public var timeoutMillisDynamic: NSNumber? {
+        get { _timeoutMillisDynamic.value }
+        set { _timeoutMillisDynamic.value = newValue }
+    }
     
     /// Stored auction response.
-    public var storedAuctionResponse: String?
+    public var storedAuctionResponse: String? {
+        get { _storedAuctionResponse.value }
+        set { _storedAuctionResponse.value = newValue }
+    }
     
     // MARK: - Public Properties (SDK)
 
@@ -122,10 +133,16 @@ public class Prebid: NSObject {
     public var useCacheForReportingWithRenderingAPI = false
     
     /// Controls how long each creative has to load before it is considered a failure.
-    public var creativeFactoryTimeout: TimeInterval = 6.0
+    public var creativeFactoryTimeout: TimeInterval {
+        get { _creativeFactoryTimeout.value }
+        set { _creativeFactoryTimeout.value = newValue }
+    }
     
     /// Controls how long video and interstitial creatives have to load before it is considered a failure.
-    public var creativeFactoryTimeoutPreRenderContent: TimeInterval = 30.0
+    public var creativeFactoryTimeoutPreRenderContent: TimeInterval {
+        get { _creativeFactoryTimeoutPreRenderContent.value }
+        set { _creativeFactoryTimeoutPreRenderContent.value = newValue }
+    }
     
     /// If set to true, the output of PrebidMobile's internal logger is written to a text file. This can be helpful for debugging. Defaults to false.
     public var debugLogFileEnabled: Bool {
@@ -157,6 +174,16 @@ public class Prebid: NSObject {
     /// Backing storage for custom HTTP headers
     private var _customHeaders: [String: String] = [:]
 
+    // Backing storage for the settings the ORTB builders read while a request is being assembled.
+    // Those reads happen on each ad unit's own request queue, so the host mutating a setting mid-load
+    // would otherwise race them.
+    private let _storedAuctionResponse = SynchronizedValue<String?>(nil)
+    private let _storedBidResponses = SynchronizedValue<[String: String]>([:])
+    private let _timeoutMillis = SynchronizedValue<Int>(defaultTimeoutMillis)
+    private let _timeoutMillisDynamic = SynchronizedValue<NSNumber?>(nil)
+    private let _creativeFactoryTimeout = SynchronizedValue<TimeInterval>(6.0)
+    private let _creativeFactoryTimeoutPreRenderContent = SynchronizedValue<TimeInterval>(30.0)
+
     // MARK: - Public Methods
     
     // MARK: - Stored Bid Response
@@ -166,12 +193,12 @@ public class Prebid: NSObject {
     ///   - bidder: The name of the bidder.
     ///   - responseId: The response ID.
     public func addStoredBidResponse(bidder: String, responseId: String) {
-        storedBidResponses[bidder] = responseId
+        _storedBidResponses.mutate { $0[bidder] = responseId }
     }
     
     /// Clears all stored bid responses.
     public func clearStoredBidResponses() {
-        storedBidResponses.removeAll()
+        _storedBidResponses.mutate { $0.removeAll() }
     }
     
     /// Retrieves stored bid responses.
@@ -179,7 +206,7 @@ public class Prebid: NSObject {
     public func getStoredBidResponses() -> [[String: String]]? {
         var storedBidResponses: [[String: String]] = []
         
-        for(bidder, responseId) in Prebid.shared.storedBidResponses {
+        for(bidder, responseId) in _storedBidResponses.value {
             var storedBidResponse: [String: String] = [:]
             storedBidResponse["bidder"] = bidder
             storedBidResponse["id"] = responseId
@@ -341,8 +368,10 @@ public class Prebid: NSObject {
     }
 
     override init() {
+        // The backing storage already holds defaultTimeoutMillis; the setters can only run once self
+        // is fully initialised, and assigning timeoutMillis is what populates the dynamic value.
+        super.init()
         timeoutMillis = defaultTimeoutMillis
-        timeoutMillisDynamic = NSNumber(value: timeoutMillis)
     }
     
     public static func registerPluginRenderer(_ pluginRenderer: PrebidMobilePluginRenderer) {
