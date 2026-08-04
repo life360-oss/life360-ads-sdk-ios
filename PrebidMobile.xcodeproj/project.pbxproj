@@ -728,6 +728,8 @@
 		925D5DB72737C60D00A8A2B5 /* PBMBidResponseTransformer+TestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D5DB62737C60D00A8A2B5 /* PBMBidResponseTransformer+TestExtension.swift */; };
 		925D5E092737DF5F00A8A2B5 /* BannerViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D5E082737DF5F00A8A2B5 /* BannerViewTest.swift */; };
 		925D5E0E2737DFCC00A8A2B5 /* RawWinningBidFabricator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D5E0D2737DFCC00A8A2B5 /* RawWinningBidFabricator.swift */; };
+		ED9D727D2AE250F5E338F46D /* NativoBidRequesterCompletionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471CC5ABEB51827296004F85 /* NativoBidRequesterCompletionTest.swift */; };
+		30F6EDAA594945F94E03BC94 /* NativoBidRequesterUserAgentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C220DA9D6C3B2A8C039A0 /* NativoBidRequesterUserAgentTest.swift */; };
 		9D1C4E97CACE02124141B989 /* NativoBidFabricator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93218C248E91B48AF57BF342 /* NativoBidFabricator.swift */; };
 		E2ED07D1301D026BF48EFFA4 /* NativoAdLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FDBE5844F46A8326B59A8B /* NativoAdLayoutTest.swift */; };
 		CD27BAF44B996C6F0CF4073B /* BannerViewConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E88FCD794CEBF3EB4BFEFC6 /* BannerViewConcurrencyTest.swift */; };
@@ -1645,6 +1647,8 @@
 		925D5DB62737C60D00A8A2B5 /* PBMBidResponseTransformer+TestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PBMBidResponseTransformer+TestExtension.swift"; sourceTree = "<group>"; };
 		925D5E082737DF5F00A8A2B5 /* BannerViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewTest.swift; sourceTree = "<group>"; };
 		925D5E0D2737DFCC00A8A2B5 /* RawWinningBidFabricator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawWinningBidFabricator.swift; sourceTree = "<group>"; };
+		471CC5ABEB51827296004F85 /* NativoBidRequesterCompletionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBidRequesterCompletionTest.swift; sourceTree = "<group>"; };
+		115C220DA9D6C3B2A8C039A0 /* NativoBidRequesterUserAgentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBidRequesterUserAgentTest.swift; sourceTree = "<group>"; };
 		93218C248E91B48AF57BF342 /* NativoBidFabricator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBidFabricator.swift; sourceTree = "<group>"; };
 		82FDBE5844F46A8326B59A8B /* NativoAdLayoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoAdLayoutTest.swift; sourceTree = "<group>"; };
 		0E88FCD794CEBF3EB4BFEFC6 /* BannerViewConcurrencyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewConcurrencyTest.swift; sourceTree = "<group>"; };
@@ -3363,6 +3367,8 @@
 				533135C5282A869800AA1E4D /* BidTest.swift */,
 				E5D79CAF2FAE951C00C0C44A /* PluginRendererFactoryTest.swift */,
 				4C8FE9E7076E1528CD4EE3E3 /* NativoBidResponseTest.swift */,
+				471CC5ABEB51827296004F85 /* NativoBidRequesterCompletionTest.swift */,
+				115C220DA9D6C3B2A8C039A0 /* NativoBidRequesterUserAgentTest.swift */,
 				82FDBE5844F46A8326B59A8B /* NativoAdLayoutTest.swift */,
 				0E88FCD794CEBF3EB4BFEFC6 /* BannerViewConcurrencyTest.swift */,
 				79165FCD86E9813EAC2682C6 /* NativoRendererConcurrencyTest.swift */,
@@ -4170,6 +4176,8 @@
 				922AFD432737295500732C53 /* PBMHTMLCreativeTest_MRAIDOrientationChange.swift in Sources */,
 				925D5D8A2737BB9C00A8A2B5 /* OMIDContext+pbmTestExtension.m in Sources */,
 				925D5E0E2737DFCC00A8A2B5 /* RawWinningBidFabricator.swift in Sources */,
+				ED9D727D2AE250F5E338F46D /* NativoBidRequesterCompletionTest.swift in Sources */,
+				30F6EDAA594945F94E03BC94 /* NativoBidRequesterUserAgentTest.swift in Sources */,
 				9D1C4E97CACE02124141B989 /* NativoBidFabricator.swift in Sources */,
 				E2ED07D1301D026BF48EFFA4 /* NativoAdLayoutTest.swift in Sources */,
 				CD27BAF44B996C6F0CF4073B /* BannerViewConcurrencyTest.swift in Sources */,
