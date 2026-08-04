@@ -17,8 +17,8 @@ import XCTest
 
 @testable @_spi(PBMInternal) import Life360AdsSDK
 
-/// The Nativo requester's completion advances the ad load flow state machine, so it has to run exactly
-/// once per request no matter how many times the network layer calls back.
+/// Covers the Nativo requester's request-timeout handling. Duplicate-callback behaviour lives in
+/// `NativoBidRequesterCompletionTest`.
 class NativoBidRequesterTest: XCTestCase {
 
     private var connection: DoubleFiringConnection!
@@ -32,49 +32,6 @@ class NativoBidRequesterTest: XCTestCase {
         connection = nil
         Prebid.reset()
         super.tearDown()
-    }
-
-    /// Redirects, retries and network-stack bugs can all deliver the same response twice.
-    func testDuplicateNetworkCallback_invokesCompletionOnce() {
-        let requester = makeRequester()
-
-        var completionCount = 0
-        let responded = expectation(description: "completion runs")
-        requester.requestBids { _, _ in
-            completionCount += 1
-            responded.fulfill()
-        }
-
-        XCTAssertTrue(connection.postWasCalled, "the ORTB request should have reached the connection")
-        connection.fireAgain()
-
-        wait(for: [responded], timeout: 1)
-        XCTAssertEqual(completionCount, 1, "a duplicate network callback must not re-run the completion")
-    }
-
-    /// A second request on the same instance is refused rather than displacing the first, so the
-    /// in-flight caller still gets its answer.
-    func testSecondRequestWhileInFlight_isRejectedWithRequestInProgress() {
-        let requester = makeRequester()
-
-        var firstCompletionCount = 0
-        requester.requestBids { _, _ in firstCompletionCount += 1 }
-
-        let expected = PBMError.requestInProgress()
-        let rejected = expectation(description: "second request is rejected")
-        requester.requestBids { response, error in
-            XCTAssertNil(response)
-            XCTAssertEqual((error as NSError?)?.domain, expected.domain)
-            XCTAssertEqual((error as NSError?)?.code, expected.code)
-            rejected.fulfill()
-        }
-
-        wait(for: [rejected], timeout: 1)
-        XCTAssertEqual(firstCompletionCount, 0, "the in-flight request must not have been completed yet")
-
-        // Let the first request finish so the instance is not left holding a completion.
-        connection.fireStoredCallback()
-        XCTAssertEqual(firstCompletionCount, 1)
     }
 
     /// `timeoutMillis` is milliseconds, but `PrebidServerConnection` applies its `timeout` to
@@ -116,12 +73,6 @@ final class DoubleFiringConnection: NSObject, PrebidServerConnectionProtocol {
 
     func fireStoredCallback() {
         storedCallback?(Self.blankResponse())
-    }
-
-    /// Delivers the response a second time, as a redirect or retry would.
-    func fireAgain() {
-        fireStoredCallback()
-        fireStoredCallback()
     }
 
     func post(
