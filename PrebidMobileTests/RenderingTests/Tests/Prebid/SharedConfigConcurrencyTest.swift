@@ -101,3 +101,53 @@ class SharedConfigConcurrencyTest: XCTestCase {
         wait(for: [read, resolved], timeout: 30)
     }
 }
+
+/// A connection that captures the requester's callback instead of hitting the network.
+///
+/// File-private: sibling suites define their own connection doubles, and a shared name at file scope
+/// would collide in this target.
+private final class DoubleFiringConnection: NSObject, PrebidServerConnectionProtocol {
+
+    private(set) var postWasCalled = false
+    private(set) var capturedTimeout: TimeInterval?
+    private var storedCallback: PrebidServerResponseCallback?
+
+    var userAgentService: UserAgentService { .shared }
+
+    func fireStoredCallback() {
+        storedCallback?(Self.blankResponse())
+    }
+
+    func post(
+        _ resourceURL: String?,
+        data: Data?,
+        timeout: TimeInterval,
+        callback: @escaping PrebidServerResponseCallback
+    ) {
+        postWasCalled = true
+        capturedTimeout = timeout
+        storedCallback = callback
+    }
+
+    func post(
+        _ resourceURL: String?,
+        contentType: String?,
+        data: Data?,
+        timeout: TimeInterval,
+        callback: @escaping PrebidServerResponseCallback
+    ) {
+        post(resourceURL, data: data, timeout: timeout, callback: callback)
+    }
+
+    func fireAndForget(_ resourceURL: String?) {}
+    func head(_ resourceURL: String?, timeout: TimeInterval, callback: @escaping PrebidServerResponseCallback) {}
+    func get(_ resourceURL: String?, timeout: TimeInterval, callback: @escaping PrebidServerResponseCallback) {}
+    func download(_ resourceURL: String?, callback: @escaping PrebidServerResponseCallback) {}
+
+    /// 204 is the cheapest terminal response: it needs no body and no JSON parsing.
+    private static func blankResponse() -> PrebidServerResponse {
+        let response = PrebidServerResponse()
+        response.statusCode = 204
+        return response
+    }
+}
