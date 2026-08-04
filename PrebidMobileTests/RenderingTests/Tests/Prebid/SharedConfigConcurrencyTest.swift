@@ -106,13 +106,28 @@ class SharedConfigConcurrencyTest: XCTestCase {
 ///
 /// File-private: sibling suites define their own connection doubles, and a shared name at file scope
 /// would collide in this target.
+/// Pre-populated so `UserAgentService` resolves without a web view.
+private class SeededUserAgentPersistence: UserAgentPersistence {
+    var userAgent: String?
+
+    required init(osVersion: String? = nil) {}
+}
+
 private final class DoubleFiringConnection: NSObject, PrebidServerConnectionProtocol {
 
     private(set) var postWasCalled = false
     private(set) var capturedTimeout: TimeInterval?
     private var storedCallback: PrebidServerResponseCallback?
 
-    var userAgentService: UserAgentService { .shared }
+    /// Seeded, so a request never waits on a `WKWebView`. `.shared` starts with an empty user agent on
+    /// a clean machine; once the requester warms the service before building, that would leave every
+    /// build here waiting on a web view that cannot resolve in a host-less `xctest`. A cached value in
+    /// `UserDefaults` masks it locally.
+    let userAgentService: UserAgentService = {
+        let store = SeededUserAgentPersistence(osVersion: nil)
+        store.userAgent = "Mozilla/5.0 (test) SharedConfigConcurrencyTest"
+        return UserAgentService(store: store)
+    }()
 
     func fireStoredCallback() {
         storedCallback?(Self.blankResponse())
