@@ -922,6 +922,8 @@ static PBMError *extracted(NSString *errorMessage) {
                 [self.exposureDelegate webView:self exposureChange:viewExposure];
             }
         } else {
+            PBMLogDebug(@"Viewability: scroll based tracking unavailable (%@), falling back to polling every 200ms",
+                        error.localizedDescription);
             // Fallback to original prebid implementation
             [self pollForViewability];
         }

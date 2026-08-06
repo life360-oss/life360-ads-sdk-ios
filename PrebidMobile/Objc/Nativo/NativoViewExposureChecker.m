@@ -15,6 +15,7 @@
 
 #import "NativoViewExposureChecker.h"
 #import "NativoUtils.h"
+#import "Log+Extensions.h"
 
 #ifdef DEBUG
     #import "Prebid+TestExtension.h"
@@ -54,6 +55,9 @@ typedef NS_ENUM(NSInteger, OcclusionType) {
 @implementation NativoViewExposureChecker {
     id<PBMViewExposure> _exposure;
 }
+- (instancetype)initWithView:(UIView *)view {
+    return [self initWithView:view onExposureChange:nil];
+}
 
 - (instancetype)initWithView:(UIView *)view onExposureChange:(NativoExposureChangeHandler)onExposureChange {
     if (!(self = [super initWithView:view])) {
@@ -65,7 +69,11 @@ typedef NS_ENUM(NSInteger, OcclusionType) {
     _observingKVO = NO;
     _colorAlphaCache = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsOpaqueMemory | NSPointerFunctionsObjectPointerPersonality
                                              valueOptions:NSPointerFunctionsStrongMemory];
-    [self beginAttachPollingIfNeededAndSetupObservation];
+    // Observation exists only to push updates into the handler, so pollers that pass none are spared the
+    // KVO registration and the attach timer.
+    if (_onExposureChange) {
+        [self beginAttachPollingIfNeededAndSetupObservation];
+    }
     return self;
 }
 
@@ -82,6 +90,8 @@ typedef NS_ENUM(NSInteger, OcclusionType) {
     if ([self isOnForeground]) {
         [self setupScrollObserving];
     } else {
+        PBMLogDebug(@"Viewability: %@ is not in a foreground window yet, polling until it attaches",
+                    [self.testedView class]);
         // If not attached/foreground yet, poll every 100ms until it is.
         __weak typeof(self) weakSelf = self;
         self.attachPollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:YES block:^(__unused NSTimer * _Nonnull timer) {
@@ -112,27 +122,50 @@ typedef NS_ENUM(NSInteger, OcclusionType) {
         } @catch (__unused NSException *exception) {
             self.observingKVO = NO;
         }
-        
+
+        if (self.observingKVO) {
+            PBMLogDebug(@"Viewability: tracking exposure of %@ against scroll view %@",
+                        [self.testedView class], [scrollView class]);
+        } else {
+            PBMLogDebug(@"Viewability: could not observe contentOffset of %@, exposure of %@ will only update on forced checks",
+                        [scrollView class], [self.testedView class]);
+        }
+
         // Setup debouncer and calculation
         __weak typeof(self) weakSelf = self;
         self.trackScrollDebounce = [NativoUtils debounceAction:^(id _Nullable param) {
             __strong typeof(weakSelf) self = weakSelf;
             if (!self) { return; }
             id<PBMViewExposure> exposure = [self calculateExposure];
-            if (exposure && self.onExposureChange) {
-                self.onExposureChange(exposure, nil);
+            if (exposure) {
+                [self notifyExposureChange:exposure error:nil];
             }
         } withInterval:0.15f];
-        
+
         // Perform initial check that doesn't rely on scrolling
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.onExposureChange([self calculateExposure], nil);
+            [self notifyExposureChange:[self calculateExposure] error:nil];
         });
     } else {
         NSError *error = [PBMError errorWithDescription:@"Failed to find UIScrollView parent."];
-        if (self.onExposureChange) {
-            self.onExposureChange([PBMFactory.ViewExposureType zeroExposure], error);
-        }
+        PBMLogDebug(@"Viewability: no scrollable ancestor of %@, reporting zero exposure so the caller can fall back to polling",
+                    [self.testedView class]);
+        [self notifyExposureChange:[PBMFactory.ViewExposureType zeroExposure] error:error];
+    }
+}
+
+#pragma mark - Exposure delivery
+
+// Every delivery goes through here: the handler is optional, and one funnel keeps the debug log from
+// repeating an unchanged exposure on each scroll tick.
+- (void)notifyExposureChange:(id<PBMViewExposure>)exposure error:(nullable NSError *)error {
+    PBMLogDebug(@"Viewability: %@ exposure %.1f%%, visible %@, %lu occlusion(s)",
+            [self.testedView class],
+            exposure.exposedPercentage,
+            NSStringFromCGRect(exposure.visibleRectangle),
+            (unsigned long)exposure.occlusionRectangles.count);
+    if (self.onExposureChange) {
+        self.onExposureChange(exposure, error);
     }
 }
 

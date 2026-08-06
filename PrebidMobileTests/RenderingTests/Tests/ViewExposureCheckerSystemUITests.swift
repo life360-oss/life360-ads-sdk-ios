@@ -510,3 +510,108 @@ class NativoFriendlyObstructionTests: XCTestCase {
         assertNotFriendly(transparentChild, friendly)
     }
 }
+
+/// Covers how `NativoViewExposureChecker` behaves the moment an ad is loaded, before any scrolling:
+/// which initializer the caller used must not change the measured exposure, and a checker with a handler
+/// has to report once on its own.
+class NativoViewExposureCheckerInitialLoadTests: XCTestCase {
+
+    var window: UIWindow!
+    var viewController: UIViewController!
+    var adView: UIView!
+
+    override func setUp() {
+        super.setUp()
+
+        window = UIWindow(frame: CGRect(x: 0, y: 0, width: 375, height: 667))
+        window.makeKeyAndVisible()
+
+        viewController = UIViewController()
+        viewController.view.backgroundColor = .white
+        window.rootViewController = viewController
+
+        adView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 250))
+        adView.backgroundColor = .red
+    }
+
+    override func tearDown() {
+        window.isHidden = true
+        window = nil
+        viewController = nil
+        adView = nil
+        super.tearDown()
+    }
+
+    /// PBMCreativeViewabilityTracker constructs the checker through the superclass initializer, so that
+    /// path has to measure the same view as the handler based one.
+    func testSuperclassInitializerMeasuresTheView() {
+        viewController.view.addSubview(adView)
+        viewController.view.layoutIfNeeded()
+
+        let checker = NativoViewExposureChecker(view: adView)
+
+        XCTAssertGreaterThan(checker.exposure.exposureFactor, 0.95)
+    }
+
+    func testBothInitializersReportTheSameExposure() {
+        viewController.view.addSubview(adView)
+        viewController.view.layoutIfNeeded()
+
+        let superclassInit = NativoViewExposureChecker(view: adView)
+        let handlerInit = NativoViewExposureChecker(view: adView, onExposureChange: nil)
+
+        XCTAssertEqual(superclassInit.exposure.exposureFactor,
+                       handlerInit.exposure.exposureFactor,
+                       accuracy: 0.001)
+    }
+
+    /// The initial report is what makes an ad that loads already on screen viewable without the user
+    /// scrolling first.
+    func testInitialExposureIsReportedWithoutScrolling() {
+        let scrollView = UIScrollView(frame: window.bounds)
+        viewController.view.addSubview(scrollView)
+        scrollView.addSubview(adView)
+        viewController.view.layoutIfNeeded()
+
+        let reported = expectation(description: "initial exposure reported")
+        var exposureFactor: Float?
+        var reportedError: Error?
+
+        let checker = NativoViewExposureChecker(view: adView) { exposure, error in
+            exposureFactor = exposure.exposureFactor
+            reportedError = error
+            reported.fulfill()
+        }
+
+        withExtendedLifetime(checker) {
+            waitForExpectations(timeout: 2)
+        }
+
+        XCTAssertNil(reportedError)
+        XCTAssertEqual(exposureFactor ?? 0, 1, accuracy: 0.05)
+    }
+
+    /// Without a scrollable ancestor there is nothing to observe, so the checker reports zero plus an
+    /// error and leaves the caller to fall back to polling.
+    func testMissingScrollAncestorReportsZeroWithError() {
+        viewController.view.addSubview(adView)
+        viewController.view.layoutIfNeeded()
+
+        let reported = expectation(description: "failure reported")
+        var exposureFactor: Float?
+        var reportedError: Error?
+
+        let checker = NativoViewExposureChecker(view: adView) { exposure, error in
+            exposureFactor = exposure.exposureFactor
+            reportedError = error
+            reported.fulfill()
+        }
+
+        withExtendedLifetime(checker) {
+            waitForExpectations(timeout: 2)
+        }
+
+        XCTAssertNotNil(reportedError)
+        XCTAssertEqual(exposureFactor, 0)
+    }
+}
