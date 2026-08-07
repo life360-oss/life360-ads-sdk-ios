@@ -139,11 +139,7 @@
     self.prebidWebView.delegate = self;
     self.view = self.prebidWebView;
 
-    // Signal readiness to the creative factory immediately. HTML is loaded lazily
-    // in displayWithRootViewController:, once the view has been added to the hierarchy,
-    // so that third-party JS inside the ad markup cannot fire impression trackers
-    // before the ad is actually visible.
-    [self onResolutionCompleted];
+    [self loadHTMLToWebView];
 }
 
 - (BOOL)hasVastTag:(NSString *)html {
@@ -159,11 +155,6 @@
  }
 
 - (void)displayWithRootViewController:(UIViewController*)viewController {
-    // Load HTML now that the view is in the hierarchy (addSubview: is always called
-    // before displayWithRootViewController: in PBMAdViewManager). This ensures
-    // third-party JS in the ad markup only executes once the ad is actually being shown.
-    [self loadHTMLToWebView];
-
     //Either these constraints are redundant or the initWithFrame is.
     [self.prebidWebView PBMAddCropAndCenterConstraintsWithInitialWidth:self.prebidWebView.frame.size.width initialHeight:self.prebidWebView.frame.size.height];
     [self.prebidWebView prepareForMRAIDWithRootViewController:viewController];
@@ -312,9 +303,8 @@
 // Per the IAB OM SDK integration guide, the OMIDAdSession must not be created until the WebView has
 // finished loading the injected OM SDK JS — creating it sooner leaves verification scripts unable to
 // receive impression and other events. The transaction requests session creation as soon as the
-// creative is built, which is before the HTML (and its injected OM JS) is loaded lazily in
-// displayWithRootViewController:. setupOpenMeasurementSession is a no-op until the WebView has
-// finished loading; webViewDidFinishNavigation: then creates the session once loading completes.
+// creative is built, which can still be mid-load, so setupOpenMeasurementSession is a no-op until the
+// WebView reports loaded; webViewDidFinishNavigation: then creates the session once loading completes.
 - (void)createOpenMeasurementSession {
     if (!NSThread.currentThread.isMainThread) {
         PBMLogError(@"Open Measurement session can only be created on the main thread");

@@ -356,9 +356,11 @@ class PBMViewExposureCheckerSystemUITests: XCTestCase {
     }
 }
 
-/// Verifies `NativoViewExposureChecker.friendlyObstructionViews` — the set of overlapping views whose
-/// entire subtree paints nothing over the ad, which the OM path registers as OMID friendly obstructions
-/// so transparent overlays stop eroding measured viewability.
+/// Verifies `NativoViewExposureChecker.friendlyObstructionViews` — every overlapping view that itself
+/// paints nothing over the ad, which the OM path registers as OMID friendly obstructions so transparent
+/// overlays stop eroding measured viewability. OMID judges each overlapping view on its own, so the list
+/// is per-view rather than per-subtree: a non-painting container is registered even when something
+/// deeper inside it draws, and that drawing descendant stays an occluder.
 class NativoFriendlyObstructionTests: XCTestCase {
 
     var window: UIWindow!
@@ -481,8 +483,8 @@ class NativoFriendlyObstructionTests: XCTestCase {
     }
 
     func testTransparentContainerWithOpaqueChildIsNotFriendly() {
-        // Container itself is transparent, but a child paints over the ad -> the subtree occludes, so
-        // neither the container nor the opaque child may be registered.
+        // The child's layer is a sublayer of the container's, so an opaque background one level down
+        // counts as the container painting: neither it nor the child may be registered.
         let container = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
         container.backgroundColor = .clear
         let opaqueChild = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -495,9 +497,10 @@ class NativoFriendlyObstructionTests: XCTestCase {
         assertNotFriendly(opaqueChild, friendly)
     }
 
-    func testFullyTransparentContainerIsFriendlyAtRoot() {
-        // Container and child both transparent -> the container root covers the whole subtree, and the
-        // child is not listed separately.
+    func testFullyTransparentContainerAndChildAreBothFriendly() {
+        // Container and child both transparent -> each is registered on its own. Declaring the nested
+        // child alongside its container is redundant for OMID but harmless, and it is what lets a
+        // container be declared even when a deeper descendant draws.
         let container = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
         container.backgroundColor = .clear
         let transparentChild = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -507,6 +510,130 @@ class NativoFriendlyObstructionTests: XCTestCase {
 
         let friendly = friendlyObstructions()
         assertFriendly(container, friendly)
-        assertNotFriendly(transparentChild, friendly)
+        assertFriendly(transparentChild, friendly)
+    }
+
+    /// The regression this collection logic exists for: on iOS 26 SwiftUI wraps an ad in containers that
+    /// paint nothing themselves but hold a small drawing view two levels down. Judging the container by
+    /// its own painting keeps it declared, so OMID charges only the drawing view's rect.
+    func testNonPaintingContainerIsFriendlyWhenOnlyADeepDescendantDraws() {
+        let container = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 250))
+        container.backgroundColor = .clear
+        let passthrough = UIView(frame: container.bounds)
+        passthrough.backgroundColor = .clear
+        let drawingDescendant = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20))
+        drawingDescendant.backgroundColor = .green
+        passthrough.addSubview(drawingDescendant)
+        container.addSubview(passthrough)
+        addOverlay(container, frame: container.frame)
+
+        let friendly = friendlyObstructions()
+        assertFriendly(container, friendly)
+        assertNotFriendly(drawingDescendant, friendly)
+    }
+}
+
+/// Covers how `NativoViewExposureChecker` behaves the moment an ad is loaded, before any scrolling:
+/// which initializer the caller used must not change the measured exposure, and a checker with a handler
+/// has to report once on its own.
+class NativoViewExposureCheckerInitialLoadTests: XCTestCase {
+
+    var window: UIWindow!
+    var viewController: UIViewController!
+    var adView: UIView!
+
+    override func setUp() {
+        super.setUp()
+
+        window = UIWindow(frame: CGRect(x: 0, y: 0, width: 375, height: 667))
+        window.makeKeyAndVisible()
+
+        viewController = UIViewController()
+        viewController.view.backgroundColor = .white
+        window.rootViewController = viewController
+
+        adView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 250))
+        adView.backgroundColor = .red
+    }
+
+    override func tearDown() {
+        window.isHidden = true
+        window = nil
+        viewController = nil
+        adView = nil
+        super.tearDown()
+    }
+
+    /// PBMCreativeViewabilityTracker constructs the checker through the superclass initializer, so that
+    /// path has to measure the same view as the handler based one.
+    func testSuperclassInitializerMeasuresTheView() {
+        viewController.view.addSubview(adView)
+        viewController.view.layoutIfNeeded()
+
+        let checker = NativoViewExposureChecker(view: adView)
+
+        XCTAssertGreaterThan(checker.exposure.exposureFactor, 0.95)
+    }
+
+    func testBothInitializersReportTheSameExposure() {
+        viewController.view.addSubview(adView)
+        viewController.view.layoutIfNeeded()
+
+        let superclassInit = NativoViewExposureChecker(view: adView)
+        let handlerInit = NativoViewExposureChecker(view: adView, onExposureChange: nil)
+
+        XCTAssertEqual(superclassInit.exposure.exposureFactor,
+                       handlerInit.exposure.exposureFactor,
+                       accuracy: 0.001)
+    }
+
+    /// The initial report is what makes an ad that loads already on screen viewable without the user
+    /// scrolling first.
+    func testInitialExposureIsReportedWithoutScrolling() {
+        let scrollView = UIScrollView(frame: window.bounds)
+        viewController.view.addSubview(scrollView)
+        scrollView.addSubview(adView)
+        viewController.view.layoutIfNeeded()
+
+        let reported = expectation(description: "initial exposure reported")
+        var exposureFactor: Float?
+        var reportedError: Error?
+
+        let checker = NativoViewExposureChecker(view: adView) { exposure, error in
+            exposureFactor = exposure.exposureFactor
+            reportedError = error
+            reported.fulfill()
+        }
+
+        withExtendedLifetime(checker) {
+            waitForExpectations(timeout: 2)
+        }
+
+        XCTAssertNil(reportedError)
+        XCTAssertEqual(exposureFactor ?? 0, 1, accuracy: 0.05)
+    }
+
+    /// Without a scrollable ancestor there is nothing to observe, so the checker reports zero plus an
+    /// error and leaves the caller to fall back to polling.
+    func testMissingScrollAncestorReportsZeroWithError() {
+        viewController.view.addSubview(adView)
+        viewController.view.layoutIfNeeded()
+
+        let reported = expectation(description: "failure reported")
+        var exposureFactor: Float?
+        var reportedError: Error?
+
+        let checker = NativoViewExposureChecker(view: adView) { exposure, error in
+            exposureFactor = exposure.exposureFactor
+            reportedError = error
+            reported.fulfill()
+        }
+
+        withExtendedLifetime(checker) {
+            waitForExpectations(timeout: 2)
+        }
+
+        XCTAssertNotNil(reportedError)
+        XCTAssertEqual(exposureFactor, 0)
     }
 }
