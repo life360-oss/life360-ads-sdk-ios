@@ -701,13 +701,16 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
         
         flowController.refresh()
-        waitForExpectations(timeout: 1)
-        
+        // Unlike the event-handler path, the failure here is only reported after the main-queue hop in
+        // requestPrimaryAdServer, so the budget has to tolerate a main queue that other suites have
+        // already backed up.
+        waitForExpectations(timeout: 10)
+
         XCTAssertTrue(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .loadingFailed)
         compositeMock.checkIsFinished()
     }
-    
+
     func testPrebidWin_noWinningBidInBidResponse() {
         let adUnitConfig = AdUnitConfig(configId: "configID")
         
