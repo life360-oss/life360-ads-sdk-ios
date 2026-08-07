@@ -447,10 +447,9 @@ static const CGFloat kAlphaEpsilon = 0.01;
 // Single traversal shared by the exposure calculation and OMID friendly-obstruction detection: it
 // makes one opacity decision per view and reports through two optional channels. `obstructions`
 // receives the intersecting rect of every view that paints opaque content over the ad (drives the
-// exposure factor). `friendly` receives the maximal roots of subtrees that paint nothing over the ad
-// — OMID would otherwise count these transparent overlays as occluders, so callers register them as
-// friendly obstructions. The return value tells the parent whether this subtree occludes, which it
-// uses to decide whether a fully-transparent child is itself a maximal friendly root.
+// exposure factor). `friendly` receives every view that paints nothing over the ad — OMID would
+// otherwise count those transparent overlays as occluders, so callers register them as friendly
+// obstructions. The two channels are exhaustive and disjoint: each visited view lands in exactly one.
 - (OcclusionType)collectObstructionsFrom:(UIView *)view
                                   withClip:(CGRect)currentClipInTestedCoords
                               obstructions:(NSMutableArray<NSValue *> *)obstructions
@@ -479,37 +478,29 @@ static const CGFloat kAlphaEpsilon = 0.01;
             // registering that descendant as friendly could not change OMID's result.
             return OcclusionTypeOpaque;
         }
+    } else {
+        // OMID evaluates every overlapping view on its own, so a view that paints nothing over the ad is
+        // a friendly obstruction even when a descendant does paint — that descendant is reported through
+        // `obstructions` and stays an occluder. Declaring only fully-transparent subtrees left any
+        // container sized to the ad undeclared as soon as one child drew inside it, and OMID then charged
+        // the container's entire rect: SwiftUI's `_UIInheritedView` wrappers around the pillar's
+        // scroll-edge-effect interaction views turned 7.5% of real occlusion into 100%.
+        [friendly addObject:view]; // no-op when friendly is nil (exposure pass)
     }
 
     CGRect nextClip = view.clipsToBounds ? intersection : currentClipInTestedCoords;
     BOOL subtreeOccludes = selfOccludes;
-    NSMutableArray<UIView *> *transparentChildren = nil;
     for (UIView *subView in view.subviews) {
         OcclusionType childResult = [self collectObstructionsFrom:subView
                                                            withClip:nextClip
                                                        obstructions:obstructions
                                                            friendly:friendly];
         if (childResult == OcclusionTypeOpaque) {
-            subtreeOccludes = YES; // maximal roots inside this child were already appended to friendly
-        } else if (childResult == OcclusionTypeTransparent && friendly) {
-            // Defer: promote this transparent child to a friendly root only if some other part of the
-            // subtree occludes. Otherwise `view` itself becomes the single maximal root below.
-            if (!transparentChildren) {
-                transparentChildren = [[NSMutableArray alloc] init];
-            }
-            [transparentChildren addObject:subView];
+            subtreeOccludes = YES;
         }
     }
-
-    if (subtreeOccludes) {
-        // Boundary between occluding and transparent regions: each fully-transparent overlapping child
-        // is a maximal friendly root.
-        [friendly addObjectsFromArray:transparentChildren];
-        return OcclusionTypeOpaque;
-    }
-
-    // The whole subtree is transparent; let the caller register `view` as the single maximal root.
-    return OcclusionTypeTransparent;
+    
+    return subtreeOccludes ? OcclusionTypeOpaque : OcclusionTypeTransparent;
 }
 
 // Backwards-compatible shims for the exposure calculation, which only needs obstruction rects.
@@ -537,7 +528,8 @@ static const CGFloat kAlphaEpsilon = 0.01;
 
     // OMID measures within the ad's own bounds, and only views drawn on top of the ad (the same set
     // visitParent:fromChild: walks) can occlude it, so clip to the ad bounds and iterate later siblings
-    // up the ancestor chain.
+    // up the ancestor chain. collectObstructionsFrom:... appends each non-painting view it visits, so
+    // this loop only has to hand it the roots.
     CGRect const adClip = self.testedView.bounds;
     UIView *child = self.testedView;
     UIView *parent = child.superview;
@@ -547,14 +539,10 @@ static const CGFloat kAlphaEpsilon = 0.01;
         }
         NSArray<UIView *> *subViews = [parent subviews];
         for (NSUInteger i = [subViews indexOfObject:child] + 1, n = subViews.count; i < n; i++) {
-            UIView *sibling = subViews[i];
-            OcclusionType siblingResult = [self collectObstructionsFrom:sibling
-                                                                 withClip:adClip
-                                                             obstructions:nil
-                                                                 friendly:result];
-            if (siblingResult == OcclusionTypeTransparent) {
-                [result addObject:sibling]; // whole sibling subtree transparent -> maximal root
-            }
+            [self collectObstructionsFrom:subViews[i]
+                                 withClip:adClip
+                             obstructions:nil
+                                 friendly:result];
         }
         child = parent;
         parent = parent.superview;
