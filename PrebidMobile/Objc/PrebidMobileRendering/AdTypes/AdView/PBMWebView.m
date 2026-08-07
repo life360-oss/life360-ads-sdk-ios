@@ -235,7 +235,6 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
 #endif
             NSURL *resolvedBaseURL = baseURL ?: [NSURL URLWithString:@"https://localhost/"];
             [self.internalWebView loadHTMLString:html baseURL:resolvedBaseURL];
-            [self pollForDocumentReadyState];
         });
 #if REMOTE_DEBUGGING
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -381,11 +380,12 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
     }
 }
 
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
+    [self pollForDocumentReadyState];
+}
+
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     PBMLogWhereAmI();
-    // Moving this out since document will always be ready at this point
-    // Noticable performance improvements if we call this earlier and load in content sooner
-//    [self pollForDocumentReadyState];
     self.state = PBMWebViewStateLoaded;
 
     [self.delegate webViewDidFinishNavigation:self];
@@ -401,6 +401,7 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
 
 - (void)checkDocumentReadyState {
     @weakify(self);
+    int pollRate = 50;
     WKUserScript *script = [[WKUserScript alloc] initWithSource:@"document.readyState" injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
     [self.internalWebView.configuration.userContentController addUserScript:script];
     [self.internalWebView evaluateJavaScript:@"document.readyState" completionHandler:^(NSString * _Nullable readyState, NSError * _Nullable error) {
@@ -417,7 +418,7 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
             [self.delegate webViewReadyToDisplay:self];
 #endif
         } else {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, pollRate * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 @strongify(self);
                 
                 if (!self) { return; }
@@ -922,6 +923,8 @@ static PBMError *extracted(NSString *errorMessage) {
                 [self.exposureDelegate webView:self exposureChange:viewExposure];
             }
         } else {
+            PBMLogDebug(@"Viewability: scroll based tracking unavailable (%@), falling back to polling every 200ms",
+                        error.localizedDescription);
             // Fallback to original prebid implementation
             [self pollForViewability];
         }
