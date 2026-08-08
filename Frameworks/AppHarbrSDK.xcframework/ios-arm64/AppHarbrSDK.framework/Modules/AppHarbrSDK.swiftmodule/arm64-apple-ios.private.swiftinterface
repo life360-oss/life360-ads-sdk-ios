@@ -1,0 +1,801 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.2 effective-5.10 (swiftlang-6.2.0.19.9 clang-1700.3.19.1)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name AppHarbrSDK
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2
+import AVFoundation
+@_exported import AppHarbrSDK
+import CoreData
+import CoreGraphics
+import Foundation
+import OSLog
+import Swift
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import os.log
+import os
+@objc public enum AdAnalyzedResult : Swift.Int, Swift.CustomStringConvertible, Swift.Sendable {
+  case analyzedSuccessfullyOnAdLoad
+  case willAnalyzeOnDisplay
+  case notAnalyzedUnableToFetchAdapter
+  case notAnalyzedAdNetworkAdapterNotSupported
+  case notAnalyzedUnsupportedContent
+  case notAnalyzedHouseCampaign
+  case notAnalyzedDueToTargetedAdNetworks
+  case notAnalyzedUnsupportedAdNetworkVersion
+  case notAnalyzedSdkNotInitialized
+  case notAnalyzedInitializationInProgress
+  case notAnalyzedPolicyUnavailable
+  public var description: Swift.String {
+    get
+  }
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum AHInitializeError : Swift.Int, Swift.Error {
+  case invalidApiKey
+  case invalidActivation
+  case unsupportedDirectMediation
+  case enableDebugMode
+  case internalError
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public static var _nsErrorDomain: Swift.String {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension AppHarbrSDK.AHInitializeError : Foundation.LocalizedError {
+  #if compiler(>=5.3) && $NonescapableTypes
+  public var errorDescription: Swift.String? {
+    get
+  }
+  #endif
+}
+@objc public enum AdQualityError : Swift.Int, Swift.Error {
+  case timeout
+  case adValidatedOnDisplay
+  case adapterVersionMismatch
+  case unsupportedAdNetwork
+  case unableToFetchData
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public static var _nsErrorDomain: Swift.String {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public let AH: AppHarbrSDK.AppHarbr
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc final public class AppHarbr : ObjectiveC.NSObject {
+  @objc public static let shared: AppHarbrSDK.AppHarbr
+  @objc final public var isReady: Swift.Bool {
+    @objc get
+  }
+  @objc final public var geConfiguration: AppHarbrSDK.AppHarbrConfiguration? {
+    get
+  }
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc final public func initializeSdk(configuration: AppHarbrSDK.AppHarbrConfiguration, completion: @escaping ((any Swift.Error)?) -> Swift.Void)
+  #endif
+  @objc(addBannerAdSdk:adObject:delegate:) final public func addBanner(with adSdk: AppHarbrSDK.AdSdk, adObject: ObjectiveC.NSObject, delegate: any AppHarbrSDK.AppHarbrDelegate)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc(addNativeBannerAdSdk:adLoader:delegate:request:) final public func addNativeBanner(with adSdk: AppHarbrSDK.AdSdk, adLoader: ObjectiveC.NSObject, delegate: any AppHarbrSDK.AppHarbrDelegate, request: ObjectiveC.NSObject? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  final public func _watchNimbusDynamicPriceBanner(_ banner: ObjectiveC.NSObject, delegate: any AppHarbrSDK.AppHarbrDelegate) -> (any AppHarbrSDK.DynamicPriceBannerViewDelegate)?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc(addInterstitialAdSdk:interstitialAd:unitId:delegate:) final public func addInterstitial(with adSdk: AppHarbrSDK.AdSdk, interstitialAd: ObjectiveC.NSObject? = nil, unitId: Swift.String? = nil, delegate: any AppHarbrSDK.AppHarbrDelegate)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc(addRewardedAdSdk:rewardedAd:unitId:delegate:) final public func addRewarded(with adSdk: AppHarbrSDK.AdSdk, rewardedAd: ObjectiveC.NSObject? = nil, unitId: Swift.String? = nil, delegate: any AppHarbrSDK.AppHarbrDelegate)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc(addRewardedInterstitialAdSdk:rewardedAd:unitId:delegate:) final public func addRewardedInterstitial(with adSdk: AppHarbrSDK.AdSdk, rewardedIntertitialAd: ObjectiveC.NSObject? = nil, unitId: Swift.String? = nil, delegate: any AppHarbrSDK.AppHarbrDelegate)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc(shouldBlockNativeAd:usingAdSdk:unitId:request:) final public func shouldBlock(nativeAd: ObjectiveC.NSObject, using adSdk: AppHarbrSDK.AdSdk, unitId: Swift.String, request: ObjectiveC.NSObject? = nil) -> AppHarbrSDK.AdResult
+  #endif
+  @objc(addMAAdPlacerAdUnitIdentifier:) final public func addMAAdPlacer(adUnitIdentifier: Swift.String)
+  @objc(removeMAAdPlacerAdUnitIdentifier:) final public func removeMAAdPlacer(adUnitIdentifier: Swift.String)
+  @objc final public func launchIntegrationDashboard(for mediation: AppHarbrSDK.AdSdk)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @available(*, deprecated, message: "This method is deprecated. Please, use interstitialResult(forAd:) method instead.")
+  @objc final public func getInterstitialState(ad: ObjectiveC.NSObject?) -> AppHarbrSDK.AdStateResult
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @available(*, deprecated, message: "This method is deprecated. Please, use rewardedResult(forAd:) method instead.")
+  @objc final public func getRewardedState(ad: ObjectiveC.NSObject?) -> AppHarbrSDK.AdStateResult
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @available(*, deprecated, message: "This method is deprecated. Please, use rewardedInterstitialResult(forAd:) method instead.")
+  @objc final public func getRewardedInterstitialState(ad: ObjectiveC.NSObject?) -> AppHarbrSDK.AdStateResult
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc final public func interstitialResult(forAd ad: ObjectiveC.NSObject?) -> AppHarbrSDK.AdResult
+  #endif
+  @objc final public func interstitialResult(forAdUnitId unitId: Swift.String) -> AppHarbrSDK.AdResult
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc final public func rewardedResult(forAd ad: ObjectiveC.NSObject?) -> AppHarbrSDK.AdResult
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc final public func rewardedInterstitialResult(forAd ad: ObjectiveC.NSObject?) -> AppHarbrSDK.AdResult
+  #endif
+  @available(*, deprecated, message: "you do not need to remove object")
+  @objc final public func removeBanner(view adObject: ObjectiveC.NSObject)
+  @available(*, deprecated, message: "you do not need to remove object")
+  @objc final public func removeNativeBanner(adLoader: ObjectiveC.NSObject)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @available(*, deprecated, message: "you do not need to remove object")
+  @objc final public func removeInterstitial(ad: ObjectiveC.NSObject?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @available(*, deprecated, message: "you do not need to remove object")
+  @objc final public func removeRewarded(ad: ObjectiveC.NSObject? = nil)
+  #endif
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class AppHarbrUnityHelper : ObjectiveC.NSObject {
+  @objc public static let shared: AppHarbrSDK.AppHarbrUnityHelper
+  public func getInterstitialState(adUnitIdentifier: Swift.String) -> AppHarbrSDK.AdStateResult
+  public func getRewardedState(adUnitIdentifier: Swift.String) -> AppHarbrSDK.AdStateResult
+  public func getRewardedInterstitialState(adUnitIdentifier: Swift.String) -> AppHarbrSDK.AdStateResult
+  public func setPlatform(_ uuid: Swift.String)
+  public func setUnityPluginVersion(_ version: Swift.String)
+  @objc public func watch(mediationSdk: AppHarbrSDK.AdSdk)
+  @objc override dynamic public init()
+  @objc deinit
+}
+public struct Bid {
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init(adm: Swift.String? = nil, creativeId: Swift.String? = nil, targetingInfo: [Swift.String : Swift.String]? = nil, bidID: Swift.String, network: Swift.String? = nil, placementId: Swift.String? = nil)
+  #endif
+}
+@objc(AHAdAnalyzeDelegate) public protocol AdAnalyzeDelegate {
+  @objc func didAnalyzeAd(with result: AppHarbrSDK.AdAnalysisResult, info: AppHarbrSDK.AHAdAnalysisInfo)
+}
+public typealias AHAdAnalysisInfo = AppHarbrSDK.AdIncidentInfo
+@objc(AHAdAnalysisResult) public enum AdAnalysisResult : Swift.Int {
+  case adAnalyzedOnLoad
+  case blockedBeforeDisplay
+  case blockedAfterDisplay
+  case invalidAdObject
+  case missingAdNetworkUnitId
+  case versionMismatch
+  case internalError
+  case unsupportedAdNetwork
+  case incidentReport
+  case analyzeWillPerformOnDisplay
+  case timeLimitWillExecute
+  case clickThresholdWillExecute
+  case unsupportedMediation
+  case sdkNotInitialized
+  case initializationInProgress
+  case policyUnavailable
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum AdBlockReason : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case security = 1
+  case videoOnDisplay = 2
+  case popup = 3
+  case adLpOffensive = 4
+  case videoAutoSound = 5
+  case lpBackButtonHijack = 6
+  case browserLocking = 7
+  case pageAutoScroll = 8
+  case mobileVibrateLp = 9
+  case jSAlertOnEntry = 10
+  case userDefinedDomain = 11
+  case adLpExtremeOffensive = 12
+  case lpCategoryAlcohol = 14
+  case lpCategoryGambling = 15
+  case lpCategoryHealth = 16
+  case lpCategoryIllegalDrugs = 17
+  case lpCategoryLaw = 18
+  case lpCategoryMarijuana = 19
+  case lpCategoryNews = 20
+  case lpCategoryPharmaceuticals = 21
+  case lpCategoryReligion = 22
+  case lpCategoryTobacco = 23
+  case lpCategoryWeightLoss = 24
+  case adLpKeyword = 25
+  case lpCategoryCryptocurrency = 26
+  case lpCategoryFashionAndBeauty = 27
+  case lpCategoryElection = 28
+  case userDefinedApp = 31
+  case animatedGif = 32
+  case markedByTheUser = 515
+  case lpCategorySwimwearAndIntimateApparel = 34
+  case lpCategoryWeapons = 35
+  case fileDownload = 36
+  case invalidTraffic = 37
+  case heavyAd = 38
+  case creativeFileSize = 39
+  case floatingAd = 40
+  case deceptiveAd = 41
+  case deceptiveSite = 83
+  case appStoreCategoryBooks = 100
+  case appStoreCategoryBusiness = 101
+  case appStoreCategoryDeveloperTools = 102
+  case appStoreCategoryEducation = 103
+  case appStoreCategoryEntertainment = 104
+  case appStoreCategoryFinance = 105
+  case appStoreCategoryFoodDrink = 106
+  case appStoreCategoryGames = 107
+  case appStoreCategoryGraphicsDesign = 108
+  case appStoreCategoryHealthFitness = 109
+  case appStoreCategoryLifestyle = 110
+  case appStoreCategoryKids = 111
+  case appStoreCategoryMagazinesNewspapers = 112
+  case appStoreCategoryMedical = 113
+  case appStoreCategoryMusic = 114
+  case appStoreCategoryNavigation = 115
+  case appStoreCategoryNews = 116
+  case appStoreCategoryPhotoVideo = 117
+  case appStoreCategoryProductivity = 118
+  case appStoreCategoryReference = 119
+  case appStoreCategorySafariExtensions = 120
+  case appStoreCategoryShopping = 121
+  case appStoreCategorySocialNetworking = 122
+  case appStoreCategorySports = 123
+  case appStoreCategoryTravel = 124
+  case appStoreCategoryUtilities = 125
+  case appStoreCategoryWeather = 126
+  case appStoreCategoryStickers = 127
+  case playStoreCategoryArtDesign = 200
+  case playStoreCategoryAutoVehicles = 201
+  case playStoreCategoryBeauty = 202
+  case playStoreCategoryBooksReference = 203
+  case playStoreCategoryBusiness = 204
+  case playStoreCategoryComics = 205
+  case playStoreCategoryCommunication = 206
+  case playStoreCategoryDating = 207
+  case playStoreCategoryEducation = 208
+  case playStoreCategoryEntertainment = 209
+  case playStoreCategoryEvents = 210
+  case playStoreCategoryFinance = 211
+  case playStoreCategoryFoodDrink = 212
+  case playStoreCategoryHealthFitness = 213
+  case playStoreCategoryHouseHome = 214
+  case playStoreCategoryLibrariesDemo = 215
+  case playStoreCategoryLifestyle = 216
+  case playStoreCategoryMapsNavigation = 217
+  case playStoreCategoryMedical = 218
+  case playStoreCategoryMusicAudio = 219
+  case playStoreCategoryNewsMagazines = 220
+  case playStoreCategoryParenting = 221
+  case playStoreCategoryPersonalization = 222
+  case playStoreCategoryPhotography = 223
+  case playStoreCategoryProductivity = 224
+  case playStoreCategoryShopping = 225
+  case playStoreCategorySocial = 226
+  case playStoreCategorySports = 227
+  case playStoreCategoryTools = 228
+  case playStoreCategoryTravelLocal = 229
+  case playStoreCategoryVideoPlayersEditors = 230
+  case playStoreCategoryWeather = 231
+  case playStoreCategoryGamesAction = 232
+  case playStoreCategoryGamesAdventure = 233
+  case playStoreCategoryGamesArcade = 234
+  case playStoreCategoryGamesBoard = 235
+  case playStoreCategoryGamesCard = 236
+  case playStoreCategoryGamesCasino = 237
+  case playStoreCategoryGamesCasual = 238
+  case playStoreCategoryGamesEducational = 239
+  case playStoreCategoryGamesMusic = 240
+  case playStoreCategoryGamesPuzzle = 241
+  case playStoreCategoryGamesRacing = 242
+  case playStoreCategoryGamesRolePlaying = 243
+  case playStoreCategoryGamesSimulation = 244
+  case playStoreCategoryGamesSports = 245
+  case playStoreCategoryGamesStrategy = 246
+  case playStoreCategoryGamesTrivia = 247
+  case playStoreCategoryGamesWord = 248
+  case forcedBrowserNotifications = 600
+  case maliciousExtensionsAddOns = 601
+  case fakeAntivirusCleaners = 602
+  case fakeSoftwareUpdate = 603
+  case suspiciousVpn = 604
+  case giftCardScam = 605
+  case techSupportScam = 606
+  case financialScam = 607
+  case brandImpersonation = 608
+  case misleadingProductOffer = 609
+  case appExperienceForceCloseAd = 901
+  case appExperienceClicksThreshold = 903
+  case none = 9998
+  case unknown = 9999
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias AllCases = [AppHarbrSDK.AdBlockReason]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [AppHarbrSDK.AdBlockReason] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension AppHarbrSDK.AdBlockReason : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+@objc public protocol AppHarbrDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
+  @available(*, deprecated, message: "This method is deprecated and will be removed in a future version. Please, use didAdBlocked(incidentInfo:) method instead.")
+  @objc optional func didAdBlocked(ad: ObjectiveC.NSObject?, unitId: Swift.String?, adForamt: AppHarbrSDK.AdFormat, reasons: [Swift.String])
+  #endif
+  @objc optional func didAdBlocked(incidentInfo: AppHarbrSDK.AdIncidentInfo)
+}
+@objc public protocol AppHarbrIncidentDelegate : AppHarbrSDK.AppHarbrDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
+  @available(*, deprecated, message: "This method is deprecated and will be removed in a future version. Please, use didAdIncident(incidentInfo:) method instead.")
+  @objc optional func didAdIncident(ad: ObjectiveC.NSObject?, adNetwork: AppHarbrSDK.AdSdk, creativeId: Swift.String?, unitId: Swift.String?, adForamt: AppHarbrSDK.AdFormat, blockReasons: [Swift.String], reportReasons: [Swift.String])
+  #endif
+  @objc optional func didAdIncident(incidentInfo: AppHarbrSDK.AdIncidentInfo)
+}
+@objc(AHAdFormat) public enum AdFormat : Swift.Int, Swift.CaseIterable, Swift.Sendable {
+  case banner = 1
+  case interstitial = 2
+  case native = 3
+  case rewarded = 4
+  case rewardedInterstitial = 5
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias AllCases = [AppHarbrSDK.AdFormat]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [AppHarbrSDK.AdFormat] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension AppHarbrSDK.AdFormat : Swift.Codable {
+}
+extension AppHarbrSDK.AdFormat : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+@objc public enum AdSdk : Swift.Int, Swift.CustomStringConvertible, Swift.Sendable {
+  case adColony = 5
+  case adFalcon = 6
+  case adGeneration = 38
+  case adMob = 1
+  case adMost = 7
+  case aequus = 8
+  case algorix = 72
+  case appLovin = 9
+  case appodeal = 39
+  case amazon = 40
+  case arity = 98
+  case automattic = 70
+  case beachfront = 73
+  case beeswax = 74
+  case bidMachine = 41
+  case bigoAds = 71
+  case chartboost = 10
+  case chocolatePlatform = 42
+  case colossus = 75
+  case conversant = 76
+  case criteo = 43
+  case crossPromotion = 11
+  case csj = 90
+  case datablocks = 77
+  case emodo = 78
+  case emx = 45
+  case equativ = 46
+  case facebook = 4
+  case fluct = 47
+  case flurry = 12
+  case fyber = 13
+  case gam = 2
+  case gfp = 96
+  case gravite = 92
+  case groundtruth = 79
+  case hyprmx = 14
+  case iMobile = 15
+  case improveDigital = 48
+  case inMobi = 16
+  case index = 49
+  case ironSource = 17
+  case leadBolt = 18
+  case levelPlay = 93
+  case lgUAD = 50
+  case line = 51
+  case maio = 19
+  case max = 20
+  case mediagrid = 80
+  case mediaNet = 52
+  case meson = 36
+  case mintegral = 37
+  case mobFox = 21
+  case mobileFuse = 53
+  case moloco = 89
+  case myTarget = 22
+  case naver = 97
+  case nend = 23
+  case nimbus = 69
+  case oneTag = 54
+  case openX = 55
+  case openWrapDFP = 88
+  case ogury = 56
+  case pangle = 24
+  case pubMatic = 57
+  case pubnative = 81
+  case prebid = 68
+  case prebidLife360 = 99
+  case reklamup = 91
+  case rhythmone = 82
+  case rubicon = 58
+  case shareThrough = 59
+  case silvermob = 83
+  case smaato = 25
+  case sonobi = 60
+  case scaleMonk = 26
+  case snap = 27
+  case xandr = 87
+  case xMediator = 44
+  case tapDaq = 28
+  case tapJoy = 29
+  case tappx = 84
+  case tencent = 30
+  case tripleLift = 61
+  case undertone = 85
+  case unity = 31
+  case unrulyX = 62
+  case verizon = 32
+  case verve = 63
+  case viberExchange = 94
+  case vpon = 33
+  case vrtcal = 86
+  case vungle = 34
+  case xiaomi = 95
+  case yahoo = 64
+  case yandex = 65
+  case yieldMo = 66
+  case yieldOne = 67
+  case zucks = 35
+  case custom = 998
+  case none = 999
+  public var description: Swift.String {
+    get
+  }
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension AppHarbrSDK.AdSdk : Swift.Codable {
+}
+@_hasMissingDesignatedInitializers @objc(AHAdIncidentInfo) public class AdIncidentInfo : AppHarbrSDK.AdMetaData {
+  @objc final public let blockReasons: [Swift.String]
+  @objc final public let reportReasons: [Swift.String]
+  @objc final public let shouldLoadNewAd: Swift.Bool
+  @objc final public let userDefinedDomain: Swift.String?
+  @objc final public let userDefinedApp: Swift.String?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc(AHAdAnalyzedInfo) public class AdAnalyzedInfo : AppHarbrSDK.AdMetaData {
+  @objc final public let analyzedResult: AppHarbrSDK.AdAnalyzedResult
+  @objc deinit
+}
+@objc public enum AdStateResult : Swift.Int {
+  case unknown
+  case verified
+  case blocked
+  case reported
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc final public class AdQualityAdNetworkProperties : ObjectiveC.NSObject {
+  @objc final public let mediationAdUnitId: Swift.String
+  @objc final public let adFormat: AppHarbrSDK.AdFormat
+  @objc final public let adNetwork: AppHarbrSDK.AdSdk
+  @objc final public let adNetworkUnitId: Swift.String
+  @objc final public let contentType: AppHarbrSDK.AdContentType
+  @objc final public let content: Swift.String
+  @objc final public let creativeId: Swift.String
+  @objc weak final public var webView: WebKit.WKWebView? {
+    get
+  }
+  @objc final public let customTargeting: [Swift.String : Any]?
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public init(mediationAdUnitId: Swift.String, adFormat: AppHarbrSDK.AdFormat, adNetwork: AppHarbrSDK.AdSdk, adNetworkUnitId: Swift.String, contentType: AppHarbrSDK.AdContentType, content: Swift.String, creativeId: Swift.String, webView: WebKit.WKWebView? = nil, customTargeting: [Swift.String : Any]? = nil)
+  #endif
+  @objc deinit
+}
+@objc public protocol AdQualityAdNetworkProtocol {
+  @objc var adNetworkVersion: Swift.String { get }
+  @objc func adNetworkAdapterName(for adFormat: AppHarbrSDK.AdFormat) -> Swift.String
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc func winningBid(for mediationAdUnitId: Swift.String, adFormat: AppHarbrSDK.AdFormat, mediationObject: Any) -> AppHarbrSDK.AdQualityAdNetworkProperties?
+  #endif
+  @objc func willBlockAd(cleanCacheFor mediationAdUnitId: Swift.String, adFormat: AppHarbrSDK.AdFormat, mediationObject: Any, adNetworkUnitId: Swift.String, creativeId: Swift.String)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class AppHarbrPrebidLife360Adapter : AppHarbrSDK.CustomAdNetworkAdapter {
+  @objc override public class var adSdk: AppHarbrSDK.AdSdk {
+    @objc get
+  }
+  @objc override public class var adapterVersion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class AppHarbrVXAdapter : AppHarbrSDK.CustomAdNetworkAdapter {
+  @objc override public class var adSdk: AppHarbrSDK.AdSdk {
+    @objc get
+  }
+  @objc override public class var adapterVersion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class CustomAdNetworkAdapter : ObjectiveC.NSObject {
+  @objc open class var adSdk: AppHarbrSDK.AdSdk {
+    @objc get
+  }
+  @objc open class var adapterVersion: Swift.String {
+    @objc get
+  }
+  @discardableResult
+  @objc public class func initAdQualityService(_ provider: any AppHarbrSDK.AdQualityAdNetworkProtocol) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers final public class AdResult : ObjectiveC.NSObject {
+  @objc final public let adStateResult: AppHarbrSDK.AdStateResult
+  @objc @available(*, deprecated, message: "Use the reasons instead.")
+  final public let reason: AppHarbrSDK.AdBlockReason
+  final public let reasons: Swift.Set<AppHarbrSDK.AdBlockReason>
+  @objc deinit
+}
+public protocol AppHarbrAdapterBidInfo : AppHarbrSDK.AppHarbrAdapterConfiguration {
+  var bidMap: [Swift.String : AppHarbrSDK.Bid] { get }
+  #if compiler(>=5.3) && $NonescapableTypes
+  func bidFor(bidId: Swift.String) -> AppHarbrSDK.Bid?
+  #endif
+  func removeBidFor(bidId: Swift.String)
+}
+@objc public protocol AppHarbrAdAnalyzeDelegate : AppHarbrSDK.AppHarbrDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
+  @available(*, deprecated, message: "This method is deprecated and will be removed in a future version. Please, use didAdIncident(incidentInfo:) method instead.")
+  @objc optional func didAdAnalyzed(ad: ObjectiveC.NSObject?, adNetwork: AppHarbrSDK.AdSdk, unitId: Swift.String?, adFormat: AppHarbrSDK.AdFormat, result: AppHarbrSDK.AdAnalyzedResult)
+  #endif
+  @objc optional func didAdAnalyzed(analyzedInfo: AppHarbrSDK.AdAnalyzedInfo)
+}
+@objc public protocol DynamicPriceBannerViewDelegate : ObjectiveC.NSObjectProtocol {
+  @objc func bannerViewDidReceiveAd(_ bannerView: UIKit.UIView)
+}
+@_hasMissingDesignatedInitializers @objc(AHAdMetaData) public class AdMetaData : ObjectiveC.NSObject {
+  @objc public var ad: ObjectiveC.NSObject?
+  @objc final public let adFormat: AppHarbrSDK.AdFormat
+  @objc public var unitId: Swift.String?
+  @objc final public let adNetwork: AppHarbrSDK.AdSdk
+  @objc public var creativeId: Swift.String?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc final public class AppHarbrConfiguration : ObjectiveC.NSObject {
+  public typealias SpecificAdNetworks = [AppHarbrSDK.AdSdk : [AppHarbrSDK.AdFormat : [Swift.String]]]
+  @objc deinit
+}
+@objc final public class AppHarbrConfigurationBuilder : ObjectiveC.NSObject {
+  @objc public init(apiKey: Swift.String)
+  @available(*, deprecated, message: "Use withTargetedNetworks")
+  final public func withAllowedNetworksToMonitor(_ adNetworksToMonitor: [AppHarbrSDK.AdSdk]) -> AppHarbrSDK.AppHarbrConfigurationBuilder
+  final public func withTargetedNetworks(_ targetedAdNetworks: [AppHarbrSDK.AdSdk]) -> AppHarbrSDK.AppHarbrConfigurationBuilder
+  @objc final public func appendTargetedAdNetworks(with adNetwork: AppHarbrSDK.AdSdk) -> AppHarbrSDK.AppHarbrConfigurationBuilder
+  @objc final public func withMuteAd(_ muted: Swift.Bool) -> AppHarbrSDK.AppHarbrConfigurationBuilder
+  @available(*, deprecated, message: "Use Time Limit only from the Publisher UI Dashboard Settings. Setting up Time Limit from the code will be removed in future versions (January 2026).")
+  @objc final public func withInterstitialAdTimeLimit(_ seconds: Foundation.TimeInterval) -> AppHarbrSDK.AppHarbrConfigurationBuilder
+  @available(*, deprecated, message: "Use Time Limit only from the Publisher UI Dashboard Settings. Setting up Time Limit from the code will be removed in future versions (January 2026).")
+  final public func withInterstitialAdTimeLimit(_ seconds: Foundation.TimeInterval, for adNetworks: [AppHarbrSDK.AdSdk]) -> AppHarbrSDK.AppHarbrConfigurationBuilder
+  @available(*, deprecated, message: "Use Time Limit only from the Publisher UI Dashboard Settings. Setting up Time Limit from the code will be removed in future versions (January 2026).")
+  @objc final public func withRewardedAdTimeLimit(_ seconds: Foundation.TimeInterval) -> AppHarbrSDK.AppHarbrConfigurationBuilder
+  @available(*, deprecated, message: "Use Time Limit only from the Publisher UI Dashboard Settings. Setting up Time Limit from the code will be removed in future versions (January 2026).")
+  final public func withRewardedAdTimeLimit(_ seconds: Foundation.TimeInterval, for adNetworks: [AppHarbrSDK.AdSdk]) -> AppHarbrSDK.AppHarbrConfigurationBuilder
+  @available(*, deprecated, message: "Use Time Limit only from the Publisher UI Dashboard Settings. Setting up Time Limit from the code will be removed in future versions (January 2026).")
+  final public func withTimeLimitConfig(_ timeLimitConfig: [AppHarbrSDK.AdFormat : [Swift.Int : [AppHarbrSDK.AdSdk]]]) -> AppHarbrSDK.AppHarbrConfigurationBuilder
+  @objc final public func withIgnoreHouseCampaignCreativeIds(using creativeIds: Swift.Set<Swift.String>) -> AppHarbrSDK.AppHarbrConfigurationBuilder
+  @objc final public func withDebugConfig(_ debugConfig: AppHarbrSDK.AppHarbrSdkDebug) -> AppHarbrSDK.AppHarbrConfigurationBuilder
+  @objc final public func build() -> AppHarbrSDK.AppHarbrConfiguration
+  @objc deinit
+}
+@objc final public class AppHarbrSdkDebug : ObjectiveC.NSObject {
+  @available(*, deprecated, message: "Use init(debug:) instead. 'blockAll' and 'reportAll' are deprecated.")
+  @objc public init(debug: Swift.Bool, blockAll: Swift.Bool = false, reportAll: Swift.Bool = false)
+  @objc public init(debug: Swift.Bool)
+  @objc deinit
+}
+extension AppHarbrSDK.AppHarbrSdkDebug {
+  @available(*, deprecated, message: "This method is deprecated. Please, use Integration Dashboard instead.")
+  @objc final public func withBlockAll(blockAll: Swift.Bool) -> AppHarbrSDK.AppHarbrSdkDebug
+  @available(*, deprecated, message: "This method is deprecated. Please, use Integration Dashboard instead.")
+  @objc final public func withReportAll(reportAll: Swift.Bool) -> AppHarbrSDK.AppHarbrSdkDebug
+  @objc final public func withBlockDomains(blockDomains: [Swift.String]) -> AppHarbrSDK.AppHarbrSdkDebug
+}
+@available(*, deprecated, message: "Use AdAnalyzeDelegate instead")
+@objc public protocol AppHarbrAdQualityDelegate {
+  @objc func didAdIncident(ad: ObjectiveC.NSObject, adFormat: AppHarbrSDK.AdFormat, blockReasons: [Swift.String], reportReasons: [Swift.String], creativeId: Swift.String, adNetworkSdk: AppHarbrSDK.AdSdk, unitId: Swift.String, timestamp: Foundation.TimeInterval)
+  @objc optional func willAdIncidentOnDisplayWithAd(ad: ObjectiveC.NSObject, adFormat: AppHarbrSDK.AdFormat, blockReasons: [Swift.String], reportReasons: [Swift.String], creativeId: Swift.String, adNetworkSdk: AppHarbrSDK.AdSdk, unitId: Swift.String, timestamp: Foundation.TimeInterval)
+  @objc func didAdIncidentOnDisplay(ad: ObjectiveC.NSObject, adFormat: AppHarbrSDK.AdFormat, blockReasons: [Swift.String], reportReasons: [Swift.String], creativeId: Swift.String, adNetworkSdk: AppHarbrSDK.AdSdk, unitId: Swift.String, timestamp: Foundation.TimeInterval)
+  @objc func didAdVerified(ad: ObjectiveC.NSObject, adFormat: AppHarbrSDK.AdFormat, adNetworkSdk: AppHarbrSDK.AdSdk, timestamp: Foundation.TimeInterval)
+  @objc func didAdNotVerified(ad: ObjectiveC.NSObject, adFormat: AppHarbrSDK.AdFormat, error: any Swift.Error, adNetworkSdk: AppHarbrSDK.AdSdk, timestamp: Foundation.TimeInterval)
+}
+@objc(AHAdAnalysisParameters) public class AdAnalysisParameters : ObjectiveC.NSObject {
+  @objc final public let adObject: ObjectiveC.NSObject
+  @objc final public let format: AppHarbrSDK.AdFormat
+  @objc final public let adNetworkSdk: AppHarbrSDK.AdSdk
+  @objc public var mediationUnitId: Swift.String
+  @objc public var adNetworkUnitId: Swift.String?
+  @objc public var adapter: ObjectiveC.NSObject?
+  @objc public var bidResponse: Swift.String?
+  @objc public var mediationCreativeId: Swift.String?
+  @objc public var adNetworkCreativeId: Swift.String?
+  @objc public var extraData: [Swift.String : Any]?
+  @objc public init(adObject: ObjectiveC.NSObject, format: AppHarbrSDK.AdFormat, adNetworkSdk: AppHarbrSDK.AdSdk, mediationUnitId: Swift.String)
+  #if compiler(>=5.3) && $NonescapableTypes
+  convenience public init(adObject: ObjectiveC.NSObject, format: AppHarbrSDK.AdFormat, adNetworkSdk: AppHarbrSDK.AdSdk, mediationUnitId: Swift.String, adNetworkUnitId: Swift.String? = nil, adapter: ObjectiveC.NSObject? = nil, bidResponse: Swift.String? = nil, mediationCreativeId: Swift.String? = nil, adNetworkCreativeId: Swift.String? = nil, extraData: [Swift.String : Any]? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public func withBidResponse(_ bidResponse: Swift.String?) -> AppHarbrSDK.AdAnalysisParameters
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public func withAdapterObject(_ adapter: ObjectiveC.NSObject?) -> AppHarbrSDK.AdAnalysisParameters
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public func withAdNetworkUnitId(_ adNetworkUnitId: Swift.String?) -> AppHarbrSDK.AdAnalysisParameters
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public func withMediationCreativeId(_ mediationCreativeId: Swift.String?) -> AppHarbrSDK.AdAnalysisParameters
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public func withAdNetworkCreativeId(_ adNetworkCreativeId: Swift.String?) -> AppHarbrSDK.AdAnalysisParameters
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public func withExtraData(_ extraData: [Swift.String : Any]?) -> AppHarbrSDK.AdAnalysisParameters
+  #endif
+  @objc deinit
+}
+@available(*, deprecated)
+@objc public enum VerificationStatus : Swift.Int {
+  case waitForDiagnosing
+  case doNotWait
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  @available(*, deprecated)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc final public class AppHarbrAdQuality : ObjectiveC.NSObject {
+  @objc public static let shared: AppHarbrSDK.AppHarbrAdQuality
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc final public func initializeSdk(apiKey: Swift.String, directMediationSdk: AppHarbrSDK.AdSdk, configuration: [Swift.String : Any]?, completion: @escaping ((any Swift.Error)?) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @available(*, deprecated, message: "This method is deprecated. Please, use analyzeAd(with:delegate:) method instead.")
+  @discardableResult
+  @objc final public func verifyAd(adObject: ObjectiveC.NSObject, adFormat: AppHarbrSDK.AdFormat, adContent: Swift.String?, adNetworkSdk: AppHarbrSDK.AdSdk, mediationUnitId: Any?, adNetworkUnitId: Any?, mediationCID: Swift.String?, adNetworkCID: Swift.String?, extraData: [Swift.String : Any]?, delegate: (any AppHarbrSDK.AppHarbrAdQualityDelegate)?) -> AppHarbrSDK.VerificationStatus
+  #endif
+  @objc final public func analyzeAd(with parameters: AppHarbrSDK.AdAnalysisParameters, delegate: any AppHarbrSDK.AdAnalyzeDelegate)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @available(*, deprecated, message: "This method is deprecated. Please, use didDisplayAd(adObject:) method instead.")
+  @objc final public func willDisplayAd(adObject: ObjectiveC.NSObject, adFormat: AppHarbrSDK.AdFormat, adContent: Swift.String?, adNetworkSdk: AppHarbrSDK.AdSdk, mediationUnitId: Any?, adNetworkUnitId: Any?, mediationCID: Swift.String?, adNetworkCID: Swift.String?, extraData: [Swift.String : Any]?)
+  #endif
+  @objc final public func didDisplayAd(adObject: ObjectiveC.NSObject)
+  @objc final public func willCloseAd(adObject: ObjectiveC.NSObject)
+  @objc final public func didClickAd(adObject: ObjectiveC.NSObject)
+  @objc final public func removeAd(adObject: ObjectiveC.NSObject)
+  @objc final public var isReady: Swift.Bool {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class AppHarbrExtraDataKeys : ObjectiveC.NSObject {
+  @objc public static let width: Swift.String
+  @objc public static let height: Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class AppHarbrConfigurationKeys : ObjectiveC.NSObject {
+  @objc public static let timeOut: Swift.String
+  @objc public static let enableBlockAll: Swift.String
+  @objc public static let enableReportAll: Swift.String
+  @objc public static let blockDomains: Swift.String
+  @objc public static let muteAd: Swift.String
+  @objc public static let interstitialAdTimeLimit: Swift.String
+  @objc public static let rewardedAdTimeLimit: Swift.String
+  @objc public static let debug: Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol AppHarbrAdapterConfiguration {
+  var adapterVersion: Swift.String { get }
+  var networkBackendId: Swift.Int { get }
+  var networkSdkVersion: Swift.String { get }
+}
+@objc public enum AdContentType : Swift.Int, Swift.CustomStringConvertible {
+  case unknown = -1
+  case html
+  case json
+  case vast
+  public var description: Swift.String {
+    get
+  }
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension AppHarbrSDK.AdAnalyzedResult : Swift.Equatable {}
+extension AppHarbrSDK.AdAnalyzedResult : Swift.Hashable {}
+extension AppHarbrSDK.AdAnalyzedResult : Swift.RawRepresentable {}
+extension AppHarbrSDK.AHInitializeError : Swift.Equatable {}
+extension AppHarbrSDK.AHInitializeError : Swift.Hashable {}
+extension AppHarbrSDK.AHInitializeError : Swift.RawRepresentable {}
+extension AppHarbrSDK.AdQualityError : Swift.Equatable {}
+extension AppHarbrSDK.AdQualityError : Swift.Hashable {}
+extension AppHarbrSDK.AdQualityError : Swift.RawRepresentable {}
+extension AppHarbrSDK.AdAnalysisResult : Swift.Equatable {}
+extension AppHarbrSDK.AdAnalysisResult : Swift.Hashable {}
+extension AppHarbrSDK.AdAnalysisResult : Swift.RawRepresentable {}
+extension AppHarbrSDK.AdBlockReason : Swift.Equatable {}
+extension AppHarbrSDK.AdBlockReason : Swift.Hashable {}
+extension AppHarbrSDK.AdBlockReason : Swift.RawRepresentable {}
+extension AppHarbrSDK.AdFormat : Swift.Equatable {}
+extension AppHarbrSDK.AdFormat : Swift.Hashable {}
+extension AppHarbrSDK.AdFormat : Swift.RawRepresentable {}
+extension AppHarbrSDK.AdSdk : Swift.Equatable {}
+extension AppHarbrSDK.AdSdk : Swift.Hashable {}
+extension AppHarbrSDK.AdSdk : Swift.RawRepresentable {}
+extension AppHarbrSDK.AdStateResult : Swift.Equatable {}
+extension AppHarbrSDK.AdStateResult : Swift.Hashable {}
+extension AppHarbrSDK.AdStateResult : Swift.RawRepresentable {}
+@available(*, deprecated)
+extension AppHarbrSDK.VerificationStatus : Swift.Equatable {}
+@available(*, deprecated)
+extension AppHarbrSDK.VerificationStatus : Swift.Hashable {}
+@available(*, deprecated)
+extension AppHarbrSDK.VerificationStatus : Swift.RawRepresentable {}
+extension AppHarbrSDK.AdContentType : Swift.Equatable {}
+extension AppHarbrSDK.AdContentType : Swift.Hashable {}
+extension AppHarbrSDK.AdContentType : Swift.RawRepresentable {}
