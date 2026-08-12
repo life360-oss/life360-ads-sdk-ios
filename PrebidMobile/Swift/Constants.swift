@@ -120,7 +120,7 @@ public class PrebidConstants: NSObject {
         """
     }
     
-    public static let VERSION                                                               = "1.3.2"
+    public static let VERSION                                                               = "1.4.0-geoedge"
     public static let PREBID_VERSION                                                        = "3.3.1"
     public static let SDK_NAME                                                              = "life360-ads-sdk"
     
