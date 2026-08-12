@@ -27,7 +27,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
     // MARK: - Properties
 
     private let bidRequesterFactory: (AdUnitConfig) -> BidRequesterProtocol
-    private let nativoBidRequesterFactory: (AdUnitConfig) -> BidRequesterProtocol
+    private let life360BidRequesterFactory: (AdUnitConfig) -> BidRequesterProtocol
     private var adLoader: AdLoaderProtocol?
     private var bannerEventDelegate: BannerEventLoadingDelegate?
     private weak var delegate: AdLoadFlowControllerDelegate?
@@ -35,11 +35,11 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
     private let savedAdUnitConfig: AdUnitConfig
 
     var bidResponse: BidResponse?
-    var nativoBidResponse: BidResponse?
+    var life360BidResponse: BidResponse?
     var flowState: AdLoadFlowState = .idle
     private var bidRequestError: Error?
     private var bidRequester: BidRequesterProtocol?
-    private var nativoRequester: BidRequesterProtocol?
+    private var life360Requester: BidRequesterProtocol?
     private var prebidAdObject: AnyObject?
     private var primaryAdObject: AnyObject?
     private var winningAdSize: NSValue?
@@ -54,9 +54,9 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
          adUnitConfig: AdUnitConfig,
          delegate: AdLoadFlowControllerDelegate,
          configValidationBlock: @escaping AdUnitConfigValidationBlock,
-         // Defaulted so production callers are unaffected; tests inject a stub to avoid the live Nativo request.
-         nativoBidRequesterFactory: @escaping (AdUnitConfig) -> BidRequesterProtocol = { adUnitConfig in
-            Factory.createNativoBidRequester(
+         // Defaulted so production callers are unaffected; tests inject a stub to avoid the live Life360 request.
+         life360BidRequesterFactory: @escaping (AdUnitConfig) -> BidRequesterProtocol = { adUnitConfig in
+            Factory.createLife360BidRequester(
                 connection: PrebidServerConnection.shared,
                 sdkConfiguration: Prebid.shared,
                 targeting: Targeting.shared,
@@ -65,11 +65,11 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
          }) {
 
         self.bidRequesterFactory = bidRequesterFactory
-        self.nativoBidRequesterFactory = nativoBidRequesterFactory
+        self.life360BidRequesterFactory = life360BidRequesterFactory
         self.adLoader = adLoader
         
         // Inconvenient logic needed to unwrap the BannerAdLoader, which is the same object as adLoader
-        // Needed so that we can notify of Nativo wins
+        // Needed so that we can notify of Life360 wins
         if let bannerDelegate = adLoader as? BannerEventLoadingDelegate {
             self.bannerEventDelegate = bannerDelegate
         }
@@ -101,7 +101,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
 
     public func adLoader(_ adLoader: AdLoaderProtocol, failedWithPrimarySDKError error: Error?) {
         enqueueGatedBlock { [weak self] in
-            // If Ad Server fails fallback to winner between Prebid or Nativo, otherwise fail
+            // If Ad Server fails fallback to winner between Prebid or Life360, otherwise fail
             guard self?.bidResponse?.winningBid != nil else {
                 self?.reportLoadingFailedWithError(error)
                 return
@@ -125,9 +125,9 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
     // At the moment this does that same thing as adLoaderDidWinPrebid
     // but adding it simply to show separate flow from Prebid win
     // Also bidResponse is different and doesn't contain same meta data
-    public func adLoaderDidWinNativo(_ adLoader: AdLoaderProtocol) {
+    public func adLoaderDidWinLife360(_ adLoader: AdLoaderProtocol) {
         enqueueGatedBlock { [weak self] in
-            let response = self?.nativoBidResponse
+            let response = self?.life360BidResponse
             self?.loadPrebidDisplayView(bidResponse: response)
         }
     }
@@ -176,8 +176,8 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
         switch flowState {
         case .idle, .loadingFailed:
             tryLaunchingAdRequestFlow()
-        case .nativoRequest:
-            sendNativoBidRequest()
+        case .life360Request:
+            sendLife360BidRequest()
         case .bidRequest:
             sendBidRequest()
         case .primaryAdRequest, .loadingDisplayView:
@@ -191,30 +191,30 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
         }
     }
     
-    private func sendNativoBidRequest() {
-        nativoRequester = nativoBidRequesterFactory(savedAdUnitConfig)
-        nativoRequester?.requestBids { [weak self] (nativoResponse: BidResponse?, err: Error?) in
+    private func sendLife360BidRequest() {
+        life360Requester = life360BidRequesterFactory(savedAdUnitConfig)
+        life360Requester?.requestBids { [weak self] (life360Response: BidResponse?, err: Error?) in
             self?.enqueueGatedBlock { [weak self] in
-                self?.handleNativoResponse(response: nativoResponse, error: err)
+                self?.handleLife360Response(response: life360Response, error: err)
             }
         }
     }
     
-    private func handleNativoResponse(response: BidResponse?, error: Error?) {
+    private func handleLife360Response(response: BidResponse?, error: Error?) {
         if let error {
-            Log.debug("Failed to get Nativo bid: \(error)")
+            Log.debug("Failed to get Life360 bid: \(error)")
             self.bidRequestError = error
         }
-        self.nativoBidResponse = response
+        self.life360BidResponse = response
         let bid = response?.winningBid
-        let isOwnedOperated: Bool = bid?.bid.ext?.nativo?.isOwnedOperated ?? false
+        let isOwnedOperated: Bool = bid?.bid.ext?.life360?.isOwnedOperated ?? false
         if (isOwnedOperated) {
-            // Render O&O demand via adLoader Nativo flow
+            // Render O&O demand via adLoader Life360 flow
             self.bidRequester = nil
             adLoader?.flowDelegate = self
             self.loadPrebidDisplayView(bidResponse: response)
         } else if !savedAdUnitConfig.prebidServerEnabled {
-            // This ad unit was created without a Prebid Server: skip the bid request; Nativo is the
+            // This ad unit was created without a Prebid Server: skip the bid request; Life360 is the
             // only programmatic demand.
             flowState = .demandReceived
             moveToNextLoadingStep()
@@ -234,7 +234,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
 
         delegate?.adLoadFlowControllerWillSendBidRequest(self)
         
-        self.flowState = .nativoRequest
+        self.flowState = .life360Request
         enqueueNextStepAttempt()
     }
 
@@ -261,11 +261,11 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
     
     private func decideWinner(completion: ((BidResponse?) -> Void)? = nil) {
         let prebidPrice = bidResponse?.winningBid?.price ?? 0.0
-        let nativoPrice = nativoBidResponse?.winningBid?.price ?? 0.0
+        let life360Price = life360BidResponse?.winningBid?.price ?? 0.0
         
         var winningResponse: BidResponse?
-        if (nativoPrice >= prebidPrice) {
-            winningResponse = nativoBidResponse
+        if (life360Price >= prebidPrice) {
+            winningResponse = life360BidResponse
         } else {
             winningResponse = bidResponse
         }
