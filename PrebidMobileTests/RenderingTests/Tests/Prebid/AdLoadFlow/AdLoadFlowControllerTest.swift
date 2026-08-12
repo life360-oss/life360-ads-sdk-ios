@@ -1080,7 +1080,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
 
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
 
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)

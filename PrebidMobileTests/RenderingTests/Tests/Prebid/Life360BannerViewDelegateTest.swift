@@ -17,9 +17,9 @@ import XCTest
 
 @testable @_spi(PBMInternal) import Life360AdsSDK
 
-/// Covers which `BannerView` load callback fires for a Nativo win: the Nativo-specific one when the
-/// delegate conforms to `NativoBannerViewDelegate`, the standard one otherwise.
-class NativoBannerViewDelegateTest: XCTestCase {
+/// Covers which `BannerView` load callback fires for a Life360 win: the Nativo-specific one when the
+/// delegate conforms to `Life360BannerViewDelegate`, the standard one otherwise.
+class Life360BannerViewDelegateTest: XCTestCase {
 
     private let adSize = CGSize(width: 320, height: 50)
 
@@ -44,7 +44,7 @@ class NativoBannerViewDelegateTest: XCTestCase {
     }
 
     /// Every non-`standardDisplay` ad type is rendered by Nativo, so all of them must route to the
-    /// Nativo callback.
+    /// Life360 callback.
     func testNativoAwareDelegateReceivesNativoCallbackForEveryNativoRenderedAdType() {
         let nativoRenderedAdTypes: [NativoAdType] = [.article, .display, .ctpVideo, .carousel, .stpVideo, .story]
 
@@ -105,7 +105,7 @@ class NativoBannerViewDelegateTest: XCTestCase {
 
     // MARK: - Delegate that hasn't opted in
 
-    /// A host still on plain `BannerViewDelegate` must keep working: a Nativo win falls back to the
+    /// A host still on plain `BannerViewDelegate` must keep working: a Life360 win falls back to the
     /// standard callback rather than being dropped.
     func testStandardDelegateFallsBackToStandardCallbackOnNativoWin() {
         let delegate = StandardDelegateSpy()
@@ -120,7 +120,7 @@ class NativoBannerViewDelegateTest: XCTestCase {
     }
 
     /// Dispatch is by protocol conformance, not selector lookup — a delegate that implements the
-    /// Nativo selector without conforming to `NativoBannerViewDelegate` gets the standard callback.
+    /// Life360 selector without conforming to `NativoBannerViewDelegate` gets the standard callback.
     func testDelegateImplementingNativoSelectorWithoutConformingGetsStandardCallback() {
         let delegate = NativoSelectorWithoutConformanceDelegateSpy()
         let bannerView = makeBannerView(
@@ -162,7 +162,7 @@ class NativoBannerViewDelegateTest: XCTestCase {
         return bannerView
     }
 
-    /// A Nativo bid response carrying a single winning bid whose ext advertises `adType`.
+    /// A Life360 bid response carrying a single winning bid whose ext advertises `adType`.
     private func makeNativoBidResponse(adType: NativoAdType?) -> NativoBidResponse {
         NativoBidResponse(rawBidResponse: makeRawBidResponse(nativoAdType: adType))
     }
@@ -206,12 +206,12 @@ class NativoBannerViewDelegateTest: XCTestCase {
         bannerView.bannerAdLoader(adLoader, loadedAdView: renderedView(for: bannerView), adSize: adSize)
     }
 
-    /// The view a Nativo win actually deploys.
+    /// The view a Life360 win actually deploys.
     ///
-    /// Nativo demand is rendered by `NativoRendererInternal`, which returns a `DisplayView` carrying the
+    /// Life360 demand is rendered by `NativoRendererInternal`, which returns a `DisplayView` carrying the
     /// winning bid, and that bid is what identifies the demand — the flow controller's `bidResponse` is
     /// reassigned part-way through a load, so it can describe a later cycle or another ad unit. A plain
-    /// `UIView` means the ad server won, and the ad server never renders Nativo demand.
+    /// `UIView` means the ad server won, and the ad server never renders Life360 demand.
     private func renderedView(for bannerView: BannerView) -> UIView {
         guard let bid = bannerView.lastBidResponse?.winningBid else {
             return UIView()
@@ -234,14 +234,14 @@ private protocol LoadCallbackRecording: AnyObject {
     var loadCallbackExpectation: XCTestExpectation? { get set }
 }
 
-private class NativoAwareDelegateSpy: NSObject, NativoBannerViewDelegate, LoadCallbackRecording {
+private class NativoAwareDelegateSpy: NSObject, Life360BannerViewDelegate, LoadCallbackRecording {
     var nativoSizes: [CGSize] = []
     var standardSizes: [CGSize] = []
     var loadCallbackExpectation: XCTestExpectation?
 
     func bannerViewPresentationController() -> UIViewController? { nil }
 
-    func bannerView(_ bannerView: BannerView, didReceiveNativoAdWithSize adSize: CGSize) {
+    func bannerView(_ bannerView: BannerView, didReceiveLife360AdWithSize adSize: CGSize) {
         nativoSizes.append(adSize)
         loadCallbackExpectation?.fulfill()
     }
@@ -264,7 +264,7 @@ private class StandardDelegateSpy: NSObject, BannerViewDelegate, LoadCallbackRec
     }
 }
 
-/// Implements the Nativo selector without declaring conformance, mimicking a host that was written
+/// Implements the Life360 selector without declaring conformance, mimicking a host that was written
 /// against the old optional `BannerViewDelegate` method.
 private class NativoSelectorWithoutConformanceDelegateSpy: NSObject, BannerViewDelegate, LoadCallbackRecording {
     var nativoSizes: [CGSize] = []

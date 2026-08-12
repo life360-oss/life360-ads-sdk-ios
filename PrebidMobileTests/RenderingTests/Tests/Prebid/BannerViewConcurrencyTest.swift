@@ -468,10 +468,10 @@ final class StubBidRequester: NSObject, BidRequesterProtocol {
 /// The existing `BannerViewTest` delegate calls `XCTFail` on success because it only covers error
 /// paths, so it cannot be reused here.
 ///
-/// Conforms to `NativoBannerViewDelegate`, not just `BannerViewDelegate`: the Nativo callback is dispatched
+/// Conforms to `Life360BannerViewDelegate`, not just `BannerViewDelegate`: the Life360 callback is dispatched
 /// by protocol conformance, so a delegate that merely implements the method never receives it and these
 /// suites would only ever observe the standard callback.
-final class RecordingBannerViewDelegate: NSObject, NativoBannerViewDelegate {
+final class RecordingBannerViewDelegate: NSObject, Life360BannerViewDelegate {
 
     var onSuccess: ((BannerView, CGSize) -> Void)?
     var onFailure: ((BannerView, Error) -> Void)?
@@ -486,7 +486,7 @@ final class RecordingBannerViewDelegate: NSObject, NativoBannerViewDelegate {
         record(bannerView, adSize)
     }
 
-    func bannerView(_ bannerView: BannerView, didReceiveNativoAdWithSize adSize: CGSize) {
+    func bannerView(_ bannerView: BannerView, didReceiveLife360AdWithSize adSize: CGSize) {
         record(bannerView, adSize)
     }
 

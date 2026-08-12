@@ -416,12 +416,12 @@ public class BannerView:
             guard let self = self else { return }
 
             // Hosts that haven't opted into the Nativo callback still expect the standard one.
-            guard let nativoDelegate = self.delegate as? NativoBannerViewDelegate else {
+            guard let nativoDelegate = self.delegate as? Life360BannerViewDelegate else {
                 self.reportLoadingSuccess(with: size)
                 return
             }
 
-            nativoDelegate.bannerView(self, didReceiveNativoAdWithSize: size)
+            nativoDelegate.bannerView(self, didReceiveLife360AdWithSize: size)
         }
     }
     
