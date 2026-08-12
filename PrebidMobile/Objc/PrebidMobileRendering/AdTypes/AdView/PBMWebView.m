@@ -33,7 +33,7 @@
 #import "PBMWebView+Internal.h"
 
 #import "SwiftImport.h"
-#import "NativoViewExposureChecker.h"
+#import "Life360ViewExposureChecker.h"
 
 // If remote debugging via Safari, delay the html injection until the Safari instance can connect
 #define REMOTE_DEBUGGING 0
@@ -60,7 +60,7 @@ static NSString * const KeyPathOutputVolume = @"outputVolume";
 
 // viewability polling
 @property (nonatomic, strong, nullable) id<PBMCreativeViewabilityTracker> viewabilityTracker;
-@property (nonatomic, strong, nullable) NativoViewExposureChecker *exposureChecker;
+@property (nonatomic, strong, nullable) Life360ViewExposureChecker *exposureChecker;
 
 // the last frame sent to an ad via onSizeChange
 @property (nonatomic, assign) CGRect mraidLastSentFrame;
@@ -515,7 +515,7 @@ static PBMError *extracted(NSString *errorMessage) {
     
 #if REMOTE_DEBUGGING
     // DEBUG MRAID
-    NSString *mraidScript = [NativoMRAIDDebugBridge script];
+    NSString *mraidScript = [Life360MRAIDDebugBridge script];
 #else
     NSString *mraidScript = [self.libraryManager getMRAIDLibrary];
 #endif
@@ -740,7 +740,7 @@ static PBMError *extracted(NSString *errorMessage) {
 // Force exposure check to keep the MRAID state in sync.
 // Runs synchronously on the calling thread so the viewable flag is
 // up-to-date immediately (e.g. before gating on webView.viewable).
-// Moving from Prebid's poll based tracking to Nativo scroll based tracking
+// Moving from Prebid's poll based tracking to Life360 scroll based tracking
 // means that MRAID_onExposureChange doesn't happen without user interaction anymore.
 // Instead we simply manually force the exposure check when needed.
 - (void)forceExposureCheck {
@@ -914,7 +914,7 @@ static PBMError *extracted(NSString *errorMessage) {
 
 - (void)observeScrollForViewability {
     @weakify(self);
-    self.exposureChecker = [[NativoViewExposureChecker alloc] initWithView:self onExposureChange:^(id<PBMViewExposure>  _Nonnull viewExposure, NSError *error) {
+    self.exposureChecker = [[Life360ViewExposureChecker alloc] initWithView:self onExposureChange:^(id<PBMViewExposure>  _Nonnull viewExposure, NSError *error) {
         @strongify(self);
         if (!self) { return; }
         if (!error) {

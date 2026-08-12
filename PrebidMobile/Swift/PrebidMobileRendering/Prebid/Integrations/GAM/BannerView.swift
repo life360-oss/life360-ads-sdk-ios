@@ -397,31 +397,31 @@ public class BannerView:
         }
     }
     
-    /// Whether Nativo's own renderer expanded this view, which the publisher is told about through a
+    /// Whether Life360's own renderer expanded this view, which the publisher is told about through a
     /// separate delegate callback.
     ///
-    /// `usesNativoRendering` is the same condition the renderer expands on, so the callback the publisher
+    /// `usesLife360Rendering` is the same condition the renderer expands on, so the callback the publisher
     /// gets cannot disagree with whether the view was actually expanded. Resolving the renderer through
     /// `PrebidMobilePluginRegister` would be more direct but depends on the register being populated, which
     /// only happens once the SDK has been initialised.
-    private func nativoDidRenderBid(for adView: UIView) -> Bool {
-        guard let bid = (adView as? DisplayView)?.bid, bid is NativoBid else {
+    private func life360DidRenderBid(for adView: UIView) -> Bool {
+        guard let bid = (adView as? DisplayView)?.bid, bid is Life360Bid else {
             return false
         }
-        return bid.usesNativoRendering
+        return bid.usesLife360Rendering
     }
 
-    private func reportNativoLoadingSuccess(with size: CGSize) {
+    private func reportLife360LoadingSuccess(with size: CGSize) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
 
-            // Hosts that haven't opted into the Nativo callback still expect the standard one.
-            guard let nativoDelegate = self.delegate as? Life360BannerViewDelegate else {
+            // Hosts that haven't opted into the Life360 callback still expect the standard one.
+            guard let life360Delegate = self.delegate as? Life360BannerViewDelegate else {
                 self.reportLoadingSuccess(with: size)
                 return
             }
 
-            nativoDelegate.bannerView(self, didReceiveLife360AdWithSize: size)
+            life360Delegate.bannerView(self, didReceiveLife360AdWithSize: size)
         }
     }
     
@@ -529,8 +529,8 @@ extension BannerView : AdLoadFlowControllerDelegate, BannerAdLoaderDelegate {
         // `winningAdSize`, which persists across load cycles and so can describe an earlier bid.
         let reportedSize = (adView as? DisplayView)?.bid.size ?? adSize
 
-        if nativoDidRenderBid(for: adView) {
-            reportNativoLoadingSuccess(with: reportedSize)
+        if life360DidRenderBid(for: adView) {
+            reportLife360LoadingSuccess(with: reportedSize)
         } else {
             reportLoadingSuccess(with: reportedSize)
         }

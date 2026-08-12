@@ -21,7 +21,7 @@
 #import "NSString+PBMExtensions.h"
 #import "UIView+PBMExtensions.h"
 #import "NSURL+PBMExtensions.h"
-#import "NativoUtils.h"
+#import "Life360Utils.h"
 
 #import "PBMFunctions+Private.h"
 #import "PBMMRAIDCommand.h"
@@ -373,7 +373,7 @@
             self.isTwoPartExpand = NO;
             
             // Add snapshot image of ad to help transition between web view swaps
-            UIImageView *snapshotImage = [NativoUtils getViewAsImage:self.creative.view];
+            UIImageView *snapshotImage = [Life360Utils getViewAsImage:self.creative.view];
             [self.creative.view.superview addSubview:snapshotImage];
             
             @weakify(self);

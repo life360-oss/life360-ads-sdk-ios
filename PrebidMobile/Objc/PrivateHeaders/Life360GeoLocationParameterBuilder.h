@@ -12,17 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import Foundation
 
-enum AdLoadFlowState: Int {
-    case idle = 0
-    
-    case life360Request
-    case bidRequest
-    case demandReceived
-    case primaryAdRequest
-    case loadingDisplayView // skipped if primaryAdServer wins
-    case readyToDeploy
-    
-    case loadingFailed = -1
-}
+#import <Foundation/Foundation.h>
+#import "PBMParameterBuilderProtocol.h"
+
+@class PBMLocationManager;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface Life360GeoLocationParameterBuilder : NSObject <PBMParameterBuilder>
+
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithLocationManager:(PBMLocationManager *)locationManager NS_DESIGNATED_INITIALIZER;
+
+@end
+
+NS_ASSUME_NONNULL_END

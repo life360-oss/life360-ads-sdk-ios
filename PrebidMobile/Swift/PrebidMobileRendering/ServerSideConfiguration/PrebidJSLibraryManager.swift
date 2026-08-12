@@ -57,7 +57,7 @@ public class PrebidJSLibraryManager: NSObject {
     
     public func getOMSDKLibrary() -> String? {
         do {
-            return try NativoUtils.loadBundledText(
+            return try Life360Utils.loadBundledText(
                 name: "omsdk",
                 extension: "js",
                 additionalBundle: nil

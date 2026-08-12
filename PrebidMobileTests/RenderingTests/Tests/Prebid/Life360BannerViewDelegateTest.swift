@@ -17,7 +17,7 @@ import XCTest
 
 @testable @_spi(PBMInternal) import Life360AdsSDK
 
-/// Covers which `BannerView` load callback fires for a Life360 win: the Nativo-specific one when the
+/// Covers which `BannerView` load callback fires for a Life360 win: the Life360-specific one when the
 /// delegate conforms to `Life360BannerViewDelegate`, the standard one otherwise.
 class Life360BannerViewDelegateTest: XCTestCase {
 
@@ -28,70 +28,70 @@ class Life360BannerViewDelegateTest: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Nativo-aware delegate
+    // MARK: - Life360-aware delegate
 
-    func testNativoAwareDelegateReceivesNativoCallback() {
-        let delegate = NativoAwareDelegateSpy()
+    func testLife360AwareDelegateReceivesLife360Callback() {
+        let delegate = Life360AwareDelegateSpy()
         let bannerView = makeBannerView(
-            bidResponse: makeNativoBidResponse(adType: .article),
+            bidResponse: makeLife360BidResponse(adType: .article),
             delegate: delegate
         )
 
         simulateAdLoaded(on: bannerView, delegate: delegate)
 
-        XCTAssertEqual(delegate.nativoSizes, [adSize])
+        XCTAssertEqual(delegate.life360Sizes, [adSize])
         XCTAssertEqual(delegate.standardSizes, [])
     }
 
-    /// Every non-`standardDisplay` ad type is rendered by Nativo, so all of them must route to the
+    /// Every non-`standardDisplay` ad type is rendered by Life360, so all of them must route to the
     /// Life360 callback.
-    func testNativoAwareDelegateReceivesNativoCallbackForEveryNativoRenderedAdType() {
-        let nativoRenderedAdTypes: [NativoAdType] = [.article, .display, .ctpVideo, .carousel, .stpVideo, .story]
+    func testLife360AwareDelegateReceivesLife360CallbackForEveryLife360RenderedAdType() {
+        let life360RenderedAdTypes: [Life360AdType] = [.article, .display, .ctpVideo, .carousel, .stpVideo, .story]
 
-        for adType in nativoRenderedAdTypes {
-            let delegate = NativoAwareDelegateSpy()
+        for adType in life360RenderedAdTypes {
+            let delegate = Life360AwareDelegateSpy()
             let bannerView = makeBannerView(
-                bidResponse: makeNativoBidResponse(adType: adType),
+                bidResponse: makeLife360BidResponse(adType: adType),
                 delegate: delegate
             )
 
             simulateAdLoaded(on: bannerView, delegate: delegate)
 
-            XCTAssertEqual(delegate.nativoSizes, [adSize], "ad type \(adType.rawValue)")
+            XCTAssertEqual(delegate.life360Sizes, [adSize], "ad type \(adType.rawValue)")
             XCTAssertEqual(delegate.standardSizes, [], "ad type \(adType.rawValue)")
         }
     }
 
-    /// `standardDisplay` bids are rendered through the regular display path, so a Nativo-aware
+    /// `standardDisplay` bids are rendered through the regular display path, so a Life360-aware
     /// delegate must still get the standard callback for them.
-    func testNativoAwareDelegateReceivesStandardCallbackForStandardDisplay() {
-        let delegate = NativoAwareDelegateSpy()
+    func testLife360AwareDelegateReceivesStandardCallbackForStandardDisplay() {
+        let delegate = Life360AwareDelegateSpy()
         let bannerView = makeBannerView(
-            bidResponse: makeNativoBidResponse(adType: .standardDisplay),
+            bidResponse: makeLife360BidResponse(adType: .standardDisplay),
             delegate: delegate
         )
 
         simulateAdLoaded(on: bannerView, delegate: delegate)
 
         XCTAssertEqual(delegate.standardSizes, [adSize])
-        XCTAssertEqual(delegate.nativoSizes, [])
+        XCTAssertEqual(delegate.life360Sizes, [])
     }
 
-    func testNativoAwareDelegateReceivesStandardCallbackWhenAdTypeIsMissing() {
-        let delegate = NativoAwareDelegateSpy()
+    func testLife360AwareDelegateReceivesStandardCallbackWhenAdTypeIsMissing() {
+        let delegate = Life360AwareDelegateSpy()
         let bannerView = makeBannerView(
-            bidResponse: makeNativoBidResponse(adType: nil),
+            bidResponse: makeLife360BidResponse(adType: nil),
             delegate: delegate
         )
 
         simulateAdLoaded(on: bannerView, delegate: delegate)
 
         XCTAssertEqual(delegate.standardSizes, [adSize])
-        XCTAssertEqual(delegate.nativoSizes, [])
+        XCTAssertEqual(delegate.life360Sizes, [])
     }
 
-    func testNativoAwareDelegateReceivesStandardCallbackForNonNativoBidResponse() {
-        let delegate = NativoAwareDelegateSpy()
+    func testLife360AwareDelegateReceivesStandardCallbackForNonLife360BidResponse() {
+        let delegate = Life360AwareDelegateSpy()
         let bannerView = makeBannerView(
             bidResponse: makePrebidBidResponse(),
             delegate: delegate
@@ -100,17 +100,17 @@ class Life360BannerViewDelegateTest: XCTestCase {
         simulateAdLoaded(on: bannerView, delegate: delegate)
 
         XCTAssertEqual(delegate.standardSizes, [adSize])
-        XCTAssertEqual(delegate.nativoSizes, [])
+        XCTAssertEqual(delegate.life360Sizes, [])
     }
 
     // MARK: - Delegate that hasn't opted in
 
     /// A host still on plain `BannerViewDelegate` must keep working: a Life360 win falls back to the
     /// standard callback rather than being dropped.
-    func testStandardDelegateFallsBackToStandardCallbackOnNativoWin() {
+    func testStandardDelegateFallsBackToStandardCallbackOnLife360Win() {
         let delegate = StandardDelegateSpy()
         let bannerView = makeBannerView(
-            bidResponse: makeNativoBidResponse(adType: .article),
+            bidResponse: makeLife360BidResponse(adType: .article),
             delegate: delegate
         )
 
@@ -120,23 +120,23 @@ class Life360BannerViewDelegateTest: XCTestCase {
     }
 
     /// Dispatch is by protocol conformance, not selector lookup — a delegate that implements the
-    /// Life360 selector without conforming to `NativoBannerViewDelegate` gets the standard callback.
-    func testDelegateImplementingNativoSelectorWithoutConformingGetsStandardCallback() {
-        let delegate = NativoSelectorWithoutConformanceDelegateSpy()
+    /// Life360 selector without conforming to `Life360BannerViewDelegate` gets the standard callback.
+    func testDelegateImplementingLife360SelectorWithoutConformingGetsStandardCallback() {
+        let delegate = Life360SelectorWithoutConformanceDelegateSpy()
         let bannerView = makeBannerView(
-            bidResponse: makeNativoBidResponse(adType: .article),
+            bidResponse: makeLife360BidResponse(adType: .article),
             delegate: delegate
         )
 
         simulateAdLoaded(on: bannerView, delegate: delegate)
 
         XCTAssertEqual(delegate.standardSizes, [adSize])
-        XCTAssertEqual(delegate.nativoSizes, [])
+        XCTAssertEqual(delegate.life360Sizes, [])
     }
 
-    func testNativoWinWithoutDelegateDoesNotCrash() {
+    func testLife360WinWithoutDelegateDoesNotCrash() {
         let bannerView = makeBannerView(
-            bidResponse: makeNativoBidResponse(adType: .article),
+            bidResponse: makeLife360BidResponse(adType: .article),
             delegate: nil
         )
 
@@ -163,26 +163,26 @@ class Life360BannerViewDelegateTest: XCTestCase {
     }
 
     /// A Life360 bid response carrying a single winning bid whose ext advertises `adType`.
-    private func makeNativoBidResponse(adType: NativoAdType?) -> NativoBidResponse {
-        NativoBidResponse(rawBidResponse: makeRawBidResponse(nativoAdType: adType))
+    private func makeLife360BidResponse(adType: Life360AdType?) -> Life360BidResponse {
+        Life360BidResponse(rawBidResponse: makeRawBidResponse(life360AdType: adType))
     }
 
-    /// A regular Prebid bid response — same shape, but not a `NativoBidResponse`.
+    /// A regular Prebid bid response — same shape, but not a `Life360BidResponse`.
     private func makePrebidBidResponse() -> BidResponse {
-        BidResponse(rawBidResponse: makeRawBidResponse(nativoAdType: nil))
+        BidResponse(rawBidResponse: makeRawBidResponse(life360AdType: nil))
     }
 
-    private func makeRawBidResponse(nativoAdType: NativoAdType?) -> RawBidResponse {
+    private func makeRawBidResponse(life360AdType: Life360AdType?) -> RawBidResponse {
         let rawBid = ORTBBid<ORTBBidExt>(bidID: "test-bid-id", impid: "test-imp-id", price: 1.0)
         rawBid.w = NSNumber(value: Int(adSize.width))
         rawBid.h = NSNumber(value: Int(adSize.height))
 
         let ext = ORTBBidExt()
-        var nativoJSON: [String: Any] = [:]
-        if let nativoAdType {
-            nativoJSON["nativoAdType"] = NSNumber(value: nativoAdType.rawValue)
+        var life360JSON: [String: Any] = [:]
+        if let life360AdType {
+            life360JSON["life360AdType"] = NSNumber(value: life360AdType.rawValue)
         }
-        ext.nativo = ORTBBidExtNativo(jsonDictionary: nativoJSON)
+        ext.life360 = ORTBBidExtLife360(jsonDictionary: life360JSON)
         rawBid.ext = ext
 
         let rawBidResponse = RawBidResponse(requestID: "test-request-id")
@@ -208,7 +208,7 @@ class Life360BannerViewDelegateTest: XCTestCase {
 
     /// The view a Life360 win actually deploys.
     ///
-    /// Life360 demand is rendered by `NativoRendererInternal`, which returns a `DisplayView` carrying the
+    /// Life360 demand is rendered by `Life360RendererInternal`, which returns a `DisplayView` carrying the
     /// winning bid, and that bid is what identifies the demand — the flow controller's `bidResponse` is
     /// reassigned part-way through a load, so it can describe a later cycle or another ad unit. A plain
     /// `UIView` means the ad server won, and the ad server never renders Life360 demand.
@@ -234,15 +234,15 @@ private protocol LoadCallbackRecording: AnyObject {
     var loadCallbackExpectation: XCTestExpectation? { get set }
 }
 
-private class NativoAwareDelegateSpy: NSObject, Life360BannerViewDelegate, LoadCallbackRecording {
-    var nativoSizes: [CGSize] = []
+private class Life360AwareDelegateSpy: NSObject, Life360BannerViewDelegate, LoadCallbackRecording {
+    var life360Sizes: [CGSize] = []
     var standardSizes: [CGSize] = []
     var loadCallbackExpectation: XCTestExpectation?
 
     func bannerViewPresentationController() -> UIViewController? { nil }
 
     func bannerView(_ bannerView: BannerView, didReceiveLife360AdWithSize adSize: CGSize) {
-        nativoSizes.append(adSize)
+        life360Sizes.append(adSize)
         loadCallbackExpectation?.fulfill()
     }
 
@@ -266,15 +266,15 @@ private class StandardDelegateSpy: NSObject, BannerViewDelegate, LoadCallbackRec
 
 /// Implements the Life360 selector without declaring conformance, mimicking a host that was written
 /// against the old optional `BannerViewDelegate` method.
-private class NativoSelectorWithoutConformanceDelegateSpy: NSObject, BannerViewDelegate, LoadCallbackRecording {
-    var nativoSizes: [CGSize] = []
+private class Life360SelectorWithoutConformanceDelegateSpy: NSObject, BannerViewDelegate, LoadCallbackRecording {
+    var life360Sizes: [CGSize] = []
     var standardSizes: [CGSize] = []
     var loadCallbackExpectation: XCTestExpectation?
 
     func bannerViewPresentationController() -> UIViewController? { nil }
 
-    @objc func bannerView(_ bannerView: BannerView, didReceiveNativoAdWithSize adSize: CGSize) {
-        nativoSizes.append(adSize)
+    @objc func bannerView(_ bannerView: BannerView, didReceiveLife360AdWithSize adSize: CGSize) {
+        life360Sizes.append(adSize)
         loadCallbackExpectation?.fulfill()
     }
 
