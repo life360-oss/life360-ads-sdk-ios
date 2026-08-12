@@ -1,29 +1,7 @@
 
 import Foundation
-import UIKit
-import WebKit
 
 enum NativoUtils {
-
-    /// Finds the web view a creative is rendering into, given the view it was deployed under.
-    ///
-    /// Searching the hierarchy keeps callers off `AdViewManager.currentCreative`, which the Swift
-    /// target only sees in DEBUG builds. The render path detaches a creative's view before attaching
-    /// its replacement, so the first web view found is the one showing the current creative.
-    ///
-    /// - Parameter view: Root of the search — typically a banner's deployed view.
-    /// - Returns: The first `WKWebView` in `view`'s hierarchy, depth first, or `nil` if there is none.
-    static func firstWebView(in view: UIView) -> WKWebView? {
-        if let webView = view as? WKWebView {
-            return webView
-        }
-        for subview in view.subviews {
-            if let webView = firstWebView(in: subview) {
-                return webView
-            }
-        }
-        return nil
-    }
 
     /// Searches available bundles to find the requested resource
     /// This is nessessary since SPM packages resources differently than cocoapods

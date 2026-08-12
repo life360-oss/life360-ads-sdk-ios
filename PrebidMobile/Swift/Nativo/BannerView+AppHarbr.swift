@@ -9,23 +9,30 @@ import WebKit
 
 internal extension BannerView {
 
-    /// The web view rendering the current creative, or `nil` before one is deployed.
+    /// The web view the current creative renders into, or `nil` before a creative is set up.
     ///
-    /// Walks the view hierarchy, so it is main-thread only. The caller is an ad quality scanner whose
-    /// calling thread this SDK does not control, so an off-main call gives up the web view rather than
-    /// reading UIKit state from the wrong thread — the bid is still reported, just without it.
-    ///
-    /// Deliberately not an `assert`, unlike the main-thread checks on this SDK's own API: a scanner
-    /// calling from its own queue is not a caller bug to trap on, and trapping would leave the path
-    /// that has to work in release builds untested.
-    @objc func currentRenderingWebView() -> WKWebView? {
-        guard Thread.isMainThread else {
-            Log.error("currentRenderingWebView() called off the main thread; skipping the web view.")
+    /// Follows ownership — display view to ad view manager to creative to its web view — rather than
+    /// searching the view hierarchy, so the web view is available from `setupCreative` onward, which is
+    /// before the creative's view is added to the display view. A scanner that wants to inspect a
+    /// creative before it goes on screen needs it at that point.
+    @objc func getAppHarbrWebView() -> WKWebView? {
+        guard let displayView = deployedView as? DisplayView else {
+            Log.debug("no deployed DisplayView yet")
             return nil
         }
-        guard let deployedView else { return nil }
-
-        return NativoUtils.firstWebView(in: deployedView)
+        guard let creative = displayView.adViewManager?.currentCreative else {
+            Log.debug("no current creative set up yet")
+            return nil
+        }
+        guard let creativeView = creative.view else {
+            Log.debug("current creative has no view yet")
+            return nil
+        }
+        guard let webView = creativeView as? WebView_Protocol else {
+            Log.debug("current creative's view is not a WebView_Protocol")
+            return nil
+        }
+        return webView.internalWebView
     }
 
     /// The bid response that produced the current creative, narrowed to the winning bid.
@@ -33,8 +40,12 @@ internal extension BannerView {
     /// Scanners match a creative against the bid that bought it, so the seatbid array is rewritten to
     /// hold the winner alone rather than every bid the auction returned.
     @objc func currentWinningBidJSON() -> String? {
-        guard let bidResponse = adLoadFlowController?.bidResponse,
-              let winningBidDict = bidResponse.winningBid?.bid.jsonDictionary else {
+        guard let bidResponse = adLoadFlowController?.bidResponse else {
+            Log.debug("no bid response resolved yet")
+            return nil
+        }
+        guard let winningBidDict = bidResponse.winningBid?.bid.jsonDictionary else {
+            Log.debug("bid response has no winning bid yet")
             return nil
         }
 
@@ -43,6 +54,7 @@ internal extension BannerView {
 
         guard let jsonData = try? JSONSerialization.data(withJSONObject: responseDict),
               let jsonString = String(data: jsonData, encoding: .utf8) else {
+            Log.error("could not serialize the winning bid to JSON")
             return nil
         }
         return jsonString
@@ -50,15 +62,19 @@ internal extension BannerView {
 
     /// The winning bid's creative ID, which is how a blocked creative is reported back.
     @objc func currentWinningBidCreativeId() -> String? {
-        adLoadFlowController?.bidResponse?.winningBid?.bid.crid
+        guard let creativeId = adLoadFlowController?.bidResponse?.winningBid?.bid.crid else {
+            Log.debug("no winning bid resolved yet")
+            return nil
+        }
+        return creativeId
     }
 
     /// The winning bid's targeting keys worth attributing a block to — currently the bidder.
     @objc func currentWinningBidCustomTargeting() -> [String: Any] {
-        var customTargeting: [String: Any] = [:]
-        if let hbBidder = adLoadFlowController?.bidResponse?.winningBid?.targetingInfo?["hb_bidder"] {
-            customTargeting["hb_bidder"] = hbBidder
+        guard let hbBidder = adLoadFlowController?.bidResponse?.winningBid?.targetingInfo?["hb_bidder"] else {
+            Log.debug("no hb_bidder in the winning bid's targeting")
+            return [:]
         }
-        return customTargeting
+        return ["hb_bidder": hbBidder]
     }
 }

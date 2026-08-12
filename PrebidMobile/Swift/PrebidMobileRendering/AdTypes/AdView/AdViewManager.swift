@@ -45,9 +45,11 @@ protocol AdViewManager: CreativeViewDelegate {
     
     func handleExternalTransaction(_ transaction: Transaction)
     
+    /// required access for AppHarbr integration
+    weak var currentCreative: AbstractCreative? { get set }
+
     // Exposed for tests
 #if DEBUG
-    weak var currentCreative: AbstractCreative? { get set }
     var externalTransaction: Transaction? { get set }
     
     func setupCreative(_ creative: AbstractCreative)

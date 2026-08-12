@@ -35,13 +35,11 @@ public final class Life360AppHarbrQualityProvider: NSObject, AdQualityAdNetworkP
     // MARK: - AdQualityAdNetworkProtocol
 
     public var adNetworkVersion: String {
-        PrebidConstants.VERSION
+        Life360Ads.shared.version
     }
 
     public func adNetworkAdapterName(for adFormat: AppHarbrSDK.AdFormat) -> String {
-        // Not used for this flow — AppHarbr routes here explicitly via
-        // AH.addBanner(with: .prebidLife360, ...), not by matching an adapter name.
-        ""
+        "Life360AdsSDK-appHarbrAdapter"
     }
 
     public func winningBid(
@@ -60,15 +58,13 @@ public final class Life360AppHarbrQualityProvider: NSObject, AdQualityAdNetworkP
             return nil
         }
 
-        let webView = bannerView.currentRenderingWebView()
+        let webView = bannerView.getAppHarbrWebView()
         if webView == nil {
             Log.debug("Life360AppHarbrQualityProvider: no current-creative webview found yet")
         }
 
         return AdQualityAdNetworkProperties(
             mediationAdUnitId: mediationAdUnitId,
-            // Echoed back rather than hardcoded to banner: this is the format AppHarbr asked about,
-            // and the cast above has already established that the object really is a banner.
             adFormat: adFormat,
             adNetwork: .prebidLife360,
             adNetworkUnitId: mediationAdUnitId,

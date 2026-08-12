@@ -111,28 +111,9 @@ class Life360AppHarbrQualityProviderTest: XCTestCase {
         )
     }
 
-    // MARK: - Thread affinity
-
-    /// Reading the view hierarchy off the main thread is a UIKit violation, and the scanner's calling
-    /// thread is not this SDK's to choose — so the web view is given up rather than read unsafely.
-    func testCurrentRenderingWebView_offTheMainThread_givesUpTheWebView() {
-        let bannerView = makeBannerView(bidResponse: nil)
-        let creativeView = UIView()
-        creativeView.addSubview(WKWebView())
-        bannerView.deployedView = creativeView
-
-        XCTAssertNotNil(bannerView.currentRenderingWebView(), "should be found on the main thread")
-
-        let offMain = expectation(description: "called off the main thread")
-        DispatchQueue.global().async {
-            XCTAssertNil(bannerView.currentRenderingWebView())
-            offMain.fulfill()
-        }
-        wait(for: [offMain], timeout: 5)
-    }
-
-    /// The bid is still reported off the main thread — only the web view is missing from it.
-    func testWinningBid_offTheMainThread_stillReportsTheBid() {
+    /// No creative has been set up on a freshly built banner, so there is no web view to report yet —
+    /// the bid still is.
+    func testWinningBid_beforeACreativeIsSetUp_reportsTheBidWithoutAWebView() throws {
         let bannerView = makeBannerView(
             bidResponse: NativoBidFabricator.makePrebidBidResponse(
                 price: 1.5,
@@ -142,18 +123,16 @@ class Life360AppHarbrQualityProviderTest: XCTestCase {
             )
         )
 
-        let offMain = expectation(description: "called off the main thread")
-        DispatchQueue.global().async {
-            let properties = Life360AppHarbrQualityProvider.shared.winningBid(
+        let properties = try XCTUnwrap(
+            Life360AppHarbrQualityProvider.shared.winningBid(
                 for: "unit",
                 adFormat: .banner,
                 mediationObject: bannerView
             )
-            XCTAssertEqual(properties?.creativeId, "creative-7")
-            XCTAssertNil(properties?.webView)
-            offMain.fulfill()
-        }
-        wait(for: [offMain], timeout: 5)
+        )
+
+        XCTAssertEqual(properties.creativeId, "creative-7")
+        XCTAssertNil(properties.webView)
     }
 
     func testAdNetworkVersion_reportsTheSDKVersion() {

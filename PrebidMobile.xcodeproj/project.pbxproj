@@ -56,7 +56,6 @@
 		3A6D7AF42ED65676001099B1 /* NativoBid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AF32ED65676001099B1 /* NativoBid.swift */; };
 		3A7286B3302677F70091E424 /* Life360AppHarbrQualityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7286B2302677F70091E424 /* Life360AppHarbrQualityProvider.swift */; };
 		3A7286B4302677F70091E424 /* BannerView+AppHarbr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7286B1302677F70091E424 /* BannerView+AppHarbr.swift */; };
-		3A7286C3302677F70091E424 /* NativoUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7286C4302677F70091E424 /* NativoUtilsTest.swift */; };
 		3A7286D2302677F70091E424 /* AppHarbrSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7286D1302677F70091E424 /* AppHarbrSDK.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		3A7286D3302677F70091E424 /* AppHarbrSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7286D1302677F70091E424 /* AppHarbrSDK.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		3A7286E1302677F70091E424 /* Life360AppHarbrQualityProviderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7286E2302677F70091E424 /* Life360AppHarbrQualityProviderTest.swift */; };
@@ -953,7 +952,6 @@
 		3A6D7AF32ED65676001099B1 /* NativoBid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoBid.swift; sourceTree = "<group>"; };
 		3A7286B1302677F70091E424 /* BannerView+AppHarbr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BannerView+AppHarbr.swift"; sourceTree = "<group>"; };
 		3A7286B2302677F70091E424 /* Life360AppHarbrQualityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360AppHarbrQualityProvider.swift; sourceTree = "<group>"; };
-		3A7286C4302677F70091E424 /* NativoUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoUtilsTest.swift; sourceTree = "<group>"; };
 		3A7286D1302677F70091E424 /* AppHarbrSDK.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:LKQPX9YH5G:Canopy Media Ltd."; lastKnownFileType = wrapper.xcframework; name = AppHarbrSDK.xcframework; path = Frameworks/AppHarbrSDK.xcframework; sourceTree = "<group>"; };
 		3A7286E2302677F70091E424 /* Life360AppHarbrQualityProviderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360AppHarbrQualityProviderTest.swift; sourceTree = "<group>"; };
 		3A826B132F61E42800EB10C0 /* NativoRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativoRenderer.swift; sourceTree = "<group>"; };
@@ -3391,7 +3389,6 @@
 				5DC1298A0000000000000002 /* NativoBundleFieldTest.swift */,
 				5DC1298E0000000000000002 /* NativoBidRequesterTimeoutTest.swift */,
 				5DC1298C0000000000000002 /* NativoBannerViewDelegateTest.swift */,
-				3A7286C4302677F70091E424 /* NativoUtilsTest.swift */,
 				3A7286E2302677F70091E424 /* Life360AppHarbrQualityProviderTest.swift */,
 			);
 			path = Prebid;
@@ -4308,7 +4305,6 @@
 				5DC1298A0000000000000001 /* NativoBundleFieldTest.swift in Sources */,
 				5DC1298E0000000000000001 /* NativoBidRequesterTimeoutTest.swift in Sources */,
 				5DC1298C0000000000000001 /* NativoBannerViewDelegateTest.swift in Sources */,
-				3A7286C3302677F70091E424 /* NativoUtilsTest.swift in Sources */,
 				3A7286E1302677F70091E424 /* Life360AppHarbrQualityProviderTest.swift in Sources */,
 				539897A12CE498A20075234B /* InterstitialObserverTests.swift in Sources */,
 				922AFC9127352C9B00732C53 /* MockPBMWebView.swift in Sources */,

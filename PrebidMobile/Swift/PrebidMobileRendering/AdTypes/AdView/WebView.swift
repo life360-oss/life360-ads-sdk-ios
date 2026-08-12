@@ -15,8 +15,14 @@
     
 
 import Foundation
+import WebKit
 
 @objc(PBMWebView_Protocol) @_spi(PBMInternal) public
 protocol WebView_Protocol {
     var isMRAID: Bool { get }
+
+    /// The web view the creative's markup is loaded into.
+    ///
+    /// Required for AppHarbr integration.
+    var internalWebView: WKWebView { get }
 }
