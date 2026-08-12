@@ -31,6 +31,10 @@ public final class Life360AppHarbrQualityProvider: NSObject, AdQualityAdNetworkP
     private override init() {
         super.init()
     }
+    
+    public func initAdQualityService() -> Bool {
+        AppHarbrPrebidLife360Adapter.initAdQualityService(self)
+    }
 
     // MARK: - AdQualityAdNetworkProtocol
 
