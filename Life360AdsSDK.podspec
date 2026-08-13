@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Life360AdsSDK"
-  s.version      = "1.3.2"
+  s.version      = "1.4.0-geoedge"
   s.summary      = "Life360 Ads SDK is a lightweight framework that integrates directly with Life360 and Prebid Server."
 
   s.description  = <<-DESC
@@ -77,6 +77,15 @@ Pod::Spec.new do |s|
   #   ]
   #   renderer.dependency 'PrebidMobile'
   # end
+
+  # Optional: pulls in AppHarbrSDK.xcframework for Life360AppHarbrQualityProvider
+  s.subspec 'AppHarbr' do |appharbr|
+    appharbr.dependency 'Life360AdsSDK/core'
+    appharbr.vendored_frameworks = 'Frameworks/AppHarbrSDK.xcframework'
+    appharbr.pod_target_xcconfig = {
+      'OTHER_LDFLAGS' => '$(inherited) -weak_framework AppHarbrSDK'
+    }
+  end
 
   s.pod_target_xcconfig = {
     'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
