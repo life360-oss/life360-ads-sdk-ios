@@ -37,17 +37,17 @@ class Factory: NSObject {
                               adUnitConfiguration: adUnitConfiguration)
     }
     
-    // MARK: Nativo BidRequester
+    // MARK: Life360 BidRequester
     // Needed in order to instantiate ObjC class from Swift
-    static let nativoBidRequesterType: BidRequester.Type = {
-        NSClassFromString("NativoBidRequester") as! BidRequester.Type
+    static let life360BidRequesterType: BidRequester.Type = {
+        NSClassFromString("Life360BidRequester") as! BidRequester.Type
     }()
     
-    @objc public static func createNativoBidRequester(connection: PrebidServerConnectionProtocol,
+    @objc public static func createLife360BidRequester(connection: PrebidServerConnectionProtocol,
                                                       sdkConfiguration: Prebid,
                                                       targeting: Targeting,
                                                       adUnitConfiguration: AdUnitConfig) -> BidRequester {
-        nativoBidRequesterType.init(connection: connection,
+        life360BidRequesterType.init(connection: connection,
                                     sdkConfiguration: sdkConfiguration,
                                     targeting: targeting,
                                     adUnitConfiguration: adUnitConfiguration)

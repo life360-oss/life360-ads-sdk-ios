@@ -356,12 +356,12 @@ class PBMViewExposureCheckerSystemUITests: XCTestCase {
     }
 }
 
-/// Verifies `NativoViewExposureChecker.friendlyObstructionViews` — every overlapping view that itself
+/// Verifies `Life360ViewExposureChecker.friendlyObstructionViews` — every overlapping view that itself
 /// paints nothing over the ad, which the OM path registers as OMID friendly obstructions so transparent
 /// overlays stop eroding measured viewability. OMID judges each overlapping view on its own, so the list
 /// is per-view rather than per-subtree: a non-painting container is registered even when something
 /// deeper inside it draws, and that drawing descendant stays an occluder.
-class NativoFriendlyObstructionTests: XCTestCase {
+class Life360FriendlyObstructionTests: XCTestCase {
 
     var window: UIWindow!
     var viewController: UIViewController!
@@ -395,7 +395,7 @@ class NativoFriendlyObstructionTests: XCTestCase {
     private func friendlyObstructions() -> [UIView] {
         viewController.view.layoutIfNeeded()
         window.layoutIfNeeded()
-        let checker = NativoViewExposureChecker(view: adView, onExposureChange: nil)
+        let checker = Life360ViewExposureChecker(view: adView, onExposureChange: nil)
         return checker.friendlyObstructionViews()
     }
 
@@ -533,10 +533,10 @@ class NativoFriendlyObstructionTests: XCTestCase {
     }
 }
 
-/// Covers how `NativoViewExposureChecker` behaves the moment an ad is loaded, before any scrolling:
+/// Covers how `Life360ViewExposureChecker` behaves the moment an ad is loaded, before any scrolling:
 /// which initializer the caller used must not change the measured exposure, and a checker with a handler
 /// has to report once on its own.
-class NativoViewExposureCheckerInitialLoadTests: XCTestCase {
+class Life360ViewExposureCheckerInitialLoadTests: XCTestCase {
 
     var window: UIWindow!
     var viewController: UIViewController!
@@ -570,7 +570,7 @@ class NativoViewExposureCheckerInitialLoadTests: XCTestCase {
         viewController.view.addSubview(adView)
         viewController.view.layoutIfNeeded()
 
-        let checker = NativoViewExposureChecker(view: adView)
+        let checker = Life360ViewExposureChecker(view: adView)
 
         XCTAssertGreaterThan(checker.exposure.exposureFactor, 0.95)
     }
@@ -579,8 +579,8 @@ class NativoViewExposureCheckerInitialLoadTests: XCTestCase {
         viewController.view.addSubview(adView)
         viewController.view.layoutIfNeeded()
 
-        let superclassInit = NativoViewExposureChecker(view: adView)
-        let handlerInit = NativoViewExposureChecker(view: adView, onExposureChange: nil)
+        let superclassInit = Life360ViewExposureChecker(view: adView)
+        let handlerInit = Life360ViewExposureChecker(view: adView, onExposureChange: nil)
 
         XCTAssertEqual(superclassInit.exposure.exposureFactor,
                        handlerInit.exposure.exposureFactor,
@@ -599,7 +599,7 @@ class NativoViewExposureCheckerInitialLoadTests: XCTestCase {
         var exposureFactor: Float?
         var reportedError: Error?
 
-        let checker = NativoViewExposureChecker(view: adView) { exposure, error in
+        let checker = Life360ViewExposureChecker(view: adView) { exposure, error in
             exposureFactor = exposure.exposureFactor
             reportedError = error
             reported.fulfill()
@@ -623,7 +623,7 @@ class NativoViewExposureCheckerInitialLoadTests: XCTestCase {
         var exposureFactor: Float?
         var reportedError: Error?
 
-        let checker = NativoViewExposureChecker(view: adView) { exposure, error in
+        let checker = Life360ViewExposureChecker(view: adView) { exposure, error in
             exposureFactor = exposure.exposureFactor
             reportedError = error
             reported.fulfill()

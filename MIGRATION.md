@@ -1,6 +1,6 @@
 # Migrating from Prebid Mobile iOS to Life360 Ads SDK iOS
 
-The Life360 Ads SDK is a fork of [Prebid Mobile iOS](https://github.com/prebid/prebid-mobile-ios) **v3.3.1**. It keeps the Prebid Mobile public API surface intact and adds Nativo as a competing demand source. For the vast majority of integrations **migration is mechanical**: rename the dependency, rename the imports, and rebuild. The base Prebid Mobile types (`Prebid`, `Targeting`, `BannerView`, `InterstitialRenderingAdUnit`, `GAMUtils`, …) keep their original names.
+The Life360 Ads SDK is a fork of [Prebid Mobile iOS](https://github.com/prebid/prebid-mobile-ios). It keeps the Prebid Mobile public API surface intact and adds Life360 Ads as a competing demand source. For the vast majority of integrations **migration is mechanical**: rename the dependency, rename the imports, and rebuild. The base Prebid Mobile types (`Prebid`, `Targeting`, `BannerView`, `InterstitialRenderingAdUnit`, `GAMUtils`, …) keep their original names.
 
 This guide was validated by migrating the in-repo demo app (`InternalTestApp`, the Prebid demo app) end-to-end. It required **no Life360-specific source API changes** — only the dependency and import renames in sections 1–2.
 
@@ -79,14 +79,14 @@ The fork does **not rename or remove** any existing Prebid Mobile public type or
 
 ### New public API
 
-Within the Prebid configuration there is a new API to allow sharing a user's location with Nativo. Use `Prebid.shared.shareGeoLocationWithNativo = true`. Continue to use `Prebid.shared.shareGeoLocation` for sharing with Prebid Server & partners.
+There is a new API to allow sharing a user's location with Life360. Use `Life360Ads.shared.shareGeoLocationWithLife360 = true`. Continue to use `Prebid.shared.shareGeoLocation` for sharing with Prebid Server & partners.
 
-`NativoBannerViewDelegate` extends `BannerViewDelegate` with a Nativo-specific load callback:
+`Life360BannerViewDelegate` extends `BannerViewDelegate` with a Life360-specific load callback:
 
 ```swift
-func bannerView(_ bannerView: BannerView, didReceiveNativoAdWithSize adSize: CGSize)
+func bannerView(_ bannerView: BannerView, didReceiveLife360AdWithSize adSize: CGSize)
 ```
 
-Conform your `BannerView` delegate to `NativoBannerViewDelegate` if you want to distinguish a Nativo win from a regular display win — when a Nativo-rendered ad loads, this callback fires *instead of* `bannerView(_:didReceiveAdWithAdSize:)`. Nativo `standardDisplay` bids go through the regular display path and keep reporting via `bannerView(_:didReceiveAdWithAdSize:)`. Delegates that stay on plain `BannerViewDelegate` need no changes: they receive `bannerView(_:didReceiveAdWithAdSize:)` for every win, Nativo or not.
+Conform your `BannerView` delegate to `Life360BannerViewDelegate` if you want to distinguish a Life360 win from a regular display win — when a Life360-rendered ad loads, this callback fires *instead of* `bannerView(_:didReceiveAdWithAdSize:)`. Life360 `standardDisplay` bids go through the regular display path and keep reporting via `bannerView(_:didReceiveAdWithAdSize:)`. Delegates that stay on plain `BannerViewDelegate` need no changes: they receive `bannerView(_:didReceiveAdWithAdSize:)` for every win, Life360 or not.
 
 For base Prebid Mobile API documentation, see the [Prebid docs](https://docs.prebid.org/prebid-mobile/pbm-api/ios/code-integration-ios.html).

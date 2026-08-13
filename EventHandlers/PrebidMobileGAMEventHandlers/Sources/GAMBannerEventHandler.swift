@@ -68,7 +68,7 @@ public class GAMBannerEventHandler :
         if let url = gamClickURL {
             // Fire GAM click URL if we have it cached
             Log.debug("Firing GAM click URL from cache.")
-            NativoGAMUtils.fire(url: url)
+            Life360GAMUtils.fire(url: url)
         } else {
             // Otherwise extract from GAM banner
             guard let bannerView = proxyBanner?.banner else {
@@ -76,14 +76,14 @@ public class GAMBannerEventHandler :
                 return
             }
 
-            NativoGAMUtils.extractClickURL(from: bannerView) { url in
+            Life360GAMUtils.extractClickURL(from: bannerView) { url in
                 guard let url = url else {
                     Log.debug("No GAM click URL found")
                     return
                 }
                 self.gamClickURL = url
                 Log.debug("Extracted and firing GAM click URL")
-                NativoGAMUtils.fire(url: url)
+                Life360GAMUtils.fire(url: url)
             }
         }
     }

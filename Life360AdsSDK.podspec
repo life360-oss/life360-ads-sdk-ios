@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
 
   s.name         = "Life360AdsSDK"
-  s.version      = "1.4.0-geoedge"
-  s.summary      = "Life360 Ads SDK is a lightweight framework that integrates directly with Nativo and Prebid Server."
+  s.version      = "1.3.2"
+  s.summary      = "Life360 Ads SDK is a lightweight framework that integrates directly with Life360 and Prebid Server."
 
   s.description  = <<-DESC
     Life360 Ads SDK is a lightweight framework that integrates directly with Prebid Server to increase yield for publishers by adding more mobile buyers."
@@ -71,9 +71,9 @@ Pod::Spec.new do |s|
 
   # Separate subspec for standalone renderer with PrebidMobile dependency
   # s.subspec 'renderer' do |renderer|
-  #   renderer.source_files = 'NativoRenderer/**/*.{h,m,swift}'
+  #   renderer.source_files = 'Life360Renderer/**/*.{h,m,swift}'
   #   renderer.exclude_files = [
-  #     'NativoRenderer/Package.swift'
+  #     'Life360Renderer/Package.swift'
   #   ]
   #   renderer.dependency 'PrebidMobile'
   # end

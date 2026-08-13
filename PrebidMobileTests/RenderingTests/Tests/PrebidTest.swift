@@ -53,7 +53,7 @@ class PrebidTest: XCTestCase {
         try XCTUnwrap(Prebid.initializeSDK(serverURL: serverURL))
     }
     
-    // A host can start Nativo-only and add Prebid Server demand later in the session, so every
+    // A host can start Life360-only and add Prebid Server demand later in the session, so every
     // `initializeSDK` overload has to re-arm the flag `initializeWithoutPrebid()` cleared.
     func testInitializeSDK_reArmsPrebidServerDemand() throws {
         // Keeps the status check off the network; this test only cares about the flag.
@@ -355,7 +355,7 @@ class PrebidTest: XCTestCase {
         
         XCTAssertTrue(PrebidMobilePluginRegister.shared.getAllPlugins().count == 2)
         XCTAssertEqual(PrebidMobilePluginRegister.shared.getAllPlugins().contains(where: { $0.name == PREBID_MOBILE_RENDERER_NAME }), true)
-        XCTAssertEqual(PrebidMobilePluginRegister.shared.getAllPlugins().contains(where: { $0.name == NativoRendererInternal.NAME }), true)
+        XCTAssertEqual(PrebidMobilePluginRegister.shared.getAllPlugins().contains(where: { $0.name == Life360RendererInternal.NAME }), true)
     }
     
     // MARK: - Private Methods

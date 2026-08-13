@@ -334,7 +334,7 @@ public class Prebid: NSObject {
 
         // Re-arms Prebid Server demand, which `Life360Ads.initializeWithoutPrebid()` may have cleared
         // earlier in the session. Only affects ad units created from here on; existing ones captured
-        // the old value and keep running Nativo-only.
+        // the old value and keep running Life360-only.
         Life360Ads.shared.prebidServerEnabled = true
 
         PrebidSDKInitializer.initializeSDK(completion)
