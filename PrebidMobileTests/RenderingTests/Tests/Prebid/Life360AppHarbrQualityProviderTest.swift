@@ -34,7 +34,7 @@ class Life360AppHarbrQualityProviderTest: XCTestCase {
 
     func testWinningBid_reportsTheWinningBidOfTheBanner() throws {
         let bannerView = makeBannerView(
-            bidResponse: NativoBidFabricator.makePrebidBidResponse(
+            bidResponse: Life360BidFabricator.makePrebidBidResponse(
                 price: 1.5,
                 width: 320,
                 height: 50,
@@ -72,7 +72,7 @@ class Life360AppHarbrQualityProviderTest: XCTestCase {
     /// still round-trips correctly.
     func testWinningBid_reportsTheAdFormatAppHarbrAskedAbout() throws {
         let bannerView = makeBannerView(
-            bidResponse: NativoBidFabricator.makePrebidBidResponse(
+            bidResponse: Life360BidFabricator.makePrebidBidResponse(
                 price: 1.5,
                 width: 320,
                 height: 50,
@@ -115,7 +115,7 @@ class Life360AppHarbrQualityProviderTest: XCTestCase {
     /// the bid still is.
     func testWinningBid_beforeACreativeIsSetUp_reportsTheBidWithoutAWebView() throws {
         let bannerView = makeBannerView(
-            bidResponse: NativoBidFabricator.makePrebidBidResponse(
+            bidResponse: Life360BidFabricator.makePrebidBidResponse(
                 price: 1.5,
                 width: 320,
                 height: 50,
@@ -133,6 +133,42 @@ class Life360AppHarbrQualityProviderTest: XCTestCase {
 
         XCTAssertEqual(properties.creativeId, "creative-7")
         XCTAssertNil(properties.webView)
+    }
+
+    /// The `hb_*` targeting `Life360BidResponse.createBids()` computes must reach AppHarbr's JSON too,
+    /// not just GAM's ad request — the two are separate properties on `BidResponse`, and only one of
+    /// them is serialized here.
+    func testWinningBid_reportsTheNativoTargetingUnderExtPrebid() throws {
+        let bannerView = makeBannerView(
+            bidResponse: Life360BidFabricator.makeLife360BidResponse(
+                price: 1.5,
+                width: 320,
+                height: 50,
+                crid: "creative-7"
+            )
+        )
+
+        let properties = try XCTUnwrap(
+            Life360AppHarbrQualityProvider.shared.winningBid(
+                for: "unit",
+                adFormat: .banner,
+                mediationObject: bannerView
+            )
+        )
+
+        let content = try XCTUnwrap(
+            try JSONSerialization.jsonObject(with: Data(properties.content.utf8)) as? [String: Any]
+        )
+        let seatbid = try XCTUnwrap(content["seatbid"] as? [[String: Any]])
+        let bids = try XCTUnwrap(seatbid.first?["bid"] as? [[String: Any]])
+        let bid = try XCTUnwrap(bids.first)
+        let ext = try XCTUnwrap(bid["ext"] as? [String: Any])
+        let prebid = try XCTUnwrap(ext["prebid"] as? [String: Any])
+        let targeting = try XCTUnwrap(prebid["targeting"] as? [String: Any])
+
+        XCTAssertEqual(targeting["hb_bidder"] as? String, "nativo")
+        XCTAssertEqual(targeting["hb_size"] as? String, "320x50")
+        XCTAssertEqual(targeting["hb_pb"] as? String, "1.50")
     }
 
     func testAdNetworkVersion_reportsTheSDKVersion() {

@@ -44,6 +44,17 @@ public class Life360BidResponse: BidResponse {
             targeting["hb_pb"] = priceString
             targeting["hb_pb_nativo"] = priceString
             self.targetingInfo = targeting
+
+            // Also write this into the winning bid's own ext.prebid.targeting — the same place Prebid
+            // Server's response carries it — so ORTBBid.jsonDictionary() reports it too. `Life360Bid`
+            // overrides `targetingInfo` to avoid depending on ext.prebid when rendering (see its "avoid
+            // ext.prebid dependency" overrides below); this is the opposite direction, a write for
+            // reporting only, so it doesn't reintroduce that dependency.
+            let ext = winningBid.bid.ext ?? ORTBBidExt()
+            let prebid = ext.prebid ?? ORTBBidExtPrebid()
+            prebid.targeting = targeting
+            ext.prebid = prebid
+            winningBid.bid.ext = ext
         }
     }
 }

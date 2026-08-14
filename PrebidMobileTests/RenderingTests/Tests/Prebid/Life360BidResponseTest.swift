@@ -118,6 +118,29 @@ class Life360BidResponseTest: XCTestCase {
         XCTAssertEqual(targeting?["hb_bidder_nativo"], "nativo")
     }
 
+    /// The same targeting also has to be readable off the raw ORTB bid: anything that serializes the
+    /// winning bid directly (an ad-quality scanner, a log) has no access to `targetingInfo`, only to
+    /// `ORTBBid.jsonDictionary`, and that only sees what is under the bid's own `ext`.
+    func testStaticTargetingKeys_areAlsoOnTheRawBidsExtPrebid() throws {
+        let response = makeLife360BidResponse(price: 10.0, width: 320, height: 50)
+
+        let prebidExt = try XCTUnwrap(response.winningBid?.bid.ext?.prebid)
+        XCTAssertEqual(prebidExt.targeting?["hb_env"] as? String, "mobile-app")
+        XCTAssertEqual(prebidExt.targeting?["hb_env_nativo"] as? String, "mobile-app")
+        XCTAssertEqual(prebidExt.targeting?["hb_bidder"] as? String, "nativo")
+        XCTAssertEqual(prebidExt.targeting?["hb_bidder_nativo"] as? String, "nativo")
+        XCTAssertEqual(prebidExt.targeting?["hb_size"] as? String, "320x50")
+        XCTAssertEqual(prebidExt.targeting?["hb_pb"] as? String, "10.00")
+
+        // The same values reach a serialized copy of the bid — this is the property an ad-quality
+        // scanner actually reads.
+        let jsonDictionary = try XCTUnwrap(response.winningBid?.bid.jsonDictionary)
+        let ext = try XCTUnwrap(jsonDictionary["ext"] as? [String: Any])
+        let prebid = try XCTUnwrap(ext["prebid"] as? [String: Any])
+        let targeting = try XCTUnwrap(prebid["targeting"] as? [String: Any])
+        XCTAssertEqual(targeting["hb_bidder"] as? String, "nativo")
+    }
+
     // MARK: - Winning bid selection
 
     /// Verifies the highest-priced bid is selected as the winning bid.
