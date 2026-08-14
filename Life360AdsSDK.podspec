@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Life360AdsSDK"
-  s.version      = "1.4.0-geoedge"
+  s.version      = "1.4.0"
   s.summary      = "Life360 Ads SDK is a lightweight framework that integrates directly with Life360 and Prebid Server."
 
   s.description  = <<-DESC
