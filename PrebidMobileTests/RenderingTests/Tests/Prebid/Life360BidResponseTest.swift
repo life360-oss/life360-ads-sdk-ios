@@ -41,7 +41,7 @@ class Life360BidResponseTest: XCTestCase {
         let response = makeLife360BidResponse(price: 29.0, width: 320, height: 50)
 
         XCTAssertEqual(response.targetingInfo?["hb_pb"], "29.00")
-        XCTAssertEqual(response.targetingInfo?["hb_pb_life360"], "29.00")
+        XCTAssertEqual(response.targetingInfo?["hb_pb_nativo"], "29.00")
     }
 
     /// Verifies that an integer price (no fractional part) is formatted with two decimal places.
@@ -50,7 +50,7 @@ class Life360BidResponseTest: XCTestCase {
         let response = makeLife360BidResponse(price: 29, width: 320, height: 50)
 
         XCTAssertEqual(response.targetingInfo?["hb_pb"], "29.00")
-        XCTAssertEqual(response.targetingInfo?["hb_pb_life360"], "29.00")
+        XCTAssertEqual(response.targetingInfo?["hb_pb_nativo"], "29.00")
     }
 
     /// Verifies that a price already having two decimal digits retains them.
@@ -58,7 +58,7 @@ class Life360BidResponseTest: XCTestCase {
         let response = makeLife360BidResponse(price: 1.50, width: 300, height: 250)
 
         XCTAssertEqual(response.targetingInfo?["hb_pb"], "1.50")
-        XCTAssertEqual(response.targetingInfo?["hb_pb_life360"], "1.50")
+        XCTAssertEqual(response.targetingInfo?["hb_pb_nativo"], "1.50")
     }
 
     /// Verifies fractional cent pricing is rounded properly.
@@ -66,7 +66,7 @@ class Life360BidResponseTest: XCTestCase {
         let response = makeLife360BidResponse(price: 3.456, width: 300, height: 250)
 
         XCTAssertEqual(response.targetingInfo?["hb_pb"], "3.46")
-        XCTAssertEqual(response.targetingInfo?["hb_pb_life360"], "3.46")
+        XCTAssertEqual(response.targetingInfo?["hb_pb_nativo"], "3.46")
     }
 
     /// Verifies a zero-price bid does not become the winning bid (0 is not > 0),
@@ -86,7 +86,7 @@ class Life360BidResponseTest: XCTestCase {
         let response = makeLife360BidResponse(price: 1.00, width: 320, height: 50)
 
         XCTAssertEqual(response.targetingInfo?["hb_size"], "320x50")
-        XCTAssertEqual(response.targetingInfo?["hb_size_life360"], "320x50")
+        XCTAssertEqual(response.targetingInfo?["hb_size_nativo"], "320x50")
     }
 
     /// Verifies a different common ad size formats correctly.
@@ -94,7 +94,7 @@ class Life360BidResponseTest: XCTestCase {
         let response = makeLife360BidResponse(price: 2.00, width: 300, height: 250)
 
         XCTAssertEqual(response.targetingInfo?["hb_size"], "300x250")
-        XCTAssertEqual(response.targetingInfo?["hb_size_life360"], "300x250")
+        XCTAssertEqual(response.targetingInfo?["hb_size_nativo"], "300x250")
     }
 
     /// Verifies leaderboard ad size formats correctly.
@@ -102,7 +102,7 @@ class Life360BidResponseTest: XCTestCase {
         let response = makeLife360BidResponse(price: 5.00, width: 728, height: 90)
 
         XCTAssertEqual(response.targetingInfo?["hb_size"], "728x90")
-        XCTAssertEqual(response.targetingInfo?["hb_size_life360"], "728x90")
+        XCTAssertEqual(response.targetingInfo?["hb_size_nativo"], "728x90")
     }
 
     // MARK: - Static targeting keys
@@ -113,9 +113,9 @@ class Life360BidResponseTest: XCTestCase {
         let targeting = response.targetingInfo
 
         XCTAssertEqual(targeting?["hb_env"], "mobile-app")
-        XCTAssertEqual(targeting?["hb_env_life360"], "mobile-app")
-        XCTAssertEqual(targeting?["hb_bidder"], "life360")
-        XCTAssertEqual(targeting?["hb_bidder_life360"], "life360")
+        XCTAssertEqual(targeting?["hb_env_nativo"], "mobile-app")
+        XCTAssertEqual(targeting?["hb_bidder"], "nativo")
+        XCTAssertEqual(targeting?["hb_bidder_nativo"], "nativo")
     }
 
     // MARK: - Winning bid selection

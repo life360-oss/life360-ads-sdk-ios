@@ -207,7 +207,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
         }
         self.life360BidResponse = response
         let bid = response?.winningBid
-        let isOwnedOperated: Bool = bid?.bid.ext?.life360?.isOwnedOperated ?? false
+        let isOwnedOperated: Bool = bid?.bid.ext?.nativo?.isOwnedOperated ?? false
         if (isOwnedOperated) {
             // Render O&O demand via adLoader Life360 flow
             self.bidRequester = nil

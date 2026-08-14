@@ -22,7 +22,7 @@ class ORTBBidExt: PBMJsonCodable {
     var prebid: ORTBBidExtPrebid?
     var bidder: [String : Any]?
     var skadn: ORTBBidExtSkadn?
-    var life360: ORTBBidExtLife360?
+    var nativo: ORTBBidExtNativo?
     
     // This part is dedicating to test server-side ad configurations.
     // Need to be removed when ext.prebid.passthrough will be available.
@@ -34,7 +34,7 @@ class ORTBBidExt: PBMJsonCodable {
         case prebid
         case bidder
         case skadn
-        case life360
+        case nativo
         case passthrough
     }
     
@@ -47,7 +47,7 @@ class ORTBBidExt: PBMJsonCodable {
         prebid  = json[.prebid]
         bidder  = json[.bidder]
         skadn   = json[.skadn]
-        life360  = json[.life360]
+        nativo  = json[.nativo]
 #if DEBUG
         passthrough = json.backwardsCompatiblePassthrough(key: .passthrough)
 #endif
@@ -59,7 +59,7 @@ class ORTBBidExt: PBMJsonCodable {
         json[.prebid]   = prebid
         json[.bidder]   = bidder
         json[.skadn]    = skadn
-        json[.life360]   = life360
+        json[.nativo]   = nativo
 #if DEBUG
         json[.passthrough] = passthrough
 #endif

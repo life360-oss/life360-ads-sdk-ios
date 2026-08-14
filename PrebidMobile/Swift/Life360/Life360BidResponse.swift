@@ -28,21 +28,21 @@ public class Life360BidResponse: BidResponse {
         
         /**
             Mimic targeting parameters sent from prebid server
-            hb_env=mobile-app&hb_env_life360=mobile-app&hb_bidder=life360&hb_size=300x250&hb_pb_life360=1.00&hb_bidder_life360=life360&hb_size_life360=300x250&hb_pb=1.00
+            hb_env=mobile-app&hb_env_nativo=mobile-app&hb_bidder=nativo&hb_size=300x250&hb_pb_nativo=1.00&hb_bidder_nativo=nativo&hb_size_nativo=300x250&hb_pb=1.00
          */
         if let winningBid = self.winningBid {
             var targeting = [String : String]()
             targeting["hb_env"] = "mobile-app"
-            targeting["hb_env_life360"] = "mobile-app"
+            targeting["hb_env_nativo"] = "mobile-app"
             let size = winningBid.size
             let sizeString = "\(Int(size.width))x\(Int(size.height))"
             targeting["hb_size"] = sizeString
-            targeting["hb_size_life360"] = sizeString
-            targeting["hb_bidder"] = "life360"
-            targeting["hb_bidder_life360"] = "life360"
+            targeting["hb_size_nativo"] = sizeString
+            targeting["hb_bidder"] = "nativo"
+            targeting["hb_bidder_nativo"] = "nativo"
             let priceString = String(format: "%.2f", winningBid.price)
             targeting["hb_pb"] = priceString
-            targeting["hb_pb_life360"] = priceString
+            targeting["hb_pb_nativo"] = priceString
             self.targetingInfo = targeting
         }
     }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -48,11 +48,12 @@
 		3A46AA322EF5D5410010B2A6 /* Life360Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A46AA2F2EF5D5410010B2A6 /* Life360Utils.m */; };
 		3A46AA352EF5D5740010B2A6 /* Life360ViewExposureChecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A46AA342EF5D5740010B2A6 /* Life360ViewExposureChecker.h */; };
 		3A46AA362EF5D5740010B2A6 /* Life360Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A46AA332EF5D5740010B2A6 /* Life360Utils.h */; };
+		3A48DDEB302FD3EA007D138B /* AppHarbrSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A48DDEA302FD3EA007D138B /* AppHarbrSDK.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		3A61D27A2FBFC980005F8B0A /* OMSDK_Life360.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A61D2792FBFC980005F8B0A /* OMSDK_Life360.xcframework */; };
 		3A67E2BC302D42C4004E3ED4 /* Life360AppHarbrQualityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A67E2BA302D42C4004E3ED4 /* Life360AppHarbrQualityProvider.swift */; };
 		3A6D7AE92ED0EC54001099B1 /* Life360ORTBDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A6D7AE72ED0EC54001099B1 /* Life360ORTBDevice.h */; };
 		3A6D7AEA2ED0EC54001099B1 /* Life360ORTBDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AE82ED0EC54001099B1 /* Life360ORTBDevice.m */; };
-		3A6D7AF02ED52DCB001099B1 /* ORTBBidExtLife360.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtLife360.swift */; };
+		3A6D7AF02ED52DCB001099B1 /* ORTBBidExtNativo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtNativo.swift */; };
 		3A6D7AF22ED53AD6001099B1 /* Life360BidResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AF12ED53AD6001099B1 /* Life360BidResponse.swift */; };
 		3A6D7AF42ED65676001099B1 /* Life360Bid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AF32ED65676001099B1 /* Life360Bid.swift */; };
 		3A8E19112F60C12400720D1B /* Life360PrebidRendererInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8E19102F60C12400720D1B /* Life360PrebidRendererInternal.swift */; };
@@ -264,6 +265,7 @@
 		5AA8F4152DB26445008A7702 /* BidRequesterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA8F4142DB26445008A7702 /* BidRequesterProtocol.swift */; };
 		5ABAA1702D384AE400FDD38A /* SharedId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABAA16F2D384ADC00FDD38A /* SharedId.swift */; };
 		5ABAA1732D3ADE0000FDD38A /* SharedIdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABAA1722D3ADE0000FDD38A /* SharedIdTests.swift */; };
+		5AC1298F0000000000000001 /* ORTBBidExtNativoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1298F0000000000000002 /* ORTBBidExtNativoTest.swift */; };
 		5AD6B3542DB89886006690BB /* UIInterfaceOrientation+PBMExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6B3532DB89886006690BB /* UIInterfaceOrientation+PBMExtensions.swift */; };
 		5AD6B3562DB8A738006690BB /* ModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6B3552DB8A738006690BB /* ModalPresentationController.swift */; };
 		5AD6B3582DB8A7AA006690BB /* TouchForwardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6B3572DB8A7AA006690BB /* TouchForwardingView.swift */; };
@@ -940,11 +942,12 @@
 		3A46AA302EF5D5410010B2A6 /* Life360ViewExposureChecker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Life360ViewExposureChecker.m; sourceTree = "<group>"; };
 		3A46AA332EF5D5740010B2A6 /* Life360Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Life360Utils.h; sourceTree = "<group>"; };
 		3A46AA342EF5D5740010B2A6 /* Life360ViewExposureChecker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Life360ViewExposureChecker.h; sourceTree = "<group>"; };
+		3A48DDEA302FD3EA007D138B /* AppHarbrSDK.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:LKQPX9YH5G:Canopy Media Ltd."; lastKnownFileType = wrapper.xcframework; name = AppHarbrSDK.xcframework; path = Frameworks/AppHarbrSDK.xcframework; sourceTree = "<group>"; };
 		3A61D2792FBFC980005F8B0A /* OMSDK_Life360.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OMSDK_Life360.xcframework; path = Frameworks/OMSDK_Life360.xcframework; sourceTree = "<group>"; };
 		3A67E2BA302D42C4004E3ED4 /* Life360AppHarbrQualityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360AppHarbrQualityProvider.swift; sourceTree = "<group>"; };
 		3A6D7AE72ED0EC54001099B1 /* Life360ORTBDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Life360ORTBDevice.h; sourceTree = "<group>"; };
 		3A6D7AE82ED0EC54001099B1 /* Life360ORTBDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Life360ORTBDevice.m; sourceTree = "<group>"; };
-		3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtLife360.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORTBBidExtLife360.swift; sourceTree = "<group>"; };
+		3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtNativo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORTBBidExtNativo.swift; sourceTree = "<group>"; };
 		3A6D7AF12ED53AD6001099B1 /* Life360BidResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BidResponse.swift; sourceTree = "<group>"; };
 		3A6D7AF32ED65676001099B1 /* Life360Bid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360Bid.swift; sourceTree = "<group>"; };
 		3A826B132F61E42800EB10C0 /* Life360Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360Renderer.swift; sourceTree = "<group>"; };
@@ -1165,6 +1168,7 @@
 		5AA8F4142DB26445008A7702 /* BidRequesterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidRequesterProtocol.swift; sourceTree = "<group>"; };
 		5ABAA16F2D384ADC00FDD38A /* SharedId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedId.swift; sourceTree = "<group>"; };
 		5ABAA1722D3ADE0000FDD38A /* SharedIdTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedIdTests.swift; sourceTree = "<group>"; };
+		5AC1298F0000000000000002 /* ORTBBidExtNativoTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORTBBidExtNativoTest.swift; sourceTree = "<group>"; };
 		5AD6B3532DB89886006690BB /* UIInterfaceOrientation+PBMExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIInterfaceOrientation+PBMExtensions.swift"; sourceTree = "<group>"; };
 		5AD6B3552DB8A738006690BB /* ModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentationController.swift; sourceTree = "<group>"; };
 		5AD6B3572DB8A7AA006690BB /* TouchForwardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchForwardingView.swift; sourceTree = "<group>"; };
@@ -1805,6 +1809,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A48DDEB302FD3EA007D138B /* AppHarbrSDK.xcframework in Frameworks */,
 				8DBACE589DCAFD75054FC869 /* OMSDK_Life360.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1836,7 +1841,7 @@
 				3A46AA2B2EF5D5300010B2A6 /* Life360Mraid.swift */,
 				3A6D7AF32ED65676001099B1 /* Life360Bid.swift */,
 				3A6D7AF12ED53AD6001099B1 /* Life360BidResponse.swift */,
-				3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtLife360.swift */,
+				3A6D7AEF2ED52DCB001099B1 /* ORTBBidExtNativo.swift */,
 				744E60F09562467414158B98 /* Life360AdType.swift */,
 				5DC1298B0000000000000002 /* Life360BannerViewDelegate.swift */,
 				5A51286FB5526C0F52FF4556 /* BidAdTypeExtention.swift */,
@@ -3121,6 +3126,7 @@
 		6062B19A218243FA00CE1BA3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A48DDEA302FD3EA007D138B /* AppHarbrSDK.xcframework */,
 				3A61D2792FBFC980005F8B0A /* OMSDK_Life360.xcframework */,
 				6062B19B218243FA00CE1BA3 /* CoreLocation.framework */,
 			);
@@ -3373,6 +3379,7 @@
 				471CC5ABEB51827296004F85 /* Life360BidRequesterCompletionTest.swift */,
 				115C220DA9D6C3B2A8C039A0 /* Life360BidRequesterUserAgentTest.swift */,
 				82FDBE5844F46A8326B59A8B /* Life360AdLayoutTest.swift */,
+				5AC1298F0000000000000002 /* ORTBBidExtNativoTest.swift */,
 				0E88FCD794CEBF3EB4BFEFC6 /* BannerViewConcurrencyTest.swift */,
 				79165FCD86E9813EAC2682C6 /* Life360RendererConcurrencyTest.swift */,
 				5DC1298A0000000000000002 /* Life360BundleFieldTest.swift */,
@@ -4183,6 +4190,7 @@
 				30F6EDAA594945F94E03BC94 /* Life360BidRequesterUserAgentTest.swift in Sources */,
 				9D1C4E97CACE02124141B989 /* Life360BidFabricator.swift in Sources */,
 				E2ED07D1301D026BF48EFFA4 /* Life360AdLayoutTest.swift in Sources */,
+				5AC1298F0000000000000001 /* ORTBBidExtNativoTest.swift in Sources */,
 				CD27BAF44B996C6F0CF4073B /* BannerViewConcurrencyTest.swift in Sources */,
 				65FD54D65E4FFD17E21C2F0A /* Life360RendererConcurrencyTest.swift in Sources */,
 				929638B827AB19DE00D30F3D /* NativeTitleTests.swift in Sources */,
@@ -4604,7 +4612,7 @@
 				5A8448002DB7108B00446F70 /* AdModelEventTracker.swift in Sources */,
 				3A6D7AEA2ED0EC54001099B1 /* Life360ORTBDevice.m in Sources */,
 				5ADC1EB12DB9A90E00EA6477 /* AdViewManagerDelegate.swift in Sources */,
-				3A6D7AF02ED52DCB001099B1 /* ORTBBidExtLife360.swift in Sources */,
+				3A6D7AF02ED52DCB001099B1 /* ORTBBidExtNativo.swift in Sources */,
 				93FABAF0BAC33DE239EFED1D /* Life360AdType.swift in Sources */,
 				5DC1298B0000000000000001 /* Life360BannerViewDelegate.swift in Sources */,
 				FDC2FDF2C1018D2D033A591B /* BidAdTypeExtention.swift in Sources */,
