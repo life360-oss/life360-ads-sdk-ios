@@ -46,7 +46,7 @@ public class AdUnitConfig: NSObject, NSCopying {
     /// Whether this ad unit may request Prebid Server demand, captured from
     /// `Life360Ads.shared.prebidServerEnabled` when the ad unit is created.
     ///
-    /// Captured rather than read live so an ad unit built while the SDK was Nativo-only keeps that
+    /// Captured rather than read live so an ad unit built while the SDK was Life360-only keeps that
     /// behaviour for its whole lifetime, including auto-refresh cycles that run after a later
     /// `Prebid.initializeSDK` call. Ad units created after that call request Prebid Server demand.
     public var prebidServerEnabled = Life360Ads.shared.prebidServerEnabled

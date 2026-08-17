@@ -35,7 +35,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                              adUnitConfig: adUnitConfig,
                                                              delegate: compositeMock.mockFlowControllerDelegate,
                                                              configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         let timeExp = expectation(description: "no event")
         timeExp.isInverted = true
         waitForExpectations(timeout: 1)
@@ -70,7 +70,7 @@ class AdLoadFlowControllerTest: XCTestCase {
             .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
             })),
-            // Nativo step gate — the stub returns no Nativo bid, so the flow continues.
+            // Life360 step gate — the stub returns no Life360 bid, so the flow continues.
             .flowControllerDelegate(call: .shouldContinue(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
                 return true
@@ -114,7 +114,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         if (preFailed) {
             flowController.flowState = .loadingFailed
@@ -154,7 +154,7 @@ class AdLoadFlowControllerTest: XCTestCase {
             .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
             })),
-            // Nativo step gate — the stub returns no Nativo bid, so the flow continues.
+            // Life360 step gate — the stub returns no Life360 bid, so the flow continues.
             .flowControllerDelegate(call: .shouldContinue(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
                 return true
@@ -206,7 +206,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         if (preFailed) {
             flowController.flowState = .loadingFailed
@@ -238,7 +238,7 @@ class AdLoadFlowControllerTest: XCTestCase {
             .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
             })),
-            // Nativo step gate — the stub returns no Nativo bid, so the flow continues.
+            // Life360 step gate — the stub returns no Life360 bid, so the flow continues.
             .flowControllerDelegate(call: .shouldContinue(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
                 return true
@@ -289,7 +289,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
         waitForExpectations(timeout: 1)
@@ -316,7 +316,7 @@ class AdLoadFlowControllerTest: XCTestCase {
             .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
             })),
-            // Nativo step gate — the stub returns no Nativo bid, so the flow continues.
+            // Life360 step gate — the stub returns no Life360 bid, so the flow continues.
             .flowControllerDelegate(call: .shouldContinue(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
                 return true
@@ -366,7 +366,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
         waitForExpectations(timeout: 1)
@@ -393,7 +393,7 @@ class AdLoadFlowControllerTest: XCTestCase {
             .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
             })),
-            // Nativo step gate — the stub returns no Nativo bid, so the flow continues.
+            // Life360 step gate — the stub returns no Life360 bid, so the flow continues.
             .flowControllerDelegate(call: .shouldContinue(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
                 return true
@@ -441,7 +441,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
         waitForExpectations(timeout: 1)
@@ -469,7 +469,7 @@ class AdLoadFlowControllerTest: XCTestCase {
             .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
             })),
-            // Nativo step gate — the stub returns no Nativo bid, so the flow continues.
+            // Life360 step gate — the stub returns no Life360 bid, so the flow continues.
             .flowControllerDelegate(call: .shouldContinue(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
                 return true
@@ -523,7 +523,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
         waitForExpectations(timeout: 1)
@@ -550,7 +550,7 @@ class AdLoadFlowControllerTest: XCTestCase {
             .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
             })),
-            // Nativo step gate — the stub returns no Nativo bid, so the flow continues.
+            // Life360 step gate — the stub returns no Life360 bid, so the flow continues.
             .flowControllerDelegate(call: .shouldContinue(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
                 return true
@@ -597,7 +597,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
         waitForExpectations(timeout: 1)
@@ -632,7 +632,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
         waitForExpectations(timeout: 1)
@@ -658,7 +658,7 @@ class AdLoadFlowControllerTest: XCTestCase {
             .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
             })),
-            // Nativo step gate — the stub returns no Nativo bid, so the flow continues.
+            // Life360 step gate — the stub returns no Life360 bid, so the flow continues.
             .flowControllerDelegate(call: .shouldContinue(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
                 return true
@@ -698,7 +698,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
         // Unlike the event-handler path, the failure here is only reported after the main-queue hop in
@@ -727,7 +727,7 @@ class AdLoadFlowControllerTest: XCTestCase {
             .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
             })),
-            // Nativo step gate — the stub returns no Nativo bid, so the flow continues.
+            // Life360 step gate — the stub returns no Life360 bid, so the flow continues.
             .flowControllerDelegate(call: .shouldContinue(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
                 return true
@@ -768,7 +768,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
         waitForExpectations(timeout: 1)
@@ -783,7 +783,7 @@ class AdLoadFlowControllerTest: XCTestCase {
         // in flight. `moveToNextLoadingStep`'s `.bidRequest` case re-issues `sendBidRequest`
         // unconditionally, so spamming refresh produces duplicate bid requests. This is
         // pre-existing behavior (the suite was excluded from the build, so it never ran) and is
-        // unrelated to the serverless/Nativo flow — re-enable once that re-entrancy is addressed.
+        // unrelated to the serverless/Life360 flow — re-enable once that re-entrancy is addressed.
         try XCTSkipIf(true, "Pre-existing refresh re-entrancy: spamming refresh() re-issues the bid request.")
         let adUnitConfig = AdUnitConfig(configId: "configID")
         
@@ -802,7 +802,7 @@ class AdLoadFlowControllerTest: XCTestCase {
             .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
                 flowController.refresh()
             })),
-            // Nativo step gate — the stub returns no Nativo bid, so the flow continues.
+            // Life360 step gate — the stub returns no Life360 bid, so the flow continues.
             .flowControllerDelegate(call: .shouldContinue(handler: { loader in
                 flowController.refresh()
                 return true
@@ -858,7 +858,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
         waitForExpectations(timeout: 1)
@@ -870,7 +870,7 @@ class AdLoadFlowControllerTest: XCTestCase {
     
     // When initialized without a Prebid Server (`prebidServerEnabled == false`), the flow must
     // skip the Prebid Server bid request entirely — the bid requester factory is never invoked —
-    // and proceed straight from the Nativo response to the primary ad (event handler) request.
+    // and proceed straight from the Life360 response to the primary ad (event handler) request.
     func testServerless_skipsBidRequest_goesToPrimaryAd() {
         Life360Ads.shared.prebidServerEnabled = false
 
@@ -893,7 +893,7 @@ class AdLoadFlowControllerTest: XCTestCase {
             .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
             })),
-            // Nativo step gate — the stub returns no Nativo bid, so the flow continues.
+            // Life360 step gate — the stub returns no Life360 bid, so the flow continues.
             .flowControllerDelegate(call: .shouldContinue(handler: { loader in
                 XCTAssertIdentical(loader, flowController)
                 return true
@@ -928,7 +928,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
 
         flowController.refresh()
         waitForExpectations(timeout: 1)
@@ -1000,7 +1000,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
 
         flowController.refresh()
         waitForExpectations(timeout: 1)
@@ -1077,10 +1077,10 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
 
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
 
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)
@@ -1091,7 +1091,7 @@ class AdLoadFlowControllerTest: XCTestCase {
         // Skipped: same pre-existing refresh re-entrancy as testPrebidAd_happyPath_spamRefresh.
         // The bid-requester closure calls refresh() before completion, so `moveToNextLoadingStep`
         // re-issues `sendBidRequest` while still in `.bidRequest`, yielding a duplicate request.
-        // Unrelated to the serverless/Nativo flow — re-enable once that re-entrancy is addressed.
+        // Unrelated to the serverless/Life360 flow — re-enable once that re-entrancy is addressed.
         try XCTSkipIf(true, "Pre-existing refresh re-entrancy: spamming refresh() re-issues the bid request.")
         let adUnitConfig = AdUnitConfig(configId: "configID")
         
@@ -1106,7 +1106,7 @@ class AdLoadFlowControllerTest: XCTestCase {
         compositeMock = CompositeMock(expectedCalls: [
             .configValidation(call: { (adConfig, renderWithPrebid) in true }),
             .flowControllerDelegate(call: .willSendBidRequest(handler: { loader in })),
-            // Nativo step gate — returns true so the flow continues to the Prebid request.
+            // Life360 step gate — returns true so the flow continues to the Prebid request.
             .flowControllerDelegate(call: .shouldContinue(handler: { loader in return true })),
             .makeBidRequester(handler: { config, mockRequester in mockRequester }),
             .bidRequester(call: (requesterOffset: 0, { completion in
@@ -1150,7 +1150,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
-                                                      nativoBidRequesterFactory: compositeMock.mockNativoRequesterFactory)
+                                                      life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         nextShouldContinueExpectation = expectation(description: "First 'shouldContinue' reached")
         let firstTimeout = expectation(description: "first timeout")

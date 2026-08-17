@@ -71,7 +71,7 @@
 #import "PBMInterstitialLayoutConfigurator.h"
 #import "PBMSKAdNetworksParameterBuilder.h"
 #import "PBMViewExposureChecker.h"
-#import "NativoViewExposureChecker.h"
+#import "Life360ViewExposureChecker.h"
 
 // Extensions
 #import "NSException+PBMExtensions.h"
@@ -128,8 +128,8 @@
 #import "PBMBidResponseTransformer.h"
 #import "PBMPrebidParameterBuilder.h"
 
-// Nativo
-#import "NativoParameterBuilder.h"
+// Life360
+#import "Life360ParameterBuilder.h"
 
 #import "UIView+PBMViewExposure.h"
 

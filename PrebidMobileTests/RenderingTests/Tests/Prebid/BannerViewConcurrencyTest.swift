@@ -21,7 +21,7 @@ import XCTest
 /// size, exactly once.
 ///
 /// Everything on the path is real — `AdLoadFlowController`, `BannerAdLoader`, the event handler,
-/// plugin resolution, `NativoRendererInternal.createBannerView`, view deploy, and delegate reporting.
+/// plugin resolution, `Life360RendererInternal.createBannerView`, view deploy, and delegate reporting.
 /// Two things are substituted:
 ///
 /// 1. the two bid requesters, so each slot gets a *distinguishable* size and creative id;
@@ -30,7 +30,7 @@ import XCTest
 ///    The test fires the load callback through whatever delegate the renderer installed on the
 ///    `DisplayView`, which is the same hand-off the web view would trigger.
 ///
-/// `NativoRendererConcurrencyTest` checks the same routing without a flow controller and is the
+/// `Life360RendererConcurrencyTest` checks the same routing without a flow controller and is the
 /// faster, fully deterministic version. This suite adds the full flow up to `BannerViewDelegate`.
 class BannerViewConcurrencyTest: XCTestCase {
 
@@ -49,7 +49,7 @@ class BannerViewConcurrencyTest: XCTestCase {
         // renderer name, shared by every concurrently-loading slot.
         PrebidMobilePluginRegister.shared.unregisterAllPlugins()
         Prebid.registerPluginRenderer(CapturingPrebidRenderer(collector: collector))
-        Prebid.registerPluginRenderer(CapturingNativoRenderer(collector: collector))
+        Prebid.registerPluginRenderer(CapturingLife360Renderer(collector: collector))
     }
 
     override func tearDown() {
@@ -164,10 +164,10 @@ class BannerViewConcurrencyTest: XCTestCase {
     }
 
     /// Routing must not depend on every slot resolving to the same renderer.
-    func testConcurrentLoads_withMixedNativoAndPrebidWinners() {
+    func testConcurrentLoads_withMixedLife360AndPrebidWinners() {
         slots = [
-            makeSlot(crid: "crid-nativo-A", size: CGSize(width: 320, height: 50)),
-            makeSlot(crid: "crid-nativo-B", size: CGSize(width: 300, height: 250)),
+            makeSlot(crid: "crid-life360-A", size: CGSize(width: 320, height: 50)),
+            makeSlot(crid: "crid-life360-B", size: CGSize(width: 300, height: 250)),
             makeSlot(crid: "crid-prebid-C", size: CGSize(width: 728, height: 90), usePrebidRenderer: true),
         ]
         let reported = expectSuccess(for: slots)
@@ -296,13 +296,13 @@ class BannerViewConcurrencyTest: XCTestCase {
         bannerView.delegate = recordingDelegate
 
         let response: BidResponse = usePrebidRenderer
-            ? NativoBidFabricator.makePrebidBidResponse(
+            ? Life360BidFabricator.makePrebidBidResponse(
                 price: price,
                 width: Int(size.width),
                 height: Int(size.height),
                 crid: crid
             )
-            : NativoBidFabricator.makeNativoBidResponse(
+            : Life360BidFabricator.makeLife360BidResponse(
                 price: price,
                 width: Int(size.width),
                 height: Int(size.height),
@@ -319,7 +319,7 @@ class BannerViewConcurrencyTest: XCTestCase {
             adUnitConfig: bannerView.adUnitConfig,
             delegate: bannerView,
             configValidationBlock: { _, _ in true },
-            nativoBidRequesterFactory: { _ in
+            life360BidRequesterFactory: { _ in
                 StubBidRequester(response: response)
             }
         )
@@ -353,12 +353,12 @@ final class DisplayViewCollector {
     }
 }
 
-/// The shipped Nativo renderer plus a capture hook.
+/// The shipped Life360 renderer plus a capture hook.
 ///
 /// Subclassing rather than reimplementing is deliberate: `super.createBannerView` performs the real
 /// delegate wiring under test, and because the register keys by the inherited `name`, this instance
-/// is resolved for Nativo bids exactly as the shipped renderer would be.
-final class CapturingNativoRenderer: NativoRendererInternal {
+/// is resolved for Life360 bids exactly as the shipped renderer would be.
+final class CapturingLife360Renderer: Life360RendererInternal {
 
     private let collector: DisplayViewCollector
 
@@ -468,10 +468,10 @@ final class StubBidRequester: NSObject, BidRequesterProtocol {
 /// The existing `BannerViewTest` delegate calls `XCTFail` on success because it only covers error
 /// paths, so it cannot be reused here.
 ///
-/// Conforms to `NativoBannerViewDelegate`, not just `BannerViewDelegate`: the Nativo callback is dispatched
+/// Conforms to `Life360BannerViewDelegate`, not just `BannerViewDelegate`: the Life360 callback is dispatched
 /// by protocol conformance, so a delegate that merely implements the method never receives it and these
 /// suites would only ever observe the standard callback.
-final class RecordingBannerViewDelegate: NSObject, NativoBannerViewDelegate {
+final class RecordingBannerViewDelegate: NSObject, Life360BannerViewDelegate {
 
     var onSuccess: ((BannerView, CGSize) -> Void)?
     var onFailure: ((BannerView, Error) -> Void)?
@@ -486,7 +486,7 @@ final class RecordingBannerViewDelegate: NSObject, NativoBannerViewDelegate {
         record(bannerView, adSize)
     }
 
-    func bannerView(_ bannerView: BannerView, didReceiveNativoAdWithSize adSize: CGSize) {
+    func bannerView(_ bannerView: BannerView, didReceiveLife360AdWithSize adSize: CGSize) {
         record(bannerView, adSize)
     }
 
