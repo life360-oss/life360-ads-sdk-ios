@@ -166,6 +166,10 @@ public class Targeting: NSObject {
     /// ID of publisher app in Apple’s App Store.
     public var sourceapp: String?
     
+    /// The publisher's own identifier for the user, sent as OpenRTB `user.id`.
+    /// Leave `nil` to omit the field from the request.
+    public var publisherUserId: String?
+    
     /// App store URL for an installed app
     public var storeURL: String? {
         get { parameterDictionary[PrebidConstants.APP_STORE_URL_SCHEME] }

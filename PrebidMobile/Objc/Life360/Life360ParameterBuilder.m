@@ -58,6 +58,10 @@
     if (bundleIdentifier) {
         bidRequest.app.bundle = bundleIdentifier;
     }
+
+    // The publisher's own identifier for the user. Serializes to user.id; a nil value
+    // drops the key rather than sending an empty one.
+    bidRequest.user.userid = Targeting.shared.publisherUserId;
 }
 
 
