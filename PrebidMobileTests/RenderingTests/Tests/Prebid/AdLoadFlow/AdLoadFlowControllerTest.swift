@@ -108,26 +108,28 @@ class AdLoadFlowControllerTest: XCTestCase {
                 successReported.fulfill()
             })),
         ])
-        
+
         flowController = AdLoadFlowController(bidRequesterFactory: compositeMock.mockRequesterFactory,
                                                       adLoader: compositeMock.mockAdLoader,
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
                                                       life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
-        
+
         if (preFailed) {
             flowController.flowState = .loadingFailed
         }
-        
+
         flowController.refresh()
-        waitForExpectations(timeout: 1)
-        
+        // Same chain length as testAdUnitCreatedBeforeServerless_keepsSendingBidRequest below, which
+        // already needed 2s once other suites had backed up the main queue.
+        waitForExpectations(timeout: 2)
+
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)
         compositeMock.checkIsFinished()
     }
-    
+
     func testPrebidAd_happyPath_fromIdle() {
         testPrebidAd_happyPath(preFailed: false)
     }
@@ -213,7 +215,7 @@ class AdLoadFlowControllerTest: XCTestCase {
         }
         
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
         
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)
@@ -292,7 +294,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
         
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)
@@ -369,7 +371,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
         
         XCTAssertTrue(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .loadingFailed)
@@ -444,7 +446,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
         
         XCTAssertTrue(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .loadingFailed)
@@ -526,7 +528,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
         
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)
@@ -600,7 +602,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
         
         XCTAssertTrue(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .loadingFailed)
@@ -771,7 +773,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
         
         XCTAssertTrue(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .loadingFailed)
@@ -861,7 +863,7 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
         
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
         
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)
@@ -931,7 +933,9 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
 
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        // Same chain length as testAdUnitCreatedBeforeServerless_keepsSendingBidRequest below, which
+        // already needed 2s once other suites had backed up the main queue.
+        waitForExpectations(timeout: 2)
 
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)
@@ -1003,7 +1007,9 @@ class AdLoadFlowControllerTest: XCTestCase {
                                                       life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
 
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        // Same chain length as testAdUnitCreatedBeforeServerless_keepsSendingBidRequest below, which
+        // already needed 2s once other suites had backed up the main queue.
+        waitForExpectations(timeout: 2)
 
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)
@@ -1157,7 +1163,7 @@ class AdLoadFlowControllerTest: XCTestCase {
         firstTimeout.isInverted = true
         
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
         
         XCTAssertEqual(flowController.flowState, .demandReceived)
         XCTAssertEqual(compositeMock.getProgress().done, 5)
@@ -1167,7 +1173,7 @@ class AdLoadFlowControllerTest: XCTestCase {
         secondTimeout.isInverted = true
         
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
         
         XCTAssertEqual(flowController.flowState, .readyToDeploy)
         XCTAssertEqual(compositeMock.getProgress().done, 12)
@@ -1175,7 +1181,7 @@ class AdLoadFlowControllerTest: XCTestCase {
         successReportedExpectation = expectation(description: "success reported")
         
         flowController.refresh()
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
         
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)

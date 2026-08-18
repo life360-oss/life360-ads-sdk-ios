@@ -159,6 +159,8 @@ class PBMVastLoaderCheckForAds : XCTestCase {
         response3.parentResponse = response2
         
         XCTAssert(vastAdsBuilder?.checkHasNoAdsAndFireURIs(vastResponse: response1) == true)
-        self.waitForExpectations(timeout: 1.0, handler:nil)
+        // 3 concurrent real network round-trips (one per chained response) need more than 1s on a
+        // loaded CI runner; other VASTTests with comparable fire-and-forget round-trips use 2-30s.
+        self.waitForExpectations(timeout: 5.0, handler:nil)
     }
 }
