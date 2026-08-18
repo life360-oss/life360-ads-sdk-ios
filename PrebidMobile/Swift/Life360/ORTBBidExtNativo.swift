@@ -17,15 +17,15 @@
 
 import Foundation
 
-class ORTBBidExtLife360: PBMJsonCodable {
+class ORTBBidExtNativo: PBMJsonCodable {
     
     // Special Life360 property to declare if ad should be rendered immediately
     private(set) var isOwnedOperated: Bool?
-    private(set) var life360AdType: Life360AdType?
+    private(set) var adType: Life360AdType?
     
     private enum KeySet: String {
         case oo
-        case life360AdType
+        case nativoAdType
     }
 
     init() { }
@@ -43,14 +43,14 @@ class ORTBBidExtLife360: PBMJsonCodable {
         } else {
             isOwnedOperated = nil
         }
-        if let raw = jsonDictionary[KeySet.life360AdType.rawValue] {
+        if let raw = jsonDictionary[KeySet.nativoAdType.rawValue] {
             if let n = raw as? NSNumber {
-                life360AdType = Life360AdType(rawValue: n.intValue)
+                adType = Life360AdType(rawValue: n.intValue)
             } else {
-                life360AdType = nil
+                adType = nil
             }
         } else {
-            life360AdType = nil
+            adType = nil
         }
     }
 
@@ -59,8 +59,8 @@ class ORTBBidExtLife360: PBMJsonCodable {
         if let isOwnedOperated {
             json[.oo] = NSNumber(value: isOwnedOperated)
         }
-        if let life360AdType {
-            json[.life360AdType] = NSNumber(value: life360AdType.rawValue)
+        if let adType {
+            json[.nativoAdType] = NSNumber(value: adType.rawValue)
         }
         return json.dict
     }

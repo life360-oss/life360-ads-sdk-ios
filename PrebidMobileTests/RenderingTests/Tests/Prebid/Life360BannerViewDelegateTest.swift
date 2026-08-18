@@ -180,9 +180,10 @@ class Life360BannerViewDelegateTest: XCTestCase {
         let ext = ORTBBidExt()
         var life360JSON: [String: Any] = [:]
         if let life360AdType {
-            life360JSON["life360AdType"] = NSNumber(value: life360AdType.rawValue)
+            // "nativoAdType" is the wire key Nativo's ad server actually sends.
+            life360JSON["nativoAdType"] = NSNumber(value: life360AdType.rawValue)
         }
-        ext.life360 = ORTBBidExtLife360(jsonDictionary: life360JSON)
+        ext.nativo = ORTBBidExtNativo(jsonDictionary: life360JSON)
         rawBid.ext = ext
 
         let rawBidResponse = RawBidResponse(requestID: "test-request-id")

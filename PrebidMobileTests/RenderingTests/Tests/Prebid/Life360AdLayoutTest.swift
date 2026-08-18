@@ -255,7 +255,8 @@ class BidLife360RenderingTest: XCTestCase {
         rawBid.adm = adm
         if let adType {
             rawBid.ext = .init()
-            rawBid.ext?.life360 = ORTBBidExtLife360(jsonDictionary: ["life360AdType": NSNumber(value: adType.rawValue)])
+            // "nativoAdType" is the wire key Nativo's ad server actually sends.
+            rawBid.ext?.nativo = ORTBBidExtNativo(jsonDictionary: ["nativoAdType": NSNumber(value: adType.rawValue)])
         }
         return Bid(bid: rawBid)
     }

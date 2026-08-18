@@ -156,8 +156,6 @@ typedef NS_ENUM(NSInteger, OcclusionType) {
 
 #pragma mark - Exposure delivery
 
-// Every delivery goes through here: the handler is optional, and one funnel keeps the debug log from
-// repeating an unchanged exposure on each scroll tick.
 - (void)notifyExposureChange:(id<PBMViewExposure>)exposure error:(nullable NSError *)error {
     PBMLogDebug(@"Viewability: %@ exposure %.1f%%, visible %@, %lu occlusion(s)",
             [self.testedView class],

@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Life360AdsSDKGAMEventHandlers"
-  s.version      = "1.4.0-geoedge"
+  s.version      = "1.4.0"
   s.summary      = "The bridge between Life360 Ads SDK and GMA SDK."
 
   s.description  = "GAM Event Handlers manages rendering of Prebid or GAM ads respectively to the winning bid."
@@ -39,7 +39,7 @@ Pod::Spec.new do |s|
   s.source_files = 'EventHandlers/PrebidMobileGAMEventHandlers/**/*.{h,m,swift}'
   s.static_framework = true
 
-  s.dependency 'Life360AdsSDK', '1.4.0-geoedge'
+  s.dependency 'Life360AdsSDK', '1.4.0'
   s.dependency 'Google-Mobile-Ads-SDK', '>= 13.0.0'
 
   s.pod_target_xcconfig = {

@@ -4,7 +4,7 @@ import Foundation
 
 public extension Bid {
     var life360AdType: Life360AdType? {
-        bid.ext?.life360?.life360AdType
+        bid.ext?.nativo?.adType
     }
 
     /// Whether Life360's renderer expands this creative to fill its container instead of leaving it at the
