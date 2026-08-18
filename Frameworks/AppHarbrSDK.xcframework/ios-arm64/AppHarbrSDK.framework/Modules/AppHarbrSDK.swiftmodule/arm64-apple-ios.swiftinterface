@@ -39,6 +39,61 @@ import os
     get
   }
 }
+@objc final public class AdQualityAdNetworkProperties : ObjectiveC.NSObject {
+  @objc final public let mediationAdUnitId: Swift.String
+  @objc final public let adFormat: AppHarbrSDK.AdFormat
+  @objc final public let adNetwork: AppHarbrSDK.AdSdk
+  @objc final public let adNetworkUnitId: Swift.String
+  @objc final public let contentType: AppHarbrSDK.AdContentType
+  @objc final public let content: Swift.String
+  @objc final public let creativeId: Swift.String
+  @objc weak final public var webView: WebKit.WKWebView? {
+    get
+  }
+  @objc final public let customTargeting: [Swift.String : Any]?
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public init(mediationAdUnitId: Swift.String, adFormat: AppHarbrSDK.AdFormat, adNetwork: AppHarbrSDK.AdSdk, adNetworkUnitId: Swift.String, contentType: AppHarbrSDK.AdContentType, content: Swift.String, creativeId: Swift.String, webView: WebKit.WKWebView? = nil, customTargeting: [Swift.String : Any]? = nil)
+  #endif
+  @objc deinit
+}
+@objc public protocol AdQualityAdNetworkProtocol {
+  @objc var adNetworkVersion: Swift.String { get }
+  @objc func adNetworkAdapterName(for adFormat: AppHarbrSDK.AdFormat) -> Swift.String
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc func winningBid(for mediationAdUnitId: Swift.String, adFormat: AppHarbrSDK.AdFormat, mediationObject: Any) -> AppHarbrSDK.AdQualityAdNetworkProperties?
+  #endif
+  @objc func willBlockAd(cleanCacheFor mediationAdUnitId: Swift.String, adFormat: AppHarbrSDK.AdFormat, mediationObject: Any, adNetworkUnitId: Swift.String, creativeId: Swift.String)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class AppHarbrPrebidLife360Adapter : AppHarbrSDK.CustomAdNetworkAdapter {
+  @objc override public class var adSdk: AppHarbrSDK.AdSdk {
+    @objc get
+  }
+  @objc override public class var adapterVersion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class AppHarbrVXAdapter : AppHarbrSDK.CustomAdNetworkAdapter {
+  @objc override public class var adSdk: AppHarbrSDK.AdSdk {
+    @objc get
+  }
+  @objc override public class var adapterVersion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class CustomAdNetworkAdapter : ObjectiveC.NSObject {
+  @objc open class var adSdk: AppHarbrSDK.AdSdk {
+    @objc get
+  }
+  @objc open class var adapterVersion: Swift.String {
+    @objc get
+  }
+  @discardableResult
+  @objc public class func initAdQualityService(_ provider: any AppHarbrSDK.AdQualityAdNetworkProtocol) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
 @objc public enum AHInitializeError : Swift.Int, Swift.Error {
   case invalidApiKey
   case invalidActivation
@@ -93,6 +148,7 @@ public let AH: AppHarbrSDK.AppHarbr
   @objc final public func initializeSdk(configuration: AppHarbrSDK.AppHarbrConfiguration, completion: @escaping ((any Swift.Error)?) -> Swift.Void)
   #endif
   @objc(addBannerAdSdk:adObject:delegate:) final public func addBanner(with adSdk: AppHarbrSDK.AdSdk, adObject: ObjectiveC.NSObject, delegate: any AppHarbrSDK.AppHarbrDelegate)
+  @objc(reportAdWithUnitId:adFormat:reason:) final public func reportAd(withUnitId unitId: Swift.String, adFormat: AppHarbrSDK.AdFormat, reason: AppHarbrSDK.ReportByUserReason)
   #if compiler(>=5.3) && $NonescapableTypes
   @objc(addNativeBannerAdSdk:adLoader:delegate:request:) final public func addNativeBanner(with adSdk: AppHarbrSDK.AdSdk, adLoader: ObjectiveC.NSObject, delegate: any AppHarbrSDK.AppHarbrDelegate, request: ObjectiveC.NSObject? = nil)
   #endif
@@ -357,6 +413,30 @@ extension AppHarbrSDK.AdBlockReason : Swift.CustomStringConvertible {
   #endif
   @objc optional func didAdIncident(incidentInfo: AppHarbrSDK.AdIncidentInfo)
 }
+@objc public protocol AppHarbrAdReportDelegate : AppHarbrSDK.AppHarbrDelegate {
+  @objc optional func didReportAd(reportInfo: AppHarbrSDK.AdReportResultInfo)
+}
+@_hasMissingDesignatedInitializers @objc(AHAdReportResultInfo) public class AdReportResultInfo : ObjectiveC.NSObject {
+  @objc final public let unitId: Swift.String
+  @objc final public let adFormat: AppHarbrSDK.AdFormat
+  @objc final public let reason: AppHarbrSDK.ReportByUserReason
+  @objc final public let success: Swift.Bool
+  @objc final public let error: (any Swift.Error)?
+  @objc deinit
+}
+public enum AdReportError : Swift.Error {
+  case unitIdNotFound
+  case adNoLongerAvailable
+  case futureAd
+  case alreadyReported
+  case notSupportedForAdNetwork
+  case featureDisabled
+  public static func == (a: AppHarbrSDK.AdReportError, b: AppHarbrSDK.AdReportError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
 @objc(AHAdFormat) public enum AdFormat : Swift.Int, Swift.CaseIterable, Swift.Sendable {
   case banner = 1
   case interstitial = 2
@@ -520,61 +600,6 @@ extension AppHarbrSDK.AdSdk : Swift.Codable {
   public var rawValue: Swift.Int {
     get
   }
-}
-@objc final public class AdQualityAdNetworkProperties : ObjectiveC.NSObject {
-  @objc final public let mediationAdUnitId: Swift.String
-  @objc final public let adFormat: AppHarbrSDK.AdFormat
-  @objc final public let adNetwork: AppHarbrSDK.AdSdk
-  @objc final public let adNetworkUnitId: Swift.String
-  @objc final public let contentType: AppHarbrSDK.AdContentType
-  @objc final public let content: Swift.String
-  @objc final public let creativeId: Swift.String
-  @objc weak final public var webView: WebKit.WKWebView? {
-    get
-  }
-  @objc final public let customTargeting: [Swift.String : Any]?
-  #if compiler(>=5.3) && $NonescapableTypes
-  @objc public init(mediationAdUnitId: Swift.String, adFormat: AppHarbrSDK.AdFormat, adNetwork: AppHarbrSDK.AdSdk, adNetworkUnitId: Swift.String, contentType: AppHarbrSDK.AdContentType, content: Swift.String, creativeId: Swift.String, webView: WebKit.WKWebView? = nil, customTargeting: [Swift.String : Any]? = nil)
-  #endif
-  @objc deinit
-}
-@objc public protocol AdQualityAdNetworkProtocol {
-  @objc var adNetworkVersion: Swift.String { get }
-  @objc func adNetworkAdapterName(for adFormat: AppHarbrSDK.AdFormat) -> Swift.String
-  #if compiler(>=5.3) && $NonescapableTypes
-  @objc func winningBid(for mediationAdUnitId: Swift.String, adFormat: AppHarbrSDK.AdFormat, mediationObject: Any) -> AppHarbrSDK.AdQualityAdNetworkProperties?
-  #endif
-  @objc func willBlockAd(cleanCacheFor mediationAdUnitId: Swift.String, adFormat: AppHarbrSDK.AdFormat, mediationObject: Any, adNetworkUnitId: Swift.String, creativeId: Swift.String)
-}
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class AppHarbrPrebidLife360Adapter : AppHarbrSDK.CustomAdNetworkAdapter {
-  @objc override public class var adSdk: AppHarbrSDK.AdSdk {
-    @objc get
-  }
-  @objc override public class var adapterVersion: Swift.String {
-    @objc get
-  }
-  @objc deinit
-}
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class AppHarbrVXAdapter : AppHarbrSDK.CustomAdNetworkAdapter {
-  @objc override public class var adSdk: AppHarbrSDK.AdSdk {
-    @objc get
-  }
-  @objc override public class var adapterVersion: Swift.String {
-    @objc get
-  }
-  @objc deinit
-}
-@_inheritsConvenienceInitializers @objc public class CustomAdNetworkAdapter : ObjectiveC.NSObject {
-  @objc open class var adSdk: AppHarbrSDK.AdSdk {
-    @objc get
-  }
-  @objc open class var adapterVersion: Swift.String {
-    @objc get
-  }
-  @discardableResult
-  @objc public class func initAdQualityService(_ provider: any AppHarbrSDK.AdQualityAdNetworkProtocol) -> Swift.Bool
-  @objc override dynamic public init()
-  @objc deinit
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers final public class AdResult : ObjectiveC.NSObject {
   @objc final public let adStateResult: AppHarbrSDK.AdStateResult
@@ -766,6 +791,40 @@ public protocol AppHarbrAdapterConfiguration {
     get
   }
 }
+@objc public enum ReportByUserReason : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case autoPlay = 1
+  case offensive = 2
+  case deceptive = 3
+  case popUp = 4
+  case dislikeAd = 5
+  case regulationViolation = 6
+  case contentCovered = 7
+  case flickerAd = 8
+  case irrelevant = 9
+  case brokenAd = 10
+  case other = 99
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias AllCases = [AppHarbrSDK.ReportByUserReason]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [AppHarbrSDK.ReportByUserReason] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension AppHarbrSDK.ReportByUserReason : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AppHarbrSDK.ReportByUserReason {
+  public var displayText: Swift.String {
+    get
+  }
+}
 extension AppHarbrSDK.AdAnalyzedResult : Swift.Equatable {}
 extension AppHarbrSDK.AdAnalyzedResult : Swift.Hashable {}
 extension AppHarbrSDK.AdAnalyzedResult : Swift.RawRepresentable {}
@@ -781,6 +840,8 @@ extension AppHarbrSDK.AdAnalysisResult : Swift.RawRepresentable {}
 extension AppHarbrSDK.AdBlockReason : Swift.Equatable {}
 extension AppHarbrSDK.AdBlockReason : Swift.Hashable {}
 extension AppHarbrSDK.AdBlockReason : Swift.RawRepresentable {}
+extension AppHarbrSDK.AdReportError : Swift.Equatable {}
+extension AppHarbrSDK.AdReportError : Swift.Hashable {}
 extension AppHarbrSDK.AdFormat : Swift.Equatable {}
 extension AppHarbrSDK.AdFormat : Swift.Hashable {}
 extension AppHarbrSDK.AdFormat : Swift.RawRepresentable {}
@@ -799,3 +860,6 @@ extension AppHarbrSDK.VerificationStatus : Swift.RawRepresentable {}
 extension AppHarbrSDK.AdContentType : Swift.Equatable {}
 extension AppHarbrSDK.AdContentType : Swift.Hashable {}
 extension AppHarbrSDK.AdContentType : Swift.RawRepresentable {}
+extension AppHarbrSDK.ReportByUserReason : Swift.Equatable {}
+extension AppHarbrSDK.ReportByUserReason : Swift.Hashable {}
+extension AppHarbrSDK.ReportByUserReason : Swift.RawRepresentable {}

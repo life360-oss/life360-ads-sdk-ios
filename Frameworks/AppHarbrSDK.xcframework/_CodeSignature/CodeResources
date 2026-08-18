@@ -30,11 +30,11 @@
 		</data>
 		<key>ios-arm64/AppHarbrSDK.framework/AppHarbrSDK</key>
 		<data>
-		5O0OitWISNFEqLZIerFHfWQFuwU=
+		N6rEPQnTgWmnix4U3aqKn78EC14=
 		</data>
 		<key>ios-arm64/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/Info.plist</key>
 		<data>
-		Kk/SPZ7G3UV1f7WNztdVZbMD8BY=
+		WbKs9NXBaTadS5ul8dPHfFRC8fs=
 		</data>
 		<key>ios-arm64/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/InspectorDebuggerInfoTableViewCell.nib</key>
 		<data>
@@ -67,7 +67,7 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/Headers/AppHarbrSDK-Swift.h</key>
 		<data>
-		gQDWYimP6fEoZylj4mZysSnZwgo=
+		kKGdw+ibAucAdULP3G+uYJ8ECgk=
 		</data>
 		<key>ios-arm64/AppHarbrSDK.framework/Headers/AppHarbrSDK.h</key>
 		<data>
@@ -75,23 +75,23 @@
 		</data>
 		<key>ios-arm64/AppHarbrSDK.framework/Info.plist</key>
 		<data>
-		utUqM9IKTK+N8pl0hjQHSgsRmgQ=
+		kr4Dvybz2CG3e2Mh4dLdD9FXAjI=
 		</data>
 		<key>ios-arm64/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		Lt8hUynrNgrNlmrMTV8n1DcoTQg=
+		cJhSipiYizOq1eo114ePLDDLeA4=
 		</data>
 		<key>ios-arm64/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		ssT+iEwbSgoODSpuQHrcgEhLiSM=
+		5/DoijetK3h1Bhg6sE8Mof/WlAo=
 		</data>
 		<key>ios-arm64/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		C5KC8fnxKlub1PP3eO9IVKgs4Xo=
+		/EZ9cXZjo5zuQngwPODwu/HWMu0=
 		</data>
 		<key>ios-arm64/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		ssT+iEwbSgoODSpuQHrcgEhLiSM=
+		5/DoijetK3h1Bhg6sE8Mof/WlAo=
 		</data>
 		<key>ios-arm64/AppHarbrSDK.framework/Modules/module.modulemap</key>
 		<data>
@@ -127,11 +127,11 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDK</key>
 		<data>
-		3x2xMsdjZJRGvYDs2BgTNoMReGo=
+		37YexSLxMiSCUJrz/mnc7SH1fWc=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/Info.plist</key>
 		<data>
-		rU+okyxuUisgPbajyjKzwNVSRpw=
+		ulIQucl+z57JooVyds+k1cW6CtA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/InspectorDebuggerInfoTableViewCell.nib</key>
 		<data>
@@ -155,19 +155,15 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/_CodeSignature/CodeDirectory</key>
 		<data>
-		VHSK6eskJ39qnQz1kS3SsZu+cvw=
+		JPX2BKik03oPZbQthhTLumRFa7E=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/_CodeSignature/CodeRequirements</key>
 		<data>
 		OnX22wWFKRSOFN1+obRynMCeyXM=
 		</data>
-		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/_CodeSignature/CodeRequirements-1</key>
-		<data>
-		HWw4ITD9zkHTg5/pIDNBPmcV09A=
-		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/_CodeSignature/CodeResources</key>
 		<data>
-		1O59+bMDBZFZUDMarCyardwNbMY=
+		hL5iqZG7EZ/2K5cG93CVn13JCvc=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/_CodeSignature/CodeSignature</key>
 		<data>
@@ -184,7 +180,7 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Headers/AppHarbrSDK-Swift.h</key>
 		<data>
-		8G9fyIIlB5EP0zdS/qwINb8gS9c=
+		ZYA1WGjl+GmNs+cn80sl6+N3wv8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Headers/AppHarbrSDK.h</key>
 		<data>
@@ -192,39 +188,39 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Info.plist</key>
 		<data>
-		1zi8CoOTR5UpjPmWbHBhlqOwv9o=
+		53JFNx9olHCxaw/zOrUkHL0lVm8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		Lt8hUynrNgrNlmrMTV8n1DcoTQg=
+		cJhSipiYizOq1eo114ePLDDLeA4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		hAqdqyvPYVM76FZIyL0veaUDJkw=
+		ZcoKjZbnKf8Cz8wIcAj9kLdlAdQ=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		Elvqc0hQ3WPt3ZmsTiufM8az4Ks=
+		/l/tv3mxnilVrRyrWDA5KFcUwTo=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		hAqdqyvPYVM76FZIyL0veaUDJkw=
+		ZcoKjZbnKf8Cz8wIcAj9kLdlAdQ=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		Lt8hUynrNgrNlmrMTV8n1DcoTQg=
+		cJhSipiYizOq1eo114ePLDDLeA4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		Zh/vtahDsIxLD5g4SGHCvedhqOY=
+		qcjfLE9uRRav+PphFQycKb1MBY8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		aRuiiyJpmIOQQC75VH8qhe77vyo=
+		X+euihcn5LqAytvR/XrPRcfJxLA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		Zh/vtahDsIxLD5g4SGHCvedhqOY=
+		qcjfLE9uRRav+PphFQycKb1MBY8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/module.modulemap</key>
 		<data>
@@ -236,17 +232,13 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/_CodeSignature/CodeResources</key>
 		<data>
-		kb/JcDF3Rm3qKsu9Xtxk2GFA/Kk=
+		owayPSqs88bsO5dmDx0B/ljEvuw=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AdData.momd/AdData.mom</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			lGGx/nAr1Ltg+vgDLR0gM5xuNPs=
-			</data>
 			<key>hash2</key>
 			<data>
 			j5/ysmW7bKkj2ryW3cdDxNz9cE6hHwvn6HydfsPuqsY=
@@ -254,10 +246,6 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AdData.momd/AdData_1.1.0.mom</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			yeF80FLqTet7aglK/0sdAPsahHY=
-			</data>
 			<key>hash2</key>
 			<data>
 			V2kTZC4ndxJVKSJoE3lEDyYdpYHVbLWU02FMq73GDRI=
@@ -265,10 +253,6 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AdData.momd/AdData_2.0.0.mom</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BxH60AxFeLHj5FeGAk9j2blt0TE=
-			</data>
 			<key>hash2</key>
 			<data>
 			WMckFyzb3s9ayMGLDkRj061FgHDl9yoQfVg4eZ2itU4=
@@ -276,10 +260,6 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AdData.momd/AdData_2.1.0.mom</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1j+PfTobRhQXpZoxHdfNVF/cTZI=
-			</data>
 			<key>hash2</key>
 			<data>
 			l4AotC8N4U07ShV5YKxJ15pOdqTPYtDk7wNjVIyoC54=
@@ -287,10 +267,6 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AdData.momd/AdData_2.1.0.omo</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AINcBXN2aPNaOgMe2uu/z4KyvWg=
-			</data>
 			<key>hash2</key>
 			<data>
 			qvygI2iCdiOeedX6XJdiZMiBA6ulX5hLEtAWWZjroiU=
@@ -298,10 +274,6 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AdData.momd/VersionInfo.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			+TzGhNnrwXT2Mn4Ta6dSWmJqyqs=
-			</data>
 			<key>hash2</key>
 			<data>
 			stfXK0haH7fZdOEzB7l5sfXRZGJFSAvc/cHQa2YVasA=
@@ -309,32 +281,20 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AppHarbrSDK</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			5O0OitWISNFEqLZIerFHfWQFuwU=
-			</data>
 			<key>hash2</key>
 			<data>
-			Eutd4n7hdNkenR4wEdSndEKnOEGp/1PO/+/Xt5L3PmU=
+			VCYVlM6533wSoCfqPw0rBQam2FpvfaAM5nAVx01rsnQ=
 			</data>
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Kk/SPZ7G3UV1f7WNztdVZbMD8BY=
-			</data>
 			<key>hash2</key>
 			<data>
-			EBnx1m8ZSB87D7mpggUxcFJ1eu6GV6Ax5gJux74gQEU=
+			u20b7C75mwJoUbpCbi5dWLcqUabQfbugGb5P7LUF3E0=
 			</data>
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/InspectorDebuggerInfoTableViewCell.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			3Ry1TeuzmGfxHRpPIKOhjU0D/So=
-			</data>
 			<key>hash2</key>
 			<data>
 			3ZvUaJBGgBPNP7v07yRBriPTgtybx2JzHHUUXXbvSSQ=
@@ -342,10 +302,6 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/InspectorDebuggerNetworkTableViewCell.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			iZ4ks15wm8QXyPKi1I3ij6F2ysc=
-			</data>
 			<key>hash2</key>
 			<data>
 			jlJbLQaW68qrW8Qx406234mpqlGiDBLNCec9wMsliq4=
@@ -353,10 +309,6 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/InspectorDebuggerTableViewHeaderView.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			SeUyrt5Hmzmbt5nqhiQChXugCf4=
-			</data>
 			<key>hash2</key>
 			<data>
 			akggOUycfqDgB4S27kREnimJCZgFl12070/gF8R++08=
@@ -364,10 +316,6 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/InspectorDebuggerToggleTableViewCell.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			kqdsHJ3jQinQIWYMpfGRU6eZ1Hc=
-			</data>
 			<key>hash2</key>
 			<data>
 			w0cO9wMII1ggYXyU8y1UUBBNyKJbG02/7HFzR5IgNPo=
@@ -375,10 +323,6 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/InspectorDebuggerViewController.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9la/adS8WxXZafIKbSuGY2pOMF0=
-			</data>
 			<key>hash2</key>
 			<data>
 			IR9oVHH1wnICbxCryQw+gevIZ6muyFERAsxhNw3WwJc=
@@ -386,10 +330,6 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			5Wzpepj4YCmgaXmelPm8tYiKIHQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			rqObcwBofKBbkhOhuGR4a3NmX+3beXnwZSA3zT+WJDk=
@@ -399,21 +339,13 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/Headers/AppHarbrSDK-Swift.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gQDWYimP6fEoZylj4mZysSnZwgo=
-			</data>
 			<key>hash2</key>
 			<data>
-			a7AixJX/aIVfSUp9GAG1nhpc0FsyXNqvYQgsv24JPw8=
+			CwNdKNDLKpCFIxg1gV011yVW/Do9EgOCT2VR5vYUyw8=
 			</data>
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/Headers/AppHarbrSDK.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ZbZ3UF7DG0m/zhRE266vVyrw1gw=
-			</data>
 			<key>hash2</key>
 			<data>
 			CNW04yTkOIAJpxmgqQywfA3F0aQocKWuR5FNkLN2b2w=
@@ -421,65 +353,41 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			utUqM9IKTK+N8pl0hjQHSgsRmgQ=
-			</data>
 			<key>hash2</key>
 			<data>
-			Uz2zkxKl64oUb71fANlV8habrRd5Cuw8lk+y40vb2TA=
+			pGt6QbyzJU6zParOGLo3Ddhld5GoWg3oRSn7f9jQrww=
 			</data>
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Lt8hUynrNgrNlmrMTV8n1DcoTQg=
-			</data>
 			<key>hash2</key>
 			<data>
-			nehAt134JIhkfRi1BjDJSGfpW7D5KsNQHlwI84jBceA=
+			bRUA931OzxUoWYTqDaXL9lA4ECgTxzJ/RC+6g/6Lvb8=
 			</data>
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ssT+iEwbSgoODSpuQHrcgEhLiSM=
-			</data>
 			<key>hash2</key>
 			<data>
-			TcZ0CI3OLIFef8kfHxvOFxjBOZTpUQ2AODXFj7zshLg=
+			eQTS3nPEo/x0uxPQx/RDU9G3X/BcZKi8nA2Ib6RjRi0=
 			</data>
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			C5KC8fnxKlub1PP3eO9IVKgs4Xo=
-			</data>
 			<key>hash2</key>
 			<data>
-			D4nytG5kQXUY+xKV4ISgysR2mkUdFUoUGDMYX8AuieY=
+			RLT8OHSiEVo7dfZZu5yeZKor4ep8YeRID4SjXBMTqoM=
 			</data>
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ssT+iEwbSgoODSpuQHrcgEhLiSM=
-			</data>
 			<key>hash2</key>
 			<data>
-			TcZ0CI3OLIFef8kfHxvOFxjBOZTpUQ2AODXFj7zshLg=
+			eQTS3nPEo/x0uxPQx/RDU9G3X/BcZKi8nA2Ib6RjRi0=
 			</data>
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/Modules/module.modulemap</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			mhfstIvhcDLpgtwGwt/rM0JhwC0=
-			</data>
 			<key>hash2</key>
 			<data>
 			UVZMeGWNaG7rf6BDtJBe/wJPkenxW3shmrM1jFcnFQE=
@@ -487,10 +395,6 @@
 		</dict>
 		<key>ios-arm64/AppHarbrSDK.framework/PrivacyInfo.xcprivacy</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			3IJ7gzX+eqNUvM9FKIK6qejanRE=
-			</data>
 			<key>hash2</key>
 			<data>
 			QfryvAHjQtjDn2DETaDax+lOVeKu9o8SZF3s1su/2Ak=
@@ -498,10 +402,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AdData.momd/AdData.mom</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			lGGx/nAr1Ltg+vgDLR0gM5xuNPs=
-			</data>
 			<key>hash2</key>
 			<data>
 			j5/ysmW7bKkj2ryW3cdDxNz9cE6hHwvn6HydfsPuqsY=
@@ -509,10 +409,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AdData.momd/AdData_1.1.0.mom</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			yeF80FLqTet7aglK/0sdAPsahHY=
-			</data>
 			<key>hash2</key>
 			<data>
 			V2kTZC4ndxJVKSJoE3lEDyYdpYHVbLWU02FMq73GDRI=
@@ -520,10 +416,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AdData.momd/AdData_2.0.0.mom</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BxH60AxFeLHj5FeGAk9j2blt0TE=
-			</data>
 			<key>hash2</key>
 			<data>
 			WMckFyzb3s9ayMGLDkRj061FgHDl9yoQfVg4eZ2itU4=
@@ -531,10 +423,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AdData.momd/AdData_2.1.0.mom</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1j+PfTobRhQXpZoxHdfNVF/cTZI=
-			</data>
 			<key>hash2</key>
 			<data>
 			l4AotC8N4U07ShV5YKxJ15pOdqTPYtDk7wNjVIyoC54=
@@ -542,10 +430,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AdData.momd/AdData_2.1.0.omo</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AINcBXN2aPNaOgMe2uu/z4KyvWg=
-			</data>
 			<key>hash2</key>
 			<data>
 			qvygI2iCdiOeedX6XJdiZMiBA6ulX5hLEtAWWZjroiU=
@@ -553,10 +437,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AdData.momd/VersionInfo.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			+TzGhNnrwXT2Mn4Ta6dSWmJqyqs=
-			</data>
 			<key>hash2</key>
 			<data>
 			stfXK0haH7fZdOEzB7l5sfXRZGJFSAvc/cHQa2YVasA=
@@ -564,32 +444,20 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDK</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			3x2xMsdjZJRGvYDs2BgTNoMReGo=
-			</data>
 			<key>hash2</key>
 			<data>
-			e2TSCc+hxi9shO444xH6looGKvleChzG6Pm/Pg39KCI=
+			v8x3g6EfPHu4U/mSNG0Kn67tX/ny5UqgE9xpUvr6Q4A=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			rU+okyxuUisgPbajyjKzwNVSRpw=
-			</data>
 			<key>hash2</key>
 			<data>
-			qHhweYbf6V5iNUqgX2zaK8ILsO/+zhnBuK1IZ6rNjQE=
+			byPxsVwzQyOW8n/eVb+QmQ+I/yulyaRFUKIMgY52l7k=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/InspectorDebuggerInfoTableViewCell.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			3Ry1TeuzmGfxHRpPIKOhjU0D/So=
-			</data>
 			<key>hash2</key>
 			<data>
 			3ZvUaJBGgBPNP7v07yRBriPTgtybx2JzHHUUXXbvSSQ=
@@ -597,10 +465,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/InspectorDebuggerNetworkTableViewCell.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			iZ4ks15wm8QXyPKi1I3ij6F2ysc=
-			</data>
 			<key>hash2</key>
 			<data>
 			jlJbLQaW68qrW8Qx406234mpqlGiDBLNCec9wMsliq4=
@@ -608,10 +472,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/InspectorDebuggerTableViewHeaderView.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			SeUyrt5Hmzmbt5nqhiQChXugCf4=
-			</data>
 			<key>hash2</key>
 			<data>
 			akggOUycfqDgB4S27kREnimJCZgFl12070/gF8R++08=
@@ -619,10 +479,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/InspectorDebuggerToggleTableViewCell.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			kqdsHJ3jQinQIWYMpfGRU6eZ1Hc=
-			</data>
 			<key>hash2</key>
 			<data>
 			w0cO9wMII1ggYXyU8y1UUBBNyKJbG02/7HFzR5IgNPo=
@@ -630,10 +486,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/InspectorDebuggerViewController.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9la/adS8WxXZafIKbSuGY2pOMF0=
-			</data>
 			<key>hash2</key>
 			<data>
 			IR9oVHH1wnICbxCryQw+gevIZ6muyFERAsxhNw3WwJc=
@@ -641,54 +493,27 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/_CodeSignature/CodeDirectory</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			VHSK6eskJ39qnQz1kS3SsZu+cvw=
-			</data>
 			<key>hash2</key>
 			<data>
-			PM9HyIIy9TcdGs66XBY0AZ/cNwvPVrFovTk7akV4j/Q=
+			bfGvVyWk82kqFJgNHy5+oBXlmKNfsRLALUn9sqioVR8=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/_CodeSignature/CodeRequirements</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OnX22wWFKRSOFN1+obRynMCeyXM=
-			</data>
 			<key>hash2</key>
 			<data>
 			mHkgkE6rZQ51eIwFSqCwUk5qgL/HGqMt+NI3phdD+YY=
 			</data>
 		</dict>
-		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/_CodeSignature/CodeRequirements-1</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			HWw4ITD9zkHTg5/pIDNBPmcV09A=
-			</data>
-			<key>hash2</key>
-			<data>
-			yvm4WH0sdr75L2iJgudu2du9xvg5z0qum+Lp1A+wakA=
-			</data>
-		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/_CodeSignature/CodeResources</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1O59+bMDBZFZUDMarCyardwNbMY=
-			</data>
 			<key>hash2</key>
 			<data>
-			w6YFQCGPnRjAsfJaUf86wpg0S2THHE8Y04hv/lKfu1I=
+			Isn/ndeI9Jb4d2kiopCj+7HU6Qf6YsM1P0rZ9mgRNyA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/_CodeSignature/CodeSignature</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2jmj7l5rSw0yVb/vlWAYkK/YBwk=
-			</data>
 			<key>hash2</key>
 			<data>
 			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
@@ -696,10 +521,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/AppHarbrSDKResources.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			5Wzpepj4YCmgaXmelPm8tYiKIHQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			rqObcwBofKBbkhOhuGR4a3NmX+3beXnwZSA3zT+WJDk=
@@ -709,21 +530,13 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Headers/AppHarbrSDK-Swift.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			8G9fyIIlB5EP0zdS/qwINb8gS9c=
-			</data>
 			<key>hash2</key>
 			<data>
-			qOd9E6Amn5FVooa6j4WbXTAXaz+bfe8B9gOS4ldO1LU=
+			9eHUfUDNKRLSLndz3G6Yl30JzFFggPYRDXVVefWDUy8=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Headers/AppHarbrSDK.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ZbZ3UF7DG0m/zhRE266vVyrw1gw=
-			</data>
 			<key>hash2</key>
 			<data>
 			CNW04yTkOIAJpxmgqQywfA3F0aQocKWuR5FNkLN2b2w=
@@ -731,109 +544,69 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1zi8CoOTR5UpjPmWbHBhlqOwv9o=
-			</data>
 			<key>hash2</key>
 			<data>
-			6GsoEyiCUE8imtUXK8nysgxEvHJ62OLH97wf9aiI9Yo=
+			Q7B0jO659r5cZLZTdztd8Wmyz2ucrIVqMP31NSGVBuM=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Lt8hUynrNgrNlmrMTV8n1DcoTQg=
-			</data>
 			<key>hash2</key>
 			<data>
-			nehAt134JIhkfRi1BjDJSGfpW7D5KsNQHlwI84jBceA=
+			bRUA931OzxUoWYTqDaXL9lA4ECgTxzJ/RC+6g/6Lvb8=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			hAqdqyvPYVM76FZIyL0veaUDJkw=
-			</data>
 			<key>hash2</key>
 			<data>
-			joxdTjYlr3EmPqg4XSuFtRKEhsfhuCoDf6fhncR8Veo=
+			tM0oi5q4ChPef/X+ViEh9oEDE4JELi46T8IS82U3gOY=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Elvqc0hQ3WPt3ZmsTiufM8az4Ks=
-			</data>
 			<key>hash2</key>
 			<data>
-			CWdJESMOlfCiuYZIIef8+xqz+0BsS0ZFanDAz07YnEs=
+			kQoaVsCLLQKPQ5iANPCueFarXOyfJaj+S79DOpH75FI=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			hAqdqyvPYVM76FZIyL0veaUDJkw=
-			</data>
 			<key>hash2</key>
 			<data>
-			joxdTjYlr3EmPqg4XSuFtRKEhsfhuCoDf6fhncR8Veo=
+			tM0oi5q4ChPef/X+ViEh9oEDE4JELi46T8IS82U3gOY=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Lt8hUynrNgrNlmrMTV8n1DcoTQg=
-			</data>
 			<key>hash2</key>
 			<data>
-			nehAt134JIhkfRi1BjDJSGfpW7D5KsNQHlwI84jBceA=
+			bRUA931OzxUoWYTqDaXL9lA4ECgTxzJ/RC+6g/6Lvb8=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Zh/vtahDsIxLD5g4SGHCvedhqOY=
-			</data>
 			<key>hash2</key>
 			<data>
-			nE9OHE5lSKjU2r9Tf4Pg8FazcIVcyH3JKEg0hROEp4U=
+			2WSA2FhwTaCRfB5k9SvfQcWlacvSlR4KvrLqdgs+zDo=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			aRuiiyJpmIOQQC75VH8qhe77vyo=
-			</data>
 			<key>hash2</key>
 			<data>
-			8iwuavotapagKRYzlgKaIKQC18l/4B4u/YAd+SEfbHY=
+			8WMRIC7e3oLAQdRHVfJTO3e2j0oi++0m9EFjoAbG5WQ=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/AppHarbrSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Zh/vtahDsIxLD5g4SGHCvedhqOY=
-			</data>
 			<key>hash2</key>
 			<data>
-			nE9OHE5lSKjU2r9Tf4Pg8FazcIVcyH3JKEg0hROEp4U=
+			2WSA2FhwTaCRfB5k9SvfQcWlacvSlR4KvrLqdgs+zDo=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/Modules/module.modulemap</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			mhfstIvhcDLpgtwGwt/rM0JhwC0=
-			</data>
 			<key>hash2</key>
 			<data>
 			UVZMeGWNaG7rf6BDtJBe/wJPkenxW3shmrM1jFcnFQE=
@@ -841,10 +614,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/PrivacyInfo.xcprivacy</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			3IJ7gzX+eqNUvM9FKIK6qejanRE=
-			</data>
 			<key>hash2</key>
 			<data>
 			QfryvAHjQtjDn2DETaDax+lOVeKu9o8SZF3s1su/2Ak=
@@ -852,13 +621,9 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/AppHarbrSDK.framework/_CodeSignature/CodeResources</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			kb/JcDF3Rm3qKsu9Xtxk2GFA/Kk=
-			</data>
 			<key>hash2</key>
 			<data>
-			rgv2bur3skecbgzOJ0A+UXc3nGII2fQfzHjRMHHYEXE=
+			bmFEEtOjKI87sfA7xTFj34TBMOYINg8PYk0+aWIZFA4=
 			</data>
 		</dict>
 	</dict>

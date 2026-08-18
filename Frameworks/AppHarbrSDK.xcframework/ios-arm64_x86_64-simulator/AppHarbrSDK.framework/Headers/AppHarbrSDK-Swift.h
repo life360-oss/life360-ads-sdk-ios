@@ -704,6 +704,19 @@ typedef SWIFT_ENUM(NSInteger, AdQualityError, open) {
 };
 static NSString * _Nonnull const AdQualityErrorDomain = @"AppHarbrSDK.AdQualityError";
 
+enum ReportByUserReason : NSInteger;
+/// The outcome of a <code>reportAd(withUnitId:adFormat:reason:)</code> call, delivered via <code>AppHarbrAdReportDelegate</code>.
+SWIFT_CLASS_NAMED("AdReportResultInfo")
+@interface AHAdReportResultInfo : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull unitId;
+@property (nonatomic, readonly) enum AHAdFormat adFormat;
+@property (nonatomic, readonly) enum ReportByUserReason reason;
+@property (nonatomic, readonly) BOOL success;
+@property (nonatomic, readonly) NSError * _Nullable error;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 enum AdStateResult : NSInteger;
 SWIFT_CLASS("_TtC11AppHarbrSDK8AdResult")
 @interface AdResult : NSObject
@@ -850,6 +863,17 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) AppHarbr * _
 /// \param delegate The publisher delegate in order to notify about block/report.
 ///
 - (void)addBannerAdSdk:(enum AdSdk)adSdk adObject:(NSObject * _Nonnull)adObject delegate:(id <AppHarbrDelegate> _Nonnull)delegate;
+/// Reports a currently-loaded ad on behalf of the end user
+/// note:
+/// The result is delivered asynchronously via <code>AppHarbrAdReportDelegate.didReportAd(reportInfo:)</code>
+/// on the delegate originally passed when the ad was added. There is no synchronous return value.
+/// \param unitId The mediation ad unit ID of the currently loaded ad.
+///
+/// \param adFormat The format of the currently loaded ad. <code>.native</code> is not supported.
+///
+/// \param reason The reason the user is reporting this ad.
+///
+- (void)reportAdWithUnitId:(NSString * _Nonnull)unitId adFormat:(enum AHAdFormat)adFormat reason:(enum ReportByUserReason)reason;
 /// Use it for banner ads loaded via GADAdLoader
 /// \param adSdk The ad network SDK associated with the native ad.
 ///
@@ -1216,6 +1240,15 @@ SWIFT_PROTOCOL("_TtP11AppHarbrSDK25AppHarbrAdQualityDelegate_") SWIFT_DEPRECATED
 - (void)didAdNotVerifiedWithAd:(NSObject * _Nonnull)ad adFormat:(enum AHAdFormat)adFormat error:(NSError * _Nonnull)error adNetworkSdk:(enum AdSdk)adNetworkSdk timestamp:(NSTimeInterval)timestamp;
 @end
 
+SWIFT_PROTOCOL("_TtP11AppHarbrSDK24AppHarbrAdReportDelegate_")
+@protocol AppHarbrAdReportDelegate <AppHarbrDelegate>
+@optional
+/// Notifies the delegate of the result of a <code>reportAd(withUnitId:adFormat:reason:)</code> call.
+/// \param reportInfo An <code>AdReportResultInfo</code> object describing the outcome of the report.
+///
+- (void)didReportAdWithReportInfo:(AHAdReportResultInfo * _Nonnull)reportInfo;
+@end
+
 SWIFT_CLASS("_TtC11AppHarbrSDK21AppHarbrConfiguration")
 @interface AppHarbrConfiguration : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -1402,6 +1435,21 @@ SWIFT_PROTOCOL("_TtP11AppHarbrSDK30DynamicPriceBannerViewDelegate_")
 @protocol DynamicPriceBannerViewDelegate <NSObject>
 - (void)bannerViewDidReceiveAd:(UIView * _Nonnull)bannerView;
 @end
+
+/// The reason a publisher’s end user gave when reporting a banner ad.
+typedef SWIFT_ENUM(NSInteger, ReportByUserReason, open) {
+  ReportByUserReasonAutoPlay = 1,
+  ReportByUserReasonOffensive = 2,
+  ReportByUserReasonDeceptive = 3,
+  ReportByUserReasonPopUp = 4,
+  ReportByUserReasonDislikeAd = 5,
+  ReportByUserReasonRegulationViolation = 6,
+  ReportByUserReasonContentCovered = 7,
+  ReportByUserReasonFlickerAd = 8,
+  ReportByUserReasonIrrelevant = 9,
+  ReportByUserReasonBrokenAd = 10,
+  ReportByUserReasonOther = 99,
+};
 
 typedef SWIFT_ENUM(NSInteger, VerificationStatus, open) {
   VerificationStatusWaitForDiagnosing = 0,
@@ -2122,6 +2170,19 @@ typedef SWIFT_ENUM(NSInteger, AdQualityError, open) {
 };
 static NSString * _Nonnull const AdQualityErrorDomain = @"AppHarbrSDK.AdQualityError";
 
+enum ReportByUserReason : NSInteger;
+/// The outcome of a <code>reportAd(withUnitId:adFormat:reason:)</code> call, delivered via <code>AppHarbrAdReportDelegate</code>.
+SWIFT_CLASS_NAMED("AdReportResultInfo")
+@interface AHAdReportResultInfo : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull unitId;
+@property (nonatomic, readonly) enum AHAdFormat adFormat;
+@property (nonatomic, readonly) enum ReportByUserReason reason;
+@property (nonatomic, readonly) BOOL success;
+@property (nonatomic, readonly) NSError * _Nullable error;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 enum AdStateResult : NSInteger;
 SWIFT_CLASS("_TtC11AppHarbrSDK8AdResult")
 @interface AdResult : NSObject
@@ -2268,6 +2329,17 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) AppHarbr * _
 /// \param delegate The publisher delegate in order to notify about block/report.
 ///
 - (void)addBannerAdSdk:(enum AdSdk)adSdk adObject:(NSObject * _Nonnull)adObject delegate:(id <AppHarbrDelegate> _Nonnull)delegate;
+/// Reports a currently-loaded ad on behalf of the end user
+/// note:
+/// The result is delivered asynchronously via <code>AppHarbrAdReportDelegate.didReportAd(reportInfo:)</code>
+/// on the delegate originally passed when the ad was added. There is no synchronous return value.
+/// \param unitId The mediation ad unit ID of the currently loaded ad.
+///
+/// \param adFormat The format of the currently loaded ad. <code>.native</code> is not supported.
+///
+/// \param reason The reason the user is reporting this ad.
+///
+- (void)reportAdWithUnitId:(NSString * _Nonnull)unitId adFormat:(enum AHAdFormat)adFormat reason:(enum ReportByUserReason)reason;
 /// Use it for banner ads loaded via GADAdLoader
 /// \param adSdk The ad network SDK associated with the native ad.
 ///
@@ -2634,6 +2706,15 @@ SWIFT_PROTOCOL("_TtP11AppHarbrSDK25AppHarbrAdQualityDelegate_") SWIFT_DEPRECATED
 - (void)didAdNotVerifiedWithAd:(NSObject * _Nonnull)ad adFormat:(enum AHAdFormat)adFormat error:(NSError * _Nonnull)error adNetworkSdk:(enum AdSdk)adNetworkSdk timestamp:(NSTimeInterval)timestamp;
 @end
 
+SWIFT_PROTOCOL("_TtP11AppHarbrSDK24AppHarbrAdReportDelegate_")
+@protocol AppHarbrAdReportDelegate <AppHarbrDelegate>
+@optional
+/// Notifies the delegate of the result of a <code>reportAd(withUnitId:adFormat:reason:)</code> call.
+/// \param reportInfo An <code>AdReportResultInfo</code> object describing the outcome of the report.
+///
+- (void)didReportAdWithReportInfo:(AHAdReportResultInfo * _Nonnull)reportInfo;
+@end
+
 SWIFT_CLASS("_TtC11AppHarbrSDK21AppHarbrConfiguration")
 @interface AppHarbrConfiguration : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -2820,6 +2901,21 @@ SWIFT_PROTOCOL("_TtP11AppHarbrSDK30DynamicPriceBannerViewDelegate_")
 @protocol DynamicPriceBannerViewDelegate <NSObject>
 - (void)bannerViewDidReceiveAd:(UIView * _Nonnull)bannerView;
 @end
+
+/// The reason a publisher’s end user gave when reporting a banner ad.
+typedef SWIFT_ENUM(NSInteger, ReportByUserReason, open) {
+  ReportByUserReasonAutoPlay = 1,
+  ReportByUserReasonOffensive = 2,
+  ReportByUserReasonDeceptive = 3,
+  ReportByUserReasonPopUp = 4,
+  ReportByUserReasonDislikeAd = 5,
+  ReportByUserReasonRegulationViolation = 6,
+  ReportByUserReasonContentCovered = 7,
+  ReportByUserReasonFlickerAd = 8,
+  ReportByUserReasonIrrelevant = 9,
+  ReportByUserReasonBrokenAd = 10,
+  ReportByUserReasonOther = 99,
+};
 
 typedef SWIFT_ENUM(NSInteger, VerificationStatus, open) {
   VerificationStatusWaitForDiagnosing = 0,
