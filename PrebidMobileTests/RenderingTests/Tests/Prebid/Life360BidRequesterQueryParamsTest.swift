@@ -18,14 +18,16 @@ import XCTest
 @testable @_spi(PBMInternal) import Life360AdsSDK
 
 /// `Life360BidRequester` posts to a URL literal hardcoded in `-makeRequestWithCompletion:`. These
-/// tests pin that query parameters written directly to `UserDefaults` (the documented internal
-/// contract — see `Life360QueryParameterStore`) end up appended to that URL, and that they can
-/// never clobber the fixed `ntv_epid` parameter.
+/// tests pin that query parameters written directly to `UserDefaults`, keyed by the ad unit's
+/// `configId` (the documented internal contract — see `Life360QueryParameterStore`), end up
+/// appended to that URL; that a different `configId`'s parameters are never applied; and that
+/// they can never clobber the fixed `ntv_epid` parameter.
 class Life360BidRequesterQueryParamsTest: XCTestCase {
 
     /// Must match the literal key documented for internal app engineers — see
     /// `Life360QueryParameterStoreTests` for why this is a hardcoded string, not a Swift symbol.
     private let queryParametersUserDefaultsKey = Life360QueryParameterStore.customQueryParametersKey
+    private let configId = "config-id"
 
     private var sdkConfiguration: Prebid!
     private let targeting = Targeting.shared
@@ -43,7 +45,7 @@ class Life360BidRequesterQueryParamsTest: XCTestCase {
     }
 
     func testCustomQueryParameterIsAppendedToPostedURL() throws {
-        UserDefaults.standard.set(["publisher_id": "abc123"], forKey: queryParametersUserDefaultsKey)
+        UserDefaults.standard.set([configId: ["publisher_id": "abc123"]], forKey: queryParametersUserDefaultsKey)
 
         let url = try capturedPostURL()
 
@@ -51,7 +53,7 @@ class Life360BidRequesterQueryParamsTest: XCTestCase {
     }
 
     func testMultipleCustomQueryParametersAreAppendedInSortedOrder() throws {
-        UserDefaults.standard.set(["b": "2", "a": "1"], forKey: queryParametersUserDefaultsKey)
+        UserDefaults.standard.set([configId: ["b": "2", "a": "1"]], forKey: queryParametersUserDefaultsKey)
 
         let url = try capturedPostURL()
 
@@ -59,7 +61,7 @@ class Life360BidRequesterQueryParamsTest: XCTestCase {
     }
 
     func testCustomQueryParameterCannotOverrideFixedParameter() throws {
-        UserDefaults.standard.set(["ntv_epid": "999"], forKey: queryParametersUserDefaultsKey)
+        UserDefaults.standard.set([configId: ["ntv_epid": "999"]], forKey: queryParametersUserDefaultsKey)
 
         let url = try capturedPostURL()
 
@@ -68,6 +70,14 @@ class Life360BidRequesterQueryParamsTest: XCTestCase {
     }
 
     func testNoCustomQueryParametersLeavesURLUnchanged() throws {
+        let url = try capturedPostURL()
+
+        XCTAssertEqual(url, "https://exchange.postrelease.com/esi.json?ntv_epid=54")
+    }
+
+    func testCustomQueryParametersForADifferentConfigIdAreNotApplied() throws {
+        UserDefaults.standard.set(["some-other-config-id": ["publisher_id": "abc123"]], forKey: queryParametersUserDefaultsKey)
+
         let url = try capturedPostURL()
 
         XCTAssertEqual(url, "https://exchange.postrelease.com/esi.json?ntv_epid=54")
@@ -89,7 +99,7 @@ class Life360BidRequesterQueryParamsTest: XCTestCase {
             connection: connection,
             sdkConfiguration: sdkConfiguration,
             targeting: targeting,
-            adUnitConfiguration: AdUnitConfig(configId: "config-id", size: CGSize(width: 300, height: 250))
+            adUnitConfiguration: AdUnitConfig(configId: configId, size: CGSize(width: 300, height: 250))
         )
 
         let exp = expectation(description: "Life360 bid request completes")

@@ -84,10 +84,11 @@
                                         ? dynamicTimeout.doubleValue / 1000.0
                                         : rawTimeoutMS / 1000.0);
 
-    // Fixed Life360 endpoint, with any developer-configured custom query parameters appended.
+    // Fixed Life360 endpoint, with any query parameters configured for this ad unit appended.
     NSString * const life360BaseURL = @"https://exchange.postrelease.com/esi.json?ntv_epid=54";
     NSString * const life360URL =
-        [Life360RequestURLBuilder urlByAppendingCustomQueryParametersToURLString:life360BaseURL];
+        [Life360RequestURLBuilder urlByAppendingCustomQueryParametersToURLString:life360BaseURL
+                                  forConfigId:self.adUnitConfiguration.configId];
 
     @weakify(self);
     [self.connection post:life360URL
