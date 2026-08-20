@@ -11,6 +11,9 @@
       location = "group:Example/PrebidDemo/PrebidDemo.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Example/Life360AdsDemo/Life360AdsDemo.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:InternalTestApp/InternalTestApp.xcodeproj">
    </FileRef>
    <FileRef

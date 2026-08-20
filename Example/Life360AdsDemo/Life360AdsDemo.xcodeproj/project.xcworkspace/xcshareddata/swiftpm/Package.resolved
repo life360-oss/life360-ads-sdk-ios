@@ -1,5 +1,5 @@
 {
-  "originHash" : "27ecf72bbbbf7cec5e8e4f3486e4ee5455b0457a86e0eff5bdbfe58d9071e939",
+  "originHash" : "e21c1663a304ebc6a361aca0c203ad1584e0e15f6b31ae775af058cb3d4d321f",
   "pins" : [
     {
       "identity" : "applovin-max-swift-package",
@@ -11,12 +11,12 @@
       }
     },
     {
-      "identity" : "swift-package-manager-google-interactive-media-ads-ios",
+      "identity" : "nativo-prebid-sdk-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/googleads/swift-package-manager-google-interactive-media-ads-ios.git",
+      "location" : "https://github.com/life360-oss/nativo-prebid-sdk-ios",
       "state" : {
-        "branch" : "main",
-        "revision" : "fdf54991c74edc228b59592a44f33c564abafcc0"
+        "revision" : "b1348a2b6bd1efc2a43ac08db466c4ce8e8061ca",
+        "version" : "1.4.0-geoedge.3"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/googleads/swift-package-manager-google-mobile-ads.git",
       "state" : {
-        "revision" : "a81f522aa4f59c0d90ee523d703bd426d5b27a03",
-        "version" : "13.4.0"
+        "revision" : "868149fc50d1452078e83540e636cf519bac3e6a",
+        "version" : "13.7.0"
       }
     },
     {
