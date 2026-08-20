@@ -5,8 +5,8 @@ import Foundation
 /// 
 /// Example usage:
 /// UserDefaults.standard.set(["my-config-id": ["publisher_id": "abc123"]], forKey: Life360QueryParameterStore.customQueryParametersKey)
-enum Life360QueryParameterStore {
-    static let customQueryParametersKey = "l360_exchange_params"
+public enum Life360QueryParameterStore {
+    public static let customQueryParametersKey = "l360_exchange_params"
 
     /// Returns the custom query parameters written for `configId`, or empty if none were set. A
     /// malformed entry for one `configId` only drops that `configId`'s parameters, not every
