@@ -102,7 +102,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
     public func adLoader(_ adLoader: AdLoaderProtocol, failedWithPrimarySDKError error: Error?) {
         enqueueGatedBlock { [weak self] in
             // If Ad Server fails fallback to winner between Prebid or Life360, otherwise fail
-            guard self?.bidResponse?.winningBid != nil else {
+            guard self?.bidResponse?.winningBid != nil || self?.life360BidResponse?.winningBid != nil else {
                 self?.reportLoadingFailedWithError(error)
                 return
             }
