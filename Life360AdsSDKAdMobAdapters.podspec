@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Life360AdsSDKAdMobAdapters"
-  s.version      = "1.4.0"
+  s.version      = "1.4.1"
   s.summary      = "The bridge between Life360 Ads SDK and GMA SDK."
 
   s.description  = "AdMob Adatpers manages rendering of Prebid ads in the case of integration with AdMob as a Primary Ad Server."
@@ -40,7 +40,7 @@ Pod::Spec.new do |s|
 
   s.static_framework = true
 
-  s.dependency 'Life360AdsSDK', '1.4.0'
+  s.dependency 'Life360AdsSDK', '1.4.1'
   s.dependency 'Google-Mobile-Ads-SDK', '>= 13.0.0'
   
   s.pod_target_xcconfig = {
