@@ -67,10 +67,18 @@ public final class Life360AppHarbrQualityProvider: NSObject, AdQualityAdNetworkP
             Log.debug("Life360AppHarbrQualityProvider: no current-creative webview found yet")
         }
 
+        var winningAdNetwork: AppHarbrSDK.AdSdk {
+            switch self {
+            case .gam: return .gam
+            case .prebid: return .prebid
+            case .life360, .none: return .prebidLife360
+            }
+        }
+
         return AdQualityAdNetworkProperties(
             mediationAdUnitId: mediationAdUnitId,
             adFormat: adFormat,
-            adNetwork: .prebidLife360,
+            adNetwork: winningAdNetwork,
             adNetworkUnitId: mediationAdUnitId,
             contentType: .html,
             content: jsonString,

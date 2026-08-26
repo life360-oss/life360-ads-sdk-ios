@@ -127,6 +127,7 @@ class AdLoadFlowControllerTest: XCTestCase {
 
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)
+        XCTAssertEqual(flowController.adServerWinner, .gam)
         compositeMock.checkIsFinished()
     }
 
@@ -216,12 +217,13 @@ class AdLoadFlowControllerTest: XCTestCase {
         
         flowController.refresh()
         waitForExpectations(timeout: 2)
-        
+
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)
+        XCTAssertEqual(flowController.adServerWinner, .prebid)
         compositeMock.checkIsFinished()
     }
-    
+
     func testPrimaryAd_noBids() {
         let adUnitConfig = AdUnitConfig(configId: "configID")
         
@@ -529,12 +531,14 @@ class AdLoadFlowControllerTest: XCTestCase {
         
         flowController.refresh()
         waitForExpectations(timeout: 2)
-        
+
         XCTAssertFalse(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .idle)
+        // The ad server failed, but there was a valid Prebid fallback bid to fall back to.
+        XCTAssertEqual(flowController.adServerWinner, .prebid)
         compositeMock.checkIsFinished()
     }
-    
+
     func testPrimaryAd_noBids_primarySDKError() {
         let adUnitConfig = AdUnitConfig(configId: "configID")
         
@@ -593,22 +597,24 @@ class AdLoadFlowControllerTest: XCTestCase {
                 failureReported.fulfill()
             })),
         ])
-        
+
         flowController = AdLoadFlowController(bidRequesterFactory: compositeMock.mockRequesterFactory,
                                                       adLoader: compositeMock.mockAdLoader,
                                                       adUnitConfig: adUnitConfig,
                                                       delegate: compositeMock.mockFlowControllerDelegate,
                                                       configValidationBlock: compositeMock.mockConfigValidator,
                                                       life360BidRequesterFactory: compositeMock.mockLife360RequesterFactory)
-        
+
         flowController.refresh()
         waitForExpectations(timeout: 2)
-        
+
         XCTAssertTrue(flowController.hasFailedLoading)
         XCTAssertEqual(flowController.flowState, .loadingFailed)
+        // Nobody actually served an impression: the ad server failed and there was no valid fallback bid.
+        XCTAssertNil(flowController.adServerWinner)
         compositeMock.checkIsFinished()
     }
-    
+
     func testConfigInvalid_forEventHandler() {
         let adUnitConfig = AdUnitConfig(configId: "configID")
         

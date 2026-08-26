@@ -175,15 +175,70 @@ class Life360AppHarbrQualityProviderTest: XCTestCase {
         XCTAssertEqual(Life360AppHarbrQualityProvider.shared.adNetworkVersion, Life360Ads.shared.version)
     }
 
+    /// AppHarbr needs to know which ad server actually rendered the impression it is scanning, not
+    /// just that Life360 demand won the auction upstream.
+    func testWinningBid_reportsTheAdServerThatActuallyWon() throws {
+        let bidResponse = Life360BidFabricator.makePrebidBidResponse(
+            price: 1.5,
+            width: 320,
+            height: 50,
+            crid: "creative-7"
+        )
+
+        let gamProperties = try XCTUnwrap(Life360AppHarbrQualityProvider.shared.winningBid(
+            for: "unit",
+            adFormat: .banner,
+            mediationObject: makeBannerView(bidResponse: bidResponse, adServerWinner: .gam)
+        ))
+        XCTAssertEqual(gamProperties.adNetwork, .gam)
+
+        let prebidProperties = try XCTUnwrap(Life360AppHarbrQualityProvider.shared.winningBid(
+            for: "unit",
+            adFormat: .banner,
+            mediationObject: makeBannerView(bidResponse: bidResponse, adServerWinner: .prebid)
+        ))
+        XCTAssertEqual(prebidProperties.adNetwork, .prebid)
+
+        let life360Properties = try XCTUnwrap(Life360AppHarbrQualityProvider.shared.winningBid(
+            for: "unit",
+            adFormat: .banner,
+            mediationObject: makeBannerView(bidResponse: bidResponse, adServerWinner: .life360)
+        ))
+        XCTAssertEqual(life360Properties.adNetwork, .prebidLife360)
+    }
+
+    /// Before the first auction resolves there is no ad server winner yet — fall back to Life360
+    /// rather than report an ad network that never actually won anything.
+    func testWinningBid_fallsBackToPrebidLife360BeforeAnAdServerWinnerIsKnown() throws {
+        let bannerView = makeBannerView(
+            bidResponse: Life360BidFabricator.makePrebidBidResponse(
+                price: 1.5,
+                width: 320,
+                height: 50,
+                crid: "creative-7"
+            ),
+            adServerWinner: nil
+        )
+
+        let properties = try XCTUnwrap(Life360AppHarbrQualityProvider.shared.winningBid(
+            for: "unit",
+            adFormat: .banner,
+            mediationObject: bannerView
+        ))
+
+        XCTAssertEqual(properties.adNetwork, .prebidLife360)
+    }
+
     // MARK: - Helpers
 
-    private func makeBannerView(bidResponse: BidResponse?) -> BannerView {
+    private func makeBannerView(bidResponse: BidResponse?, adServerWinner: AdServerType? = nil) -> BannerView {
         let bannerView = BannerView(
             frame: CGRect(origin: .zero, size: adSize),
             configID: "test-config-id",
             adSize: adSize
         )
         bannerView.adLoadFlowController?.bidResponse = bidResponse
+        bannerView.adLoadFlowController?.adServerWinner = adServerWinner
         return bannerView
     }
 }

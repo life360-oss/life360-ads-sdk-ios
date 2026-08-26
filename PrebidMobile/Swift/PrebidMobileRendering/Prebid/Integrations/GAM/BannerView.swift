@@ -46,6 +46,11 @@ public class BannerView:
     public var lastBidResponse: BidResponse? {
         adLoadFlowController?.bidResponse
     }
+
+    /// Which ad server actually served the last impression, or `nil` before the first auction resolves.
+    public var adServerWinner: AdServerType? {
+        adLoadFlowController?.adServerWinner
+    }
     
     /// ID of Stored Impression on the Prebid server
     public var configID: String {
