@@ -35,13 +35,14 @@
 #pragma mark - Initialization
 
 - (instancetype)initWithContext:(OMIDLife360AdSessionContext *)context
-                  configuration:(OMIDLife360AdSessionConfiguration *)configuration {
+                  configuration:(OMIDLife360AdSessionConfiguration *)configuration
+              isJSBasedTracking:(BOOL)isJSBasedTracking {
     self = [super init];
     if (self) {
         if ([self initializeOMSessionWithContext:context configuration:configuration]) {
             // IMPORTANT: Event tracker must be created before session start
             // Otherwise, tracking of video events will be unavailable.
-            self.eventTracker = [[PBMOpenMeasurementEventTracker alloc] initWithSession:self.session];
+            self.eventTracker = [[PBMOpenMeasurementEventTracker alloc] initWithSession:self.session isJSBasedTracking:isJSBasedTracking];
         } else {
             self = nil;
         }

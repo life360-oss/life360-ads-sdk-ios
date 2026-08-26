@@ -30,7 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)injectJSLib:(NSString *)html error:(NSError * __nullable * __null_unspecified)error;
 
 - (nullable PBMOpenMeasurementSession *)initializeWebViewSession:(WKWebView *)webView
-                                                      contentUrl:(nullable NSString *)contentUrl;
+                                                      contentUrl:(nullable NSString *)contentUrl
+                                               isJSBasedTracking:(BOOL)isJSBasedTracking;
 
 - (nullable PBMOpenMeasurementSession *)initializeNativeVideoSession:(UIView *)videoView
                                               verificationParameters:(nullable PBMVideoVerificationParameters *)verificationParameters;

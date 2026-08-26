@@ -29,26 +29,33 @@
 @property (nonatomic, strong) OMIDLife360AdEvents *adEvents;
 @property (nonatomic, strong) OMIDLife360MediaEvents *mediaEvents;
 
+@property (nonatomic, assign, readwrite) BOOL isJSBasedTracking;
+
 @end
 
 @implementation PBMOpenMeasurementEventTracker
 
-- (instancetype)initWithSession:(OMIDLife360AdSession *)session {
+- (instancetype)initWithSession:(OMIDLife360AdSession *)session isJSBasedTracking:(BOOL)isJSBasedTracking {
     self = [super init];
     if (self) {
         self.session = session;
+        self.isJSBasedTracking = isJSBasedTracking;
         [self initOMEventTrackers];
     }
-    
+
     return self;
 }
 
 - (void)trackEvent:(PBMTrackingEvent)event {
+    if (self.isJSBasedTracking) {
+        return;
+    }
+
     if (!self.session) {
         PBMLogError(@"Measurement Session is missed.");
         return;
     }
-    
+
     switch (event) {
         case PBMTrackingEventLoaded         : [self trackAdLoaded]; break;
         case PBMTrackingEventImpression     : [self trackImpression]; break;

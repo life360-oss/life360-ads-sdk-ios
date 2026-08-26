@@ -21,8 +21,8 @@ public protocol OMSessionWrapper: NSObjectProtocol {
     
     func injectJSLib(_ html: String, error: NSErrorPointer) -> String?
     
-    @objc(initializeWebViewSession:contentUrl:)
-    func initializeWebViewSession(_ webView: WKWebView, contentUrl: String?) -> OMSession?
+    @objc(initializeWebViewSession:contentUrl:isJSBasedTracking:)
+    func initializeWebViewSession(_ webView: WKWebView, contentUrl: String?, isJSBasedTracking: Bool) -> OMSession?
     
     func initializeNativeVideoSession(_ videoView: UIView, verificationParameters: VideoVerificationParameters?) -> OMSession?
     

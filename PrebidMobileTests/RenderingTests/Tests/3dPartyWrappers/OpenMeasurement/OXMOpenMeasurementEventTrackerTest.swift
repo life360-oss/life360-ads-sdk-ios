@@ -31,7 +31,7 @@ class PBMOpenMeasurementEventTrackerTest: XCTestCase {
         mockLibraryManager.omsdkScript = "{}"
         measurement.libraryManager = mockLibraryManager
         
-        let webViewSession = measurement.initializeWebViewSession(WKWebView(), contentUrl: nil)
+        let webViewSession = measurement.initializeWebViewSession(WKWebView(), contentUrl: nil, isJSBasedTracking: false)
         
         XCTAssertNotNil(webViewSession)
         XCTAssertNotNil(webViewSession?.eventTracker)
@@ -71,7 +71,7 @@ class PBMOpenMeasurementEventTrackerTest: XCTestCase {
     func testInvalidSession() {
         logToFile = .init()
         
-        var pbmTracker = PBMOpenMeasurementEventTracker(session: OMIDLife360AdSession())
+        var pbmTracker = PBMOpenMeasurementEventTracker(session: OMIDLife360AdSession(), isJSBasedTracking: false)
         XCTAssertNotNil(pbmTracker)
         XCTAssertNotNil(pbmTracker.session)
         UtilitiesForTesting.checkLogContains("Open Measurement can't create ad events with error")

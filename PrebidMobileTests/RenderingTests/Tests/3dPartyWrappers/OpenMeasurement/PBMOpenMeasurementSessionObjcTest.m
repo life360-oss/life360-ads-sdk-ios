@@ -27,7 +27,7 @@
     OMIDLife360AdSessionContext *context = nil;
     OMIDLife360AdSessionConfiguration *configuration = nil;
     
-    PBMOpenMeasurementSession *session = [[PBMOpenMeasurementSession alloc] initWithContext:context configuration:configuration];
+    PBMOpenMeasurementSession *session = [[PBMOpenMeasurementSession alloc] initWithContext:context configuration:configuration isJSBasedTracking:NO];
     XCTAssertNil(session);
 }
 

@@ -70,14 +70,21 @@ class PBMOpenMeasurementWrapperTest: XCTestCase {
     
     func testInitWebViewSession() {
         let measurement = PBMOpenMeasurementWrapper()
-        let session = measurement.initializeWebViewSession(WKWebView(), contentUrl: nil)
-        
+        let session = measurement.initializeWebViewSession(WKWebView(), contentUrl: nil, isJSBasedTracking: false)
+
         XCTAssertNotNil(session)
     }
-    
+
+    func testInitWebViewSessionForVideo() {
+        let measurement = PBMOpenMeasurementWrapper()
+        let session = measurement.initializeWebViewSession(WKWebView(), contentUrl: nil, isJSBasedTracking: true)
+
+        XCTAssertNotNil(session)
+    }
+
     func testInitWebViewSessionWithoutCredentials() {
         let measurement = PBMOpenMeasurementWrapperErrorMock()
-        let session = measurement.initializeWebViewSession(WKWebView(), contentUrl: nil)
+        let session = measurement.initializeWebViewSession(WKWebView(), contentUrl: nil, isJSBasedTracking: false)
         
         XCTAssertNil(session)
     }
@@ -177,7 +184,7 @@ class PBMOpenMeasurementWrapperTest: XCTestCase {
         XCTAssertNotNil(nativeVideoSession)
         XCTAssertNotNil(nativeVideoSession?.eventTracker)
         
-        let webViewSession = measurement.initializeWebViewSession(WKWebView(), contentUrl: nil)
+        let webViewSession = measurement.initializeWebViewSession(WKWebView(), contentUrl: nil, isJSBasedTracking: false)
         
         XCTAssertNotNil(webViewSession)
         XCTAssertNotNil(webViewSession?.eventTracker)

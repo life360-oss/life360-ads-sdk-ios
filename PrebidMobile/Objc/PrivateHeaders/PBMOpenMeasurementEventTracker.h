@@ -26,7 +26,11 @@
 NS_ASSUME_NONNULL_BEGIN
 @interface PBMOpenMeasurementEventTracker : NSObject <PBMEventTrackerProtocol>
 
-- (instancetype)initWithSession:(OMIDLife360AdSession *)session;
+// stpVideo/ctpVideo banners fire their own OM events from JS, so native tracking must stay silent
+// to avoid double-counting impression/media events already attributed to the JS layer.
+@property (nonatomic, assign, readonly) BOOL isJSBasedTracking;
+
+- (instancetype)initWithSession:(OMIDLife360AdSession *)session isJSBasedTracking:(BOOL)isJSBasedTracking;
 
 #if DEBUG
 // This method declared in PBMEventTrackerProtocol is not visible in Swift
