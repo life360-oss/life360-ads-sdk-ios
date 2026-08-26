@@ -48,11 +48,7 @@ final class BannerAdSlotView: AdSlotView, Life360BannerViewDelegate {
     override func loadAd() {
         super.loadAd()
         removeBanner()
-        
-        UserDefaults.standard.set(
-            [Self.configID: ["ntv_tm": "tout"]],
-            forKey: Life360QueryParameterStore.customQueryParametersKey
-        )
+        setTestingParameters()
 
         let banner = BannerView(frame: CGRect(origin: .zero, size: Self.adSize),
                                 configID: Self.configID,
@@ -109,6 +105,13 @@ final class BannerAdSlotView: AdSlotView, Life360BannerViewDelegate {
     }
 
     // MARK: - Private
+    
+    private func setTestingParameters() {
+        UserDefaults.standard.set(
+            [Self.configID: ["ntv_tm": "tout"]],
+            forKey: Life360QueryParameterStore.customQueryParametersKey
+        )
+    }
 
     private func removeBanner() {
         banner?.stopRefresh()
