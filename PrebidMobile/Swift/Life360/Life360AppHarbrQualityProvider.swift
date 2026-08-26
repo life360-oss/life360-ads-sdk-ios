@@ -67,8 +67,10 @@ public final class Life360AppHarbrQualityProvider: NSObject, AdQualityAdNetworkP
             Log.debug("Life360AppHarbrQualityProvider: no current-creative webview found yet")
         }
 
+        // AppHarbr has no "unresolved" ad network, so a `nil` winner — before the first auction
+        // resolves — reports the same as an actual Life360 win.
         var winningAdNetwork: AppHarbrSDK.AdSdk {
-            switch self {
+            switch bannerView.adServerWinner {
             case .gam: return .gam
             case .prebid: return .prebid
             case .life360, .none: return .prebidLife360
