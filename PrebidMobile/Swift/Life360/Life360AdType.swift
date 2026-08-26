@@ -4,6 +4,7 @@
 
 @objc
 public enum Life360AdType: Int {
+    case unknown         = -1
     case article         = 0
     case display         = 2
     case ctpVideo        = 3

@@ -31,7 +31,7 @@ class MockMeasurementWrapper : PBMOpenMeasurementWrapper {
         throw PBMError.error(description:"PrebidMobileTests: do nothing")
     }
     
-    override func initializeWebViewSession(_ webView: UIView, contentUrl: String?) -> PBMOpenMeasurementSession? {
+    override func initializeWebViewSession(_ webView: UIView, contentUrl: String?, isJSBasedTracking: Bool) -> PBMOpenMeasurementSession? {
         let session = MockMeasurementSession()
         initializeSessionClosure?(session)
         

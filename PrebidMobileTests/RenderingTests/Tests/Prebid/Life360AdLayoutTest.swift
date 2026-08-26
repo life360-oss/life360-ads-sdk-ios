@@ -261,3 +261,45 @@ class BidLife360RenderingTest: XCTestCase {
         return Bid(bid: rawBid)
     }
 }
+
+/// `Bid.life360AdType` must be callable from Objective-C, so it can't be an `Optional` enum. Instead it
+/// collapses "no ad-type extension present" and "an ad-type code the SDK doesn't recognize" into
+/// `.unknown`.
+class BidLife360AdTypeTest: XCTestCase {
+
+    func testKnownAdTypes_returnThemselves() {
+        let knownTypes: [Life360AdType] = [.article, .display, .ctpVideo, .carousel, .stpVideo, .standardDisplay, .story]
+        for adType in knownTypes {
+            XCTAssertEqual(makeBid(adType: adType).life360AdType, adType)
+        }
+    }
+
+    func testMissingAdType_isUnknown() {
+        XCTAssertEqual(makeBid(adType: nil).life360AdType, .unknown)
+    }
+
+    func testUnrecognizedRawValue_isUnknown() {
+        // 1 is a gap in the wire enum (no case owns it); 99 and -5 are simply out of range.
+        XCTAssertEqual(makeBid(rawAdType: 1).life360AdType, .unknown)
+        XCTAssertEqual(makeBid(rawAdType: 99).life360AdType, .unknown)
+        XCTAssertEqual(makeBid(rawAdType: -5).life360AdType, .unknown)
+    }
+
+    // MARK: - Helpers
+
+    private func makeBid(adType: Life360AdType?) -> Bid {
+        let rawBid = ORTBBid<ORTBBidExt>(bidID: "bid", impid: "imp", price: 1.0)
+        if let adType {
+            rawBid.ext = .init()
+            rawBid.ext?.nativo = ORTBBidExtNativo(jsonDictionary: ["nativoAdType": NSNumber(value: adType.rawValue)])
+        }
+        return Bid(bid: rawBid)
+    }
+
+    private func makeBid(rawAdType: Int) -> Bid {
+        let rawBid = ORTBBid<ORTBBidExt>(bidID: "bid", impid: "imp", price: 1.0)
+        rawBid.ext = .init()
+        rawBid.ext?.nativo = ORTBBidExtNativo(jsonDictionary: ["nativoAdType": NSNumber(value: rawAdType)])
+        return Bid(bid: rawBid)
+    }
+}

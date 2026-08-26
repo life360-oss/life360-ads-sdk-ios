@@ -321,8 +321,10 @@
         return;
     }
 
-    self.transaction.measurementSession = [self.transaction.measurementWrapper initializeWebViewSession:self.prebidWebView.internalWebView
-                                                                                             contentUrl:@""];
+    Life360AdType adType = self.transaction.bid.life360AdType;
+    // Web video ad types are responsible for tracking OM events within the JS.
+    Boolean isJSBasedTracking = adType == Life360AdTypeStpVideo || adType == Life360AdTypeCtpVideo;
+    self.transaction.measurementSession = [self.transaction.measurementWrapper initializeWebViewSession:self.prebidWebView.internalWebView contentUrl:@"" isJSBasedTracking:isJSBasedTracking];
     if (self.transaction.measurementSession && [self.transaction.measurementSession isKindOfClass:PBMOpenMeasurementSession.class]) {
         [self.prebidWebView addFriendlyObstructionsToMeasurementSession:self.transaction.measurementSession];
         [self.transaction.measurementSession start];

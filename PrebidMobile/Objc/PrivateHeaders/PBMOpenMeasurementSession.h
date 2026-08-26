@@ -30,7 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) id<PBMEventTrackerProtocol> eventTracker;
 
 - (nonnull)initWithContext:(OMIDLife360AdSessionContext *)context
-             configuration:(OMIDLife360AdSessionConfiguration *)configuration;
+             configuration:(OMIDLife360AdSessionConfiguration *)configuration
+         isJSBasedTracking:(BOOL)isJSBasedTracking;
 
 #pragma mark - PBMOpenMeasurementSessionProtocol
 

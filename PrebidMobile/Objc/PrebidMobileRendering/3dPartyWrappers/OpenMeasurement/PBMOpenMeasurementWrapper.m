@@ -107,43 +107,57 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     return res;
 }
 
-- (nullable PBMOpenMeasurementSession *)initializeWebViewSession:(WKWebView *)webView contentUrl:(NSString *)contentUrl {
-    
+- (nullable PBMOpenMeasurementSession *)initializeWebViewSession:(WKWebView *)webView
+                                                       contentUrl:(NSString *)contentUrl
+                                                isJSBasedTracking:(BOOL)isJSBasedTracking {
+
     NSError *contextError;
     OMIDLife360AdSessionContext *context = [[OMIDLife360AdSessionContext alloc] initWithPartner:self.partner
                                                                                             webView:webView
                                                                                          contentUrl:contentUrl
                                                                           customReferenceIdentifier:self.customRefId
                                                                                               error:&contextError];
-    
+
     if (contextError) {
         PBMLogError(@"Unable to create Open Measurement session context with error: %@", [contextError localizedDescription]);
         return nil;
     }
-    
+
     NSError *configurationError;
-    
-    OMIDLife360AdSessionConfiguration *config = [
-        [OMIDLife360AdSessionConfiguration alloc]
-        initWithCreativeType:OMIDCreativeTypeHtmlDisplay
-        impressionType:OMIDImpressionTypeOnePixel
-        impressionOwner:OMIDNativeOwner
-        mediaEventsOwner:OMIDNoneOwner
-        isolateVerificationScripts:NO
-        error:&configurationError];
-    
+
+    OMIDLife360AdSessionConfiguration *config;
+    if (isJSBasedTracking) {
+        // stpVideo/ctpVideo banners embed a <video> element and fire its OM events from their own JS, so
+        // OM must attribute impression/media events to the JS layer rather than to native.
+        config = [[OMIDLife360AdSessionConfiguration alloc]
+         initWithCreativeType:OMIDCreativeTypeDefinedByJavaScript
+         impressionType:OMIDImpressionTypeDefinedByJavaScript
+         impressionOwner:OMIDJavaScriptOwner
+         mediaEventsOwner:OMIDJavaScriptOwner
+         isolateVerificationScripts:NO
+                  error:&configurationError];
+    } else {
+        config = [[OMIDLife360AdSessionConfiguration alloc]
+         initWithCreativeType:OMIDCreativeTypeHtmlDisplay
+         impressionType:OMIDImpressionTypeOnePixel
+         impressionOwner:OMIDNativeOwner
+         mediaEventsOwner:OMIDNoneOwner
+         isolateVerificationScripts:NO
+         error:&configurationError];
+    }
+
     if (configurationError) {
         PBMLogError(@"Unable to create Open Measurement session configuration with error: %@", [configurationError localizedDescription]);
         return nil;
     }
     
     NSError *sessionError;
-    PBMOpenMeasurementSession *session = [[PBMOpenMeasurementSession alloc] initWithContext:context configuration:config];
+    PBMOpenMeasurementSession *session = [[PBMOpenMeasurementSession alloc] initWithContext:context configuration:config isJSBasedTracking:isJSBasedTracking];
     if (!session) {
         PBMLogError(@"Unable to create Open Measurement session with error: %@", [sessionError localizedDescription]);
         return nil;
     }
-    
+
     [session setupMainView:webView];
     
     return session;
@@ -185,12 +199,12 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     }
     
     NSError *sessionError;
-    PBMOpenMeasurementSession *session = [[PBMOpenMeasurementSession alloc] initWithContext:context configuration:config];
+    PBMOpenMeasurementSession *session = [[PBMOpenMeasurementSession alloc] initWithContext:context configuration:config isJSBasedTracking:NO];
     if (!session) {
         PBMLogError(@"Unable to create Open Measurement session with error: %@", [sessionError localizedDescription]);
         return nil;
     }
-    
+
     [session setupMainView:videoView];
     
     return session;
@@ -242,12 +256,12 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     }
     
     NSError *sessionError;
-    PBMOpenMeasurementSession *session = [[PBMOpenMeasurementSession alloc] initWithContext:context configuration:config];
+    PBMOpenMeasurementSession *session = [[PBMOpenMeasurementSession alloc] initWithContext:context configuration:config isJSBasedTracking:NO];
     if (!session) {
         PBMLogError(@"Unable to create Open Measurement session with error: %@", [sessionError localizedDescription]);
         return nil;
     }
-    
+
     [session setupMainView:view];
     
     return session;
