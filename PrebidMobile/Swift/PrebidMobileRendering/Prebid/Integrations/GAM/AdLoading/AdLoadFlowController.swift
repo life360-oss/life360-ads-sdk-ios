@@ -36,6 +36,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
 
     var bidResponse: BidResponse?
     var life360BidResponse: BidResponse?
+    var adServerWinner: AdServerType?
     var flowState: AdLoadFlowState = .idle
     private var bidRequestError: Error?
     private var bidRequester: BidRequesterProtocol?
@@ -95,6 +96,7 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
         enqueueGatedBlock { [weak self] in
             self?.winningAdSize = adSize
             self?.primaryAdObject = adObject
+            self?.adServerWinner = .gam
             self?.markReadyToDeployAdView()
         }
     }
@@ -103,6 +105,9 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
         enqueueGatedBlock { [weak self] in
             // If Ad Server fails fallback to winner between Prebid or Life360, otherwise fail
             guard self?.bidResponse?.winningBid != nil || self?.life360BidResponse?.winningBid != nil else {
+                // Nobody actually served an impression: the ad server failed and there's no valid
+                // fallback bid either.
+                self?.adServerWinner = nil
                 self?.reportLoadingFailedWithError(error)
                 return
             }
@@ -302,7 +307,9 @@ typealias AdUnitConfigValidationBlock = (_ adUnitConfig: AdUnitConfig, _ renderW
             reportLoadingFailedWithError(PBMError.noWinningBid())
             return
         }
-        
+
+        adServerWinner = bidResponse is Life360BidResponse ? .life360 : .prebid
+
         // Set winning ad size for later
         self.winningAdSize = NSValue(cgSize: bid.size)
         self.bidResponse = bidResponse
