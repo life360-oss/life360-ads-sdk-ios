@@ -25,6 +25,7 @@
 		0012D7912E0C311D007013F3 /* OMSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7902E0C3109007013F3 /* OMSession.swift */; };
 		0012D7A32E0C3210007013F3 /* OpenMeasurementFriendlyObstructionPurpose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7A22E0C320D007013F3 /* OpenMeasurementFriendlyObstructionPurpose.swift */; };
 		0012D7AB2E0C540C007013F3 /* OMSessionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7AA2E0C540C007013F3 /* OMSessionWrapper.swift */; };
+		3AF3600D2FE10002007E2C44 /* OMSessionWrapperRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF3600C2FE10002007E2C44 /* OMSessionWrapperRegistry.swift */; };
 		0012D7B32E0D67A7007013F3 /* OMSDKVersionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7B22E0D67A7007013F3 /* OMSDKVersionProvider.swift */; };
 		0012D7D52E0E97C9007013F3 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7D42E0E97C9007013F3 /* Functions.swift */; };
 		00334CA82D55EFED00770E4C /* PrebidMobilePRTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 00334CA72D55EFED00770E4C /* PrebidMobilePRTests.xctestplan */; };
@@ -42,6 +43,7 @@
 		2FCEAF460A636FBFDFBFB2AF /* Life360GeoLocationParameterBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4D48A4D7937F085F698A3 /* Life360GeoLocationParameterBuilder.m */; };
 		30F6EDAA594945F94E03BC94 /* Life360BidRequesterUserAgentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C220DA9D6C3B2A8C039A0 /* Life360BidRequesterUserAgentTest.swift */; };
 		335B242095269A5F583128FE /* Life360QueryParameterStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D51F62A9D8CE42528222EA /* Life360QueryParameterStoreTests.swift */; };
+		3AF3600F2FE10003007E2C44 /* Life360NativeOMUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF3600E2FE10003007E2C44 /* Life360NativeOMUtilsTests.swift */; };
 		38F03B272576421400E026A2 /* CacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F03B262576421400E026A2 /* CacheManagerTests.swift */; };
 		38F03B332576624C00E026A2 /* TrackerManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F03B322576624C00E026A2 /* TrackerManagerTests.swift */; };
 		3A46AA2D2EF5D5300010B2A6 /* Life360Mraid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A46AA2B2EF5D5300010B2A6 /* Life360Mraid.swift */; };
@@ -60,6 +62,7 @@
 		3A8E19112F60C12400720D1B /* Life360PrebidRendererInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8E19102F60C12400720D1B /* Life360PrebidRendererInternal.swift */; };
 		3AC45289303FA3E2009C1050 /* AppHarbrSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A48DDEA302FD3EA007D138B /* AppHarbrSDK.xcframework */; };
 		3AED93342FD34398007E2C44 /* Life360Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED93332FD34398007E2C44 /* Life360Utils.swift */; };
+		3AF3600B2FE10001007E2C44 /* Life360NativeOMUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF3600A2FE10001007E2C44 /* Life360NativeOMUtils.swift */; };
 		3AED93362FD34398007E2C44 /* Life360Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED93352FD34398007E2C44 /* Life360Ads.swift */; };
 		3AED94A52FE1E89E007E2C44 /* AdLoadFlowControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D5DAA2737C4F600A8A2B5 /* AdLoadFlowControllerTest.swift */; };
 		3AFDF6452EC808D600FC7AA2 /* Life360BidRequester.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AFDF6422EC808D600FC7AA2 /* Life360BidRequester.h */; };
@@ -924,6 +927,7 @@
 		0012D7902E0C3109007013F3 /* OMSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSession.swift; sourceTree = "<group>"; };
 		0012D7A22E0C320D007013F3 /* OpenMeasurementFriendlyObstructionPurpose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMeasurementFriendlyObstructionPurpose.swift; sourceTree = "<group>"; };
 		0012D7AA2E0C540C007013F3 /* OMSessionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSessionWrapper.swift; sourceTree = "<group>"; };
+		3AF3600C2FE10002007E2C44 /* OMSessionWrapperRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSessionWrapperRegistry.swift; sourceTree = "<group>"; };
 		0012D7B22E0D67A7007013F3 /* OMSDKVersionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSDKVersionProvider.swift; sourceTree = "<group>"; };
 		0012D7D42E0E97C9007013F3 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		00334CA62D55EFB600770E4C /* PrebidMobileTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = PrebidMobileTests.xctestplan; sourceTree = "<group>"; };
@@ -939,6 +943,7 @@
 		0E88FCD794CEBF3EB4BFEFC6 /* BannerViewConcurrencyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewConcurrencyTest.swift; sourceTree = "<group>"; };
 		115C220DA9D6C3B2A8C039A0 /* Life360BidRequesterUserAgentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BidRequesterUserAgentTest.swift; sourceTree = "<group>"; };
 		14D51F62A9D8CE42528222EA /* Life360QueryParameterStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Life360QueryParameterStoreTests.swift; sourceTree = "<group>"; };
+		3AF3600E2FE10003007E2C44 /* Life360NativeOMUtilsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Life360NativeOMUtilsTests.swift; sourceTree = "<group>"; };
 		2A9DDDCB2C5BE190000EA4A0 /* PrebidEventDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidEventDelegate.swift; sourceTree = "<group>"; };
 		2A9DDDD32C63665A000EA4A0 /* PBMEventDelegateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBMEventDelegateHelper.swift; sourceTree = "<group>"; };
 		2A9DDDD72C63A88C000EA4A0 /* PrebidEventDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidEventDelegateTests.swift; sourceTree = "<group>"; };
@@ -961,6 +966,7 @@
 		3A826B132F61E42800EB10C0 /* Life360Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360Renderer.swift; sourceTree = "<group>"; };
 		3A8E19102F60C12400720D1B /* Life360PrebidRendererInternal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360PrebidRendererInternal.swift; sourceTree = "<group>"; };
 		3AED93332FD34398007E2C44 /* Life360Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360Utils.swift; sourceTree = "<group>"; };
+		3AF3600A2FE10001007E2C44 /* Life360NativeOMUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360NativeOMUtils.swift; sourceTree = "<group>"; };
 		3AED93352FD34398007E2C44 /* Life360Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360Ads.swift; sourceTree = "<group>"; };
 		3AFDF6422EC808D600FC7AA2 /* Life360BidRequester.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Life360BidRequester.h; sourceTree = "<group>"; };
 		3AFDF6432EC808D600FC7AA2 /* Life360BidRequester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Life360BidRequester.m; sourceTree = "<group>"; };
@@ -1861,6 +1867,7 @@
 				5DC1298B0000000000000002 /* Life360BannerViewDelegate.swift */,
 				5A51286FB5526C0F52FF4556 /* BidAdTypeExtention.swift */,
 				3AED93332FD34398007E2C44 /* Life360Utils.swift */,
+				3AF3600A2FE10001007E2C44 /* Life360NativeOMUtils.swift */,
 				6873CFAE748275486EE29AC8 /* Life360AdLayout.swift */,
 				3AED93352FD34398007E2C44 /* Life360Ads.swift */,
 				B6DA79F1C9609A18EC09622A /* Life360GAMUtils.swift */,
@@ -3070,6 +3077,7 @@
 				0012D7A22E0C320D007013F3 /* OpenMeasurementFriendlyObstructionPurpose.swift */,
 				0012D7902E0C3109007013F3 /* OMSession.swift */,
 				0012D7AA2E0C540C007013F3 /* OMSessionWrapper.swift */,
+				3AF3600C2FE10002007E2C44 /* OMSessionWrapperRegistry.swift */,
 			);
 			path = OpenMeasurement;
 			sourceTree = "<group>";
@@ -3724,6 +3732,7 @@
 				5AE4E5D12DB83F53002C84DF /* SwiftMigrationHelper+pbmTests.swift */,
 				47D9A35B40BBC16996BC05A9 /* RenderingTests */,
 				14D51F62A9D8CE42528222EA /* Life360QueryParameterStoreTests.swift */,
+				3AF3600E2FE10003007E2C44 /* Life360NativeOMUtilsTests.swift */,
 			);
 			path = PrebidMobileTests;
 			sourceTree = "<group>";
@@ -4331,6 +4340,7 @@
 				922AFCD327353C5700732C53 /* MockServerMimeType.m in Sources */,
 				922AFD292737255700732C53 /* PBMCreativeFactoryTest.swift in Sources */,
 				335B242095269A5F583128FE /* Life360QueryParameterStoreTests.swift in Sources */,
+				3AF3600F2FE10003007E2C44 /* Life360NativeOMUtilsTests.swift in Sources */,
 				A1AEEB85B4A8175DAFFB9CF8 /* Life360BidRequesterQueryParamsTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4363,6 +4373,7 @@
 				5387042A2DE0848D006EA150 /* LocationManagerProtocol.swift in Sources */,
 				53269D55282E6D0F0098550D /* ServerEvent.swift in Sources */,
 				0012D7AB2E0C540C007013F3 /* OMSessionWrapper.swift in Sources */,
+				3AF3600D2FE10002007E2C44 /* OMSessionWrapperRegistry.swift in Sources */,
 				5A423CA82DBA4EA7008EE9EA /* ORTBRewardedCompletionVideoEndcard.swift in Sources */,
 				53137BD42D563CF400E417CE /* SKOverlayManager.swift in Sources */,
 				2A9DDDD42C63665A000EA4A0 /* PBMEventDelegateHelper.swift in Sources */,
@@ -4611,6 +4622,7 @@
 				3A46AA322EF5D5410010B2A6 /* Life360Utils.m in Sources */,
 				5AF5EB512E13580F002D80C1 /* PBMExternalURLOpenCallbacks.m in Sources */,
 				3AED93342FD34398007E2C44 /* Life360Utils.swift in Sources */,
+				3AF3600B2FE10001007E2C44 /* Life360NativeOMUtils.swift in Sources */,
 				13B95C8637F8231D861C9D08 /* Life360AdLayout.swift in Sources */,
 				3AED93362FD34398007E2C44 /* Life360Ads.swift in Sources */,
 				5AF5EB522E13580F002D80C1 /* PBMMRAIDController.m in Sources */,

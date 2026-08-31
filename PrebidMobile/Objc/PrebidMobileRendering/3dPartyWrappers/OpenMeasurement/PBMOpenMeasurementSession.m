@@ -85,8 +85,9 @@
 }
 
 - (void)stop {
+    // Callers may stop explicitly and then release the session, so a second stop is expected rather than
+    // an error worth logging.
     if (!self.session) {
-        PBMLogError(@"Measurement Session is missed.");
         return;
     }
     
