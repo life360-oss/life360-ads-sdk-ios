@@ -54,11 +54,7 @@ final class NativeAdSlotView: AdSlotView, NativeAdEventDelegate {
 
         nativeRequest = request
 
-        // AdUnit.init just forced this true, but isWinning then requires an hb_cache_id in the response,
-        // which only appears if Prebid Server actually cached the bid on an external Prebid Cache server —
-        // the local dev PBS has none configured, so a real bid never clears isWinning and fetchDemand
-        // reports success with no cache id. Safe to force off here: Banner and Video render through GAM's
-        // own pipeline and never consult this flag.
+        // Set this to enable native ad format responses without hb_cache_id for testing
         Prebid.shared.useCacheForReportingWithRenderingAPI = false
 
         report("fetchDemand sent — configID \(Self.configID)")
