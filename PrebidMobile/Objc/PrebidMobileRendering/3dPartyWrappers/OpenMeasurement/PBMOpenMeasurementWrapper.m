@@ -70,6 +70,10 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     if (self) {
         _libraryManager = PrebidJSLibraryManager.shared;
         [self initializeOMSDK];
+
+        // The Swift half of the SDK can't name this class — under SwiftPM the dependency runs the other
+        // way — so publish ourselves for the Swift-side native display path to pick up by protocol.
+        [PBMOMSessionWrapperRegistry register:self];
     }
     
     return self;
@@ -240,6 +244,8 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     
     NSError *configurationError;
     
+    // TODO: revisit impressionType. NativeAd only fires the impression once the registered view has been
+    // at least half visible for a full second, which is a viewable impression rather than a one-pixel one.
     OMIDLife360AdSessionConfiguration *config = [
         [OMIDLife360AdSessionConfiguration alloc]
         initWithCreativeType:OMIDCreativeTypeNativeDisplay

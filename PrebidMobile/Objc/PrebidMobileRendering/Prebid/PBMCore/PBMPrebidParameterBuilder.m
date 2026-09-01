@@ -296,6 +296,10 @@
                 if (ver) {
                     nextNative.ver = ver;
                 }
+                NSArray<NSNumber *> * const api = self.adConfiguration.nativeAdConfiguration.api;
+                if (api.count > 0) {
+                    nextNative.api = api;
+                }
             }
         }
         
