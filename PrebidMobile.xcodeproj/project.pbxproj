@@ -59,9 +59,13 @@
 		3A6D7AF42ED65676001099B1 /* Life360Bid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D7AF32ED65676001099B1 /* Life360Bid.swift */; };
 		3A8E19112F60C12400720D1B /* Life360PrebidRendererInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8E19102F60C12400720D1B /* Life360PrebidRendererInternal.swift */; };
 		3AC45289303FA3E2009C1050 /* AppHarbrSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A48DDEA302FD3EA007D138B /* AppHarbrSDK.xcframework */; };
+		3AC452A130474F96009C1050 /* omsdk.js in Resources */ = {isa = PBXBuildFile; fileRef = 3AC452A030474F96009C1050 /* omsdk.js */; };
 		3AED93342FD34398007E2C44 /* Life360Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED93332FD34398007E2C44 /* Life360Utils.swift */; };
 		3AED93362FD34398007E2C44 /* Life360Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED93352FD34398007E2C44 /* Life360Ads.swift */; };
 		3AED94A52FE1E89E007E2C44 /* AdLoadFlowControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D5DAA2737C4F600A8A2B5 /* AdLoadFlowControllerTest.swift */; };
+		3AF3600B2FE10001007E2C44 /* Life360NativeOMUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF3600A2FE10001007E2C44 /* Life360NativeOMUtils.swift */; };
+		3AF3600D2FE10002007E2C44 /* OMSessionWrapperRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF3600C2FE10002007E2C44 /* OMSessionWrapperRegistry.swift */; };
+		3AF3600F2FE10003007E2C44 /* Life360NativeOMUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF3600E2FE10003007E2C44 /* Life360NativeOMUtilsTests.swift */; };
 		3AFDF6452EC808D600FC7AA2 /* Life360BidRequester.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AFDF6422EC808D600FC7AA2 /* Life360BidRequester.h */; };
 		3AFDF6462EC808D600FC7AA2 /* Life360BidRequester.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFDF6432EC808D600FC7AA2 /* Life360BidRequester.m */; };
 		3AFDF6522ECD1DE500FC7AA2 /* Life360ParameterBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFDF6512ECD1DE500FC7AA2 /* Life360ParameterBuilder.m */; };
@@ -296,7 +300,6 @@
 		5AE4E5E52DB863EB002C84DF /* ModalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE4E5E42DB863EB002C84DF /* ModalManager.swift */; };
 		5AE4E5E82DB865B4002C84DF /* DeferredModalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE4E5E72DB865B4002C84DF /* DeferredModalState.swift */; };
 		5AE4E5EB2DB87172002C84DF /* ModalManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE4E5EA2DB87172002C84DF /* ModalManagerDelegate.swift */; };
-		5AF1BFDE2E1C50D30096B53C /* omsdk.js in Resources */ = {isa = PBXBuildFile; fileRef = 5AF1BFDC2E1C50D30096B53C /* omsdk.js */; };
 		5AF1BFDF2E1C50D30096B53C /* mraid.js in Resources */ = {isa = PBXBuildFile; fileRef = 5AF1BFDB2E1C50D30096B53C /* mraid.js */; };
 		5AF5EA532E13580F002D80C1 /* PBMORTBUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AF5EA122E13580F002D80C1 /* PBMORTBUser.h */; };
 		5AF5EA542E13580F002D80C1 /* PBMAbstractCreative.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AF5E9C02E13580F002D80C1 /* PBMAbstractCreative.h */; };
@@ -960,8 +963,12 @@
 		3A6D7AF32ED65676001099B1 /* Life360Bid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360Bid.swift; sourceTree = "<group>"; };
 		3A826B132F61E42800EB10C0 /* Life360Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360Renderer.swift; sourceTree = "<group>"; };
 		3A8E19102F60C12400720D1B /* Life360PrebidRendererInternal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360PrebidRendererInternal.swift; sourceTree = "<group>"; };
+		3AC452A030474F96009C1050 /* omsdk.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = omsdk.js; sourceTree = "<group>"; };
 		3AED93332FD34398007E2C44 /* Life360Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360Utils.swift; sourceTree = "<group>"; };
 		3AED93352FD34398007E2C44 /* Life360Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360Ads.swift; sourceTree = "<group>"; };
+		3AF3600A2FE10001007E2C44 /* Life360NativeOMUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360NativeOMUtils.swift; sourceTree = "<group>"; };
+		3AF3600C2FE10002007E2C44 /* OMSessionWrapperRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSessionWrapperRegistry.swift; sourceTree = "<group>"; };
+		3AF3600E2FE10003007E2C44 /* Life360NativeOMUtilsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Life360NativeOMUtilsTests.swift; sourceTree = "<group>"; };
 		3AFDF6422EC808D600FC7AA2 /* Life360BidRequester.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Life360BidRequester.h; sourceTree = "<group>"; };
 		3AFDF6432EC808D600FC7AA2 /* Life360BidRequester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Life360BidRequester.m; sourceTree = "<group>"; };
 		3AFDF6502ECD1DE500FC7AA2 /* Life360ParameterBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Life360ParameterBuilder.h; sourceTree = "<group>"; };
@@ -1206,7 +1213,6 @@
 		5AE4E5E72DB865B4002C84DF /* DeferredModalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeferredModalState.swift; sourceTree = "<group>"; };
 		5AE4E5EA2DB87172002C84DF /* ModalManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalManagerDelegate.swift; sourceTree = "<group>"; };
 		5AF1BFDB2E1C50D30096B53C /* mraid.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mraid.js; sourceTree = "<group>"; };
-		5AF1BFDC2E1C50D30096B53C /* omsdk.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = omsdk.js; sourceTree = "<group>"; };
 		5AF5E9242E13580F002D80C1 /* InternalUserConsentDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InternalUserConsentDataManager.m; sourceTree = "<group>"; };
 		5AF5E9272E13580F002D80C1 /* PBMOpenMeasurementEventTracker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBMOpenMeasurementEventTracker.m; sourceTree = "<group>"; };
 		5AF5E9282E13580F002D80C1 /* PBMOpenMeasurementFriendlyObstructionTypeBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBMOpenMeasurementFriendlyObstructionTypeBridge.m; sourceTree = "<group>"; };
@@ -2160,8 +2166,8 @@
 		5AF1BFDD2E1C50D30096B53C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3AC452A030474F96009C1050 /* omsdk.js */,
 				5AF1BFDB2E1C50D30096B53C /* mraid.js */,
-				5AF1BFDC2E1C50D30096B53C /* omsdk.js */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -4040,7 +4046,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AF1BFDE2E1C50D30096B53C /* omsdk.js in Resources */,
+				3AC452A130474F96009C1050 /* omsdk.js in Resources */,
 				5AF1BFDF2E1C50D30096B53C /* mraid.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
