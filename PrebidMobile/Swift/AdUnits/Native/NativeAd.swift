@@ -35,14 +35,12 @@ public class NativeAd: NSObject, CacheExpiryDelegate {
     var bid: Bid?
     
     private static let nativeAdIABShouldBeViewableForTrackingDuration = 1.0
-    private static let nativeAdCheckViewabilityForTrackingFrequency = 0.25
-    
+
     //NativeAd Expire
     private var expired = false
     //Impression Tracker
-    private var targetViewabilityValue = 0
-    private var viewabilityTimer: Timer?
-    private var viewabilityValue = 0
+    private var exposureChecker: Life360ViewExposureChecking?
+    private var viewabilityCountdownTimer: PausableCountdownTimer?
     private var impressionHasBeenTracked = false
     private weak var viewForTracking: UIView?
     //Click Handling
@@ -231,9 +229,11 @@ public class NativeAd: NSObject, CacheExpiryDelegate {
     private func unregisterViewFromTracking() {
         detachAllGestureRecognizers()
         viewForTracking = nil
-        invalidateTimer(viewabilityTimer)
+        exposureChecker = nil
+        viewabilityCountdownTimer?.pause()
+        viewabilityCountdownTimer = nil
     }
-    
+
     //MARK: NativeAd Expire
     func cacheExpired() {
         if viewForTracking == nil {
@@ -242,49 +242,37 @@ public class NativeAd: NSObject, CacheExpiryDelegate {
             unregisterViewFromTracking()
         }
     }
-    
-    private func invalidateTimer(_ timer :Timer?) {
-        if let timer = timer, timer.isValid {
-            timer.invalidate()
-        }
-    }
-    
-    
+
     //MARK: Impression Tracking
     private func setupViewabilityTracker() {
-        let requiredAmountOfSimultaneousViewableEvents = lround(NativeAd.nativeAdIABShouldBeViewableForTrackingDuration / NativeAd.nativeAdCheckViewabilityForTrackingFrequency) + 1
-        
-        targetViewabilityValue = lround(pow(Double(2),Double(requiredAmountOfSimultaneousViewableEvents)) - 1)
-        
-        Log.debug("\n\trequiredAmountOfSimultaneousViewableEvents=\(requiredAmountOfSimultaneousViewableEvents) \n\ttargetViewabilityValue=\(targetViewabilityValue)")
-        
-        viewabilityTimer = Timer.scheduledTimer(withTimeInterval: NativeAd.nativeAdCheckViewabilityForTrackingFrequency, repeats: true) { [weak self] timer in
-            guard let strongSelf = self else {
-                timer.invalidate()
-                Log.debug("FAILED TO ACQUIRE strongSelf viewabilityTimer")
-                return
-            }
-            strongSelf.checkViewability()
-            if (strongSelf.viewForTracking == nil) {
-                timer.invalidate()
-            }
+        guard let viewForTracking else { return }
+
+        let countdownTimer = PausableCountdownTimer(duration: NativeAd.nativeAdIABShouldBeViewableForTrackingDuration) { [weak self] in
+            self?.trackImpression()
+        }
+        viewabilityCountdownTimer = countdownTimer
+
+        // Life360ViewExposureChecker drives its callback off scroll events rather than polling, so
+        // exposure is only recalculated when the ad's position on screen could actually have changed.
+        exposureChecker = Factory.life360ViewExposureCheckerType.init(view: viewForTracking) { [weak self] exposure, _ in
+            self?.handleExposureChange(exposure)
         }
     }
-    
-    @objc private func checkViewability() {
-        viewabilityValue = (viewabilityValue << 1 | (viewForTracking?.pb_isAtLeastHalfViewable() == true ? 1 : 0)) & targetViewabilityValue
-        let isIABViewable = (viewabilityValue == targetViewabilityValue)
-        Log.debug("\n\tviewabilityValue=\(viewabilityValue) \n\tself.targetViewabilityValue=\(targetViewabilityValue) \n\tisIABViewable=\(isIABViewable)")
-        if isIABViewable {
-            trackImpression()
+
+    private func handleExposureChange(_ exposure: ViewExposure) {
+        Log.debug("Native ad exposedPercentage=\(exposure.exposedPercentage)")
+        if exposure.exposedPercentage > 0 {
+            viewabilityCountdownTimer?.resume()
+        } else {
+            viewabilityCountdownTimer?.pause()
         }
     }
-    
+
     private func trackImpression() {
         if !impressionHasBeenTracked {
             Log.debug("Firing impression trackers")
             fireEventTrackers()
-            viewabilityTimer?.invalidate()
+            exposureChecker = nil
             eventManager.trackEvent(.impression)
             impressionHasBeenTracked = true
         }

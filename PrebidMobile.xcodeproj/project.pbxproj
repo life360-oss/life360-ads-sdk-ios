@@ -48,6 +48,8 @@
 		3A46AA312EF5D5410010B2A6 /* Life360ViewExposureChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A46AA302EF5D5410010B2A6 /* Life360ViewExposureChecker.m */; };
 		3A46AA322EF5D5410010B2A6 /* Life360Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A46AA2F2EF5D5410010B2A6 /* Life360Utils.m */; };
 		3A46AA352EF5D5740010B2A6 /* Life360ViewExposureChecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A46AA342EF5D5740010B2A6 /* Life360ViewExposureChecker.h */; };
+		218D00C4ACC947A59ED91AE5 /* PausableCountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065AA3433044155983FA07F /* PausableCountdownTimer.swift */; };
+		FF782EE0AAC84719ACB73880 /* Life360ViewExposureChecking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F0C740153342D5BFCB35E8 /* Life360ViewExposureChecking.swift */; };
 		3A46AA362EF5D5740010B2A6 /* Life360Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A46AA332EF5D5740010B2A6 /* Life360Utils.h */; };
 		3A48DDEB302FD3EA007D138B /* AppHarbrSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A48DDEA302FD3EA007D138B /* AppHarbrSDK.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		3A61D27A2FBFC980005F8B0A /* OMSDK_Life360.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A61D2792FBFC980005F8B0A /* OMSDK_Life360.xcframework */; };
@@ -953,6 +955,8 @@
 		3A46AA302EF5D5410010B2A6 /* Life360ViewExposureChecker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Life360ViewExposureChecker.m; sourceTree = "<group>"; };
 		3A46AA332EF5D5740010B2A6 /* Life360Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Life360Utils.h; sourceTree = "<group>"; };
 		3A46AA342EF5D5740010B2A6 /* Life360ViewExposureChecker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Life360ViewExposureChecker.h; sourceTree = "<group>"; };
+		5065AA3433044155983FA07F /* PausableCountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausableCountdownTimer.swift; sourceTree = "<group>"; };
+		24F0C740153342D5BFCB35E8 /* Life360ViewExposureChecking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360ViewExposureChecking.swift; sourceTree = "<group>"; };
 		3A48DDEA302FD3EA007D138B /* AppHarbrSDK.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:LKQPX9YH5G:Canopy Media Ltd."; lastKnownFileType = wrapper.xcframework; name = AppHarbrSDK.xcframework; path = Frameworks/AppHarbrSDK.xcframework; sourceTree = "<group>"; };
 		3A61D2792FBFC980005F8B0A /* OMSDK_Life360.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OMSDK_Life360.xcframework; path = Frameworks/OMSDK_Life360.xcframework; sourceTree = "<group>"; };
 		3A67E2BA302D42C4004E3ED4 /* Life360AppHarbrQualityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360AppHarbrQualityProvider.swift; sourceTree = "<group>"; };
@@ -1872,6 +1876,8 @@
 				B6DA79F1C9609A18EC09622A /* Life360GAMUtils.swift */,
 				7F53C50C2FC198B1BBF17020 /* Life360QueryParameterStore.swift */,
 				810F85C11222A60B07AE86E0 /* Life360RequestURLBuilder.swift */,
+				5065AA3433044155983FA07F /* PausableCountdownTimer.swift */,
+				24F0C740153342D5BFCB35E8 /* Life360ViewExposureChecking.swift */,
 			);
 			path = Life360;
 			sourceTree = "<group>";
@@ -4758,6 +4764,8 @@
 				FAEE4D1F262DC2B200AD9966 /* Utils.swift in Sources */,
 				EB1396D82FE3A937CC6B78CC /* Life360QueryParameterStore.swift in Sources */,
 				9A9277EDA48FEB29243E1B4A /* Life360RequestURLBuilder.swift in Sources */,
+				218D00C4ACC947A59ED91AE5 /* PausableCountdownTimer.swift in Sources */,
+				FF782EE0AAC84719ACB73880 /* Life360ViewExposureChecking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
