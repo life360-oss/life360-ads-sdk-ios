@@ -92,6 +92,13 @@ public class NativeRequest: AdUnit {
         set { self.adUnitConfig.nativeAdConfiguration?.markupRequestObject.ext = newValue }
     }
     
+    /// Supported API frameworks for the impression, sent as `imp.native.api`.
+    /// Defaults to OMID so Open Measurement resources are offered by the exchange.
+    public var api: [NSNumber] {
+        get { adUnitConfig.nativeAdConfiguration?.api ?? [] }
+        set { adUnitConfig.nativeAdConfiguration?.api = newValue }
+    }
+    
     /// The configuration ID for the ad unit.
     public var configId: String {
         get { adUnitConfig.configId }
@@ -154,6 +161,10 @@ public class NativeRequest: AdUnit {
         
         if let ver = adUnitConfig.nativeAdConfiguration?.version {
             native.ver = ver;
+        }
+        
+        if let api = adUnitConfig.nativeAdConfiguration?.api, !api.isEmpty {
+            native.api = api
         }
         
         return native.jsonDictionary

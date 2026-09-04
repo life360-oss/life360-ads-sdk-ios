@@ -23,6 +23,8 @@
 		0012D7832E0BE60C007013F3 /* TransactionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7822E0BE602007013F3 /* TransactionFactory.swift */; };
 		0012D78A2E0BFAC3007013F3 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7892E0BFABF007013F3 /* DisplayView.swift */; };
 		0012D7912E0C311D007013F3 /* OMSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7902E0C3109007013F3 /* OMSession.swift */; };
+		0012D7AB2E0C540C007013F4 /* OMSessionWrapperRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7AA2E0C540C007013F4 /* OMSessionWrapperRegistry.swift */; };
+		218D00C4ACC947A59ED91AE6 /* Life360NativeOMUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F0C740153342D5BFCB35E9 /* Life360NativeOMUtils.swift */; };
 		0012D7A32E0C3210007013F3 /* OpenMeasurementFriendlyObstructionPurpose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7A22E0C320D007013F3 /* OpenMeasurementFriendlyObstructionPurpose.swift */; };
 		0012D7AB2E0C540C007013F3 /* OMSessionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7AA2E0C540C007013F3 /* OMSessionWrapper.swift */; };
 		0012D7B32E0D67A7007013F3 /* OMSDKVersionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7B22E0D67A7007013F3 /* OMSDKVersionProvider.swift */; };
@@ -36,6 +38,8 @@
 		00614C902DE87D6A00A61974 /* AdLoaderFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00614C8F2DE87D6900A61974 /* AdLoaderFlowDelegate.swift */; };
 		00CD459A2DE9C7E4009D1EEA /* AdLoadFlowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD45992DE9C7E1009D1EEA /* AdLoadFlowState.swift */; };
 		0D1EB57FF98FBF1DE082E179 /* NativeAdViewabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1A01087C8D2FF9D6D60D82 /* NativeAdViewabilityTests.swift */; };
+		0D1EB57FF98FBF1DE082E17B /* NativeAdOpenMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1A01087C8D2FF9D6D60D84 /* NativeAdOpenMeasurementTests.swift */; };
+		0D1EB57FF98FBF1DE082E17A /* Life360NativeOMUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1A01087C8D2FF9D6D60D83 /* Life360NativeOMUtilsTests.swift */; };
 		13B95C8637F8231D861C9D08 /* Life360AdLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6873CFAE748275486EE29AC8 /* Life360AdLayout.swift */; };
 		218D00C4ACC947A59ED91AE5 /* PausableCountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065AA3433044155983FA07F /* PausableCountdownTimer.swift */; };
 		2A9DDDCC2C5BE190000EA4A0 /* PrebidEventDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9DDDCB2C5BE190000EA4A0 /* PrebidEventDelegate.swift */; };
@@ -925,6 +929,8 @@
 		0012D7822E0BE602007013F3 /* TransactionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFactory.swift; sourceTree = "<group>"; };
 		0012D7892E0BFABF007013F3 /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
 		0012D7902E0C3109007013F3 /* OMSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSession.swift; sourceTree = "<group>"; };
+		0012D7AA2E0C540C007013F4 /* OMSessionWrapperRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSessionWrapperRegistry.swift; sourceTree = "<group>"; };
+		24F0C740153342D5BFCB35E9 /* Life360NativeOMUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360NativeOMUtils.swift; sourceTree = "<group>"; };
 		0012D7A22E0C320D007013F3 /* OpenMeasurementFriendlyObstructionPurpose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMeasurementFriendlyObstructionPurpose.swift; sourceTree = "<group>"; };
 		0012D7AA2E0C540C007013F3 /* OMSessionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSessionWrapper.swift; sourceTree = "<group>"; };
 		0012D7B22E0D67A7007013F3 /* OMSDKVersionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSDKVersionProvider.swift; sourceTree = "<group>"; };
@@ -1770,6 +1776,8 @@
 		B6DA79F1C9609A18EC09622A /* Life360GAMUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360GAMUtils.swift; sourceTree = "<group>"; };
 		C2C4D48A4D7937F085F698A3 /* Life360GeoLocationParameterBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Life360GeoLocationParameterBuilder.m; sourceTree = "<group>"; };
 		DF1A01087C8D2FF9D6D60D82 /* NativeAdViewabilityTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NativeAdViewabilityTests.swift; sourceTree = "<group>"; };
+		DF1A01087C8D2FF9D6D60D84 /* NativeAdOpenMeasurementTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NativeAdOpenMeasurementTests.swift; sourceTree = "<group>"; };
+		DF1A01087C8D2FF9D6D60D83 /* Life360NativeOMUtilsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Life360NativeOMUtilsTests.swift; sourceTree = "<group>"; };
 		E557D4B62ED219CB00E5580A /* UserAgentPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgentPersistence.swift; sourceTree = "<group>"; };
 		E5D79CAD2FAE93BF00C0C44A /* PluginRendererFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRendererFactory.swift; sourceTree = "<group>"; };
 		E5D79CAF2FAE951C00C0C44A /* PluginRendererFactoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRendererFactoryTest.swift; sourceTree = "<group>"; };
@@ -1874,6 +1882,7 @@
 				810F85C11222A60B07AE86E0 /* Life360RequestURLBuilder.swift */,
 				5065AA3433044155983FA07F /* PausableCountdownTimer.swift */,
 				24F0C740153342D5BFCB35E8 /* Life360ViewExposureChecking.swift */,
+				24F0C740153342D5BFCB35E9 /* Life360NativeOMUtils.swift */,
 			);
 			path = Life360;
 			sourceTree = "<group>";
@@ -3078,6 +3087,7 @@
 				0012D7A22E0C320D007013F3 /* OpenMeasurementFriendlyObstructionPurpose.swift */,
 				0012D7902E0C3109007013F3 /* OMSession.swift */,
 				0012D7AA2E0C540C007013F3 /* OMSessionWrapper.swift */,
+				0012D7AA2E0C540C007013F4 /* OMSessionWrapperRegistry.swift */,
 			);
 			path = OpenMeasurement;
 			sourceTree = "<group>";
@@ -3561,6 +3571,8 @@
 				929638B927AB1FE900D30F3D /* NativeAssetObjectsTests */,
 				929638C427ABB64300D30F3D /* NativeAdMarkupAssetTests.swift */,
 				DF1A01087C8D2FF9D6D60D82 /* NativeAdViewabilityTests.swift */,
+				DF1A01087C8D2FF9D6D60D84 /* NativeAdOpenMeasurementTests.swift */,
+				DF1A01087C8D2FF9D6D60D83 /* Life360NativeOMUtilsTests.swift */,
 			);
 			path = NativeUnitTests;
 			sourceTree = "<group>";
@@ -4342,6 +4354,8 @@
 				335B242095269A5F583128FE /* Life360QueryParameterStoreTests.swift in Sources */,
 				A1AEEB85B4A8175DAFFB9CF8 /* Life360BidRequesterQueryParamsTest.swift in Sources */,
 				0D1EB57FF98FBF1DE082E179 /* NativeAdViewabilityTests.swift in Sources */,
+				0D1EB57FF98FBF1DE082E17B /* NativeAdOpenMeasurementTests.swift in Sources */,
+				0D1EB57FF98FBF1DE082E17A /* Life360NativeOMUtilsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4373,6 +4387,7 @@
 				5387042A2DE0848D006EA150 /* LocationManagerProtocol.swift in Sources */,
 				53269D55282E6D0F0098550D /* ServerEvent.swift in Sources */,
 				0012D7AB2E0C540C007013F3 /* OMSessionWrapper.swift in Sources */,
+				0012D7AB2E0C540C007013F4 /* OMSessionWrapperRegistry.swift in Sources */,
 				5A423CA82DBA4EA7008EE9EA /* ORTBRewardedCompletionVideoEndcard.swift in Sources */,
 				53137BD42D563CF400E417CE /* SKOverlayManager.swift in Sources */,
 				2A9DDDD42C63665A000EA4A0 /* PBMEventDelegateHelper.swift in Sources */,
@@ -4763,6 +4778,7 @@
 				EB1396D82FE3A937CC6B78CC /* Life360QueryParameterStore.swift in Sources */,
 				9A9277EDA48FEB29243E1B4A /* Life360RequestURLBuilder.swift in Sources */,
 				218D00C4ACC947A59ED91AE5 /* PausableCountdownTimer.swift in Sources */,
+				218D00C4ACC947A59ED91AE6 /* Life360NativeOMUtils.swift in Sources */,
 				FF782EE0AAC84719ACB73880 /* Life360ViewExposureChecking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

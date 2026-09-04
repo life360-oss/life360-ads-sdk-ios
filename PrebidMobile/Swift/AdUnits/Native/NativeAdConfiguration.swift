@@ -25,6 +25,10 @@ public class NativeAdConfiguration: NSObject {
     /// The object containing the request details for the native markup.
     public var markupRequestObject = NativeMarkupRequestObject()
     
+    /// Supported API frameworks for the impression, sent as `imp.native.api`. Defaults to OMID because
+    /// exchanges that gate verification resources on this signal return none when it is absent.
+    public var api: [NSNumber] = [NSNumber(value: Signals.Api.OMID_1.value)]
+    
     /// Initializes a new instance of `NativeAdMarkup` with default values.
     public override init() {
         super.init()
@@ -35,6 +39,9 @@ public class NativeAdConfiguration: NSObject {
     init(nativeParameters: NativeParameters) {
         version = nativeParameters.version
         markupRequestObject = NativeMarkupRequestObject(nativeParameters: nativeParameters)
+        if let api = nativeParameters.api {
+            self.api = api
+        }
         
         super.init()
     }

@@ -445,6 +445,17 @@ class PrebidParameterBuilderTest: XCTestCase {
         }
     }
     
+    /// Native runs an OM session even though it goes through the original API, which otherwise omits
+    /// these — and exchanges return no verification resources without them.
+    func testNativeOriginalAPIDeclaresOpenMeasurementSupport() {
+        let adUnit = NativeRequest(configId: "test", assets: [NativeAssetTitle(length: 90, required: true)])
+        let bidRequest = buildBidRequest(with: adUnit.adUnitConfig)
+
+        XCTAssertEqual(bidRequest.source.extOMID.omidpn, "Life360")
+        XCTAssertEqual(bidRequest.source.extOMID.omidpv, PBMFunctions.sdkVersion())
+        XCTAssertEqual(bidRequest.imp.first?.native?.api, [NSNumber(value: Signals.Api.OMID_1.value)])
+    }
+
     func testDefaultBannerParameters_DisplayBanner_OriginalAPI() {
         let adUnit = BannerAdUnit(configId: "test", size: CGSize(width: 300, height: 250))
         let bidRequest = buildBidRequest(with: adUnit.adUnitConfig)
