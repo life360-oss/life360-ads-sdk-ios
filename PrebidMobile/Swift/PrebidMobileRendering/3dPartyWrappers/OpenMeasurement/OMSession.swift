@@ -21,6 +21,12 @@ public protocol OMSession: NSObjectProtocol {
     var eventTracker: EventTrackerProtocol { get }
 
     func start()
+
+    /// The rendering path relies on the session being deallocated to finish it, but a caller that
+    /// outlives the ad view — such as a native ad whose registered view is swapped out — has to end it
+    /// explicitly so the verification script is told the ad is gone.
+    func stop()
+
     func addFriendlyObstruction(_ friendlyObstruction: UIView,
                                 purpose: OpenMeasurementFriendlyObstructionPurpose)
 }

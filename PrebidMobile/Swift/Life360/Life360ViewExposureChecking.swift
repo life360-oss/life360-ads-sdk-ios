@@ -9,4 +9,8 @@ import UIKit
 @objc(Life360ViewExposureChecking) @_spi(PBMInternal) public
 protocol Life360ViewExposureChecking: NSObjectProtocol {
     init(view: UIView, onExposureChange: ((ViewExposure, Error?) -> Void)?)
+
+    /// Views overlapping the ad that draw no opaque content. Open Measurement needs these declared as
+    /// friendly obstructions or it counts them against the ad's viewable area.
+    func friendlyObstructionViews() -> [UIView]
 }

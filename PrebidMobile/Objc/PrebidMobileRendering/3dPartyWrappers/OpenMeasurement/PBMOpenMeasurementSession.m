@@ -85,8 +85,8 @@
 }
 
 - (void)stop {
+    // An explicit stop followed by release means a second stop is expected, not an error.
     if (!self.session) {
-        PBMLogError(@"Measurement Session is missed.");
         return;
     }
     

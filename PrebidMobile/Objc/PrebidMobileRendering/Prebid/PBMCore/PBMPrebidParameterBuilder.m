@@ -118,7 +118,10 @@
 
     PBMORTBSourceExtOMID *extSource = [PBMORTBSourceExtOMID new];
     
-    if (!self.adConfiguration.adConfiguration.isOriginalAPI) {
+    // Native goes through the original API but still runs an OM session, and exchanges gate verification
+    // resources on these being present.
+    if (!self.adConfiguration.adConfiguration.isOriginalAPI
+        || self.adConfiguration.nativeAdConfiguration != nil) {
         extSource.omidpn = @"Life360";
         extSource.omidpv = [PBMFunctions sdkVersion];
     }
@@ -295,6 +298,10 @@
                 NSString * const ver = self.adConfiguration.nativeAdConfiguration.version;
                 if (ver) {
                     nextNative.ver = ver;
+                }
+                NSArray<NSNumber *> * const api = self.adConfiguration.nativeAdConfiguration.api;
+                if (api.count > 0) {
+                    nextNative.api = api;
                 }
             }
         }

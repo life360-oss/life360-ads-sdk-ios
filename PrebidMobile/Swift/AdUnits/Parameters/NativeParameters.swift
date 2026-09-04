@@ -57,4 +57,8 @@ public class NativeParameters: NSObject {
     
     /// A placeholder for custom JSON agreed to by the parties to support flexibility beyond the standard specification.
     public var ext: [String: Any]?
+    
+    /// Supported API frameworks for the impression, sent as `imp.native.api`.
+    /// Leave `nil` to keep the SDK default, which advertises OMID support.
+    public var api: [NSNumber]?
 }

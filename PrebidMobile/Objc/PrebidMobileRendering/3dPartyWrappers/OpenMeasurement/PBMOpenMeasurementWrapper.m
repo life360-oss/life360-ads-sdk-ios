@@ -70,6 +70,10 @@ static NSString * const PBMOpenMeasurementCustomRefId   = @"";
     if (self) {
         _libraryManager = PrebidJSLibraryManager.shared;
         [self initializeOMSDK];
+
+        // The Swift half of the SDK can't name this class, so publish ourselves for the native display
+        // path to resolve by protocol.
+        [PBMOMSessionWrapperRegistry register:self];
     }
     
     return self;

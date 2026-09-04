@@ -43,6 +43,7 @@ public class NativeAd: NSObject, CacheExpiryDelegate {
     var viewabilityTimers: [Int: PausableCountdownTimer] = [:]
     var impressionHasBeenTracked = false
     private weak var viewForTracking: UIView?
+    var omSession: OMSession?
     //Click Handling
     private var gestureRecognizerRecords = [NativeAdGestureRecognizerRecord]()
     
@@ -220,7 +221,11 @@ public class NativeAd: NSObject, CacheExpiryDelegate {
             return false
         } else {
             viewForTracking = view
+            // Before the exposure checker: it can report exposure the moment it is built, and OM rejects
+            // an impression that arrives before `start` and `loaded`.
+            setupOpenMeasurementSession(for: view)
             setupViewabilityTracker()
+            registerFriendlyObstructions()
             attachGestureRecognizersToNativeView(nativeView: view, withClickableViews: clickableViews)
             return true
         }
@@ -232,6 +237,48 @@ public class NativeAd: NSObject, CacheExpiryDelegate {
         exposureChecker = nil
         viewabilityTimers.values.forEach { $0.pause() }
         viewabilityTimers.removeAll()
+        omSession?.stop()
+        omSession = nil
+    }
+
+    //MARK: Open Measurement
+
+    /// Native display has no WebView for the OM SDK to instrument, so the session is handed the
+    /// app-built view directly and told the ad is loaded up front — `impressionOccurred` is only valid
+    /// after `loaded`.
+    private func setupOpenMeasurementSession(for view: UIView) {
+        guard let nativeAdMarkup,
+              let resource = Life360NativeOMUtils.verificationResource(in: nativeAdMarkup) else {
+            // Most demand carries no OM resource, so this is the normal path rather than a failure.
+            return
+        }
+
+        guard let wrapper = OMSessionWrapperRegistry.wrapper else {
+            Log.error("Open Measurement is unavailable, native display measurement will not be reported")
+            return
+        }
+
+        guard let session = wrapper.initializeNativeDisplaySession(
+            view,
+            omidJSUrl: resource.url,
+            vendorKey: resource.vendorKey,
+            parameters: resource.verificationParameters
+        ) else {
+            Log.error("Could not create an Open Measurement session for the native ad")
+            return
+        }
+
+        omSession = session
+        session.start()
+        session.eventTracker.trackEvent(.loaded)
+    }
+
+    private func registerFriendlyObstructions() {
+        guard let omSession, let exposureChecker else { return }
+
+        for obstruction in exposureChecker.friendlyObstructionViews() {
+            omSession.addFriendlyObstruction(obstruction, purpose: .transparentOverlay)
+        }
     }
 
     //MARK: NativeAd Expire
@@ -336,6 +383,7 @@ public class NativeAd: NSObject, CacheExpiryDelegate {
         Log.debug("Firing event type \(type.value) trackers")
         if (EventType.Impression == type) {
             impressionHasBeenTracked = true
+            omSession?.eventTracker.trackEvent(.impression)
             eventManager.trackEvent(.impression)
         }
         
