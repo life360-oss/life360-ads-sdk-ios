@@ -13,6 +13,11 @@
  limitations under the License.
  */
 
+// SwiftImport.h pulls in the generated Swift header that defines
+// @objc(Life360ViewExposureChecking). It must precede Life360ViewExposureChecker.h so the
+// protocol is fully defined where the @interface declares conformance to it.
+#import "SwiftImport.h"
+
 #import "Life360ViewExposureChecker.h"
 #import "Life360Utils.h"
 #import "Log+Extensions.h"
@@ -20,13 +25,12 @@
 #ifdef DEBUG
     #import "Prebid+TestExtension.h"
 #endif
-#import "SwiftImport.h"
 
 /**
  Modified from PBMViewExposureChecker to support scroll based tracking instead of timer based polling
  Also fixes issue where tracking would stop during user touch
  */
-@interface Life360ViewExposureChecker()
+@interface Life360ViewExposureChecker() <Life360ViewExposureChecking>
 
 @property (nonatomic, nullable, weak, readonly) UIView *testedView;
 @property (nonatomic, assign, readwrite) CGRect clippedRect;

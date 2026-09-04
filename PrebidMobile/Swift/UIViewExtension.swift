@@ -16,40 +16,7 @@ limitations under the License.
 import UIKit
 
 extension UIView {
-    
-    func pb_isAtLeastHalfViewable() -> Bool{
-        if isHidden {
-            return false
-        }
-        if (window == nil) {
-            return false
-        }
-        var isInHiddenSuperview = false
-        var currentView = self
-        while let ancestorView = currentView.superview {
-            if ancestorView.isHidden {
-                isInHiddenSuperview = true
-                break
-            }
-            currentView = ancestorView
-        }
-        
-        if isInHiddenSuperview {
-            return false
-        }
-        
-        let screenRect = UIScreen.main.bounds
-        let normalizedSelfRect = convert(self.bounds, to: nil)
-        let intersection = screenRect.intersection(normalizedSelfRect)
-        if intersection.equalTo(.null) {
-            return false
-        }
-        
-        let intersectionArea = intersection.width * intersection.height
-        let selfArea = normalizedSelfRect.width * normalizedSelfRect.height
-        return intersectionArea >= 0.5 * selfArea
-    }
-    
+
     func searchSubviews(targetClassName: String) -> UIView? {
         let viewClassName = String(describing: type(of: self))
         

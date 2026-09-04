@@ -53,6 +53,12 @@ class Factory: NSObject {
                                     adUnitConfiguration: adUnitConfiguration)
     }
     
+    // MARK: Life360ViewExposureChecker
+    // Needed in order to instantiate ObjC class from Swift
+    static let life360ViewExposureChecker: Life360ViewExposureChecking.Type = {
+        NSClassFromString("Life360ViewExposureChecker") as! Life360ViewExposureChecking.Type
+    }()
+
     // MARK: WinNotifier
     
     @objc public static let WinNotifierType: WinNotifier.Type = {
