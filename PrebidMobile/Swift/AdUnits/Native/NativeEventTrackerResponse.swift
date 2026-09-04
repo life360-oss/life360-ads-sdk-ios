@@ -22,7 +22,7 @@ public class NativeEventTrackerResponse: NSObject, JsonDecodable {
     /// Type of event to track.
     /// See Event Types table.
     public var event: Int?
-    
+
     /// Type of tracking requested.
     /// See Event Tracking Methods table.
     public var method: Int?

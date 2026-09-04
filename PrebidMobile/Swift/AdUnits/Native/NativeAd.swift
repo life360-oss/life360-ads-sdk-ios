@@ -33,15 +33,15 @@ public class NativeAd: NSObject, CacheExpiryDelegate {
     // MARK: - Internal properties
     
     var bid: Bid?
-    
-    private static let nativeAdIABShouldBeViewableForTrackingDuration = 1.0
 
     //NativeAd Expire
     private var expired = false
     //Impression Tracker
-    private var exposureChecker: Life360ViewExposureChecking?
-    private var viewabilityCountdownTimer: PausableCountdownTimer?
-    private var impressionHasBeenTracked = false
+    var exposureChecker: Life360ViewExposureChecking?
+    // One independent countdown per duration-gated event type the response actually asked to track,
+    // keyed by `EventType.value`
+    var viewabilityTimers: [Int: PausableCountdownTimer] = [:]
+    var impressionHasBeenTracked = false
     private weak var viewForTracking: UIView?
     //Click Handling
     private var gestureRecognizerRecords = [NativeAdGestureRecognizerRecord]()
@@ -230,8 +230,8 @@ public class NativeAd: NSObject, CacheExpiryDelegate {
         detachAllGestureRecognizers()
         viewForTracking = nil
         exposureChecker = nil
-        viewabilityCountdownTimer?.pause()
-        viewabilityCountdownTimer = nil
+        viewabilityTimers.values.forEach { $0.pause() }
+        viewabilityTimers.removeAll()
     }
 
     //MARK: NativeAd Expire
@@ -246,49 +246,113 @@ public class NativeAd: NSObject, CacheExpiryDelegate {
     //MARK: Impression Tracking
     private func setupViewabilityTracker() {
         guard let viewForTracking else { return }
-
-        let countdownTimer = PausableCountdownTimer(duration: NativeAd.nativeAdIABShouldBeViewableForTrackingDuration) { [weak self] in
-            self?.trackImpression()
+        
+        // Setup viewability timers for each event type
+        // ORTB Native event type 1: One pixel in view impression
+        // ORTB Native event type 2: 50% in view for 1 continuous second (MRC standard).
+        // ORTB Native event type 3: 100% in view for 1 continuous second (GroupM standard).
+        // ORTB Native event type 4: 50% in view for 2 continuous seconds.
+        let recievedEventTypes: Set<Int> = Set((eventTrackers ?? []).compactMap(\.event))
+        for eventType in recievedEventTypes {
+            var duration: TimeInterval = switch eventType {
+                case EventType.ViewableImpression50.value, EventType.ViewableImpression100.value: 1.0
+                case EventType.ViewableVideoImpression50.value: 2.0
+                default: 0.0
+            }
+            if (duration > 0) {
+                viewabilityTimers[eventType] = PausableCountdownTimer(duration: duration) { [weak self] in
+                    self?.fireEventTrackers(for: EventType(integerLiteral: eventType))
+                }
+            }
         }
-        viewabilityCountdownTimer = countdownTimer
 
         // Life360ViewExposureChecker drives its callback off scroll events rather than polling, so
         // exposure is only recalculated when the ad's position on screen could actually have changed.
-        exposureChecker = Factory.life360ViewExposureCheckerType.init(view: viewForTracking) { [weak self] exposure, _ in
+        exposureChecker = Factory.life360ViewExposureChecker.init(view: viewForTracking) { [weak self] exposure, _ in
             self?.handleExposureChange(exposure)
         }
     }
 
-    private func handleExposureChange(_ exposure: ViewExposure) {
+    func handleExposureChange(_ exposure: ViewExposure) {
         Log.debug("Native ad exposedPercentage=\(exposure.exposedPercentage)")
-        if exposure.exposedPercentage > 0 {
-            viewabilityCountdownTimer?.resume()
-        } else {
-            viewabilityCountdownTimer?.pause()
+
+        // No dwell duration — fires the moment the ad has any exposure at all.
+        if !impressionHasBeenTracked && exposure.exposedPercentage > 0 {
+            fireEventTrackers(for: .Impression)
+        }
+
+        for (eventType, timer) in viewabilityTimers {
+            switch eventType {
+            case EventType.ViewableImpression50.value:
+                toggle(timer, isExposed: exposure.exposedPercentage >= 50)
+
+            case EventType.ViewableImpression100.value:
+                toggle(timer, isExposed: exposure.exposedPercentage >= 100)
+
+            case EventType.ViewableVideoImpression50.value:
+                toggle(timer, isExposed: exposure.exposedPercentage >= 50)
+
+            default:
+                break
+            }
+        }
+
+        // Stop watching exposure once every event type the response actually asked to track has fired.
+        let allDone = impressionHasBeenTracked && viewabilityTimers.values.allSatisfy { $0.hasFired }
+        if allDone {
+            exposureChecker = nil
         }
     }
 
-    private func trackImpression() {
-        if !impressionHasBeenTracked {
-            Log.debug("Firing impression trackers")
-            fireEventTrackers()
-            exposureChecker = nil
-            eventManager.trackEvent(.impression)
-            impressionHasBeenTracked = true
+    private func toggle(_ timer: PausableCountdownTimer?, isExposed: Bool) {
+        guard let timer else { return }
+        if isExposed {
+            timer.resume()
+        } else {
+            timer.pause()
         }
     }
-    
-    private func fireEventTrackers() {
-        if let eventTrackers = eventTrackers, eventTrackers.count > 0 {
-            let eventTrackersUrls = eventTrackers.compactMap { $0.url }
-            TrackerManager.shared.fireTrackerURLArray(arrayWithURLs: eventTrackersUrls) { [weak self] isTrackerFired in
-                guard let strongSelf = self else {
-                    Log.debug("FAILED TO ACQUIRE strongSelf for fireEventTrackers")
-                    return
-                }
-                if isTrackerFired {
-                    strongSelf.delegate?.adDidLogImpression?(ad: strongSelf)
-                }
+
+    /// A tracker matches `type` if its `event` equals that exact standard event ID, or if it's an
+    /// exchange-specific (500+) / unrecognized ID being folded into the impression milestone.
+    func isEventTypeMatch(_ tracker: NativeEventTrackerResponse, _ type: EventType) -> Bool {
+        let standardEventTypeValues: Set<Int> = [
+            EventType.Impression.value,
+            EventType.ViewableImpression50.value,
+            EventType.ViewableImpression100.value,
+            EventType.ViewableVideoImpression50.value
+        ]
+
+        guard let event = tracker.event, standardEventTypeValues.contains(event) else {
+            return type.value == EventType.Impression.value
+        }
+        return event == type.value
+    }
+
+    /// Fires only the `eventtrackers` entries matching `type`. Exchange-specific (500+) entries have no
+    /// known semantics, so they're treated like a basic impression pixel
+    private func fireEventTrackers(for type: EventType) {
+        
+        Log.debug("Firing event type \(type.value) trackers")
+        if (EventType.Impression == type) {
+            impressionHasBeenTracked = true
+            eventManager.trackEvent(.impression)
+        }
+        
+        guard let eventTrackers, !eventTrackers.isEmpty else { return }
+
+        let urls = eventTrackers
+            .filter { isEventTypeMatch($0, type) }
+            .compactMap { $0.url }
+        guard !urls.isEmpty else { return }
+
+        TrackerManager.shared.fireTrackerURLArray(arrayWithURLs: urls) { [weak self] isTrackerFired in
+            guard let strongSelf = self else {
+                Log.debug("FAILED TO ACQUIRE strongSelf for fireEventTrackers")
+                return
+            }
+            if isTrackerFired, type.value == EventType.Impression.value {
+                strongSelf.delegate?.adDidLogImpression?(ad: strongSelf)
             }
         }
     }

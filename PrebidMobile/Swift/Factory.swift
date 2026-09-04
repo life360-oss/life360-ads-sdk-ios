@@ -55,7 +55,7 @@ class Factory: NSObject {
     
     // MARK: Life360ViewExposureChecker
     // Needed in order to instantiate ObjC class from Swift
-    static let life360ViewExposureCheckerType: Life360ViewExposureChecking.Type = {
+    static let life360ViewExposureChecker: Life360ViewExposureChecking.Type = {
         NSClassFromString("Life360ViewExposureChecker") as! Life360ViewExposureChecking.Type
     }()
 
