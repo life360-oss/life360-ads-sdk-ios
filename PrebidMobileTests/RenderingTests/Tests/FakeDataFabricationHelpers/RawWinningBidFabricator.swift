@@ -15,7 +15,7 @@
 
 import Foundation
 
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 public class RawWinningBidFabricator {
     static func makeRawWinningBid(price: Double?, bidder: String?, cacheID: String?) -> ORTBBid<ORTBBidExt> {

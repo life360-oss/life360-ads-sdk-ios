@@ -7,7 +7,7 @@ let package = Package(
 
     name: "Life360AdsSDK",
     platforms: [
-        .iOS(.v13),
+        .iOS(.v15),
     ],
     products: [
         .library(

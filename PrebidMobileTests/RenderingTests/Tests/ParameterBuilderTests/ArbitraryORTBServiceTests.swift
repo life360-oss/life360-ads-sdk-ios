@@ -14,7 +14,7 @@
   */
 
 import XCTest
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 class ArbitraryORTBServiceTests: XCTestCase {
     
@@ -40,7 +40,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -50,7 +50,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         let expectedORTB = "{\"imp\": [{\"id\": \"1\", \"banner\": {\"format\": [{\"w\": 320, \"h\": 50},{\"w\": 300, \"h\": 250}]}}]}"
         
         let result = ArbitraryORTBService.merge(
-            sdkORTB: try! PBMFunctions.dictionaryFromJSONString(sdkORTB),
+            sdkORTB: try! Functions.dictionaryFromJSONString(sdkORTB),
             impORTB: impORTB,
             globalAdUnitORTB: nil,
             globalORTB: nil
@@ -58,7 +58,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -68,7 +68,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         let expectedORTB = "{\"imp\": [{\"banner\": {\"format\": [{\"w\": 300, \"h\": 250}]}}]}"
         
         let result = ArbitraryORTBService.merge(
-            sdkORTB: try! PBMFunctions.dictionaryFromJSONString(sdkORTB),
+            sdkORTB: try! Functions.dictionaryFromJSONString(sdkORTB),
             impORTB: impORTB,
             globalAdUnitORTB: nil,
             globalORTB: nil
@@ -76,7 +76,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -124,7 +124,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -163,7 +163,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         """
         
         let result = ArbitraryORTBService.merge(
-            sdkORTB: try! PBMFunctions.dictionaryFromJSONString(sdkORTB),
+            sdkORTB: try! Functions.dictionaryFromJSONString(sdkORTB),
             impORTB: impORTB,
             globalAdUnitORTB: nil,
             globalORTB: globalORTB
@@ -171,7 +171,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -217,7 +217,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -255,7 +255,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -292,7 +292,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -336,7 +336,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -380,7 +380,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -432,7 +432,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -472,7 +472,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -516,7 +516,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -569,7 +569,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -614,7 +614,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -653,7 +653,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -692,7 +692,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -730,7 +730,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         """
         
         let result = ArbitraryORTBService.merge(
-            sdkORTB: try! PBMFunctions.dictionaryFromJSONString(sdkORTB),
+            sdkORTB: try! Functions.dictionaryFromJSONString(sdkORTB),
             impORTB: nil,
             globalAdUnitORTB: adUnitORTB,
             globalORTB: nil
@@ -756,7 +756,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -809,7 +809,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -889,7 +889,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -952,7 +952,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1019,7 +1019,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1057,7 +1057,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1094,7 +1094,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1138,7 +1138,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1182,7 +1182,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1234,7 +1234,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1274,7 +1274,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1318,7 +1318,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1371,7 +1371,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1416,7 +1416,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1455,7 +1455,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1494,7 +1494,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1577,7 +1577,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1614,7 +1614,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         """
         
         let result = ArbitraryORTBService.merge(
-            sdkORTB: try! PBMFunctions.dictionaryFromJSONString(sdkORTB),
+            sdkORTB: try! Functions.dictionaryFromJSONString(sdkORTB),
             impORTB: impORTB,
             globalAdUnitORTB: adUnitORTB,
             globalORTB: nil
@@ -1622,7 +1622,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1650,7 +1650,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         """
         
         let result = ArbitraryORTBService.merge(
-            sdkORTB: try! PBMFunctions.dictionaryFromJSONString(sdkORTB),
+            sdkORTB: try! Functions.dictionaryFromJSONString(sdkORTB),
             impORTB: nil,
             globalAdUnitORTB: globalAdUnitORTB,
             globalORTB: globalORTB
@@ -1669,7 +1669,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1725,7 +1725,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
     
@@ -1759,7 +1759,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         """
         
         let result = ArbitraryORTBService.merge(
-            sdkORTB: try! PBMFunctions.dictionaryFromJSONString(sdkORTB),
+            sdkORTB: try! Functions.dictionaryFromJSONString(sdkORTB),
             impORTB: impORTB,
             globalAdUnitORTB: globalAdUnitORTB,
             globalORTB: globalORTB
@@ -1789,7 +1789,7 @@ class ArbitraryORTBServiceTests: XCTestCase {
         
         XCTAssertEqual(
             result as NSDictionary,
-            try? PBMFunctions.dictionaryFromJSONString(expectedORTB) as NSDictionary
+            try? Functions.dictionaryFromJSONString(expectedORTB) as NSDictionary
         )
     }
 
@@ -1829,5 +1829,32 @@ class ArbitraryORTBServiceTests: XCTestCase {
 
         XCTAssertFalse(jsonString.contains("0.050000000000000003"), jsonString)
         XCTAssertFalse(jsonString.contains("0.10000000000000001"), jsonString)
+    }
+
+    // MARK: - Issue #1318 regression
+
+    func testMergeImpORTB_deduplicatesNumbersAlreadySetBySDK_issue1318() throws {
+        let impORTB = """
+        {
+          "video": {
+            "delivery": [1, 3]
+          }
+        }
+        """
+
+        // `JSONSerialization` boxes numbers as `NSNumber`, as the SDK-built request does
+        // for the hardcoded `delivery = @[@(3)]`.
+        let sdkORTB = #"{"imp": [{"id": "1", "video": {"delivery": [3]}}]}"#
+
+        let merged = ArbitraryORTBService.merge(
+            sdkORTB: try Functions.dictionaryFromJSONString(sdkORTB),
+            impORTB: impORTB,
+            globalAdUnitORTB: nil,
+            globalORTB: nil
+        )
+
+        let jsonString = try Functions.jsonString(from: merged)
+
+        XCTAssertEqual(jsonString, #"{"imp":[{"id":"1","video":{"delivery":[3,1]}}]}"#)
     }
 }

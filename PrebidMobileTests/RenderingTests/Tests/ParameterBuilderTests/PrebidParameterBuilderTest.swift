@@ -14,7 +14,7 @@
   */
 
 import XCTest
-@testable import Life360AdsSDK
+@testable @_spi(PBMInternal) import Life360AdsSDK
 
 class PrebidParameterBuilderTest: XCTestCase {
     
@@ -30,6 +30,7 @@ class PrebidParameterBuilderTest: XCTestCase {
     
     override func tearDown() {
         UtilitiesForTesting.resetTargeting(targeting)
+        sdkConfiguration.filterOutUncachedBids = false
         Prebid.reset()
     }
     
@@ -170,8 +171,8 @@ class PrebidParameterBuilderTest: XCTestCase {
         PBMAssertEq(video.delivery, [3])
         PBMAssertEq(video.battr, [15, 16])
         PBMAssertEq(video.skip, 0)
-        XCTAssertEqual(video.pos.intValue, AdPosition.header.rawValue)
-        XCTAssertEqual(video.pos.intValue, 4)
+        XCTAssertEqual(video.pos!.intValue, AdPosition.header.rawValue)
+        XCTAssertEqual(video.pos!.intValue, 4)
     }
     
     func testFirstPartyData() {
@@ -211,15 +212,38 @@ class PrebidParameterBuilderTest: XCTestCase {
         }
     }
 
+    /// A nil `pbAdSlot` must *remove* the key from `imp.ext.data`, not store a boxed nil.
+    /// The builder writes `nextImp.extData?["pbadslot"] = adConfiguration.getPbAdSlot()`;
+    /// assigning a `String?` through `NSMutableDictionary`'s `Any?` subscript relies on
+    /// Swift's optional-to-optional conversion to delete the entry, matching the ObjC
+    /// original. Injecting the optional into `Any` instead would silently insert a key.
+    func testPbAdSlotIsOmittedWhenNil() {
+        let configId = "b6260e2b-bc4c-4d10-bdb5-f7bdd62f5ed4"
+        let adUnitConfig = AdUnitConfig(configId: configId, size: CGSize(width: 320, height: 50))
+
+        XCTAssertNil(adUnitConfig.getPbAdSlot())
+
+        let bidRequest = buildBidRequest(with: adUnitConfig)
+
+        bidRequest.imp.forEach { imp in
+            guard let extData = imp.extData as? [String: Any] else {
+                XCTFail("ext.data dictionary is nil.")
+                return
+            }
+
+            XCTAssertFalse(extData.keys.contains("pbadslot"))
+        }
+    }
+
     func testSourceOMID() {
         let configId = "b6260e2b-bc4c-4d10-bdb5-f7bdd62f5ed4"
         let adUnitConfig = AdUnitConfig(configId: configId, size: CGSize(width: 320, height: 50))
         Targeting.shared.omidPartnerName = "Prebid"
-        Targeting.shared.omidPartnerVersion = PBMFunctions.sdkVersion()
+        Targeting.shared.omidPartnerVersion = PrebidConstants.PREBID_VERSION
         var bidRequest = buildBidRequest(with: adUnitConfig)
 
         XCTAssertEqual(bidRequest.source.extOMID.omidpn, "Prebid")
-        XCTAssertEqual(bidRequest.source.extOMID.omidpv, PBMFunctions.sdkVersion())
+        XCTAssertEqual(bidRequest.source.extOMID.omidpv, PrebidConstants.PREBID_VERSION)
 
         targeting.omidPartnerVersion = "test omid version"
         targeting.omidPartnerName = "test omid name"
@@ -374,6 +398,21 @@ class PrebidParameterBuilderTest: XCTestCase {
         XCTAssertNotNil(cache["vastxml"])
     }
     
+    func testFilterOutUncachedBidsAloneDoesNotEnableCaching() {
+        // filterOutUncachedBids only controls response-side filtering for Original API.
+        // It must not, by itself, trigger a cache request; Original API already asks PBS
+        // to cache via useCacheForReportingWithRenderingAPI (see testCachingForOriginalAPI).
+        sdkConfiguration.useCacheForReportingWithRenderingAPI = false
+        sdkConfiguration.filterOutUncachedBids = true
+
+        let configId = "b6260e2b-bc4c-4d10-bdb5-f7bdd62f5ed4"
+        let adUnitConfig = AdUnitConfig(configId: configId, size: CGSize(width: 320, height: 50))
+
+        let bidRequest = buildBidRequest(with: adUnitConfig)
+
+        XCTAssertNil(bidRequest.extPrebid.cache, "filterOutUncachedBids alone should not add a cache request object.")
+    }
+    
     func testCachingForOriginalAPI() {
         // This should not impact on caching the bid in original api
         sdkConfiguration.useCacheForReportingWithRenderingAPI = false
@@ -452,7 +491,7 @@ class PrebidParameterBuilderTest: XCTestCase {
         let bidRequest = buildBidRequest(with: adUnit.adUnitConfig)
 
         XCTAssertEqual(bidRequest.source.extOMID.omidpn, "Life360")
-        XCTAssertEqual(bidRequest.source.extOMID.omidpv, PBMFunctions.sdkVersion())
+        XCTAssertEqual(bidRequest.source.extOMID.omidpv, Functions.sdkVersion)
         XCTAssertEqual(bidRequest.imp.first?.native?.api, [NSNumber(value: Signals.Api.OMID_1.value)])
     }
 
@@ -602,7 +641,7 @@ class PrebidParameterBuilderTest: XCTestCase {
 
     func testDefaultVideoParameters_RenderingAPI() {
         let adUnit = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: 300, height: 250)), configID: "configId", adSize: CGSize(width: 300, height: 250))
-        adUnit.adFormat = .video
+        adUnit.adFormats = [.video]
         let bidRequest = buildBidRequest(with: adUnit.adUnitConfig)
 
         //Check that this is counted as an interstitial
@@ -803,6 +842,71 @@ class PrebidParameterBuilderTest: XCTestCase {
         XCTAssert(bidRequest.extPrebid.targeting["includeformat"] as! Bool == true)
     }
 
+    func testMultiformatBannerView() {
+        let size = CGSize(width: 300, height: 250)
+        let bannerView = BannerView(frame: CGRect(origin: .zero, size: size), configID: "configID", adSize: size)
+        bannerView.adFormats = [.banner, .video]
+        
+        let bidRequest = buildBidRequest(with: bannerView.adUnitConfig)
+        
+        // includeformat makes PBS return hb_format so ad server line items can target the winning format
+        XCTAssertEqual(bidRequest.extPrebid.targeting["includeformat"] as? Bool, true)
+        
+        PBMAssertEq(bidRequest.imp.count, 1)
+        guard let imp = bidRequest.imp.first else {
+            XCTFail("No Imp object!")
+            return
+        }
+        PBMAssertEq(imp.instl, 0)
+        XCTAssertNil(imp.native)
+        
+        // imp.banner carries the ad size and rendering API signals
+        guard let banner = imp.banner else {
+            XCTFail("No banner object!")
+            return
+        }
+        PBMAssertEq(banner.format.count, 1)
+        PBMAssertEq(banner.format.first?.w, 300)
+        PBMAssertEq(banner.format.first?.h, 250)
+        PBMAssertEq(banner.api, PrebidConstants.supportedRenderingBannerAPISignals.map { NSNumber(value: $0.value) })
+        
+        // imp.video carries the outstream defaults for the same size
+        guard let video = imp.video else {
+            XCTFail("No video object!")
+            return
+        }
+        PBMAssertEq(video.w, 300)
+        PBMAssertEq(video.h, 250)
+        PBMAssertEq(video.mimes, PrebidConstants.SUPPORTED_VIDEO_MIME_TYPES)
+        PBMAssertEq(video.protocols, [2,5])
+        PBMAssertEq(video.delivery!, [3])
+        PBMAssertEq(video.pos, 7)
+        PBMAssertEq(video.playbackend, 2)
+    }
+    
+    func testMultiformatMediationBannerAdUnit() {
+        let size = CGSize(width: 320, height: 50)
+        let adUnit = MediationBannerAdUnit(configID: "configID", size: size, mediationDelegate: MockMediationUtils(adObject: MockAdObject()))
+        adUnit.adFormats = [.banner, .video]
+        
+        let bidRequest = buildBidRequest(with: adUnit.adUnitConfig)
+        
+        XCTAssertEqual(bidRequest.extPrebid.targeting["includeformat"] as? Bool, true)
+        
+        PBMAssertEq(bidRequest.imp.count, 1)
+        guard let imp = bidRequest.imp.first else {
+            XCTFail("No Imp object!")
+            return
+        }
+        XCTAssertNotNil(imp.banner)
+        XCTAssertNotNil(imp.video)
+        XCTAssertNil(imp.native)
+        PBMAssertEq(imp.banner?.format.first?.w, 320)
+        PBMAssertEq(imp.banner?.format.first?.h, 50)
+        PBMAssertEq(imp.video?.w, 320)
+        PBMAssertEq(imp.video?.h, 50)
+    }
+    
     func testIncludewinnersAndIncludeBidderKeysAreNil() {
         //Default value
         Prebid.shared.includeWinners = false
@@ -1043,10 +1147,10 @@ class PrebidParameterBuilderTest: XCTestCase {
     }
 
     // MARK: - Helpers
-
-    func buildBidRequest(with adUnitConfig: AdUnitConfig) -> PBMORTBBidRequest {
-        let bidRequest = PBMORTBBidRequest()
-        PBMBasicParameterBuilder(
+    
+    func buildBidRequest(with adUnitConfig: AdUnitConfig) -> ORTBBidRequest {
+        let bidRequest = ORTBBidRequest()
+        BasicParameterBuilder(
             adConfiguration: adUnitConfig.adConfiguration,
             sdkConfiguration: sdkConfiguration,
             sdkVersion: "MOCK_SDK_VERSION",
@@ -1058,8 +1162,13 @@ class PrebidParameterBuilderTest: XCTestCase {
             deviceAccessManager: MockDeviceAccessManager(rootViewController: nil)
         )
         .build(bidRequest)
-        
-        PBMPrebidParameterBuilder(
+
+        // Owns regs.ext["gdpr"] / regs.ext["us_privacy"] / user.ext["consent"]. Kept in the same
+        // position relative to the other builders as in ParameterBuilderService.
+        UserConsentParameterBuilder()
+            .build(bidRequest)
+
+        PrebidParameterBuilder(
             adConfiguration: adUnitConfig,
             sdkConfiguration: sdkConfiguration,
             targeting: targeting,

@@ -23,12 +23,12 @@ class DeviceInfoParameterBuilderTest: XCTestCase {
     let initialDict = [String:String]()
     var userDefaults: UserDefaults!
     var deviceInfoParameterBuilder: DeviceInfoParameterBuilder!
-    var bidRequest: PBMORTBBidRequest!
+    var bidRequest: ORTBBidRequest!
 
     override func setUp() {
         self.userDefaults = UserDefaults()
         self.deviceInfoParameterBuilder = DeviceInfoParameterBuilder(deviceAccessManager: MockDeviceAccessManager(rootViewController: nil))
-        self.bidRequest = PBMORTBBidRequest()
+        self.bidRequest = ORTBBidRequest()
     }
 
     override func tearDown() {
@@ -75,6 +75,19 @@ class DeviceInfoParameterBuilderTest: XCTestCase {
         if #available(iOS 14, *) {
             PBMAssertEq(self.bidRequest.device.extAtts.atts as? UInt, ATTrackingManager.AuthorizationStatus.notDetermined.rawValue)
         }
+    }
+    
+    func testEmptyAdvertisingIdentifier() {
+        MockDeviceAccessManager.mockAdvertisingIdentifier = ""
+        
+        if #available(iOS 14, *) {
+            MockDeviceAccessManager.mockAppTrackingTransparencyStatus = .authorized
+        }
+        
+        self.deviceInfoParameterBuilder.build(self.bidRequest)
+        
+        XCTAssertNil(self.bidRequest.device.ifa)
+        PBMAssertEq(self.bidRequest.device.extAtts.ifv, MockDeviceAccessManager.mockIdentifierForVendor)
     }
 
     func testDeviceDetails() {

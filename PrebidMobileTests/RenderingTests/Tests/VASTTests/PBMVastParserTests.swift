@@ -15,7 +15,7 @@
 
 import XCTest
 
-@testable import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 class PBMVastParserTests: XCTestCase {
     
@@ -36,21 +36,21 @@ class PBMVastParserTests: XCTestCase {
     func testVastParserDidEndElementAd() {
 
         //Create an ad
-        let ad = PBMVastAbstractAd()
-        ad.creatives = [PBMVastCreativeAbstract()]
+        let ad = VastAbstractAd()
+        ad.creatives = [VastCreativeAbstract()]
         
-        //Set up an PBMVastParser
-        let pbmVastParser = PBMVastParser()
-        pbmVastParser.parsedResponse = PBMVastResponse()
+        //Set up an VastParser
+        let pbmVastParser = VastParser()
+        pbmVastParser.parsedResponse = VastResponse()
         pbmVastParser.ad = ad
         pbmVastParser.adAttributes = ["id":"12345"]
         
         //Force the end of an "Ad" element
         pbmVastParser.parser(XMLParser(), didEndElement: "Ad", namespaceURI: nil, qualifiedName:nil)
         
-        //The parser's PBMVastResponse should contain the ad we created with an appropriate sequence number.
+        //The parser's VastResponse should contain the ad we created with an appropriate sequence number.
         XCTAssert(pbmVastParser.parsedResponse!.vastAbstractAds.count == 1)
-        XCTAssert(pbmVastParser.parsedResponse!.vastAbstractAds.firstObject as! PBMVastAbstractAd === ad)
+        XCTAssert(pbmVastParser.parsedResponse!.vastAbstractAds.firstObject as! VastAbstractAd === ad)
         XCTAssert(ad.sequence == 0)
         
         //The parser should tidy up after the Ad tag is done parsing.
@@ -67,9 +67,21 @@ class PBMVastParserTests: XCTestCase {
             XCTFail("Could not load video")
             return
         }
-        let pbmVastParser = PBMVastParser()
+        let pbmVastParser = VastParser()
         
         XCTAssertNotNil(pbmVastParser.parseAdsResponse(xmlData))
+    }
+    
+    func testVastParserNoAdsResponseErrorURI() {
+        let xmlString = """
+        <VAST version="3.0">
+            <Error><![CDATA[https://example.com/vast-error]]></Error>
+        </VAST>
+        """
+        let parser = VastParser()
+        let response = parser.parseAdsResponse(Data(xmlString.utf8))
+        XCTAssertNotNil(response)
+        XCTAssertEqual(response?.noAdsResponseURI, "https://example.com/vast-error")
     }
     
     // MARK: - Test Parse Resource
@@ -77,10 +89,10 @@ class PBMVastParserTests: XCTestCase {
     func testParseResourceCreativeCompanionStaticType() {
         
         // Prepare
-        let parser = PBMVastParser()
-        let creative = PBMVastCreativeCompanionAds()
+        let parser = VastParser()
+        let creative = VastCreativeCompanionAds()
         
-        creative.companions = [PBMVastCreativeCompanionAdsCompanion()]
+        creative.companions = [VastCreativeCompanionAdsCompanion()]
         parser.currentElementAttributes = ["creativeType" : "test"]
         
         parser.creative = creative
@@ -97,10 +109,10 @@ class PBMVastParserTests: XCTestCase {
     func testParseResourceCreativeCompanionFrameType() {
         
         // Prepare
-        let parser = PBMVastParser()
-        let creative = PBMVastCreativeCompanionAds()
+        let parser = VastParser()
+        let creative = VastCreativeCompanionAds()
         
-        creative.companions = [PBMVastCreativeCompanionAdsCompanion()]
+        creative.companions = [VastCreativeCompanionAdsCompanion()]
         parser.currentElementAttributes = ["creativeType" : "test"]
         
         parser.creative = creative
@@ -117,10 +129,10 @@ class PBMVastParserTests: XCTestCase {
     func testParseResourceCreativeLinear() {
         
         // Prepare
-        let parser = PBMVastParser()
-        let creative = PBMVastCreativeLinear()
+        let parser = VastParser()
+        let creative = VastCreativeLinear()
         
-        creative.icons = [PBMVastIcon()]
+        creative.icons = [VastIcon()]
         
         parser.creative = creative
         
@@ -135,10 +147,10 @@ class PBMVastParserTests: XCTestCase {
     func testParseResourceCreativeNonLinearAds() {
         
         // Prepare
-        let parser = PBMVastParser()
-        let creative = PBMVastCreativeNonLinearAds()
+        let parser = VastParser()
+        let creative = VastCreativeNonLinearAds()
         
-        creative.nonLinears = [PBMVastCreativeNonLinearAdsNonLinear()]
+        creative.nonLinears = [VastCreativeNonLinearAdsNonLinear()]
         
         parser.creative = creative
         
@@ -162,22 +174,22 @@ class PBMVastParserTests: XCTestCase {
 
         // not particular creative
         self.checkErrorLog( { parser in
-            parser.creative = PBMVastCreativeAbstract()
+            parser.creative = VastCreativeAbstract()
             parser.parseResource(for: .staticResource)
         }, expectedLog: logErrorNAContainer)
 
         // Linear
         self.checkErrorLog( { parser in
-            parser.creative = PBMVastCreativeLinear()
+            parser.creative = VastCreativeLinear()
             parser.parseResource(for: .staticResource)
         }, expectedLog: logErrorNAContainer)
         
         // missmatch between creative and container
-        // PBMVastCreativeCompanionAds
+        // VastCreativeCompanionAds
         self.checkErrorLog( { parser in
-            let creative = PBMVastCreativeCompanionAds()
+            let creative = VastCreativeCompanionAds()
             
-            creative.companions = [PBMVastCreativeNonLinearAds()]
+            creative.companions = [VastCreativeNonLinearAds()]
             
             parser.creative = creative
             
@@ -188,11 +200,11 @@ class PBMVastParserTests: XCTestCase {
         }, expectedLog: logErrorNAContainer)
         
         // missmatch between creative and container
-        // PBMVastCreativeLinear
+        // VastCreativeLinear
         self.checkErrorLog( { parser in
-            let creative = PBMVastCreativeLinear()
+            let creative = VastCreativeLinear()
             
-            creative.icons = [PBMVastCreativeNonLinearAds()]
+            creative.icons = [VastCreativeNonLinearAds()]
             
             parser.creative = creative
             
@@ -203,11 +215,11 @@ class PBMVastParserTests: XCTestCase {
         }, expectedLog: logErrorNAContainer)
         
         // missmatch between creative and container
-        // PBMVastCreativeNonLinearAds
+        // VastCreativeNonLinearAds
         self.checkErrorLog( { parser in
-            let creative = PBMVastCreativeNonLinearAds()
+            let creative = VastCreativeNonLinearAds()
             
-            creative.nonLinears = [PBMVastCreativeCompanionAdsCompanion()]
+            creative.nonLinears = [VastCreativeCompanionAdsCompanion()]
             
             parser.creative = creative
             
@@ -223,27 +235,27 @@ class PBMVastParserTests: XCTestCase {
     func testParseTimeInterval() {
         
         // Valid interval
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("00:00:00"), 0)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("00:00:30"), 30)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("00:00:60"), 60)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("00:00:61"), 61)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("00:00:99"), 99)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("00:01:00"), 60)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("00:01:60"), 120)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("00:01:61"), 121)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("00:60:00"), 3600)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("00:99:00"), 5940)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("01:00:00"), 3600)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("01:01:00"), 3660)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("01:01:01"), 3661)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("99:99:99"), 362439)
+        XCTAssertEqual(VastParser().parseTimeInterval("00:00:00"), 0)
+        XCTAssertEqual(VastParser().parseTimeInterval("00:00:30"), 30)
+        XCTAssertEqual(VastParser().parseTimeInterval("00:00:60"), 60)
+        XCTAssertEqual(VastParser().parseTimeInterval("00:00:61"), 61)
+        XCTAssertEqual(VastParser().parseTimeInterval("00:00:99"), 99)
+        XCTAssertEqual(VastParser().parseTimeInterval("00:01:00"), 60)
+        XCTAssertEqual(VastParser().parseTimeInterval("00:01:60"), 120)
+        XCTAssertEqual(VastParser().parseTimeInterval("00:01:61"), 121)
+        XCTAssertEqual(VastParser().parseTimeInterval("00:60:00"), 3600)
+        XCTAssertEqual(VastParser().parseTimeInterval("00:99:00"), 5940)
+        XCTAssertEqual(VastParser().parseTimeInterval("01:00:00"), 3600)
+        XCTAssertEqual(VastParser().parseTimeInterval("01:01:00"), 3660)
+        XCTAssertEqual(VastParser().parseTimeInterval("01:01:01"), 3661)
+        XCTAssertEqual(VastParser().parseTimeInterval("99:99:99"), 362439)
         
         // Strange but also correct
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("00:30"), 30)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval(":30"), 30)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("30"), 30)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval(""), 0)
-        XCTAssertEqual(PBMVastParser().parseTimeInterval("0"), 0)
+        XCTAssertEqual(VastParser().parseTimeInterval("00:30"), 30)
+        XCTAssertEqual(VastParser().parseTimeInterval(":30"), 30)
+        XCTAssertEqual(VastParser().parseTimeInterval("30"), 30)
+        XCTAssertEqual(VastParser().parseTimeInterval(""), 0)
+        XCTAssertEqual(VastParser().parseTimeInterval("0"), 0)
 
         // Invalid interval
         self.checkErrorLog({parser in
@@ -253,11 +265,11 @@ class PBMVastParserTests: XCTestCase {
     
     // MARK: - Helper Methods
     
-    func checkErrorLog(_ parse: (PBMVastParser) -> Void, expectedLog: String, file: StaticString = #file, line: UInt = #line) {
+    func checkErrorLog(_ parse: (VastParser) -> Void, expectedLog: String, file: StaticString = #file, line: UInt = #line) {
         
         logToFile = .init()
         
-        parse(PBMVastParser())
+        parse(VastParser())
         
         let log = Log.getLogFileAsString() ?? ""
         

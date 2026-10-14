@@ -15,17 +15,12 @@
 
 @import UIKit;
 
-#import "PBMExternalLinkHandler.h"
-#import "PBMExternalURLOpeners.h"
-#import "PBMTrackingURLVisitors.h"
 #import "PBMURLOpenAttempterBlock.h"
+#import "PBMTrackingURLVisitorBlock.h"
 #import "PBMDeepLinkPlusHelper+PBMExternalLinkHandler.h"
 
 #import "PBMDeepLinkPlusHelper.h"
 #import "PBMDeepLinkPlusHelper+Testing.h"
-#import "PBMDeepLinkPlus.h"
-#import "PBMFunctions.h"
-#import "PBMFunctions+Private.h"
 #import "PBMMacros.h"
 
 #import "SwiftImport.h"

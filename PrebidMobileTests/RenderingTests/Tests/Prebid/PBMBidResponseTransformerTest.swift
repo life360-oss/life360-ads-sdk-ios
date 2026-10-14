@@ -15,15 +15,15 @@
 
 import XCTest
 
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 class PBMBidResponseTransformerTest: XCTestCase {
     
     func testInvalidAccountID() {
-        let response = PBMBidResponseTransformer.invalidAccountIDResponse(accountID: "0689a263-318d-448b-a3d4-b02e8a709d9d")
+        let response = BidResponseTransformer.invalidAccountIDResponse(accountID: "0689a263-318d-448b-a3d4-b02e8a709d9d")
         
         do {
-            let _ = try PBMBidResponseTransformer.transform(response)
+            let _ = try BidResponseTransformer.transform(response)
             XCTFail("Expected error not thrown")
         } catch {
             XCTAssertEqual(error as NSError, PBMError.prebidInvalidAccountId() as NSError)
@@ -31,10 +31,10 @@ class PBMBidResponseTransformerTest: XCTestCase {
     }
     
     func testInvalidConfigId() {
-        let response = PBMBidResponseTransformer.invalidConfigIdResponse(configId: "b6260e2b-bc4c-4d10-bdb5-d1c2b6c0c97a")
+        let response = BidResponseTransformer.invalidConfigIdResponse(configId: "b6260e2b-bc4c-4d10-bdb5-d1c2b6c0c97a")
         
         do {
-            let _ = try PBMBidResponseTransformer.transform(response)
+            let _ = try BidResponseTransformer.transform(response)
             XCTFail("Expected error not thrown")
         } catch {
             XCTAssertEqual(error as NSError, PBMError.prebidInvalidConfigId() as NSError)
@@ -42,10 +42,32 @@ class PBMBidResponseTransformerTest: XCTestCase {
     }
     
     func testInvalidSize() {
-        let response = PBMBidResponseTransformer.invalidSizeResponse(impIndex: 0, formatIndex: 0)
+        let response = BidResponseTransformer.invalidSizeResponse(impIndex: 0, formatIndex: 0)
         
         do {
-            let _ = try PBMBidResponseTransformer.transform(response)
+            let _ = try BidResponseTransformer.transform(response)
+            XCTFail("Expected error not thrown")
+        } catch {
+            XCTAssertEqual(error as NSError, PBMError.prebidInvalidSize() as NSError)
+        }
+    }
+
+    func testInvalidSizeForNonFirstImp() {
+        let response = BidResponseTransformer.invalidSizeResponse(impIndex: 1, formatIndex: 2)
+
+        do {
+            let _ = try BidResponseTransformer.transform(response)
+            XCTFail("Expected error not thrown")
+        } catch {
+            XCTAssertEqual(error as NSError, PBMError.prebidInvalidSize() as NSError)
+        }
+    }
+
+    func testInvalidSizeFromPrebidServerJava() {
+        let response = BidResponseTransformer.buildResponse("Invalid request format: request.imp[0].banner.format[0] should define *either* {w, h} (for static size requirements) *or* {wmin, wratio, hratio} (for flexible sizes) to be non-zero positive")
+
+        do {
+            let _ = try BidResponseTransformer.transform(response)
             XCTFail("Expected error not thrown")
         } catch {
             XCTAssertEqual(error as NSError, PBMError.prebidInvalidSize() as NSError)
@@ -54,32 +76,52 @@ class PBMBidResponseTransformerTest: XCTestCase {
     
     func testServerError() {
         let messageBody = "Invalid request: some server reason, probably"
-        let response = PBMBidResponseTransformer.serverErrorResponse
+        let response = BidResponseTransformer.serverErrorResponse
         
         do {
-            let _ = try PBMBidResponseTransformer.transform(response)
+            let _ = try BidResponseTransformer.transform(response)
             XCTFail("Expected error not thrown")
         } catch {
             XCTAssertEqual(error as NSError, PBMError.serverError(messageBody) as NSError)
         }
     }
+
+    func testValidBidWithInvalidRequestInMarkup() throws {
+        let adm = "<html><div>Invalid request format detected</div></html>"
+        let response = BidResponseTransformer.buildResponse("{\"id\":\"B4A2D3F4-41B6-4D37-B68B-EE8893E85C31\",\"seatbid\":[{\"bid\":[{\"id\":\"test-bid-id-1\",\"impid\":\"8BBB0D42-5A73-45AC-B275-51B299A74C32\",\"price\":0.1,\"adm\":\"\(adm)\",\"ext\":{\"prebid\":{\"targeting\":{\"hb_bidder\":\"openx\",\"hb_pb\":\"0.10\"},\"type\":\"banner\"}}}],\"seat\":\"openx\"}],\"cur\":\"USD\"}")
+
+        let bidResponse = try BidResponseTransformer.transform(response)
+        XCTAssertEqual(bidResponse.allBids?.count, 1)
+        XCTAssertEqual(bidResponse.winningBid?.adm, adm)
+    }
     
     func testNoJsonDic() {
-        let response = PBMBidResponseTransformer.nonJsonDicResponse
+        let response = BidResponseTransformer.nonJsonDicResponse
         
         do {
-            let _ = try PBMBidResponseTransformer.transform(response)
+            let _ = try BidResponseTransformer.transform(response)
             XCTFail("Expected error not thrown")
         } catch {
             XCTAssertEqual(error as NSError, PBMError.jsonDictNotFound() as NSError)
         }
     }
+
+    func testMissingResponseId() {
+        let response = BidResponseTransformer.missingIdResponse
+
+        do {
+            let _ = try BidResponseTransformer.transform(response)
+            XCTFail("Expected error not thrown")
+        } catch {
+            XCTAssertEqual(error as NSError, PBMError.responseDeserializationFailed() as NSError)
+        }
+    }
     
     func testOk() {
         let bidPrice: Float = 0.1091000000051168
-        let response = PBMBidResponseTransformer.makeValidResponse(bidPrice: bidPrice)
+        let response = BidResponseTransformer.makeValidResponse(bidPrice: bidPrice)
         
-        let bidResponse = try! PBMBidResponseTransformer.transform(response)
+        let bidResponse = try! BidResponseTransformer.transform(response)
         XCTAssertNotNil(bidResponse)
         XCTAssertNotNil(bidResponse.winningBid)
         XCTAssertEqual(bidResponse.winningBid?.price, bidPrice)
@@ -88,19 +130,193 @@ class PBMBidResponseTransformerTest: XCTestCase {
     }
     
     func testZeroPriceBid() {
-        let response = PBMBidResponseTransformer.makeValidResponse(bidPrice: 0)
+        let response = BidResponseTransformer.makeValidResponse(bidPrice: 0)
         
-        let bidResponse = try! PBMBidResponseTransformer.transform(response)
+        let bidResponse = try! BidResponseTransformer.transform(response)
         XCTAssertNotNil(bidResponse)
         XCTAssertEqual(bidResponse.allBids?.count, 1)
         XCTAssertNotNil(bidResponse.winningBid)
     }
     
+    func testRemoveBidsWithoutSuccessfulCache_uncachedBidRemoved() {
+        let bidResponse = BidResponse(jsonDictionary: Self.uncachedBidResponseDictionary())
+        
+        XCTAssertEqual(bidResponse.removeBidsWithoutSuccessfulCache(), 1)
+        XCTAssertEqual(bidResponse.allBids?.count, 0)
+        XCTAssertNil(bidResponse.winningBid)
+        XCTAssertNil(bidResponse.targetingInfo)
+    }
+    
+    func testRemoveBidsWithoutSuccessfulCache_cachedBidRemains() {
+        let bidResponse = BidResponse(jsonDictionary: Self.cachedBidResponseDictionary())
+        
+        XCTAssertEqual(bidResponse.removeBidsWithoutSuccessfulCache(), 0)
+        XCTAssertEqual(bidResponse.allBids?.count, 1)
+        XCTAssertNotNil(bidResponse.winningBid)
+        XCTAssertEqual(bidResponse.targetingInfo?["hb_cache_id"], "cache-id")
+    }
+    
+    func testRemoveBidsWithoutSuccessfulCache_mixedResponseOnlyCachedBidRemains() {
+        var response = Self.cachedBidResponseDictionary()
+        var uncachedBid = Self.bidDictionary(cache: nil, bidder: "uncached_bidder")
+        uncachedBid["id"] = "uncached-bid-id"
+        var seatbid = (response["seatbid"] as? [[String : Any]])?[0] ?? [:]
+        var bids = seatbid["bid"] as? [[String : Any]] ?? []
+        bids.append(uncachedBid)
+        seatbid["bid"] = bids
+        response["seatbid"] = [seatbid]
+        
+        let bidResponse = BidResponse(jsonDictionary: response)
+        
+        XCTAssertEqual(bidResponse.removeBidsWithoutSuccessfulCache(), 1)
+        XCTAssertEqual(bidResponse.allBids?.count, 1)
+        XCTAssertEqual(bidResponse.targetingInfo?["hb_bidder"], "openx")
+    }
+    
+    func testTargetingInfo_winningBidTargetingOverridesLaterBids() {
+        var winningBid = Self.bidDictionary(cache: nil, bidder: "winning_bidder")
+        Self.setTargetingValue("winning_value", forKey: "shared_key", in: &winningBid)
+        
+        var laterBid = Self.bidDictionary(cache: nil, bidder: "later_bidder")
+        laterBid["id"] = "later-bid-id"
+        Self.setTargetingValue("later_value", forKey: "shared_key", in: &laterBid)
+        
+        let bidResponse = BidResponse(jsonDictionary: [
+            "id": "response-id",
+            "seatbid": [
+                [
+                    "bid": [
+                        winningBid,
+                        laterBid
+                    ],
+                    "seat": "openx"
+                ]
+            ],
+            "cur": "USD"
+        ])
+        
+        XCTAssertEqual(bidResponse.targetingInfo?["hb_bidder"], "winning_bidder")
+        XCTAssertEqual(bidResponse.targetingInfo?["shared_key"], "winning_value")
+    }
+    
+    func testRemoveBidsWithoutSuccessfulCache_vastXmlCacheBidRemains() {
+        let bidResponse = BidResponse(jsonDictionary: Self.cachedBidResponseDictionary(cacheKey: "vastXml"))
+        
+        XCTAssertEqual(bidResponse.removeBidsWithoutSuccessfulCache(), 0)
+        XCTAssertEqual(bidResponse.allBids?.count, 1)
+        XCTAssertNotNil(bidResponse.winningBid)
+    }
+    
+    func testRemoveBidsWithoutSuccessfulCache_lowercaseVastXmlCacheBidRemains() {
+        let bidResponse = BidResponse(jsonDictionary: Self.cachedBidResponseDictionary(cacheKey: "vastxml"))
+
+        XCTAssertEqual(bidResponse.removeBidsWithoutSuccessfulCache(), 0)
+        XCTAssertEqual(bidResponse.allBids?.count, 1)
+        XCTAssertNotNil(bidResponse.winningBid)
+    }
+
+    func testRemoveBidsWithoutSuccessfulCache_urlWithoutCacheIdIsRemoved() {
+        // cacheId is what PUC actually needs to retrieve the creative (GET /cache?uuid=).
+        // A cache object with only `url` and no `cacheId` cannot be retrieved and must not
+        // be treated as cache-successful.
+        var response = Self.cachedBidResponseDictionary()
+        var seatbid = (response["seatbid"] as? [[String : Any]])?[0] ?? [:]
+        var bids = seatbid["bid"] as? [[String : Any]] ?? []
+        var bid = bids[0]
+        var ext = bid["ext"] as? [String : Any] ?? [:]
+        var prebid = ext["prebid"] as? [String : Any] ?? [:]
+        var cache = prebid["cache"] as? [String : Any] ?? [:]
+        var cacheBids = cache["bids"] as? [String : Any] ?? [:]
+        cacheBids["cacheId"] = nil
+        cache["bids"] = cacheBids
+        prebid["cache"] = cache
+        ext["prebid"] = prebid
+        bid["ext"] = ext
+        bids[0] = bid
+        seatbid["bid"] = bids
+        response["seatbid"] = [seatbid]
+
+        let bidResponse = BidResponse(jsonDictionary: response)
+
+        XCTAssertEqual(bidResponse.removeBidsWithoutSuccessfulCache(), 1)
+        XCTAssertEqual(bidResponse.allBids?.count, 0)
+        XCTAssertNil(bidResponse.winningBid)
+    }
+
+    func testRemoveBidsWithoutSuccessfulCache_promotesRunnerUpWhenTopBidFiltered() {
+        // The PBS-designated winner carries the unsuffixed hb_bidder/hb_pb/hb_cache_id
+        // keys but has no ext.prebid.cache, so it fails the cache check.
+        let topBid: [String : Any] = [
+            "id": "top-bid-id",
+            "impid": "test-imp-id",
+            "price": 0.20,
+            "adm": "<html></html>",
+            "w": 300,
+            "h": 250,
+            "ext": [
+                "prebid": [
+                    "targeting": [
+                        "hb_bidder": "openx",
+                        "hb_pb": "0.20",
+                        "hb_cache_id": "cache-id"
+                    ],
+                    "type": "banner"
+                ]
+            ]
+        ]
+
+        // The runner-up carries only bidder-suffixed keys (as PBS does for non-winning
+        // bids) but does have a successful cache entry.
+        let runnerUpBid: [String : Any] = [
+            "id": "runner-up-bid-id",
+            "impid": "test-imp-id",
+            "price": 0.10,
+            "adm": "<html></html>",
+            "w": 300,
+            "h": 250,
+            "ext": [
+                "prebid": [
+                    "targeting": [
+                        "hb_bidder_appnexus": "appnexus",
+                        "hb_pb_appnexus": "0.10"
+                    ],
+                    "cache": [
+                        "bids": [
+                            "url": "https://prebid-cache/cache?uuid=runner-up-cache-id",
+                            "cacheId": "runner-up-cache-id"
+                        ]
+                    ],
+                    "type": "banner"
+                ]
+            ]
+        ]
+
+        let bidResponse = BidResponse(jsonDictionary: [
+            "id": "response-id",
+            "seatbid": [
+                [
+                    "bid": [topBid, runnerUpBid],
+                    "seat": "openx"
+                ]
+            ],
+            "cur": "USD"
+        ])
+
+        XCTAssertEqual(bidResponse.winningBid?.price, 0.20)
+        XCTAssertFalse(bidResponse.topBidWasFiltered)
+
+        XCTAssertEqual(bidResponse.removeBidsWithoutSuccessfulCache(), 1)
+        XCTAssertEqual(bidResponse.allBids?.count, 1)
+        XCTAssertEqual(bidResponse.winningBid?.price, 0.10)
+        XCTAssertTrue(bidResponse.topBidWasFiltered)
+        XCTAssertEqual(bidResponse.targetingInfo?["hb_bidder_appnexus"], "appnexus")
+    }
+    
     func testRealPrebidResponse() {
         let realResponseBody = "{\"id\":\"CCF0B31C-1813-43C5-A365-C12C785BA3D2\",\"seatbid\":[{\"bid\":[{\"id\":\"test-bid-id-1\",\"impid\":\"62B86D48-D7FA-4190-8F4E-65A170A731E6\",\"price\":0.10903999999610946,\"adm\":\"<html><div>You Won! This is a test bid<\\/div><\\/html>\",\"adid\":\"test-ad-id-12345\",\"adomain\":[\"openx.com\"],\"crid\":\"test-creative-id-1\",\"w\":300,\"h\":250,\"ext\":{\"prebid\":{\"cache\":{\"key\":\"\",\"url\":\"\",\"bids\":{\"url\":\"prebid.devint.openx.net\\/cache?uuid=32541b8f-5d49-446d-ae26-18629273a6fe\",\"cacheId\":\"32541b8f-5d49-446d-ae26-18629273a6fe\"}},\"targeting\":{\"hb_bidder\":\"openx\",\"hb_bidder_openx\":\"openx\",\"hb_cache_host\":\"prebid.devint.openx.net\",\"hb_cache_host_openx\":\"prebid.devint.openx.net\",\"hb_cache_id\":\"32541b8f-5d49-446d-ae26-18629273a6fe\",\"hb_cache_id_openx\":\"32541b8f-5d49-446d-ae26-18629273a6fe\",\"hb_cache_path\":\"\\/cache\",\"hb_cache_path_openx\":\"\\/cache\",\"hb_env\":\"mobile-app\",\"hb_env_openx\":\"mobile-app\",\"hb_pb\":\"0.10\",\"hb_pb_openx\":\"0.10\",\"hb_size\":\"300x250\",\"hb_size_openx\":\"300x250\"},\"type\":\"banner\"},\"bidder\":{\"ad_ox_cats\":[2],\"agency_id\":\"agency_10\",\"brand_id\":\"brand_10\",\"buyer_id\":\"buyer_10\",\"matching_ad_id\":{\"campaign_id\":1,\"creative_id\":3,\"placement_id\":2},\"next_highest_bid_price\":0.099}}}],\"seat\":\"openx\"}],\"cur\":\"USD\",\"ext\":{\"responsetimemillis\":{\"openx\":16},\"tmaxrequest\":3000}}"
         
-        let serverResponse = PBMBidResponseTransformer.buildResponse(realResponseBody)
-        let response = try! PBMBidResponseTransformer.transform(serverResponse)
+        let serverResponse = BidResponseTransformer.buildResponse(realResponseBody)
+        let response = try! BidResponseTransformer.transform(serverResponse)
         let serializedResponse = try! response.rawResponse!.toJsonString()
         
         let sortedResponseBody = try! String(
@@ -128,8 +344,8 @@ class PBMBidResponseTransformerTest: XCTestCase {
         
         let responseBody = "{\"id\":\"CCF0B31C-1813-43C5-A365-C12C785BA3D2\",\"seatbid\":[{\"bid\":[{\"id\":\"test-bid-id-1\",\"impid\":\"62B86D48-D7FA-4190-8F4E-65A170A731E6\",\"price\":\(rawPrice),\"adm\":\(rawAdm),\"nurl\":\(rawNurl),\"adid\":\"test-ad-id-12345\",\"adomain\":[\"openx.com\"],\"crid\":\"test-creative-id-1\",\"w\":300,\"h\":250,\"ext\":{\"prebid\":{\"cache\":{\"key\":\"\",\"url\":\"\",\"bids\":{\"url\":\"prebid.devint.openx.net\\/cache?uuid=32541b8f-5d49-446d-ae26-18629273a6fe\",\"cacheId\":\"32541b8f-5d49-446d-ae26-18629273a6fe\"}},\"targeting\":{\"hb_bidder\":\"openx\",\"hb_bidder_openx\":\"openx\",\"hb_cache_host\":\"prebid.devint.openx.net\",\"hb_cache_host_openx\":\"prebid.devint.openx.net\",\"hb_cache_id\":\"32541b8f-5d49-446d-ae26-18629273a6fe\",\"hb_cache_id_openx\":\"32541b8f-5d49-446d-ae26-18629273a6fe\",\"hb_cache_path\":\"\\/cache\",\"hb_cache_path_openx\":\"\\/cache\",\"hb_env\":\"mobile-app\",\"hb_env_openx\":\"mobile-app\",\"hb_pb\":\"0.10\",\"hb_pb_openx\":\"0.10\",\"hb_size\":\"300x250\",\"hb_size_openx\":\"300x250\"},\"type\":\"banner\"},\"bidder\":{\"ad_ox_cats\":[2],\"agency_id\":\"agency_10\",\"brand_id\":\"brand_10\",\"buyer_id\":\"buyer_10\",\"matching_ad_id\":{\"campaign_id\":1,\"creative_id\":3,\"placement_id\":2},\"next_highest_bid_price\":0.099}}}],\"seat\":\"openx\"}],\"cur\":\"USD\",\"ext\":{\"responsetimemillis\":{\"openx\":16},\"tmaxrequest\":3000}}"
         
-        let serverResponse = PBMBidResponseTransformer.buildResponse(responseBody)
-        let response = try! PBMBidResponseTransformer.transform(serverResponse)
+        let serverResponse = BidResponseTransformer.buildResponse(responseBody)
+        let response = try! BidResponseTransformer.transform(serverResponse)
         
         func checkReplacements(keyPath: KeyPath<Bid, String?>, src: String) {
             var expectedResult = src
@@ -143,5 +359,79 @@ class PBMBidResponseTransformerTest: XCTestCase {
         
         checkReplacements(keyPath: \.adm, src: admSrc)
         checkReplacements(keyPath: \.nurl, src: nurlSrc)
+    }
+    
+    private static func cachedBidResponseDictionary(cacheKey: String = "bids") -> [String : Any] {
+        [
+            "id": "response-id",
+            "seatbid": [
+                [
+                    "bid": [
+                        bidDictionary(
+                            cache: [
+                                cacheKey: [
+                                    "url": "https://prebid-cache/cache?uuid=cache-id",
+                                    "cacheId": "cache-id"
+                                ]
+                            ],
+                            bidder: "openx"
+                        )
+                    ],
+                    "seat": "openx"
+                ]
+            ],
+            "cur": "USD"
+        ]
+    }
+    
+    private static func uncachedBidResponseDictionary() -> [String : Any] {
+        [
+            "id": "response-id",
+            "seatbid": [
+                [
+                    "bid": [
+                        bidDictionary(cache: nil, bidder: "openx")
+                    ],
+                    "seat": "openx"
+                ]
+            ],
+            "cur": "USD"
+        ]
+    }
+    
+    private static func bidDictionary(cache: [String : Any]?, bidder: String) -> [String : Any] {
+        // Keep hb_cache_id present when cache is nil to verify strict mode relies on ext.prebid.cache,
+        // not targeting alone.
+        var prebid: [String : Any] = [
+            "targeting": [
+                "hb_bidder": bidder,
+                "hb_pb": "0.10",
+                "hb_cache_id": "cache-id"
+            ],
+            "type": "banner"
+        ]
+        prebid["cache"] = cache
+        
+        return [
+            "id": "test-bid-id",
+            "impid": "test-imp-id",
+            "price": 0.1,
+            "adm": "<html></html>",
+            "w": 300,
+            "h": 250,
+            "ext": [
+                "prebid": prebid
+            ]
+        ]
+    }
+    
+    private static func setTargetingValue(_ value: String, forKey key: String, in bid: inout [String : Any]) {
+        var ext = bid["ext"] as? [String : Any] ?? [:]
+        var prebid = ext["prebid"] as? [String : Any] ?? [:]
+        var targeting = prebid["targeting"] as? [String : Any] ?? [:]
+        targeting[key] = value
+        prebid["targeting"] = targeting
+        ext["prebid"] = prebid
+        bid["ext"] = ext
     }
 }

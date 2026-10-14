@@ -121,7 +121,7 @@ public class PrebidConstants: NSObject {
     }
     
     public static let VERSION                                                               = "1.4.3"
-    public static let PREBID_VERSION                                                        = "3.3.1"
+    public static let PREBID_VERSION                                                        = "3.4.1"
     public static let SDK_NAME                                                              = "life360-ads-sdk"
     
     public static let DOMAIN_KEY                                                            = "domain"

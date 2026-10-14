@@ -13,12 +13,12 @@
  limitations under the License.
  */
 
+#import <UIKit/UIKit.h>
+
 #import "Life360ViewExposureChecker.h"
 #import "PBMMacros.h"
+#import "PBMScheduledTimerFactory.h"
 
-#import "NSTimer+PBMScheduledTimerFactory.h"
-#import "PBMWeakTimerTargetBox.h"
-#import "UIView+PBMExtensions.h"
 
 #import "SwiftImport.h"
 

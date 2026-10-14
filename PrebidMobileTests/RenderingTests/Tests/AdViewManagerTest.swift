@@ -15,8 +15,9 @@
 
 import Foundation
 import XCTest
+import AVFoundation
 
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 class AdViewManagerTest: XCTestCase, AdViewManagerDelegate {
     
@@ -37,11 +38,12 @@ class AdViewManagerTest: XCTestCase, AdViewManagerDelegate {
     
     weak var videoWasMutedExpectation: XCTestExpectation?
     weak var videoWasUnmutedExpectation: XCTestExpectation?
+    weak var videoDidStartExpectation: XCTestExpectation?
     weak var videoDidPauseExpectation: XCTestExpectation?
     weak var videoDidResumeExpectation: XCTestExpectation?
 
     var adViewManager:AdViewManager!
-    var adLoadManager:PBMAdLoadManagerBase!
+    var adLoadManager:AdLoadManagerBase!
     var videoCreative: PBMVideoCreative?
     var testDisplayView: UIView!
     var adLoadedHandler: (() -> Void)?
@@ -350,6 +352,7 @@ class AdViewManagerTest: XCTestCase, AdViewManagerDelegate {
     }
         
     func testVideoCreativePlaybackEvents() {
+        videoDidStartExpectation = expectation(description: "Expected a delegate function videoAdDidStart to fire")
         videoWasMutedExpectation = expectation(description: "Expected a delegate function videoAdWasMuted to fire")
         videoWasUnmutedExpectation = expectation(description: "Expected a delegate function videoAdWasUnmuted to fire")
         videoDidPauseExpectation = expectation(description: "Expected a delegate function videoAdDidPause to fire")
@@ -368,6 +371,7 @@ class AdViewManagerTest: XCTestCase, AdViewManagerDelegate {
         adViewManager.currentCreative = videoCreative
         adViewManager.adViewManagerDelegate = self
  
+        videoCreative?.videoView.startPlayback()
         adViewManager.pause()
         adViewManager.resume()
         adViewManager.mute()
@@ -446,6 +450,10 @@ class AdViewManagerTest: XCTestCase, AdViewManagerDelegate {
     
     func videoAdWasUnmuted() {
         fulfillOrFail(videoWasUnmutedExpectation, "videoWasUnmutedExpectation")
+    }
+    
+    func videoAdDidStart() {
+        fulfillOrFail(videoDidStartExpectation, "videoDidStartExpectation")
     }
     
     func videoAdDidPause() {

@@ -14,9 +14,9 @@
   */
 
 import Foundation
-@testable import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
-class MockVideoView: PBMVideoView {
+class MockVideoView: VideoView {
     
     var mockRequiredVideoDuration: CGFloat = 10
     

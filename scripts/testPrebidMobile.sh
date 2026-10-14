@@ -3,9 +3,9 @@ cd scripts/
 fi
 
 # Flags:
-# --latest:             run tests only for the latest iOS.
-#                       It is needed for the GitHub Actions builds.
-#                       Do not use this flag locally to keep everything updated.
+# --latest:             accepted for backward compatibility; it used to skip a sanity test on the
+#                       oldest supported iOS (13). That run was removed when the minimum became
+#                       iOS 15, since Xcode 27 hosts cannot run an iOS 15 simulator runtime.
 # --quick:              run only quick set of tests for PR.
 #                       It is needed for the GitHub Actions builds on every PR to avoid running all tests.
 
@@ -33,14 +33,14 @@ done
 
 set -e
 
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
 # CocoaPods crashes with an Encoding::CompatibilityError when the locale is not
 # UTF-8 (Ruby falls back to US-ASCII). Force a UTF-8 locale so `pod install` runs
 # regardless of the inherited environment.
 export LANG="${LANG:-en_US.UTF-8}"
 export LC_ALL="${LC_ALL:-en_US.UTF-8}"
-
-GREEN='\033[0;32m'
-NC='\033[0m' # No Color
 
 # --- Ephemeral test simulator -------------------------------------------------
 # These own the purge/create/delete strategy; callers pass only the device name and
@@ -74,35 +74,26 @@ echo -e "\n\n${GREEN}INSTALL PODS${NC}\n\n"
 
 cd ..
 
-export PATH="/Users/distiller/.gem/ruby/2.7.0/bin:$PATH"
-gem install cocoapods
+if ! command -v pod >/dev/null 2>&1; then
+    echo "CocoaPods is required but 'pod' was not found on PATH." >&2
+    echo "GitHub Actions 'macos-26' ships it preinstalled; install it locally with 'brew install cocoapods'." >&2
+    exit 1
+fi
+
 pod install --repo-update
 
 echo -e "\n\n${GREEN}RUN PREBID MOBILE TESTS${NC}\n\n"
 
-provision_test_simulator "iPhone-16-Pro-PrebidMobile" "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro"
+provision_test_simulator "iPhone-17-Pro-PrebidMobile" "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro"
 trap remove_test_simulator EXIT
 
 if [ "$run_only_PR_tests" != "YES" ]; then
     echo -e "\n${GREEN}Clean build\n"
-    xcodebuild clean build
-fi
-
-if [ "$run_only_with_latest_ios" != "YES" ]
-then
- echo -e "\n${GREEN}Running some unit tests for iOS 13${NC} \n"
- xcodebuild test \
-    -workspace Life360AdsSDK.xcworkspace \
-    -scheme "PrebidMobileTests" \
-    -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.7' \
-    -only-testing PrebidMobileTests/RequestBuilderTests/testPostData
-
- if [[ ${PIPESTATUS[0]} == 0 ]]; then
-     echo "✅ unit tests for iOS 13 Passed"
- else
-     echo "🔴 unit tests for iOS 13 Failed"
-     exit 1
- fi
+    xcodebuild clean build \
+        -workspace Life360AdsSDK.xcworkspace \
+        -scheme PrebidMobileTests \
+        -sdk iphonesimulator \
+        -destination "id=$SIMULATOR_ID"
 fi
 
 TESTPLAN=""
@@ -124,6 +115,7 @@ xcodebuild \
     -destination-timeout 60 \
     build-for-testing
 
+TEST_STATUS=0
 xcodebuild \
     -workspace Life360AdsSDK.xcworkspace \
     -scheme PrebidMobileTests \
@@ -132,9 +124,9 @@ xcodebuild \
     -destination "id=$SIMULATOR_ID" \
     -destination-timeout 60 \
     -retry-tests-on-failure \
-    test-without-building
+    test-without-building || TEST_STATUS=$?
 
-if [[ ${PIPESTATUS[0]} == 0 ]]; then
+if [[ ${TEST_STATUS} == 0 ]]; then
     echo "✅ PrebidMobile Unit Tests Passed"
 else
     echo "🔴 PrebidMobile Unit Tests Failed"

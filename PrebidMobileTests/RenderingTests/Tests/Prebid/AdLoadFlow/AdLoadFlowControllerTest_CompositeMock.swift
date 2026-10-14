@@ -15,7 +15,7 @@
 import Foundation
 import XCTest
 
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 /// Synchronous Life360 requester stub: returns no bid so the flow proceeds past the Life360 step
 /// deterministically, without hitting the live `exchange.postrelease.com` endpoint.

@@ -16,9 +16,9 @@
 import Foundation
 import XCTest
 
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
-class VideoFileTypeTest : XCTestCase, CreativeViewDelegate, PBMVideoViewDelegate {
+class VideoFileTypeTest : XCTestCase, CreativeViewDelegate, VideoViewDelegate {
     
     let viewController = MockViewController()
     var pbmVideoCreative:PBMVideoCreative!
@@ -147,7 +147,7 @@ class VideoFileTypeTest : XCTestCase, CreativeViewDelegate, PBMVideoViewDelegate
     
     func creativeDidSendRewardedEvent(_ creative: AbstractCreative) {}
     
-    // MARK: - PBMVideoViewDelegate
+    // MARK: - VideoViewDelegate
     
     func videoViewFailedWithError(_ error: Error) {}
     func videoViewReadyToDisplay() {}

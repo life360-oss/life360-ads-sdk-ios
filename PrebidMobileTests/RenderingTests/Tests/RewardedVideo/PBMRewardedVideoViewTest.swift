@@ -14,9 +14,10 @@
   */
 
 import XCTest
-@testable @_spi(PBMInternal) import Life360AdsSDK
+import AVFoundation
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
-class PBMRewardedVideoViewTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDelegate, PBMVideoViewDelegate {
+class PBMRewardedVideoViewTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDelegate, VideoViewDelegate {
     
     var vc = UIViewController()
     var videoCreative:PBMVideoCreative!
@@ -119,7 +120,7 @@ class PBMRewardedVideoViewTest: XCTestCase, CreativeResolutionDelegate, Creative
     }
     
     
-    // MARK: - PBMVideoViewDelegate
+    // MARK: - VideoViewDelegate
     
     func videoViewCurrentPlayingTime(_ currentPlayingTime: NSNumber) {}
     func videoViewFailedWithError(_ error: Error) {}
@@ -169,7 +170,7 @@ class PBMRewardedVideoViewTest: XCTestCase, CreativeResolutionDelegate, Creative
         self.expectationDownloadCompleted = self.expectation(description: "expectationDownloadVideoData")
         
         let url = URL(string: model.videoFileURL!)
-        let downloader = PBMDownloadDataHelper(serverConnection:connection)
+        let downloader = DownloadDataHelper(serverConnection:connection)
         downloader.downloadData(for: url, maxSize: PBMVideoCreative.maxSizeForPreRenderContent, completionClosure: { (data:Data?, error:Error?) in
             
             DispatchQueue.main.async {
@@ -199,7 +200,7 @@ class PBMRewardedVideoViewTest: XCTestCase, CreativeResolutionDelegate, Creative
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             
-            guard let videoView = self.videoCreative.view as? PBMVideoView else {
+            guard let videoView = self.videoCreative.view as? VideoView else {
                 XCTFail("Couldn't get Video View")
                 return
             }

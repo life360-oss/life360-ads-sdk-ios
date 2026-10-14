@@ -169,7 +169,8 @@ public class AdUnit: NSObject, DispatcherDelegate {
         lastFetchDemandCompletion = completion
         adServerObject = adObject
         
-        let timeoutHandler = DispatchWorkItem {
+        let timeoutHandler = DispatchWorkItem { [weak self] in
+            guard let self = self else { return }
             if (!self.didReceiveResponse) {
                 self.timeOutSignalSent = true
                 completion(BidInfo(resultCode: .prebidDemandTimedOut))
@@ -254,10 +255,15 @@ public class AdUnit: NSObject, DispatcherDelegate {
         if let adObject {
             Utils.shared.validateAndAttachKeywords(adObject: adObject, bidResponse: bidResponse)
         }
-        
+
+        // A promoted runner-up is still successfully returned demand: the winning bid is
+        // cached and its targeting is attached to the ad object. Reporting anything other
+        // than prebidDemandFetchSuccess here would make the standard
+        // `resultCode == .prebidDemandFetchSuccess` integration check drop usable demand.
+        // The yield signal is surfaced separately via `BidInfo.topBidFiltered`.
         return .prebidDemandFetchSuccess
     }
-    
+
     private func cacheBidIfNeeded(_ winningBid: Bid) -> String? {
         let isNative = winningBid.adFormat == .native
         let isSkadnPresent = winningBid.skadn != nil && SkadnParametersManager

@@ -69,10 +69,32 @@ public class BannerView:
         set { adUnitConfig.additionalSizes = newValue }
     }
     
+    /// The set of ad formats requested for this ad unit.
+    ///
+    /// Defaults to `[.banner]`. Set `[.video]` for an outstream video banner, or
+    /// `[.banner, .video]` for a multiformat request.
+    ///
+    /// Only `.banner` and `.video` can be rendered by `BannerView`.
+    public var adFormats: Set<AdFormat> {
+        get { adUnitConfig.adFormats }
+        set {
+            guard let formats = AdFormat.validated(newValue, supported: Self.supportedAdFormats) else {
+                return
+            }
+            
+            adUnitConfig.adFormats = formats
+        }
+    }
+    
     /// The ad format (e.g., banner, video).
+    ///
+    /// - Note: Deprecated. Use `adFormats` instead, which supports multiformat requests.
+    ///   Assigning goes through `adFormats`, so unsupported values such as `.native`
+    ///   are ignored with a warning.
+    @available(*, deprecated, message: "Use `adFormats` instead.")
     public var adFormat: AdFormat {
         get { adUnitConfig.adFormats.first ?? .banner }
-        set { adUnitConfig.adFormats = [newValue] }
+        set { adFormats = [newValue] }
     }
     
     /// The position of the ad on the screen.
@@ -90,6 +112,7 @@ public class BannerView:
     var adLoadFlowController: AdLoadFlowController?
     
     // MARK: Externally observable
+    
     var deployedView: UIView?
     
     var isRefreshStopped = false
@@ -112,7 +135,7 @@ public class BannerView:
             return  true
         }
         
-        if isAdOpened || !isVisible() || isCreativeOpened {
+        if isAdOpened || !isVisible() || isCreativeOpened || isVideoPlaying {
             return false
         }
         
@@ -125,6 +148,13 @@ public class BannerView:
         }
         
         return false
+    }
+    
+    /// Whether the deployed Prebid creative is a video that is currently playing.
+    /// Read on every refresh tick so a video is never torn down mid-playback, while a
+    /// creative that never reports playback (HTML, ad server, plugin) keeps refreshing.
+    var isVideoPlaying: Bool {
+        (deployedView as? DisplayView)?.isVideoPlaying ?? false
     }
     
     // MARK: - Public Methods
@@ -367,6 +397,11 @@ public class BannerView:
         return delegate.bannerViewPresentationController()
     }
     
+    // MARK: - Private Properties
+    
+    /// Formats that `BannerView` is able to render.
+    private static let supportedAdFormats: [AdFormat] = [.banner, .video]
+    
     // MARK: - Private Methods
     
     private func invokeDelegateSelector(_ selector: Selector) {
@@ -456,7 +491,24 @@ public class BannerView:
         }
     }
     
-    // TODO: GAM requires banners to be fixed size. Why not set Banner view size to parent, and inner DisplayView to hard coded size?
+    private func reportAdExpired() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+
+            // A non-refreshable banner keeps showing its creative; the app is only notified.
+            guard self.adUnitConfig.refreshInterval > 0, !self.isRefreshStopped else {
+                self.delegate?.bannerViewDidExpire?(self)
+                return
+            }
+
+            self.autoRefreshManager?.cancelRefreshTimer()
+            self.deployedView?.removeFromSuperview()
+            self.deployedView = nil
+            self.delegate?.bannerViewDidExpire?(self)
+            self.adLoadFlowController?.refresh()
+        }
+    }
+    
     private func installDeployedViewConstraints(view: UIView) {
         guard view.superview === self else { return }
 
@@ -541,11 +593,14 @@ extension BannerView : AdLoadFlowControllerDelegate, BannerAdLoaderDelegate {
         }
     }
     
-    
+    public func bannerAdLoaderDidExpire(_ bannerAdLoader: BannerAdLoader) {
+        reportAdExpired()
+    }
 }
 
 @_spi(PBMInternal)
 extension BannerView: DisplayViewVideoPlaybackDelegate {
+    
     public func videoPlaybackDidPause() {
         videoPlaybackDelegate?.videoPlaybackDidPause(self)
     }

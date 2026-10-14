@@ -41,8 +41,12 @@ touch "$LOG_FILE_FRAMEWORK"
 
 echo -e "\n\n${GREEN}INSTALL PODS${NC}\n\n"
 
-export PATH="/Users/distiller/.gem/ruby/2.7.0/bin:$PATH"
-gem install cocoapods
+if ! command -v pod >/dev/null 2>&1; then
+	echo -e "${RED}CocoaPods is required but 'pod' was not found on PATH.${NC}" >&2
+	echo "GitHub Actions 'macos-26' ships it preinstalled; install it locally with 'brew install cocoapods'." >&2
+	exit 1
+fi
+
 pod install --repo-update
 
 echo -e "\n\n${GREEN}BUILD PREBID MOBILE${NC}\n\n"
@@ -111,6 +115,10 @@ do
 	"
 
 done
+
+echo -e "\n\n${GREEN}VERIFY SWIFT INTERFACES${NC}\n\n"
+
+./scripts/verifyXCFrameworkInterfaces.sh "$OUTPUT_DIR"
 
 echo -e "\n${GREEN}Done!${NC} \n"
 echo -e "XCFrameworks are located: "$OUTPUT_DIR_ABSOLUTE" \n"

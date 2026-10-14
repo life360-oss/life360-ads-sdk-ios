@@ -45,7 +45,7 @@ public class MediationBaseInterstitialAdUnit : NSObject {
         get { adUnitConfig.adConfiguration.videoControlsConfig.isSoundButtonVisible }
         set { adUnitConfig.adConfiguration.videoControlsConfig.isSoundButtonVisible = newValue }
     }
-    
+
     /// The area for the close button in the video ad.
     public var closeButtonArea: Double {
         get { adUnitConfig.adConfiguration.videoControlsConfig.closeButtonArea }
@@ -76,7 +76,7 @@ public class MediationBaseInterstitialAdUnit : NSObject {
         adUnitConfig = AdUnitConfig(configId: configId)
         adUnitConfig.adConfiguration.isInterstitialAd = true
         adUnitConfig.adPosition = .fullScreen
-        adUnitConfig.adConfiguration.adFormats = [.banner, .video]
+        adUnitConfig.adFormats = [.banner, .video]
         adUnitConfig.adConfiguration.bannerParameters.api = PrebidConstants.supportedRenderingBannerAPISignals
         
         super.init()

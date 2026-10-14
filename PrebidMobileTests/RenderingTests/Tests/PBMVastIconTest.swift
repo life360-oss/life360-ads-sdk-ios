@@ -14,12 +14,12 @@
   */
 
 import XCTest
-@testable import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 class PBMVastIconTest: XCTestCase {
     
     func testDefaultState() {
-        let icon = PBMVastIcon()
+        let icon = VastIcon()
         
         XCTAssertNotNil(icon.program)
         XCTAssertEqual(icon.program, "")
@@ -39,8 +39,8 @@ class PBMVastIconTest: XCTestCase {
         // computed later
         XCTAssertFalse(icon.displayed)
         
-        // PBMVastResourceContainer
-        XCTAssertEqual(icon.resourceType, PBMVastResourceType.staticResource)
+        // VastResourceContainer
+        XCTAssertEqual(icon.resourceType, VastResourceType.staticResource)
         XCTAssertNil(icon.resource)
         XCTAssertNil(icon.staticType)
     }

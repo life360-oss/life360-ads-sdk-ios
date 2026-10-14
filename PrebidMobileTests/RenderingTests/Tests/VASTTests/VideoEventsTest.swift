@@ -16,9 +16,9 @@
 import Foundation
 import XCTest
 
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
-class VideoEventsTest : XCTestCase, CreativeViewDelegate, PBMVideoViewDelegate {
+class VideoEventsTest : XCTestCase, CreativeViewDelegate, VideoViewDelegate {
     
     let viewController = MockViewController()
     let modalManager = ModalManager()
@@ -169,7 +169,7 @@ class VideoEventsTest : XCTestCase, CreativeViewDelegate, PBMVideoViewDelegate {
     func creativeFullScreenDidFinish(_ creative: AbstractCreative) {}
     func creativeDidSendRewardedEvent(_ creative: AbstractCreative) {}
     
-    // MARK: - PBMVideoViewDelegate
+    // MARK: - VideoViewDelegate
     
     func videoViewFailedWithError(_ error: Error) {}
     func videoViewReadyToDisplay() {}

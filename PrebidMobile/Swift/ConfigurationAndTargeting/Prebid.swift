@@ -121,6 +121,12 @@ public class Prebid: NSObject {
     /// the impression event respectively to the legacy analytic setup.
     public var useCacheForReportingWithRenderingAPI = false
     
+    /// Indicates whether the SDK should filter out bids that don't contain a successful
+    /// server-side Prebid Cache entry in bid.ext.prebid.cache before passing them to the
+    /// ad server. Applies to Original API only: Rendering API renders creatives directly
+    /// from the bid's own markup and never depends on Prebid Cache to display an ad.
+    public var filterOutUncachedBids = false
+    
     /// Controls how long each creative has to load before it is considered a failure.
     public var creativeFactoryTimeout: TimeInterval = 6.0
     
@@ -144,6 +150,11 @@ public class Prebid: NSObject {
 
     /// If true, the sdk will add `includebidderkeys` flag inside the targeting object described in [PBS Documentation](https://docs.prebid.org/prebid-server/endpoints/openrtb2/pbs-endpoint-auction.html#targeting)
     public var includeBidderKeys = false
+
+    /// Where the SDK places Extended Identifiers (EIDs) in the bid request: `user.eids` (OpenRTB 2.6),
+    /// `user.ext.eids` (OpenRTB 2.5), or both. Prebid Server uses `user.eids` when both are present.
+    /// Defaults to `.compatible`.
+    public var eidsPlacement: EidsPlacement = .compatible
     
     /**
      * If true, the SDK will not check the PBS status during initialization. This will save initialization time

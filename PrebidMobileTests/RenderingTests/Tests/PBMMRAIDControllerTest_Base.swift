@@ -14,7 +14,7 @@
   */
 
 import XCTest
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 class PBMMRAIDControllerTest_Base: XCTestCase, CreativeViewDelegate {
     
@@ -158,7 +158,7 @@ class PBMMRAIDControllerTest_Base: XCTestCase, CreativeViewDelegate {
     
     func createLoader(connection: PrebidServerConnectionProtocol) -> PBMCreativeFactoryDownloadDataCompletionClosure {
         let result: PBMCreativeFactoryDownloadDataCompletionClosure =  {url, completionBlock in
-            let downloader = PBMDownloadDataHelper(serverConnection:connection)
+            let downloader = DownloadDataHelper(serverConnection:connection)
             downloader.downloadData(for: url, completionClosure: { (data:Data?, error:Error?) in
                 completionBlock(data,error)
             })
