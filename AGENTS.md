@@ -23,6 +23,7 @@ files under `.claude/`.
 | Review a PR on this repo | `agents/review/SKILL.md` |
 | Run SwiftLint | `agents/lint/SKILL.md` |
 | CocoaPods install | `agents/pod-install/SKILL.md` |
+| Merge the latest `prebid/master` into a new branch and port Life360 changes | `agents/prebid-merge-latest/SKILL.md` |
 | Generic iOS/Swift background (not repo-specific; playbook wins on conflicts) | `agents/ios-development/SKILL.md` |
 | Generic ObjC → Swift / XCTest migration background (playbook wins on conflicts) | `agents/migration-patterns/SKILL.md` |
 
