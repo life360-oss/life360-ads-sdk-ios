@@ -44,7 +44,8 @@ class BidRequesterImpl: NSObject, BidRequester {
     }
 
     public func requestBids(completion: @escaping (BidResponse?, Error?) -> Void) {
-        UserAgentService.shared.fetchUserAgent { [weak self] _ in
+        // Warm the service the request body reads from, so tests can inject a stub via the connection.
+        connection.userAgentService.fetchUserAgent { [weak self] _ in
             self?.makeRequest(completion: completion)
         }
     }

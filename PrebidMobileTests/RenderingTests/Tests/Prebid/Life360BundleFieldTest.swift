@@ -15,12 +15,12 @@
 
 import XCTest
 
-@testable import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 /// SDK-1298: bidding partners need the right app identifier in `app.bundle`.
 /// Life360 demand matches on the app bundle identifier, while Prebid demand matches
 /// on the App Store (iTunes) ID when one is configured. These tests drive the same
-/// `PBMParameterBuilderService` pipeline the SDK uses in production and pin both behaviours.
+/// `ParameterBuilderService` pipeline the SDK uses in production and pin both behaviours.
 class Life360BundleFieldTest: XCTestCase {
 
     private let itunesID = "464700387"
@@ -85,12 +85,12 @@ class Life360BundleFieldTest: XCTestCase {
     /// Drives the shared parameter-builder pipeline and parses the ORTB result. When
     /// `includeLife360Builder` is true the Life360 builder is appended exactly as
     /// `Life360BidRequester.buildORTBRequestString` does, so the Life360 override is exercised end-to-end.
-    private func buildBidRequest(bundle: PBMBundleProtocol, includeLife360Builder: Bool) -> PBMORTBBidRequest {
-        let extraBuilders: [PBMParameterBuilder]? = includeLife360Builder
+    private func buildBidRequest(bundle: BundleProtocol, includeLife360Builder: Bool) -> ORTBBidRequest {
+        let extraBuilders: [ParameterBuilder]? = includeLife360Builder
             ? [Life360ParameterBuilder(adConfiguration: AdUnitConfig(configId: "config-id"), bundle: bundle)]
             : nil
 
-        let paramsDict = PBMParameterBuilderService.buildParamsDict(
+        let paramsDict = ParameterBuilderService.buildParamsDict(
             with: AdConfiguration(),
             bundle: bundle,
             pbmLocationManager: MockLocationManagerSuccessful.sharedMock,
@@ -104,9 +104,9 @@ class Life360BundleFieldTest: XCTestCase {
         )
 
         guard let strORTB = paramsDict[PrebidConstants.OPEN_RTB_SCHEME],
-              let bidRequest = try? PBMORTBBidRequest.from(jsonString: strORTB) else {
+              let bidRequest = try? ORTBBidRequest.from(jsonString: strORTB) else {
             XCTFail("Failed to build ORTB bid request")
-            return PBMORTBBidRequest()
+            return ORTBBidRequest()
         }
         return bidRequest
     }

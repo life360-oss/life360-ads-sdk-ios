@@ -29,7 +29,6 @@
 #import "PBMWebView+Internal.h"
 
 #import "SwiftImport.h"
-#import "Life360ViewExposureChecker.h"
 
 // If remote debugging via Safari, delay the html injection until the Safari instance can connect
 #define REMOTE_DEBUGGING 0

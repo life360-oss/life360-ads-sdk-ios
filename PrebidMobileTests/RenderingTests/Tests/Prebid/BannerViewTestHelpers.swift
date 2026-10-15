@@ -69,7 +69,8 @@ class TestAdLoadFlowController: AdLoadFlowController {
             adLoader: TestAdLoader(),
             adUnitConfig: adUnitConfig,
             delegate: TestAdLoadFlowControllerDelegate(),
-            configValidationBlock: { _, _ in true }
+            configValidationBlock: { _, _ in true },
+            life360BidRequesterFactory: { _ in TestBidRequester() }
         )
     }
 
@@ -78,14 +79,16 @@ class TestAdLoadFlowController: AdLoadFlowController {
         adLoader: AdLoaderProtocol,
         adUnitConfig: AdUnitConfig,
         delegate: AdLoadFlowControllerDelegate,
-        configValidationBlock: @escaping AdUnitConfigValidationBlock
+        configValidationBlock: @escaping AdUnitConfigValidationBlock,
+        life360BidRequesterFactory: @escaping (AdUnitConfig) -> BidRequesterProtocol
     ) {
         super.init(
             bidRequesterFactory: bidRequesterFactory,
             adLoader: adLoader,
             adUnitConfig: adUnitConfig,
             delegate: delegate,
-            configValidationBlock: configValidationBlock
+            configValidationBlock: configValidationBlock,
+            life360BidRequesterFactory: life360BidRequesterFactory
         )
     }
 

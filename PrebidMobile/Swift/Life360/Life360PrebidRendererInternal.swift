@@ -27,7 +27,7 @@ public class Life360RendererInternal: NSObject, PrebidMobilePluginRenderer {
         adConfiguration: AdUnitConfig,
         loadingDelegate: DisplayViewLoadingDelegate,
         interactionDelegate: DisplayViewInteractionDelegate
-    ) -> PrebidMobileDisplayViewProtocol? {
+    ) -> (UIView & PrebidMobileDisplayViewProtocol)? {
 
         let displayView = DisplayView(
             frame: frame,

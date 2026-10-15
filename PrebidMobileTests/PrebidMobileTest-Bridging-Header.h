@@ -40,7 +40,6 @@
 #import "PBMWebView.h"
 #import "PBMWebViewDelegate.h"
 // PBMCircularProgressBarLayer moved to Swift — available via module import
-#import "Life360ViewExposureChecker.h"
 
 // Extensions
 #import "WKNavigationAction+PBMWKNavigationActionCompatible.h"
@@ -73,6 +72,3 @@
 
 #import "MediationInterstitialAdUnit+TestExtension.h"
 #import "MediationBannerAdUnit+TestExtension.h"
-
-// Life360
-#import "Life360ParameterBuilder.h"

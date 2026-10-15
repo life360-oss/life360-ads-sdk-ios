@@ -42,7 +42,7 @@ class BasicParameterBuilder: NSObject, ParameterBuilder {
         }
 
         for rtbImp in bidRequest.imp {
-            rtbImp.displaymanager = adConfiguration.isOriginalAPI ? nil : "prebid-mobile"
+            rtbImp.displaymanager = adConfiguration.isOriginalAPI ? nil : PrebidConstants.SDK_NAME
             rtbImp.displaymanagerver = adConfiguration.isOriginalAPI ? nil : sdkVersion
 
             rtbImp.instl = adConfiguration.presentAsInterstitial ? 1 : 0

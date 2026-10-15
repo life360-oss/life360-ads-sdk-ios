@@ -18,7 +18,7 @@ import UIKit
 extension UIWindow {
 
     @objc public static func appVisibleViewController() -> UIViewController? {
-        UIApplication.shared.keyWindow?.visibleViewController()
+        UIApplication.shared.pbmKeyWindow?.visibleViewController()
     }
 
     @objc public func visibleViewController() -> UIViewController? {

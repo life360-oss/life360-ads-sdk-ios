@@ -10,11 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^Debouncable)(id _Nullable param);
-
 @interface Life360Utils : NSObject
-
-+ (Debouncable)debounceAction:(void (^)(id param))action withInterval:(NSTimeInterval)interval;
 
 + (UIImageView *)getViewAsImage:(UIView *)view;
 

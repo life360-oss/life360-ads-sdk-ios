@@ -85,7 +85,9 @@ class AdViewManagerImpl: NSObject, AdViewManager {
         }
 
         guard let viewController = adViewManagerDelegate?.viewControllerForModalPresentation() else {
-            Log.error("viewControllerForModalPresentation is nil. Check the implementation of Ad View Delegate.")
+            let message = "viewControllerForModalPresentation is nil. Check the implementation of Ad View Delegate."
+            Log.error(message)
+            adViewManagerDelegate?.failedToLoad(PBMError.error(description: message))
             return
         }
 
@@ -245,10 +247,12 @@ class AdViewManagerImpl: NSObject, AdViewManager {
     }
 
     public func creativeViewWasClicked(_ creative: AbstractCreative) {
-        // POTENTIAL BUG: if publisher did not provide the controller for modal presentation
-        // and we did not check it before 'show'
-        // the video will disappear from UI and won't appear in the interstitial controller.
         if isAbleToShowCurrentCreative() && !adConfiguration.presentAsInterstitial {
+            guard adViewManagerDelegate?.viewControllerForModalPresentation() != nil else {
+                Log.error("viewControllerForModalPresentation is nil. Cannot expand video ad.")
+                return
+            }
+
             // IMPORTANT: we have to remove PBMVideoAdView from super view before invoking the show method.
             // Otherwise, the video won't be displayed.
 

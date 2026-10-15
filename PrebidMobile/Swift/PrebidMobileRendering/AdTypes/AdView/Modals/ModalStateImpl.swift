@@ -29,6 +29,8 @@ class ModalStateImpl: NSObject, ModalState {
     public let onStatePopFinished: ModalStatePopHandler?
     public let onStateHasLeftApp: ModalStateAppLeavingHandler?
 
+    public var onStateWillPop: ModalStatePopHandler?
+
     public let nextOnStatePopFinished: ModalStatePopHandler?
     public let nextOnStateHasLeftApp: ModalStateAppLeavingHandler?
 

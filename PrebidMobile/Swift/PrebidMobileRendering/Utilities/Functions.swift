@@ -78,7 +78,7 @@ import UIKit
     // MARK: - ObjC bridge (PBMFunctions public API)
 
     @objc public static var sdkVersion: String {
-        PrebidConstants.PREBID_VERSION
+        PrebidConstants.VERSION
     }
 
     @objc public static var supportedSKAdNetworkVersions: [String] {

@@ -104,8 +104,10 @@ class PrebidParameterBuilder: NSObject, ParameterBuilder {
 
         let extSource = ORTBSourceExtOMID()
 
-        if !adConfiguration.adConfiguration.isOriginalAPI {
-            extSource.omidpn = "Prebid"
+        // Native goes through the original API but still runs an OM session, and exchanges gate
+        // verification resources on these being present.
+        if !adConfiguration.adConfiguration.isOriginalAPI || adConfiguration.nativeAdConfiguration != nil {
+            extSource.omidpn = "Life360"
             extSource.omidpv = Functions.sdkVersion
         }
 
@@ -276,6 +278,9 @@ class PrebidParameterBuilder: NSObject, ParameterBuilder {
                     if let ver = adConfiguration.nativeAdConfiguration?.version {
                         nextNative.ver = ver
                     }
+                    if let api = adConfiguration.nativeAdConfiguration?.api, !api.isEmpty {
+                        nextNative.api = api
+                    }
                 }
             }
 
@@ -284,11 +289,12 @@ class PrebidParameterBuilder: NSObject, ParameterBuilder {
             }
 
             if appExtPrebid.source == nil {
-                appExtPrebid.source = "prebid-mobile"
+                appExtPrebid.source = PrebidConstants.SDK_NAME
             }
 
             if appExtPrebid.version == nil {
-                appExtPrebid.version = Prebid.shared.version
+                // Bidders see the Life360 Ads SDK version, not the underlying Prebid version.
+                appExtPrebid.version = PrebidConstants.VERSION
             }
         }
     }
