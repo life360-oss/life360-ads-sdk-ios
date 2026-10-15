@@ -27,7 +27,7 @@ TRIPLE="arm64-apple-ios15.0-simulator"
 # cross-compiling this way it never adds a framework search path for OMSDK. Point
 # clang at the iOS simulator slice explicitly (the identifier comes from the
 # xcframework's Info.plist AvailableLibraries).
-OMSDK_SLICE="Frameworks/OMSDK_Prebidorg.xcframework/ios-arm64_x86_64-simulator"
+OMSDK_SLICE="Frameworks/OMSDK_Life360.xcframework/ios-arm64_x86_64-simulator"
 
 if [ ! -d "${OMSDK_SLICE}" ]; then
     echo "🔴 OMSDK iOS simulator slice not found at ${OMSDK_SLICE}"
