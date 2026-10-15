@@ -18,7 +18,7 @@ import XCTest
 
 import UIKit
 import AdSupport
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 // MARK: - Mocks
 
@@ -365,7 +365,7 @@ class PBMWebViewTest : XCTestCase, PBMWebViewDelegate {
         
         //Fake a tap on the webview
         if (sendTap) {
-            webView.recordTapEvent(webView.tapdownGestureRecognizer)
+            webView.recordTapEvent(webView.tapGestureRecognizer)
         }
         
         self.expectationWebViewShouldOpenExternalLink = expectation(description: "expectationWebViewShouldOpenExternalLink")
@@ -456,7 +456,7 @@ class PBMWebViewTest : XCTestCase, PBMWebViewDelegate {
         navigationAction.mockedRequest = URLRequest(url: URL(string: "mraid://test")!)
         
         webView.state = .loaded
-        webView.recordTapEvent(webView.tapdownGestureRecognizer)
+        webView.recordTapEvent(webView.tapGestureRecognizer)
         
         webView.webView(webView.internalWebView, decidePolicyFor: navigationAction, decisionHandler: { policy in
             XCTAssertEqual(policy, .cancel)
@@ -477,7 +477,7 @@ class PBMWebViewTest : XCTestCase, PBMWebViewDelegate {
         navigationAction.mockedRequest = URLRequest(url: openxURL)
         
         webView.state = .loaded
-        webView.recordTapEvent(webView.tapdownGestureRecognizer)
+        webView.recordTapEvent(webView.tapGestureRecognizer)
         
         webView.webView(webView.internalWebView, decidePolicyFor: navigationAction, decisionHandler: { policy in
             XCTAssertEqual(policy, .cancel)
@@ -542,7 +542,7 @@ class PBMWebViewTest : XCTestCase, PBMWebViewDelegate {
         XCTAssertFalse(webView.wasRecentlyTapped())
         
         // Test: change internal state
-        webView.recordTapEvent(webView.tapdownGestureRecognizer)
+        webView.recordTapEvent(webView.tapGestureRecognizer)
         XCTAssertTrue(webView.wasRecentlyTapped())
     }
     
@@ -866,7 +866,7 @@ class PBMWebViewTest : XCTestCase, PBMWebViewDelegate {
         let expectedMraidEnv = [
             "version": "3.0",
             "sdk": "life360-ads-sdk",
-            "sdkVersion": PBMFunctions.sdkVersion(),
+            "sdkVersion": Functions.sdkVersion,
             "appId": "com.apple.dt.xctest.tool",
             "ifa": ASIdentifierManager.shared().advertisingIdentifier.uuidString,
             "limitAdTracking": !ASIdentifierManager.shared().isAdvertisingTrackingEnabled,
@@ -1000,7 +1000,7 @@ class PBMWebViewTest : XCTestCase, PBMWebViewDelegate {
         expectationCommandExecuted = expectation(description: "expectationCommandExecuted")
         
         webView.jsEvaluatingCompletion = { jsCommand, jsRes, error in
-            if jsCommand == PBMMRAIDJavascriptCommands.updateMaxSize(PBMFunctions.deviceMaxSize()) {
+            if jsCommand == PBMMRAIDJavascriptCommands.updateMaxSize(Functions.deviceMaxSize) {
                 self.expectationCommandExecuted?.fulfill();
             }
         }

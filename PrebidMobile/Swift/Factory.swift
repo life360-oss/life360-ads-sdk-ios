@@ -37,28 +37,16 @@ class Factory: NSObject {
                               adUnitConfiguration: adUnitConfiguration)
     }
     
-    // MARK: Life360 BidRequester
-    // Needed in order to instantiate ObjC class from Swift
-    static let life360BidRequesterType: BidRequester.Type = {
-        NSClassFromString("Life360BidRequester") as! BidRequester.Type
-    }()
-    
     @objc public static func createLife360BidRequester(connection: PrebidServerConnectionProtocol,
                                                       sdkConfiguration: Prebid,
                                                       targeting: Targeting,
                                                       adUnitConfiguration: AdUnitConfig) -> BidRequester {
-        life360BidRequesterType.init(connection: connection,
-                                    sdkConfiguration: sdkConfiguration,
-                                    targeting: targeting,
-                                    adUnitConfiguration: adUnitConfiguration)
+        Life360BidRequester(connection: connection,
+                            sdkConfiguration: sdkConfiguration,
+                            targeting: targeting,
+                            adUnitConfiguration: adUnitConfiguration)
     }
     
-    // MARK: Life360ViewExposureChecker
-    // Needed in order to instantiate ObjC class from Swift
-    static let life360ViewExposureChecker: Life360ViewExposureChecking.Type = {
-        NSClassFromString("Life360ViewExposureChecker") as! Life360ViewExposureChecking.Type
-    }()
-
     // MARK: WinNotifier
     
     @objc public static let WinNotifierType: WinNotifier.Type = {
@@ -154,17 +142,13 @@ class Factory: NSObject {
     
     // MARK: PBMTransactionFactory
     
-    @objc public static let TransactionFactoryType: TransactionFactory.Type = {
-        NSClassFromString("PBMTransactionFactory_Objc") as! TransactionFactory.Type
-    }()
-    
     @objc public static func createTransactionFactory(
         bid: Bid,
         adConfiguration: AdUnitConfig,
         connection: PrebidServerConnectionProtocol,
         callback: @escaping TransactionFactoryCallback
     ) -> TransactionFactory {
-        TransactionFactoryType.init(
+        TransactionFactoryImpl(
             bid: bid,
             adConfiguration: adConfiguration,
             connection: connection,

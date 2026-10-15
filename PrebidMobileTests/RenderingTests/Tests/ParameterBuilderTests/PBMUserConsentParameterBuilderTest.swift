@@ -28,7 +28,7 @@ class PBMUserConsentParameterBuilderTest: XCTestCase {
     }
     
     func testInit() {
-        let builder = PBMUserConsentParameterBuilder()
+        let builder = UserConsentParameterBuilder()
         XCTAssertNotNil(builder)
     }
     
@@ -36,9 +36,9 @@ class PBMUserConsentParameterBuilderTest: XCTestCase {
         UserConsentDataManager.shared.subjectToGDPR = false
         UserConsentDataManager.shared.gdprConsentString = "consentstring"
         
-        let builder = PBMUserConsentParameterBuilder()
+        let builder = UserConsentParameterBuilder()
         
-        let bidRequest = PBMORTBBidRequest()
+        let bidRequest = ORTBBidRequest()
         builder.build(bidRequest)
         
         XCTAssertEqual(bidRequest.regs.ext?["gdpr"] as? Int, 0)
@@ -49,9 +49,9 @@ class PBMUserConsentParameterBuilderTest: XCTestCase {
         UserConsentDataManager.shared.subjectToGDPR = true
         UserConsentDataManager.shared.gdprConsentString = "differentconsentstring"
         
-        let builder = PBMUserConsentParameterBuilder()
+        let builder = UserConsentParameterBuilder()
         
-        let bidRequest = PBMORTBBidRequest()
+        let bidRequest = ORTBBidRequest()
         builder.build(bidRequest)
         
         XCTAssertEqual(bidRequest.regs.ext?["gdpr"] as? Int, 1)

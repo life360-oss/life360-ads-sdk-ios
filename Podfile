@@ -1,4 +1,4 @@
-platform :ios, '13.0'
+platform :ios, '15.0'
 
 workspace 'Life360AdsSDK'
 
@@ -32,11 +32,16 @@ def prebid_demo_pods
 end
 
 def internalTestApp_pods
+  use_frameworks!
+  
+  pod 'Alamofire', '4.9.1'
   pod 'Eureka'
   pod 'SVProgressHUD'
+  pod 'RxSwift'
   
-  applovin_pods
+  ima_pod
   gma_pods
+  applovin_pods
 end
 
 target 'Life360AdsSDKGAMEventHandlers' do
@@ -87,24 +92,21 @@ target 'PrebidDemoObjectiveC' do
 end
 
 target 'InternalTestApp' do
-  use_frameworks!
   project 'InternalTestApp/InternalTestApp.xcodeproj'
   internalTestApp_pods
-  ima_pod
+  
+  target 'InternalTestAppTests' do
+    inherit! :search_paths
+  end
+  
+  target 'InternalTestAppUITests' do
+    inherit! :search_paths
+  end
 end
 
 target 'InternalTestApp-Skadn' do
-  use_frameworks!
   project 'InternalTestApp/InternalTestApp.xcodeproj'
   internalTestApp_pods
-  ima_pod
-end
-
-target 'InternalTestAppTests' do
-  use_frameworks!
-  project 'InternalTestApp/InternalTestApp.xcodeproj'
-  internalTestApp_pods
-  pod 'Google-Mobile-Ads-SDK'
 end
 
 target 'OpenXMockServer' do
@@ -113,13 +115,22 @@ target 'OpenXMockServer' do
   
   pod 'Alamofire', '4.9.1'
   pod 'RxSwift'
+  
+  target 'OpenXMockServerTests' do
+    inherit! :search_paths
+  end
 end
 
 post_install do |installer|
   installer.generated_projects.each do |project|
     project.targets.each do |target|
       target.build_configurations.each do |config|
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        # Xcode 27 refuses deployment targets below 15.0. Raise pod targets to the
+        # SDK floor, but keep any pod that already declares a higher minimum.
+        current = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_s
+        if current.empty? || Gem::Version.new(current) < Gem::Version.new('15.0')
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+        end
       end
     end
   end

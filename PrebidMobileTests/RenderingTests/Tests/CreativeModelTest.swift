@@ -16,13 +16,20 @@
 import Foundation
 import XCTest
 
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 //TODO: Refactor to use MockServer
 
 class CreativeModelTest: XCTestCase {
     
     var fireAndForgetExpectation:XCTestExpectation!
+    
+    func testExpirationInterval() {
+        let creativeModel = CreativeModel(adConfiguration: AdConfiguration())
+        creativeModel.expirationInterval = 30
+        
+        XCTAssertEqual(creativeModel.expirationInterval, 30)
+    }
     
     func testTrackEvent() {
         

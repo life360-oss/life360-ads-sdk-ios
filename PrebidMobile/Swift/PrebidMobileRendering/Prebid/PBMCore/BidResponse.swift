@@ -25,7 +25,12 @@ public class BidResponse: NSObject {
     public internal(set) var allBids: [Bid]?
     public internal(set) var winningBid: Bid?
     public internal(set) var targetingInfo: [String: String]?
-    
+
+    /// True when `removeBidsWithoutSuccessfulCache()` removed the PBS-designated winning
+    /// bid because it lacked a successful server-side cache entry, and a lower-priced
+    /// surviving bid was promoted to `winningBid` in its place.
+    public private(set) var topBidWasFiltered = false
+
     public internal(set) var tmaxrequest: NSNumber?
     
     public internal(set) var ext: ORTBBidResponseExt?
@@ -55,47 +60,33 @@ public class BidResponse: NSObject {
     }
     
     required init(rawBidResponse: RawBidResponse?) {
-        super.init()
         rawResponse = rawBidResponse
+        super.init()
         
         guard let rawBidResponse = rawBidResponse else {
             return
         }
 
         createBids(rawBidResponse: rawBidResponse)
-        
+
         tmaxrequest = rawBidResponse.ext?.tmaxrequest
         self.ext = rawBidResponse.ext
     }
     
     internal func createBids(rawBidResponse: RawBidResponse) {
         var allBids: [Bid] = []
-        var targetingInfo: [String : String] = [:]
-        var winningBid: Bid? = nil
-
         if let seatbid = rawBidResponse.seatbid {
             for nextSeatBid in seatbid {
                 guard let bids = nextSeatBid.bid else { continue }
                 for nextBid in bids {
                     let bid = Bid(bid: nextBid)
                     allBids.append(bid)
-                    
-                    if winningBid == nil && bid.isWinning {
-                        winningBid = bid
-                    } else if let bidTargetingInfo = bid.targetingInfo {
-                        targetingInfo.merge(bidTargetingInfo) { $1 }
-                    }
                 }
             }
         }
 
-        if let winningBidTargetingInfo = winningBid?.targetingInfo {
-            targetingInfo.merge(winningBidTargetingInfo) { $1 }
-        }
-
-        self.winningBid = winningBid
         self.allBids = allBids
-        self.targetingInfo = targetingInfo.count > 0 ? targetingInfo : nil
+        updateWinningBidAndTargetingInfo(from: allBids)
     }
     
     public func setTargetingInfo(with newValue: [String : String]) {
@@ -108,5 +99,49 @@ public class BidResponse: NSObject {
         }
         
         targetingInfo?[key] = value
+    }
+    
+    @discardableResult
+    public func removeBidsWithoutSuccessfulCache() -> Int {
+        guard let allBids else { return 0 }
+
+        let hadWinningBid = winningBid != nil
+        let filteredBids = allBids.filter { $0.hasSuccessfulServerCache }
+        let removedBids = allBids.count - filteredBids.count
+
+        self.allBids = filteredBids
+        updateWinningBidAndTargetingInfo(from: filteredBids)
+
+        // The PBS-designated winner does not automatically hand off its "winning" status
+        // to another bid when it gets filtered out. Without this, a perfectly renderable
+        // runner-up bid would be discarded along with everything else just because the
+        // top bid failed to cache.
+        if hadWinningBid, winningBid == nil, let fallbackWinner = filteredBids.max(by: { $0.price < $1.price }) {
+            topBidWasFiltered = true
+            setWinningBid(fallbackWinner, from: filteredBids)
+        }
+
+        return removedBids
+    }
+
+    private func updateWinningBidAndTargetingInfo(from bids: [Bid]) {
+        setWinningBid(bids.first(where: { $0.isWinning }), from: bids)
+    }
+
+    private func setWinningBid(_ winningBid: Bid?, from bids: [Bid]) {
+        var targetingInfo: [String : String] = [:]
+
+        for bid in bids {
+            if winningBid !== bid, let bidTargetingInfo = bid.targetingInfo {
+                targetingInfo.merge(bidTargetingInfo) { $1 }
+            }
+        }
+
+        if let winningBidTargetingInfo = winningBid?.targetingInfo {
+            targetingInfo.merge(winningBidTargetingInfo) { $1 }
+        }
+
+        self.winningBid = winningBid
+        self.targetingInfo = targetingInfo.isEmpty ? nil : targetingInfo
     }
 }

@@ -19,8 +19,6 @@ import XCTest
 
 class PBMBasicParameterBuilderTest: XCTestCase {
     
-    private var logToFile: LogToFileLock?
-    
     private var targeting: Targeting!
     
     override func setUp() {
@@ -31,7 +29,6 @@ class PBMBasicParameterBuilderTest: XCTestCase {
     }
     
     override func tearDown() {
-        logToFile = nil
         targeting.coppa = nil
         
         UserDefaults.standard.removeObject(forKey: InternalUserConsentDataManager.IABGPP_HDR_GppString)
@@ -47,14 +44,14 @@ class PBMBasicParameterBuilderTest: XCTestCase {
         adConfiguration.isInterstitialAd = false
         
         let sdkConfiguration = Prebid.mock
-        let builder = PBMBasicParameterBuilder(adConfiguration:adConfiguration,
+        let builder = BasicParameterBuilder(adConfiguration:adConfiguration,
                                                sdkConfiguration:sdkConfiguration,
                                                sdkVersion:"MOCK_SDK_VERSION",
                                                targeting: targeting)
         
         
         //Run Builder
-        let bidRequest = PBMORTBBidRequest()
+        let bidRequest = ORTBBidRequest()
         builder.build(bidRequest)
         
         //Check Impression
@@ -85,12 +82,12 @@ class PBMBasicParameterBuilderTest: XCTestCase {
         adConfiguration.isOriginalAPI = true
         let sdkConfiguration = Prebid.mock
         
-        let builder = PBMBasicParameterBuilder(adConfiguration:adConfiguration,
+        let builder = BasicParameterBuilder(adConfiguration:adConfiguration,
                                                sdkConfiguration:sdkConfiguration,
                                                sdkVersion:"MOCK_SDK_VERSION",
                                                targeting: targeting)
         
-        let bidRequest = PBMORTBBidRequest()
+        let bidRequest = ORTBBidRequest()
         builder.build(bidRequest)
         
         guard let imp = bidRequest.imp.first else {
@@ -107,12 +104,12 @@ class PBMBasicParameterBuilderTest: XCTestCase {
         adConfiguration.isOriginalAPI = false
         let sdkConfiguration = Prebid.mock
         
-        let builder = PBMBasicParameterBuilder(adConfiguration:adConfiguration,
+        let builder = BasicParameterBuilder(adConfiguration:adConfiguration,
                                                sdkConfiguration:sdkConfiguration,
                                                sdkVersion:"MOCK_SDK_VERSION",
                                                targeting: targeting)
         
-        let bidRequest = PBMORTBBidRequest()
+        let bidRequest = ORTBBidRequest()
         builder.build(bidRequest)
         
         guard let imp = bidRequest.imp.first else {
@@ -149,14 +146,14 @@ class PBMBasicParameterBuilderTest: XCTestCase {
         adConfiguration.isInterstitialAd = false
         
         let sdkConfiguration = Prebid.mock
-        let builder = PBMBasicParameterBuilder(adConfiguration:adConfiguration,
+        let builder = BasicParameterBuilder(adConfiguration:adConfiguration,
                                                sdkConfiguration:sdkConfiguration,
                                                sdkVersion:"MOCK_SDK_VERSION",
                                                targeting: targeting)
         
         
         //Run Builder
-        let bidRequest = PBMORTBBidRequest()
+        let bidRequest = ORTBBidRequest()
         builder.build(bidRequest)
         
         XCTAssertNil(bidRequest.regs.coppa)
@@ -178,57 +175,17 @@ class PBMBasicParameterBuilderTest: XCTestCase {
         }
         
         let sdkConfiguration = Prebid.mock
-        let builder = PBMBasicParameterBuilder(adConfiguration:adConfiguration,
+        let builder = BasicParameterBuilder(adConfiguration:adConfiguration,
                                                sdkConfiguration:sdkConfiguration,
                                                sdkVersion:"MOCK_SDK_VERSION",
                                                targeting: targeting)
         
         
         //Run Builder
-        let bidRequest = PBMORTBBidRequest()
+        let bidRequest = ORTBBidRequest()
         builder.build(bidRequest)
         
         PBMAssertEq(bidRequest.regs.coppa, expectedRegValue)
-    }
-    
-    func testInvalidProperties() {
-        let adConfiguration = AdConfiguration()
-        
-        let sdkConfiguration = Prebid.mock
-        let bidRequest = PBMORTBBidRequest()
-        
-        let builder = PBMBasicParameterBuilder(adConfiguration:adConfiguration,
-                                               sdkConfiguration:sdkConfiguration,
-                                               sdkVersion:"MOCK_SDK_VERSION",
-                                               targeting: targeting)
-        
-        
-        builder.build(bidRequest)
-        
-        logToFile = .init()
-        
-        builder.adConfiguration = nil
-        builder.build(bidRequest)
-        var log = Log.getLogFileAsString() ?? ""
-        XCTAssertTrue(log.contains("Invalid properties"))
-        
-        logToFile = nil
-        logToFile = .init()
-        
-        builder.adConfiguration = adConfiguration
-        builder.sdkConfiguration = nil
-        builder.build(bidRequest)
-        log = Log.getLogFileAsString() ?? ""
-        XCTAssertTrue(log.contains("Invalid properties"))
-        
-        logToFile = nil
-        logToFile = .init()
-        
-        builder.sdkConfiguration = sdkConfiguration
-        builder.sdkVersion = nil
-        builder.build(bidRequest)
-        log = Log.getLogFileAsString() ?? ""
-        XCTAssertTrue(log.contains("Invalid properties"))
     }
     
     func testParameterBuilderVideoPlacement() {
@@ -255,7 +212,7 @@ class PBMBasicParameterBuilderTest: XCTestCase {
             adConfiguration = adUnit.adUnitConfig.adConfiguration
         } else {
             let adUnit = BannerView.init(frame: CGRect.zero, configID: "configId", adSize: CGSize.zero)
-            adUnit.adFormat = .video
+            adUnit.adFormats = [.video]
             if let placement = placement {
                 adUnit.videoParameters.placement = placement
             }
@@ -263,11 +220,11 @@ class PBMBasicParameterBuilderTest: XCTestCase {
         }
         
         let sdkConfiguration = Prebid.mock
-        let builder = PBMBasicParameterBuilder(adConfiguration:adConfiguration,
+        let builder = BasicParameterBuilder(adConfiguration:adConfiguration,
                                                sdkConfiguration:sdkConfiguration,
                                                sdkVersion:"MOCK_SDK_VERSION",
                                                targeting: targeting)
-        let bidRequest = PBMORTBBidRequest()
+        let bidRequest = ORTBBidRequest()
         builder.build(bidRequest)
         
         guard let video = bidRequest.imp.first?.video else {
@@ -293,13 +250,13 @@ class PBMBasicParameterBuilderTest: XCTestCase {
         // Create Builder
         let adConfiguration = AdConfiguration()
         let sdkConfiguration = Prebid.mock
-        let builder = PBMBasicParameterBuilder(adConfiguration:adConfiguration,
+        let builder = BasicParameterBuilder(adConfiguration:adConfiguration,
                                                sdkConfiguration:sdkConfiguration,
                                                sdkVersion:"MOCK_SDK_VERSION",
                                                targeting: targeting)
         
         // Run Builder
-        let bidRequest = PBMORTBBidRequest()
+        let bidRequest = ORTBBidRequest()
         builder.build(bidRequest)
         
         // Check Regs
@@ -313,12 +270,12 @@ class PBMBasicParameterBuilderTest: XCTestCase {
     func checkDefaultParametersForAdUnit(adConfiguration: AdConfiguration) {
         let sdkConfiguration = Prebid.mock
         
-        let builder = PBMBasicParameterBuilder(adConfiguration:adConfiguration,
+        let builder = BasicParameterBuilder(adConfiguration:adConfiguration,
                                                sdkConfiguration:sdkConfiguration,
                                                sdkVersion:"MOCK_SDK_VERSION",
                                                targeting: targeting)
         
-        let bidRequest = PBMORTBBidRequest()
+        let bidRequest = ORTBBidRequest()
         builder.build(bidRequest)
         
         //Check that this is counted as an interstitial

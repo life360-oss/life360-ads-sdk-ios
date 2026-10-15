@@ -16,15 +16,10 @@
 #import "PBMVideoCreative.h"
 #import "PBMAbstractCreative+Protected.h"
 
-#import "PBMFunctions+Private.h"
-#import "UIView+PBMExtensions.h"
 
 #import "PBMConstants.h"
-#import "PBMDownloadDataHelper.h"
-#import "PBMFunctions.h"
 #import "PBMOpenMeasurementWrapper.h"
 #import "PBMOpenMeasurementSession.h"
-#import "PBMVideoView.h"
 #import "PBMModalState.h"
 #import "PBMMacros.h"
 #import "Log+Extensions.h"
@@ -39,6 +34,9 @@
 @property (nonatomic, strong) NSData *data;
 @property (nonatomic, strong) PBMRewardedConfig *rewardedConfig;
 
+// Whether playback should follow the viewability of the ad view.
+@property (nonatomic, assign, readonly) BOOL isVisibilityDrivenPlayback;
+
 @end
 
 #pragma mark - Implementation
@@ -50,6 +48,10 @@
 + (NSInteger)maxSizeForPreRenderContent {
     // 25 MiB
     return 25 * 1024 * 1024;
+}
+
+- (BOOL)isVisibilityDrivenPlayback {
+    return !self.creativeModel.adConfiguration.presentAsInterstitial;
 }
 
 #pragma mark - PBMAbstractCreative
@@ -109,8 +111,28 @@
 
 - (void)onAdDisplayed {
     [super onAdDisplayed];
-    [self.viewabilityTracker stop];
-    self.viewabilityTracker = NULL;
+
+    // An outstream video lives in the publisher's view hierarchy and may leave
+    // the viewport at any moment, so the tracker must keep running after the impression
+    // in order to pause playback. A fullscreen video always covers the screen.
+    if (self.isVisibilityDrivenPlayback == NO) {
+        [self.viewabilityTracker stop];
+        self.viewabilityTracker = NULL;
+    }
+}
+
+- (void)onViewabilityChanged:(BOOL)viewable viewExposure:(id<PBMViewExposure>)viewExposure {
+    [super onViewabilityChanged:viewable viewExposure:viewExposure];
+
+    if (!self.isVisibilityDrivenPlayback) {
+        return;
+    }
+
+    if (viewable) {
+        [self.videoView resumeAfterVisibilityChange];
+    } else {
+        [self.videoView pauseForVisibilityChange];
+    }
 }
 
 - (void)pause {
@@ -139,7 +161,7 @@
 }
 
 - (BOOL)isPlaybackFinished {
-    return self.videoView.isPlaybackFinished;
+    return self.videoView.playbackState == PBMVideoViewPlaybackStateFinished;
 }
 
 - (void)createOpenMeasurementSession {
@@ -177,10 +199,12 @@
     }
     
     if (self.creativeModel.adConfiguration.presentAsInterstitial) {
-        // no companion ads so pass this event to the PBMModalManager
-        // and close video automatically
-        [self.modalManager creativeDisplayCompleted:self];        
-        if (self.dismissInterstitialModalState) {
+        // No companion ads, so pass completion to the modal manager. Rewarded ads use
+        // rwdd.close.action; non-rewarded interstitials use the video controls setting.
+        [self.modalManager creativeDisplayCompleted:self];
+        if (!self.creativeModel.adConfiguration.isRewarded &&
+            self.creativeModel.adConfiguration.videoControlsConfig.isAutoCloseOnCompletionEnabled &&
+            self.dismissInterstitialModalState) {
             self.dismissInterstitialModalState();
         }
     } else {

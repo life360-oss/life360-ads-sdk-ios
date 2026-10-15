@@ -116,7 +116,17 @@ Pods/
 # Visual Studio Code
 .build/
 
-# Claude Code
-CLAUDE.md
-.claude/
+# Claude Code — shared agent config (AGENTS.md, CLAUDE.md, agents/) is tracked on purpose;
+# only per-developer machine state is ignored.
+.claude/settings.local.json
+.claude/shell-snapshots/
+.claude/todos/
+.claude/statsig/
+.claude/projects/
+.claude/worktrees/
 
+EventHandlers/Package.resolved
+
+# The SPM demo tracks the Prebid packages by branch; pins committed here go stale
+# and make the demo build against an old release.
+PrebidMobile.xcworkspace/xcshareddata/swiftpm/Package.resolved

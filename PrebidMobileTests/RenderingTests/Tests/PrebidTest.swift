@@ -14,7 +14,7 @@
   */
 
 import XCTest
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 class PrebidTest: XCTestCase {
     
@@ -324,7 +324,7 @@ class PrebidTest: XCTestCase {
         let configId = "b6260e2b-bc4c-4d10-bdb5-f7bdd62f5ed4"
         let adUnitConfig = AdUnitConfig(configId: configId, size: CGSize(width: 300, height: 250))
         let connection = MockServerConnection(onPost: [{ (url, data, timeout, callback) in
-            callback(PBMBidResponseTransformer.makeValidResponseWithCTF(bidPrice: 0.5, ctfBanner: creativeFactoryTimeout, ctfPreRender: creativeFactoryTimeoutPreRenderContent))
+            callback(BidResponseTransformer.makeValidResponseWithCTF(bidPrice: 0.5, ctfBanner: creativeFactoryTimeout, ctfPreRender: creativeFactoryTimeoutPreRenderContent))
         }])
         
         let requester = Factory.createBidRequester(connection: connection,

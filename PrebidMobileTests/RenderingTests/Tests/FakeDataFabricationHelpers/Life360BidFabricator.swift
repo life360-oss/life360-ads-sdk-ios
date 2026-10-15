@@ -19,7 +19,7 @@ import Foundation
 
 /// Builds Life360 bid fixtures whose size and creative identity are *distinguishable* per slot.
 ///
-/// The shared fixtures (`PBMBidResponseTransformer.someValidResponse`,
+/// The shared fixtures (`BidResponseTransformer.someValidResponse`,
 /// `WinningBidResponseFabricator`) hardcode one creative id and one 300x250 size, so they cannot
 /// express "slot N received slot N's creative at slot N's size". Every value here derives from `crid`,
 /// so a callback that reaches the wrong ad unit is visible in the assertion.

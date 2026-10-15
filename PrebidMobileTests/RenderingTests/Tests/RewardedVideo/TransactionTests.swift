@@ -15,7 +15,7 @@
 
 import XCTest
 
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 class TransactionTests: XCTestCase {
     

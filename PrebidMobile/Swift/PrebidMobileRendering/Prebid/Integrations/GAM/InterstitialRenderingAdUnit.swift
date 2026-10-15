@@ -27,11 +27,21 @@ public class InterstitialRenderingAdUnit: NSObject, BaseInterstitialAdUnitProtoc
         baseAdUnit.isReady
     }
     
-    /// The set of ad formats supported by this ad unit.
+    /// The set of ad formats requested for this ad unit.
+    ///
+    /// Only `.banner` and `.video` can be rendered by `InterstitialRenderingAdUnit`.
+    /// Empty sets and sets containing unsupported formats are ignored.
     public var adFormats: Set<AdFormat> {
         get { adUnitConfig.adFormats }
-        set { adUnitConfig.adFormats = newValue }
+        set {
+            guard let formats = AdFormat.validated(newValue, supported: Self.supportedAdFormats) else {
+                return
+            }
+            
+            adUnitConfig.adFormats = formats
+        }
     }
+    
     
     /// The position of the ad on the screen.
     public var adPosition: AdPosition {
@@ -100,8 +110,18 @@ public class InterstitialRenderingAdUnit: NSObject, BaseInterstitialAdUnitProtoc
         get { adUnitConfig.adConfiguration.videoControlsConfig.isSoundButtonVisible }
         set { adUnitConfig.adConfiguration.videoControlsConfig.isSoundButtonVisible = newValue }
     }
+
+    /// Controls whether full-screen video ads without an end card close when playback completes.
+    /// Set to `false` to keep the ad open with a **Watch Again** button. The default value is `true`.
+    public var isAutoCloseOnCompletionEnabled: Bool {
+        get { adUnitConfig.adConfiguration.videoControlsConfig.isAutoCloseOnCompletionEnabled }
+        set { adUnitConfig.adConfiguration.videoControlsConfig.isAutoCloseOnCompletionEnabled = newValue }
+    }
     
     // MARK: Private properties
+    
+    /// Formats that `InterstitialRenderingAdUnit` is able to render.
+    private static let supportedAdFormats: [AdFormat] = [.banner, .video]
     
     private let baseAdUnit: BaseInterstitialAdUnit
     
@@ -249,6 +269,10 @@ public class InterstitialRenderingAdUnit: NSObject, BaseInterstitialAdUnitProtoc
     
     func callDelegate_didClickAd() {
         delegate?.interstitialDidClickAd?(self)
+    }
+    
+    func callDelegate_adDidExpire() {
+        delegate?.interstitialDidExpireAd?(self)
     }
     
     func callEventHandler_isReady() -> Bool {

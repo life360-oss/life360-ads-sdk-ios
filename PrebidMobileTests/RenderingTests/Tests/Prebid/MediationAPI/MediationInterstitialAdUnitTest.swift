@@ -15,7 +15,7 @@
 
 import XCTest
 
-@testable import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 class MediationInterstitialAdUnitTest: XCTestCase {
     private let sdkConfiguration: Prebid = {
@@ -43,10 +43,73 @@ class MediationInterstitialAdUnitTest: XCTestCase {
         PBMAssertEq(adUnitConfig.adPosition, .fullScreen)
     }
     
+    func testAdFormats() {
+        let adUnit = MediationInterstitialAdUnit(configId: "prebidConfigId", mediationDelegate: mediationDelegate!)
+        let adUnitConfig = adUnit.adUnitConfig
+        
+        // Default: multiformat
+        XCTAssertEqual(adUnit.adFormats, [.banner, .video])
+        XCTAssertEqual(adUnitConfig.adFormats, [.banner, .video])
+        XCTAssertEqual(adUnitConfig.adConfiguration.adFormats, [.banner, .video])
+        
+        // Single format
+        adUnit.adFormats = [.video]
+        XCTAssertEqual(adUnit.adFormats, [.video])
+        XCTAssertEqual(adUnitConfig.adFormats, [.video])
+        XCTAssertEqual(adUnitConfig.adConfiguration.adFormats, [.video])
+        
+        adUnit.adFormats = [.banner]
+        XCTAssertEqual(adUnit.adFormats, [.banner])
+        XCTAssertEqual(adUnitConfig.adFormats, [.banner])
+        XCTAssertEqual(adUnitConfig.adConfiguration.adFormats, [.banner])
+        
+        // Back to multiformat
+        adUnit.adFormats = [.banner, .video]
+        XCTAssertEqual(adUnit.adFormats, [.banner, .video])
+        XCTAssertEqual(adUnitConfig.adFormats, [.banner, .video])
+        XCTAssertEqual(adUnitConfig.adConfiguration.adFormats, [.banner, .video])
+    }
+    
+    func testAdFormatsRejectsEmptySet() {
+        let adUnit = MediationInterstitialAdUnit(configId: "prebidConfigId", mediationDelegate: mediationDelegate!)
+        let adUnitConfig = adUnit.adUnitConfig
+        
+        adUnit.adFormats = [.video]
+        
+        adUnit.adFormats = []
+        
+        XCTAssertEqual(adUnit.adFormats, [.video], "Empty set must be ignored")
+        XCTAssertEqual(adUnitConfig.adFormats, [.video])
+        XCTAssertEqual(adUnitConfig.adConfiguration.adFormats, [.video])
+    }
+    
+    func testAdFormatsRejectsUnsupportedFormats() {
+        let adUnit = MediationInterstitialAdUnit(configId: "prebidConfigId", mediationDelegate: mediationDelegate!)
+        let adUnitConfig = adUnit.adUnitConfig
+        
+        // Unsupported only
+        adUnit.adFormats = [.native]
+        XCTAssertEqual(adUnit.adFormats, [.banner, .video], "Native-only set must be ignored")
+        XCTAssertEqual(adUnitConfig.adFormats, [.banner, .video])
+        XCTAssertEqual(adUnitConfig.adConfiguration.adFormats, [.banner, .video])
+        
+        // Mixed supported + unsupported must be rejected as a whole
+        adUnit.adFormats = [.video, .native]
+        XCTAssertEqual(adUnit.adFormats, [.banner, .video], "Set containing native must be ignored entirely")
+        XCTAssertEqual(adUnitConfig.adFormats, [.banner, .video])
+        XCTAssertEqual(adUnitConfig.adConfiguration.adFormats, [.banner, .video])
+        
+        // A valid set is still accepted afterwards
+        adUnit.adFormats = [.video]
+        XCTAssertEqual(adUnit.adFormats, [.video])
+        XCTAssertEqual(adUnitConfig.adFormats, [.video])
+        XCTAssertEqual(adUnitConfig.adConfiguration.adFormats, [.video])
+    }
+    
     func testAdObjectSetUpCleanUp() {
         //a good response with a bid
         let connection = MockServerConnection(onPost: [{ (url, data, timeout, callback) in
-            callback(PBMBidResponseTransformer.someValidResponse)
+            callback(BidResponseTransformer.someValidResponse)
         }])
         let initialKeywords = "key1,key2"
         
@@ -79,7 +142,7 @@ class MediationInterstitialAdUnitTest: XCTestCase {
         //a bad response with the same ad object without bids
         
         let noBidConnection = MockServerConnection(onPost: [{ (url, data, timeout, callback) in
-            callback(PBMBidResponseTransformer.serverErrorResponse)
+            callback(BidResponseTransformer.serverErrorResponse)
         }])
         
         let asyncExpectation2 = expectation(description: "fetchDemand executed")

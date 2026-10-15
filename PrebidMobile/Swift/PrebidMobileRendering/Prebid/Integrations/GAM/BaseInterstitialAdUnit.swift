@@ -69,6 +69,7 @@ class BaseInterstitialAdUnit:
     private var currentAdBlock: ((UIViewController?) -> Void)?
     private var isReadyBlock: (() -> Bool)?
     private var adLoader: InterstitialAdLoader?
+    private var isExpired = false
     
     private weak var targetController: UIViewController?
     
@@ -110,7 +111,7 @@ class BaseInterstitialAdUnit:
         adUnitConfig.adConfiguration.isInterstitialAd = true
         adUnitConfig.minSizePerc = minSizePerc
         adUnitConfig.adPosition = .fullScreen
-        adUnitConfig.adConfiguration.adFormats = [.banner, .video]
+        adUnitConfig.adFormats = [.banner, .video]
         adUnitConfig.adConfiguration.bannerParameters.api = PrebidConstants.supportedRenderingBannerAPISignals
         videoParameters.placement = .Interstitial
         videoParameters.plcmnt = .Interstitial
@@ -119,6 +120,10 @@ class BaseInterstitialAdUnit:
     // MARK: - Public Methods
     
     func loadAd() {
+        objc_sync_enter(blocksLockToken)
+        isExpired = false
+        objc_sync_exit(blocksLockToken)
+        
         adLoadFlowController.refresh()
     }
     
@@ -152,6 +157,7 @@ class BaseInterstitialAdUnit:
         isReadyBlock: @escaping () -> Bool
     ) {
         objc_sync_enter(blocksLockToken)
+        isExpired = false
         self.showBlock = showBlock
         self.isReadyBlock = isReadyBlock
         objc_sync_exit(blocksLockToken)
@@ -164,6 +170,10 @@ class BaseInterstitialAdUnit:
         createdInterstitialController interstitialController: InterstitialController
     ) {
         interstitialController.interactionDelegate = self
+    }
+    
+    public func interstitialAdLoaderAdDidExpire(_ interstitialAdLoader: InterstitialAdLoader) {
+        expireAd()
     }
     
     // MARK: - AdLoadFlowControllerDelegate
@@ -205,6 +215,11 @@ class BaseInterstitialAdUnit:
     /// Called when the ad in the interstitial controller is closed.
     public func interstitialControllerDidCloseAd(_ interstitialController: PrebidMobileInterstitialControllerProtocol) {
         assert(Thread.isMainThread, "Expected to only be called on the main thread")
+        // The ad has closed, so the next show(from:) may present the next loaded ad.
+        // A VAST companion end card reports its close before its modal finishes dismissing.
+        objc_sync_enter(blocksLockToken)
+        currentAdBlock = nil
+        objc_sync_exit(blocksLockToken)
         delegate?.callDelegate_didDismissAd()
     }
     
@@ -269,6 +284,21 @@ class BaseInterstitialAdUnit:
     private func reportLoadingFailed(with error: Error?) {
         DispatchQueue.main.async {
             self.delegate?.callDelegate_didFailToReceiveAd(with: error)
+        }
+    }
+    
+    private func expireAd() {
+        objc_sync_enter(blocksLockToken)
+        guard !isExpired else {
+            objc_sync_exit(blocksLockToken)
+            return
+        }
+        
+        isExpired = true
+        objc_sync_exit(blocksLockToken)
+        
+        DispatchQueue.main.async {
+            self.delegate?.callDelegate_adDidExpire?()
         }
     }
 }

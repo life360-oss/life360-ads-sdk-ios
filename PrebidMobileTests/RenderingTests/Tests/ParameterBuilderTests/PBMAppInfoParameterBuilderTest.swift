@@ -14,24 +14,25 @@
   */
 
 import XCTest
+@testable import Life360AdsSDK
 
 class PBMAppInfoParameterBuilderTest: XCTestCase {
     
     let parameterDict = ["foo": "bar"]
     let publisherName = "publisherName"
-    var bidRequest: PBMORTBBidRequest!
+    var bidRequest: ORTBBidRequest!
     var mockBundle: MockBundle!
-    var builder: PBMAppInfoParameterBuilder!
+    var builder: AppInfoParameterBuilder!
     var targeting: Targeting!
     
     override func setUp() {
         super.setUp()
-        bidRequest = PBMORTBBidRequest()
+        bidRequest = ORTBBidRequest()
         mockBundle = MockBundle()
         targeting = Targeting.shared
         targeting.publisherName = publisherName
         
-        builder = PBMAppInfoParameterBuilder(bundle: mockBundle, targeting: targeting)
+        builder = AppInfoParameterBuilder(bundle: mockBundle, targeting: targeting)
     }
     
     func testAddsAppInfoToORTBBidRequest() {

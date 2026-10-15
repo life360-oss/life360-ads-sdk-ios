@@ -17,9 +17,17 @@ import UIKit
 import XCTest
 import AVFoundation
 
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
-class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDelegate, PBMVideoViewDelegate {
+private final class CompletionTrackingModalManager: MockModalManager {
+    private(set) var completedCreative: AbstractCreative?
+
+    override func creativeDisplayCompleted(_ creative: AbstractCreative) {
+        completedCreative = creative
+    }
+}
+
+class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, CreativeViewDelegate, VideoViewDelegate {
    
     var videoCreative:PBMVideoCreative!
     let connection = UtilitiesForTesting.createConnectionForMockedTest()
@@ -122,7 +130,7 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
         self.videoCreative.creativeResolutionDelegate = self
         self.videoCreative.creativeViewDelegate = self
         
-        let state = Factory.createModalState(view: PBMVideoView(),
+        let state = Factory.createModalState(view: VideoView(),
                                              adConfiguration:AdConfiguration(),
                                              displayProperties:InterstitialDisplayProperties())
         self.videoCreative.modalManagerDidLeaveApp(state)
@@ -149,7 +157,7 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
         
         self.videoCreative?.display(rootViewController: UIViewController())
         
-        guard let videoView = self.videoCreative.view as? PBMVideoView else {
+        guard let videoView = self.videoCreative.view as? VideoView else {
             XCTFail("Couldn't get Video View")
             return
         }
@@ -186,7 +194,7 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
         
         self.videoCreative?.display(rootViewController: UIViewController())
         
-        guard let videoView = self.videoCreative.view as? PBMVideoView else {
+        guard let videoView = self.videoCreative.view as? VideoView else {
             XCTFail("Couldn't get Video View")
             return
         }
@@ -222,6 +230,83 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
         self.videoCreative.showAsInterstitial(fromRootViewController: rootVC, displayProperties: displayProperties)
         
         waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    func testInterstitialWithoutCompanionAutoClosesByDefault() {
+        let adConfiguration = AdConfiguration()
+        adConfiguration.isInterstitialAd = true
+        let model = CreativeModel(adConfiguration: adConfiguration)
+        model.hasCompanionAd = false
+
+        videoCreative = PBMVideoCreative(
+            creativeModel: model,
+            transaction: UtilitiesForTesting.createEmptyTransaction(),
+            videoData: Data()
+        )
+
+        let modalManager = MockModalManager()
+        videoCreative.modalManager = modalManager
+        videoCreative.showAsInterstitial(
+            fromRootViewController: UIViewController(),
+            displayProperties: InterstitialDisplayProperties()
+        )
+        XCTAssertEqual(modalManager.modalStateStack.count, 1)
+
+        videoCreative.videoViewCompletedDisplay()
+
+        XCTAssertTrue(modalManager.modalStateStack.isEmpty)
+    }
+
+    func testInterstitialWithoutCompanionCanDisableAutoClose() {
+        let adConfiguration = AdConfiguration()
+        adConfiguration.isInterstitialAd = true
+        adConfiguration.videoControlsConfig.isAutoCloseOnCompletionEnabled = false
+        let model = CreativeModel(adConfiguration: adConfiguration)
+        model.hasCompanionAd = false
+
+        videoCreative = PBMVideoCreative(
+            creativeModel: model,
+            transaction: UtilitiesForTesting.createEmptyTransaction(),
+            videoData: Data()
+        )
+
+        let modalManager = MockModalManager()
+        videoCreative.modalManager = modalManager
+        videoCreative.showAsInterstitial(
+            fromRootViewController: UIViewController(),
+            displayProperties: InterstitialDisplayProperties()
+        )
+        XCTAssertEqual(modalManager.modalStateStack.count, 1)
+
+        videoCreative.videoViewCompletedDisplay()
+
+        XCTAssertEqual(modalManager.modalStateStack.count, 1)
+    }
+
+    func testRewardedCompletionDefersDismissalToRewardedConfiguration() {
+        let adConfiguration = AdConfiguration()
+        adConfiguration.isInterstitialAd = true
+        adConfiguration.isRewarded = true
+        let model = CreativeModel(adConfiguration: adConfiguration)
+        model.hasCompanionAd = false
+
+        videoCreative = PBMVideoCreative(
+            creativeModel: model,
+            transaction: UtilitiesForTesting.createEmptyTransaction(),
+            videoData: Data()
+        )
+
+        let modalManager = CompletionTrackingModalManager()
+        videoCreative.modalManager = modalManager
+        videoCreative.showAsInterstitial(
+            fromRootViewController: UIViewController(),
+            displayProperties: InterstitialDisplayProperties()
+        )
+
+        videoCreative.videoViewCompletedDisplay()
+
+        XCTAssertTrue(modalManager.completedCreative === videoCreative)
+        XCTAssertEqual(modalManager.modalStateStack.count, 1)
     }
     
     func testSkipOffset() {
@@ -322,7 +407,7 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
         
         logToFile = .init()
 
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .utility).async {
             self.videoCreative.createOpenMeasurementSession();
             UtilitiesForTesting.checkLogContains("Open Measurement session can only be created on the main thread")
             expectation.fulfill()
@@ -454,7 +539,7 @@ class VideoCreativeDelegateTest: XCTestCase, CreativeResolutionDelegate, Creativ
     func creativeDidDisplay(_ creative: AbstractCreative) {}
     func creativeFullScreenDidFinish(_ creative: AbstractCreative) {}
     
-    // MARK: - PBMVideoViewDelegate
+    // MARK: - VideoViewDelegate
     
     func videoViewFailedWithError(_ error: Error) {
         self.expectationVideoDidComplete.fulfill()

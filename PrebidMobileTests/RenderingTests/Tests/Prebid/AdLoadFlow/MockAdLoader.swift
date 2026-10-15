@@ -16,7 +16,7 @@
 import Foundation
 import XCTest
 
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 class MockAdLoader: NSObject, AdLoaderProtocol {
     enum ExpectedCall {

@@ -25,4 +25,7 @@ protocol WebView_Protocol {
     ///
     /// Required for AppHarbr integration.
     var internalWebView: WKWebView { get }
+
+    // PBMWebView declares the getter as isRotationEnabled
+    @objc(isRotationEnabled) var rotationEnabled: Bool { get }
 }

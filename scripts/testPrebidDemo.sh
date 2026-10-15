@@ -2,19 +2,25 @@ if [ -d "scripts" ]; then
 cd scripts/
 fi
 
+# Set bash script to exit immediately if any commands fail.
+set -e
+
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 echo -e "\n\n${GREEN}RUN PREBID DEMO TESTS${NC}\n\n"
 
 echo -e "\n${GREEN}Creating simulator${NC} \n"
-xcrun simctl create iPhone-16-Pro-PrebidMobile com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro
+xcrun simctl create iPhone-17-Pro-PrebidMobile com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro
 
 cd ..
 echo $PWD
 
-export PATH="/Users/distiller/.gem/ruby/2.7.0/bin:$PATH"
-gem install cocoapods
+if ! command -v pod >/dev/null 2>&1; then
+    echo "CocoaPods is required but 'pod' was not found on PATH." >&2
+    echo "GitHub Actions 'macos-26' ships it preinstalled; install it locally with 'brew install cocoapods'." >&2
+    exit 1
+fi
 
 pod deintegrate
 pod install --repo-update
@@ -37,23 +43,26 @@ xcodebuild \
     -scheme $SCHEME \
     -sdk iphonesimulator \
     -configuration Debug \
-    -destination 'platform=iOS Simulator,name=iPhone-16-Pro-PrebidMobile,OS=latest' \
+    -destination 'platform=iOS Simulator,name=iPhone-17-Pro-PrebidMobile,OS=latest' \
     -destination-timeout 60 \
     build-for-testing
 
 echo -e "\n\n${GREEN}Testing ${SCHEME}${NC}\n\n"
 
+# `set -e` would abort the script on a failing xcodebuild before the report below runs,
+# so take the exit status explicitly and keep the diagnostic reachable.
+TEST_STATUS=0
 xcodebuild \
     -workspace Life360AdsSDK.xcworkspace \
     -scheme $SCHEME \
     -sdk iphonesimulator \
-    -destination 'platform=iOS Simulator,name=iPhone-16-Pro-PrebidMobile,OS=latest' \
+    -destination 'platform=iOS Simulator,name=iPhone-17-Pro-PrebidMobile,OS=latest' \
     -destination-timeout 60 \
     -test-iterations 2 \
     -retry-tests-on-failure \
-    test-without-building
+    test-without-building || TEST_STATUS=$?
 
-if [[ ${PIPESTATUS[0]} == 0 ]]; then
+if [[ ${TEST_STATUS} == 0 ]]; then
     echo "✅ ${TEST} Tests Passed"
 else
     echo "🔴 ${TEST} Tests Failed"
@@ -61,4 +70,4 @@ else
 fi
 
 echo -e "\n${GREEN}Removing simulator${NC} \n"
-xcrun simctl delete iPhone-16-Pro-PrebidMobile
+xcrun simctl delete iPhone-17-Pro-PrebidMobile

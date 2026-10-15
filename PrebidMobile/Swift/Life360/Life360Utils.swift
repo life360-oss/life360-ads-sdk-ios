@@ -46,6 +46,21 @@ enum Life360Utils {
         )
     }
 
+    /// Scroll observers fire on every frame, far more often than an exposure recalculation is worth.
+    /// The returned closure runs `action` on its first call, then ignores calls until `interval` has passed.
+    /// Call it on the main thread.
+    static func throttle(interval: TimeInterval, action: @escaping () -> Void) -> () -> Void {
+        var isThrottled = false
+        return {
+            guard !isThrottled else { return }
+            isThrottled = true
+            action()
+            DispatchQueue.main.asyncAfter(deadline: .now() + interval) {
+                isThrottled = false
+            }
+        }
+    }
+
     // MARK: - Private
 
     /// Private anchor class used solely to resolve the SDK's framework bundle via `Bundle(for:)`.

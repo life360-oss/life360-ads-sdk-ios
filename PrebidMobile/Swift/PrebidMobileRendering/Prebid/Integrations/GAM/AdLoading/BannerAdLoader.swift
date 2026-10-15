@@ -81,6 +81,10 @@ class BannerAdLoader: NSObject, AdLoaderProtocol, DisplayViewLoadingDelegate, Ba
     public func displayView(_ displayView: UIView, didFailWithError error: any Error) {
         flowDelegate?.adLoader(self, failedWithPrebidError: error)
     }
+    
+    @objc public func displayViewDidExpire(_ displayView: UIView) {
+        delegate?.bannerAdLoaderDidExpire?(self)
+    }
 
     // MARK: - BannerEventLoadingDelegate
 
@@ -98,7 +102,7 @@ class BannerAdLoader: NSObject, AdLoaderProtocol, DisplayViewLoadingDelegate, Ba
 
     // MARK: - Private
 
-    private func createBannerView(with bid: Bid, adUnitConfig: AdUnitConfig) -> PrebidMobileDisplayViewProtocol? {
+    private func createBannerView(with bid: Bid, adUnitConfig: AdUnitConfig) -> (UIView & PrebidMobileDisplayViewProtocol)? {
         guard let delegate else { return nil }
 
         let displayFrame = CGRect(origin: .zero, size: bid.size)

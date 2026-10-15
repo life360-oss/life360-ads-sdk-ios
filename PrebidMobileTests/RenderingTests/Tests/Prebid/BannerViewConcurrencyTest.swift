@@ -373,7 +373,7 @@ final class CapturingLife360Renderer: Life360RendererInternal {
         adConfiguration: AdUnitConfig,
         loadingDelegate: DisplayViewLoadingDelegate,
         interactionDelegate: DisplayViewInteractionDelegate
-    ) -> PrebidMobileDisplayViewProtocol? {
+    ) -> (UIView & PrebidMobileDisplayViewProtocol)? {
         let view = super.createBannerView(
             with: frame,
             bid: bid,
@@ -404,7 +404,7 @@ final class CapturingPrebidRenderer: PrebidRenderer {
         adConfiguration: AdUnitConfig,
         loadingDelegate: DisplayViewLoadingDelegate,
         interactionDelegate: DisplayViewInteractionDelegate
-    ) -> PrebidMobileDisplayViewProtocol? {
+    ) -> (UIView & PrebidMobileDisplayViewProtocol)? {
         let view = super.createBannerView(
             with: frame,
             bid: bid,

@@ -18,22 +18,17 @@
 
 #import <JavaScriptCore/JavaScriptCore.h>
 
-#import "PBMFunctions+Private.h"
 #import "PBMMRAIDController.h"
 #import "PBMMRAIDJavascriptCommands.h"
 #import "PBMMacros.h"
 #import "PBMOpenMeasurementSession.h"
 #import "PBMORTB.h"
-#import "PBMTouchDownRecognizer.h"
-#import "PBMWKScriptMessageHandlerLeakAvoider.h"
-#import "UIView+PBMExtensions.h"
 #import "Log+Extensions.h"
 
 #import "PBMWebView.h"
 #import "PBMWebView+Internal.h"
 
 #import "SwiftImport.h"
-#import "Life360ViewExposureChecker.h"
 
 // If remote debugging via Safari, delay the html injection until the Safari instance can connect
 #define REMOTE_DEBUGGING 0
@@ -450,7 +445,7 @@ static PBMError *extracted(NSString *errorMessage) {
 
 #ifdef DEBUG
 - (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
-    [Functions checkCertificateChallenge:challenge completionHandler:completionHandler];
+    [PBMFunctions checkCertificateChallenge:challenge completionHandler:completionHandler];
 }
 #endif
 
@@ -673,7 +668,10 @@ static PBMError *extracted(NSString *errorMessage) {
 - (void)setupVolumeObserver {
     if (!self.isVolumeObserverSetup) {
         self.isVolumeObserverSetup = YES;
-        [[AVAudioSession sharedInstance] setActive:YES error:nil];
+        // Note: intentionally not calling `setActive:YES` here. Activating the shared audio session
+        // is a synchronous call that can block the main thread and interrupts audio already playing
+        // in other apps, even though this is only needed to observe `outputVolume` via KVO, which
+        // works without activating the session.
         [[AVAudioSession sharedInstance] addObserver:self
                                           forKeyPath:KeyPathOutputVolume
                                              options:NSKeyValueObservingOptionNew
@@ -968,21 +966,21 @@ static PBMError *extracted(NSString *errorMessage) {
 }
 
 - (void)setupTapRecognizer {
-    if (self.tapdownGestureRecognizer) {
-        [self.internalWebView removeGestureRecognizer:self.tapdownGestureRecognizer];
+    if (self.tapGestureRecognizer) {
+        [self.internalWebView removeGestureRecognizer:self.tapGestureRecognizer];
     }
-    
-    self.tapdownGestureRecognizer = [[PBMTouchDownRecognizer alloc] initWithTarget:self action:@selector(recordTapEvent:)];
-    [self.tapdownGestureRecognizer setCancelsTouchesInView:YES];
-    [self.internalWebView addGestureRecognizer:self.tapdownGestureRecognizer];
-    self.tapdownGestureRecognizer.delegate = self;
+
+    self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(recordTapEvent:)];
+    [self.tapGestureRecognizer setCancelsTouchesInView:NO];
+    [self.internalWebView addGestureRecognizer:self.tapGestureRecognizer];
+    self.tapGestureRecognizer.delegate = self;
 }
 
 - (void)recordTapEvent:(UITapGestureRecognizer *)tap {
-    if (self.tapdownGestureRecognizer != tap) {
+    if (self.tapGestureRecognizer != tap) {
         return;
     }
-    
+
     self.lastTapTimestamp = [NSDate new];
 }
 

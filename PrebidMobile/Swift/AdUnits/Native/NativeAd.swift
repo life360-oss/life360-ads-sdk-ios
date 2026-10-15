@@ -37,7 +37,7 @@ public class NativeAd: NSObject, CacheExpiryDelegate {
     //NativeAd Expire
     private var expired = false
     //Impression Tracker
-    var exposureChecker: Life360ViewExposureChecking?
+    var exposureChecker: Life360ViewExposureChecker?
     // One independent countdown per duration-gated event type the response actually asked to track,
     // keyed by `EventType.value`
     var viewabilityTimers: [Int: PausableCountdownTimer] = [:]
@@ -315,7 +315,7 @@ public class NativeAd: NSObject, CacheExpiryDelegate {
 
         // Life360ViewExposureChecker drives its callback off scroll events rather than polling, so
         // exposure is only recalculated when the ad's position on screen could actually have changed.
-        exposureChecker = Factory.life360ViewExposureChecker.init(view: viewForTracking) { [weak self] exposure, _ in
+        exposureChecker = Life360ViewExposureChecker(view: viewForTracking) { [weak self] exposure, _ in
             self?.handleExposureChange(exposure)
         }
     }

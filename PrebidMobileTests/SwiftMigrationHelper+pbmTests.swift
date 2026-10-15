@@ -15,7 +15,7 @@
     
 
 import XCTest
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 func XCTAssertEqual<T: PBMSwiftMigrationHelper>(_ expression1: @autoclosure () -> T,
                                                 _ expression2: @autoclosure () -> T) {

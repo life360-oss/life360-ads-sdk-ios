@@ -69,7 +69,7 @@ To [add the Life360 Ads SDK package dependency](https://developer.apple.com/docu
 Easily include the Life360 Ads SDK for your primary ad server in your Podfile/
 
 ```
-platform :ios, '13.0'
+platform :ios, '15.0'
 
 target 'MyAmazingApp' do 
     pod 'Life360AdsSDK'

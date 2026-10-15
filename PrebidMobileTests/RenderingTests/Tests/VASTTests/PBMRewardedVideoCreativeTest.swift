@@ -18,7 +18,7 @@ import UIKit
 import XCTest
 import AVFoundation
 
-@testable @_spi(PBMInternal) import Life360AdsSDK
+@_spi(PBMInternal) @testable import Life360AdsSDK
 
 
 class PBMModalManagerTest: ModalManager {
