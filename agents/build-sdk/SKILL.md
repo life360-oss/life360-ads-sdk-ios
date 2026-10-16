@@ -30,10 +30,10 @@ The `Lib-` prefix on scheme names avoids collision with auto-generated SPM schem
 
 ```
 generated/output/
-  XCPrebidMobile.xcframework            (~60 MB)
-  XCPrebidMobileGAMEventHandlers.xcframework  (~21 MB)
-  XCPrebidMobileAdMobAdapters.xcframework     (~22 MB)
-  XCPrebidMobileMAXAdapters.xcframework       (~9 MB)
+  XCLife360AdsSDK.xcframework
+  XCLife360AdsSDKGAMEventHandlers.xcframework
+  XCLife360AdsSDKAdMobAdapters.xcframework
+  XCLife360AdsSDKMAXAdapters.xcframework
 ```
 
 Each XCFramework contains an `ios-arm64` (device) and `ios-arm64_x86_64-simulator` slice.
