@@ -23,10 +23,9 @@
 		0012D7832E0BE60C007013F3 /* TransactionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7822E0BE602007013F3 /* TransactionFactory.swift */; };
 		0012D78A2E0BFAC3007013F3 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7892E0BFABF007013F3 /* DisplayView.swift */; };
 		0012D7912E0C311D007013F3 /* OMSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7902E0C3109007013F3 /* OMSession.swift */; };
-		0012D7AB2E0C540C007013F4 /* OMSessionWrapperRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7AA2E0C540C007013F4 /* OMSessionWrapperRegistry.swift */; };
-		218D00C4ACC947A59ED91AE6 /* Life360NativeOMUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F0C740153342D5BFCB35E9 /* Life360NativeOMUtils.swift */; };
 		0012D7A32E0C3210007013F3 /* OpenMeasurementFriendlyObstructionPurpose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7A22E0C320D007013F3 /* OpenMeasurementFriendlyObstructionPurpose.swift */; };
 		0012D7AB2E0C540C007013F3 /* OMSessionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7AA2E0C540C007013F3 /* OMSessionWrapper.swift */; };
+		0012D7AB2E0C540C007013F4 /* OMSessionWrapperRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7AA2E0C540C007013F4 /* OMSessionWrapperRegistry.swift */; };
 		0012D7B32E0D67A7007013F3 /* OMSDKVersionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7B22E0D67A7007013F3 /* OMSDKVersionProvider.swift */; };
 		0012D7D52E0E97C9007013F3 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0012D7D42E0E97C9007013F3 /* Functions.swift */; };
 		00334CA82D55EFED00770E4C /* PrebidMobilePRTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 00334CA72D55EFED00770E4C /* PrebidMobilePRTests.xctestplan */; };
@@ -37,11 +36,6 @@
 		00614C892DE7B5D900A61974 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00614C882DE7B5D900A61974 /* WebView.swift */; };
 		00614C902DE87D6A00A61974 /* AdLoaderFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00614C8F2DE87D6900A61974 /* AdLoaderFlowDelegate.swift */; };
 		00CD459A2DE9C7E4009D1EEA /* AdLoadFlowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD45992DE9C7E1009D1EEA /* AdLoadFlowState.swift */; };
-		0D1EB57FF98FBF1DE082E179 /* NativeAdViewabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1A01087C8D2FF9D6D60D82 /* NativeAdViewabilityTests.swift */; };
-		0D1EB57FF98FBF1DE082E17B /* NativeAdOpenMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1A01087C8D2FF9D6D60D84 /* NativeAdOpenMeasurementTests.swift */; };
-		0D1EB57FF98FBF1DE082E17A /* Life360NativeOMUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1A01087C8D2FF9D6D60D83 /* Life360NativeOMUtilsTests.swift */; };
-		13B95C8637F8231D861C9D08 /* Life360AdLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6873CFAE748275486EE29AC8 /* Life360AdLayout.swift */; };
-		218D00C4ACC947A59ED91AE5 /* PausableCountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065AA3433044155983FA07F /* PausableCountdownTimer.swift */; };
 		024155AD52021B27AF7FBD9C /* VastGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF8681AE720A2DF62D50457 /* VastGlobals.swift */; };
 		032D7FC98125C9939E641313 /* ORTBAppExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED245A104A112F097C6593E5 /* ORTBAppExt.swift */; };
 		03AFA13B5ABA8004256B53B6 /* TrackingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13EFFA3249245DF91494410 /* TrackingRecord.swift */; };
@@ -49,11 +43,16 @@
 		05B48418672D7FA6746D0CA8 /* VastParserParityExpectations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1079EFFA07871AF2F2B2E8 /* VastParserParityExpectations.swift */; };
 		0A3EF42B5306C88AA57AA87C /* ORTBSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6ACD389F978752087E0949 /* ORTBSource.swift */; };
 		0BCD2F4A9DB9E5A9F9FBA653 /* AdFormatTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A317FB18451250C388872C /* AdFormatTest.swift */; };
+		0D1EB57FF98FBF1DE082E179 /* NativeAdViewabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1A01087C8D2FF9D6D60D82 /* NativeAdViewabilityTests.swift */; };
+		0D1EB57FF98FBF1DE082E17A /* Life360NativeOMUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1A01087C8D2FF9D6D60D83 /* Life360NativeOMUtilsTests.swift */; };
+		0D1EB57FF98FBF1DE082E17B /* NativeAdOpenMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1A01087C8D2FF9D6D60D84 /* NativeAdOpenMeasurementTests.swift */; };
 		0E7A6F86C4BC10946CD6AE70 /* AdRequesterVAST.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032A83C4C0D68293758B2AE5 /* AdRequesterVAST.swift */; };
 		1012A8B8D1E35C9FF622E6A1 /* TimerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC11CB985237BDF13C1EA3A /* TimerInterface.swift */; };
 		116C742636ABBF44125EA4EA /* AppInfoParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F7C73ACDF82FFC82F6226F /* AppInfoParameterBuilder.swift */; };
 		120C95C7E8B979533CA0AD13 /* VideoViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2973BD6181117CE19F7318DC /* VideoViewDelegate.swift */; };
+		13B95C8637F8231D861C9D08 /* Life360AdLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6873CFAE748275486EE29AC8 /* Life360AdLayout.swift */; };
 		157E912C306427D8B9A467BD /* VastResourceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B483D135EE02F83C18C3265F /* VastResourceContainer.swift */; };
+		16A6BFAAD378CFF5F88A8BAF /* Life360ParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A2B7D4C0840DBE326BD93 /* Life360ParameterBuilder.swift */; };
 		17233527BE3B924DFC5DEA8C /* TransactionFactoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC2A797D33013BDA6031E7 /* TransactionFactoryImpl.swift */; };
 		179601796864174214D8B47E /* VastParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B18994C3F5C22C18C8203A /* VastParser.swift */; };
 		182FDC42982D79C584F3D103 /* UserConsentParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998620523ABC1256267CC282 /* UserConsentParameterBuilder.swift */; };
@@ -61,21 +60,24 @@
 		1C4778A3FF4B9B08DF801B9F /* BidRequesterImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A901063285106026F818CE6 /* BidRequesterImpl.swift */; };
 		1D0F9436F462F6F7D7E203FC /* AdViewManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F075B5FDD474004A94EDC6E2 /* AdViewManagerImpl.swift */; };
 		211E0F25F60BA677CE5C9266 /* BidResponseTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0BFF5BAC7E52A1847038E0 /* BidResponseTransformer.swift */; };
+		218D00C4ACC947A59ED91AE5 /* PausableCountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065AA3433044155983FA07F /* PausableCountdownTimer.swift */; };
+		218D00C4ACC947A59ED91AE6 /* Life360NativeOMUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F0C740153342D5BFCB35E9 /* Life360NativeOMUtils.swift */; };
 		235EDA3856EE246ECB590B4B /* VastModelDump.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF291384001B188BFD83C51 /* VastModelDump.swift */; };
 		274EB15456E4AB1FAE423B01 /* ORTBAppExtPrebid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A4C47F8AD51FBE02021911 /* ORTBAppExtPrebid.swift */; };
 		2A9DDDCC2C5BE190000EA4A0 /* PrebidEventDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9DDDCB2C5BE190000EA4A0 /* PrebidEventDelegate.swift */; };
 		2A9DDDD42C63665A000EA4A0 /* PBMEventDelegateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9DDDD32C63665A000EA4A0 /* PBMEventDelegateHelper.swift */; };
 		2A9DDDD82C63A88C000EA4A0 /* PrebidEventDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9DDDD72C63A88C000EA4A0 /* PrebidEventDelegateTests.swift */; };
-		30F6EDAA594945F94E03BC94 /* Life360BidRequesterUserAgentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C220DA9D6C3B2A8C039A0 /* Life360BidRequesterUserAgentTest.swift */; };
-		335B242095269A5F583128FE /* Life360QueryParameterStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D51F62A9D8CE42528222EA /* Life360QueryParameterStoreTests.swift */; };
 		2D15D3A95CB7BD5F88F19A84 /* ORTBDeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18B18C8FF34917C31D27DAD /* ORTBDeal.swift */; };
 		305440E738A68C8729A92BC2 /* InterstitialLayoutConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A181D26943B3808F8D0FF8 /* InterstitialLayoutConfigurator.swift */; };
+		30F6EDAA594945F94E03BC94 /* Life360BidRequesterUserAgentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C220DA9D6C3B2A8C039A0 /* Life360BidRequesterUserAgentTest.swift */; };
+		335B242095269A5F583128FE /* Life360QueryParameterStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D51F62A9D8CE42528222EA /* Life360QueryParameterStoreTests.swift */; };
 		3420EF17206C78405F99A694 /* ViewExposureImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BABF17B17F72333E6304521 /* ViewExposureImpl.swift */; };
 		355E1AF40179B3948A514A14 /* SKAdNetworksParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1846FEE0D4A9AD72B7A8025 /* SKAdNetworksParameterBuilder.swift */; };
 		3598648FE712212C1C2271C7 /* VideoViewPlaybackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A24D6E6DE17B5C590F8EBF /* VideoViewPlaybackState.swift */; };
 		3899FB8B3A805BD4F01F338B /* AdLoadManagerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719F3385E1034E4B053CFC70 /* AdLoadManagerBase.swift */; };
 		38F03B272576421400E026A2 /* CacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F03B262576421400E026A2 /* CacheManagerTests.swift */; };
 		38F03B332576624C00E026A2 /* TrackerManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F03B322576624C00E026A2 /* TrackerManagerTests.swift */; };
+		3A0A862B5156CD6CF42044C6 /* ORTBParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59DEE29F49C3AD4461CFD10 /* ORTBParameterBuilder.swift */; };
 		3A46AA2D2EF5D5300010B2A6 /* Life360Mraid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A46AA2B2EF5D5300010B2A6 /* Life360Mraid.swift */; };
 		3A46AA322EF5D5410010B2A6 /* Life360Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A46AA2F2EF5D5410010B2A6 /* Life360Utils.m */; };
 		3A46AA362EF5D5740010B2A6 /* Life360Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A46AA332EF5D5740010B2A6 /* Life360Utils.h */; };
@@ -89,12 +91,8 @@
 		3AC45289303FA3E2009C1050 /* AppHarbrSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A48DDEA302FD3EA007D138B /* AppHarbrSDK.xcframework */; };
 		3AC452A130474F96009C1050 /* omsdk.js in Resources */ = {isa = PBXBuildFile; fileRef = 3AC452A030474F96009C1050 /* omsdk.js */; };
 		3AED93342FD34398007E2C44 /* Life360Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED93332FD34398007E2C44 /* Life360Utils.swift */; };
-		4400174E25025B4716670DCB /* Life360BidRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8072D808734190CA58F817EE /* Life360BidRequester.swift */; };
-		16A6BFAAD378CFF5F88A8BAF /* Life360ParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A2B7D4C0840DBE326BD93 /* Life360ParameterBuilder.swift */; };
-		B3911716769F3DB24023025A /* Life360GeoLocationParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2946D120A1901C5DE40386 /* Life360GeoLocationParameterBuilder.swift */; };
 		3AED93362FD34398007E2C44 /* Life360Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED93352FD34398007E2C44 /* Life360Ads.swift */; };
 		3AED94A52FE1E89E007E2C44 /* AdLoadFlowControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D5DAA2737C4F600A8A2B5 /* AdLoadFlowControllerTest.swift */; };
-		3A0A862B5156CD6CF42044C6 /* ORTBParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59DEE29F49C3AD4461CFD10 /* ORTBParameterBuilder.swift */; };
 		3CD0ADEE2C5125E9006CDA6B /* PluginRegisterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0ADED2C5125E9006CDA6B /* PluginRegisterTest.swift */; };
 		3CD0ADF32C512E5E006CDA6B /* RawSampleCustomRendererBidFabricator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0ADF22C512E5E006CDA6B /* RawSampleCustomRendererBidFabricator.swift */; };
 		3EF4A8B3806B35F5BE9BC556 /* BasicParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47DBB24DFB7C7D21C787483 /* BasicParameterBuilder.swift */; };
@@ -106,6 +104,7 @@
 		42D4EA2C9397B5A4473E7502 /* PrebidParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF9C08E8C9EB81A92A0E6D8 /* PrebidParameterBuilder.swift */; };
 		4320566E2F778DF16A00EBF2 /* WKScriptMessageHandlerLeakAvoider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FF282BA416084F96EB1DF /* WKScriptMessageHandlerLeakAvoider.swift */; };
 		43E88B0F424433FE4C770D08 /* DeviceAccessManagerKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D64B71C29070D654233B212 /* DeviceAccessManagerKeys.swift */; };
+		4400174E25025B4716670DCB /* Life360BidRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8072D808734190CA58F817EE /* Life360BidRequester.swift */; };
 		45161301B41FC5C62E63A387 /* CircularProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75FE26A056A9AD378E85D92 /* CircularProgressBarView.swift */; };
 		45D1CA0BF3A0BD33D21336F6 /* UIWindow+PBMExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6383CDCC7579907805F631 /* UIWindow+PBMExtensions.swift */; };
 		46C0B26C1CAFB163665A3D32 /* VastRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF2890F7E67DB653015E87D /* VastRequester.swift */; };
@@ -460,15 +459,15 @@
 		5BC37AAE271F1D0000444D5E /* BannerEventHandlerStandalone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3786F271F1CFF00444D5E /* BannerEventHandlerStandalone.swift */; };
 		5BC37AB1271F1D0000444D5E /* DemandResponseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC37872271F1CFF00444D5E /* DemandResponseInfo.swift */; };
 		5BC37AE0271F1D0100444D5E /* AdFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC378A8271F1CFF00444D5E /* AdFormat.swift */; };
-		5BC37AE4271F1D4500444D5E /* Life360AdsSDKSwiftHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BC37AE3271F1D4500444D5E /* Life360AdsSDKSwiftHeaders.h */; };
+		5BC37AE4271F1D4500444D5E /* PrebidMobileSwiftHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BC37AE3271F1D4500444D5E /* PrebidMobileSwiftHeaders.h */; };
 		5BC37AE8271F2D0F00444D5E /* NativeImageAssetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC377DD271F1CFF00444D5E /* NativeImageAssetType.swift */; };
 		5BC37AF9271F2D3500444D5E /* NativeDataAssetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC37804271F1CFF00444D5E /* NativeDataAssetType.swift */; };
+		5D1139B616B9BD650EEA8DD1 /* NSString+PBMExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA25DAA5E2F605055A1A2CD /* NSString+PBMExtensions.swift */; };
+		5D3AC1EE73A7B258FC7EDE30 /* NSMutableDictionary+PBMExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8679195AC8696129CE3F88 /* NSMutableDictionary+PBMExtensions.swift */; };
 		5DC1298A0000000000000001 /* Life360BundleFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1298A0000000000000002 /* Life360BundleFieldTest.swift */; };
 		5DC1298B0000000000000001 /* Life360BannerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1298B0000000000000002 /* Life360BannerViewDelegate.swift */; };
 		5DC1298C0000000000000001 /* Life360BannerViewDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1298C0000000000000002 /* Life360BannerViewDelegateTest.swift */; };
 		5DC1298E0000000000000001 /* Life360BidRequesterTimeoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1298E0000000000000002 /* Life360BidRequesterTimeoutTest.swift */; };
-		5D1139B616B9BD650EEA8DD1 /* NSString+PBMExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA25DAA5E2F605055A1A2CD /* NSString+PBMExtensions.swift */; };
-		5D3AC1EE73A7B258FC7EDE30 /* NSMutableDictionary+PBMExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8679195AC8696129CE3F88 /* NSMutableDictionary+PBMExtensions.swift */; };
 		5FE9942B44D02BFF9FDC7A46 /* ORTBDeviceExtPrebid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8674299BC145909DB3E1D6 /* ORTBDeviceExtPrebid.swift */; };
 		600CF0702208963500C95176 /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600CF06F2208963500C95176 /* UtilsTests.swift */; };
 		6013E3F82215C82900FEE2B1 /* CLLocationManager+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6013E3F72215C82900FEE2B1 /* CLLocationManager+Swizzle.swift */; };
@@ -479,15 +478,14 @@
 		60C00EA45D38F02749155C4A /* VastParserParityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267DB939A3FF39911A166671 /* VastParserParityTests.swift */; };
 		60C0381F2204AF5D0082B32C /* DispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979177962201AF5F00E624CE /* DispatcherTests.swift */; };
 		60C038242204AF5D0082B32C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97826AA621FB4F1B001E2C05 /* Constants.swift */; };
-		65FD54D65E4FFD17E21C2F0A /* Life360RendererConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79165FCD86E9813EAC2682C6 /* Life360RendererConcurrencyTest.swift */; };
-		740B55EEE9AF5F2C6DA05ACE /* AdServerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C91F12900F4186B630C9E6 /* AdServerType.swift */; };
-		8DBACE589DCAFD75054FC869 /* OMSDK_Life360.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A61D2792FBFC980005F8B0A /* OMSDK_Life360.xcframework */; };
 		60C6D066F65792E41633B638 /* VastCreativeNonLinearAdsNonLinear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0C082CA926222AD863D8 /* VastCreativeNonLinearAdsNonLinear.swift */; };
 		62624439E889DF4A3BA8AD04 /* DownloadDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D40071933E258EF6A2F222 /* DownloadDataHelper.swift */; };
+		65FD54D65E4FFD17E21C2F0A /* Life360RendererConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79165FCD86E9813EAC2682C6 /* Life360RendererConcurrencyTest.swift */; };
 		65FE20300F6B611BFB6859F5 /* ORTBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652D755A3EB43A8614741A21 /* ORTBUser.swift */; };
 		6849D0E6183912249A715C2F /* NSURL+PBMExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2C4AFA26DB1ECCDA640F2 /* NSURL+PBMExtensions.swift */; };
 		6CB2112622AD3266C26419F9 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA3D2E30C325E66B779F3D /* VideoView.swift */; };
 		7170854A5CD3491ADED41348 /* DeviceInfoParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0399983F858C8A3A81A03843 /* DeviceInfoParameterBuilder.swift */; };
+		740B55EEE9AF5F2C6DA05ACE /* AdServerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C91F12900F4186B630C9E6 /* AdServerType.swift */; };
 		75B8629127EA6FE94C5CC8AF /* ORTBPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9174EEAFE5EA16364D1B3A78 /* ORTBPublisher.swift */; };
 		79E1DEB8A96A06250372AF97 /* TrackingURLVisitors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26190AC809536F33FA984AF2 /* TrackingURLVisitors.swift */; };
 		7F1E784CEF692D48F63950C0 /* ModalStateImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BE7BE833C871ED33B7D670 /* ModalStateImpl.swift */; };
@@ -495,6 +493,7 @@
 		8B41FDE0AE2B4E6F0AA19D0F /* VastTransactionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E812317D294C28D34BDC4A /* VastTransactionFactory.swift */; };
 		8BADC9578B0CF7BE38AA6AB8 /* ORTBGeo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360DDF22CFA7990EC8F8B9FD /* ORTBGeo.swift */; };
 		8D9BB55B0E5B16F5ECAFC4B6 /* ORTBApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3996B77BA1A2119C714F103A /* ORTBApp.swift */; };
+		8DBACE589DCAFD75054FC869 /* OMSDK_Life360.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A61D2792FBFC980005F8B0A /* OMSDK_Life360.xcframework */; };
 		8E68D9A35C4D78ACD4D78ED7 /* VastCreativeNonLinearAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EF3B2EA593FE48C09B0930 /* VastCreativeNonLinearAds.swift */; };
 		8F1FFE1795F393560A5AA112 /* VastMediaFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B98051B335E0B39D3F806 /* VastMediaFile.swift */; };
 		91A9B06B270A4EB892DD28E3 /* NSException+PBMExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E070E09140C3555F8F19C3C6 /* NSException+PBMExtensions.swift */; };
@@ -694,13 +693,13 @@
 		9743CB84235F1CDB002E2CAA /* NativeAssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743CB83235F1CDB002E2CAA /* NativeAssetTests.swift */; };
 		9743CB86235F264B002E2CAA /* NativeEventTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743CB85235F264B002E2CAA /* NativeEventTrackerTests.swift */; };
 		978A82F58FD9C612F99D1C0B /* Life360GAMUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DA79F1C9609A18EC09622A /* Life360GAMUtils.swift */; };
-		9A9277EDA48FEB29243E1B4A /* Life360RequestURLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810F85C11222A60B07AE86E0 /* Life360RequestURLBuilder.swift */; };
-		9D1C4E97CACE02124141B989 /* Life360BidFabricator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93218C248E91B48AF57BF342 /* Life360BidFabricator.swift */; };
-		A1AEEB85B4A8175DAFFB9CF8 /* Life360BidRequesterQueryParamsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB98047F2931DB4F803039FB /* Life360BidRequesterQueryParamsTest.swift */; };
 		9927746C621ACE46F9920949 /* EidsPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C8A58612B1D71C266D0614 /* EidsPlacement.swift */; };
 		99D9ADA28C000EA69821B372 /* VastCreativeCompanionAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF285D39D8865DADFBD882E6 /* VastCreativeCompanionAds.swift */; };
 		9A0E1C5B2D1F4A0100DE0002 /* SKOverlayManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0E1C5A2D1F4A0100DE0001 /* SKOverlayManagerTest.swift */; };
+		9A9277EDA48FEB29243E1B4A /* Life360RequestURLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810F85C11222A60B07AE86E0 /* Life360RequestURLBuilder.swift */; };
+		9D1C4E97CACE02124141B989 /* Life360BidFabricator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93218C248E91B48AF57BF342 /* Life360BidFabricator.swift */; };
 		9E2CCA7AD937A9CDF2B0B5FD /* ExternalURLOpenCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4147DBDA12F19627E087C958 /* ExternalURLOpenCallbacks.swift */; };
+		A1AEEB85B4A8175DAFFB9CF8 /* Life360BidRequesterQueryParamsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB98047F2931DB4F803039FB /* Life360BidRequesterQueryParamsTest.swift */; };
 		A5C8D3F18D57E0DCA836417B /* PBMUIApplicationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90616BA371B3101D44D03A /* PBMUIApplicationProtocol.swift */; };
 		A63E783F322D5B19D31EE32A /* AdLoadManagerVAST.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67498C84B0EDA3352BEB31F3 /* AdLoadManagerVAST.swift */; };
 		A6973A23E4372256034F22D7 /* ORTBDeviceExtAtts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEB81589766D33F9F73C471 /* ORTBDeviceExtAtts.swift */; };
@@ -708,14 +707,13 @@
 		A908694229E05EAF00B37479 /* PrebidMobilePluginRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = A908694129E05EAF00B37479 /* PrebidMobilePluginRegister.swift */; };
 		A908694429E05ED500B37479 /* PrebidMobilePluginRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A908694329E05ED500B37479 /* PrebidMobilePluginRenderer.swift */; };
 		A908694629E05F7900B37479 /* PrebidRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A908694529E05F7900B37479 /* PrebidRenderer.swift */; };
-		CD27BAF44B996C6F0CF4073B /* BannerViewConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E88FCD794CEBF3EB4BFEFC6 /* BannerViewConcurrencyTest.swift */; };
-		E2ED07D1301D026BF48EFFA4 /* Life360AdLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FDBE5844F46A8326B59A8B /* Life360AdLayoutTest.swift */; };
 		A9D01DE1E7594F359AF84A11 /* ORTBParityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E618F8CC072D420CBB717375 /* ORTBParityHelper.swift */; };
 		AC62751CA69E420B30402C86 /* ViewExposureChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8812D3C5C59838EE2DDB8F3A /* ViewExposureChecker.swift */; };
 		ACB14E40DFDCA4341A35FC3A /* VastCreativeLinearTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53EA1DFD25E0E22EFF42EE2 /* VastCreativeLinearTest.swift */; };
 		ADD3585F76171F02AD580598 /* ORTBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57D31DE1AFA14ABA663192C /* ORTBDevice.swift */; };
 		B125F3F2B9BC171A76DEB367 /* ORTBFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68664B988D627C36D0583E20 /* ORTBFormat.swift */; };
 		B23ACFDEF40CC3F2FA412FFB /* VastParserParityCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B25906363BD07BFC5BD7643 /* VastParserParityCases.swift */; };
+		B3911716769F3DB24023025A /* Life360GeoLocationParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2946D120A1901C5DE40386 /* Life360GeoLocationParameterBuilder.swift */; };
 		B462127D3055B8A6C0C6549A /* VastRequesterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ECD428DC0E255DDF370E55 /* VastRequesterTest.swift */; };
 		B6E73B46C9D6AA7BDAB15ACF /* ORTBImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A39AD253CDEECC791304046 /* ORTBImp.swift */; };
 		B7C9E1A20000000000000002 /* ImageHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9E1A10000000000000001 /* ImageHelperTests.swift */; };
@@ -736,24 +734,26 @@
 		CAB9AEF3BC5540C81D635275 /* UIView+PBMViewExposure.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD5E3359D7378A5ABF80E9 /* UIView+PBMViewExposure.swift */; };
 		CB42362D09DAFEF27BAE4C16 /* ExternalLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4888B94D24C64BB4FB166C4B /* ExternalLinkHandler.swift */; };
 		CC9CE64F5531E0D742C06C2C /* TransactionFactoryImplTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAF9ACA9EF527765CC38A2A /* TransactionFactoryImplTest.swift */; };
+		CD27BAF44B996C6F0CF4073B /* BannerViewConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E88FCD794CEBF3EB4BFEFC6 /* BannerViewConcurrencyTest.swift */; };
 		CFEC221403DFC8920408C374 /* ORTBPmp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871C59520F7BB233C8E9387 /* ORTBPmp.swift */; };
 		D33B948606516DBD28289FF3 /* WeakTimerTargetBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95ECD8AB93F68F7FE8ED363D /* WeakTimerTargetBox.swift */; };
 		D35849A4D9C64564D88398B5 /* ClickTrackingBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C887C73587A3DFEA520FEBA7 /* ClickTrackingBlocks.swift */; };
 		DA93ACC3E9AD7591B7B4D768 /* ORTBVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6831B0DD60EF55A07D4D1847 /* ORTBVideo.swift */; };
 		E0EB197E2CEB36317D346E75 /* ParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5311ABE58852622C5D719A49 /* ParameterBuilder.swift */; };
 		E2871435525A2EDE290922F8 /* MRAIDConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7E513D90D3A098D6FB07DE /* MRAIDConstants.swift */; };
+		E2ED07D1301D026BF48EFFA4 /* Life360AdLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FDBE5844F46A8326B59A8B /* Life360AdLayoutTest.swift */; };
 		E557D4B72ED219CB00E5580A /* UserAgentPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E557D4B62ED219CB00E5580A /* UserAgentPersistence.swift */; };
 		E5D79CAE2FAE93BF00C0C44A /* PluginRendererFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D79CAD2FAE93BF00C0C44A /* PluginRendererFactory.swift */; };
 		E5D79CB02FAE951C00C0C44A /* PluginRendererFactoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D79CAF2FAE951C00C0C44A /* PluginRendererFactoryTest.swift */; };
 		E5D88C022F4517FA00E801C3 /* ViewExposureCheckerSystemUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D88C012F4517FA00E801C3 /* ViewExposureCheckerSystemUITests.swift */; };
-		EB1396D82FE3A937CC6B78CC /* Life360QueryParameterStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53C50C2FC198B1BBF17020 /* Life360QueryParameterStore.swift */; };
-		ED9D727D2AE250F5E338F46D /* Life360BidRequesterCompletionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471CC5ABEB51827296004F85 /* Life360BidRequesterCompletionTest.swift */; };
-		F271AB277F15E7BB4DC4FD29 /* Life360BidResponseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8FE9E7076E1528CD4EE3E3 /* Life360BidResponseTest.swift */; };
 		E73EE6EA0342103A38F1949D /* WinNotifierImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA923B87D86838D32EF6AB05 /* WinNotifierImpl.swift */; };
 		E85B47F4B82D340510A509CE /* ORTBBidRequestExtPrebid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4404B3DFFA15E3C0EA70A691 /* ORTBBidRequestExtPrebid.swift */; };
 		E92665FA21BEFC59B4C4A521 /* Functions+Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F12838B16AF520EC1E7FB80 /* Functions+Testing.swift */; };
+		EB1396D82FE3A937CC6B78CC /* Life360QueryParameterStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53C50C2FC198B1BBF17020 /* Life360QueryParameterStore.swift */; };
+		ED9D727D2AE250F5E338F46D /* Life360BidRequesterCompletionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471CC5ABEB51827296004F85 /* Life360BidRequesterCompletionTest.swift */; };
 		EE562C6C4C558B5089F3A1B3 /* VastCreativeLinear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754427D8E388E3F556014EE /* VastCreativeLinear.swift */; };
 		EEC03AD6E351AFE0FC589EBB /* GeoLocationParameterBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0918024B761A2FC1C16C8BB /* GeoLocationParameterBuilder.swift */; };
+		F271AB277F15E7BB4DC4FD29 /* Life360BidResponseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8FE9E7076E1528CD4EE3E3 /* Life360BidResponseTest.swift */; };
 		F2B1F73A4DC4C71770A8F289 /* VastAbstractAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A589A6F90DB59956472220 /* VastAbstractAd.swift */; };
 		F5E5743E73977AA4C9D3DB0F /* ORTBDeviceExtPrebidInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C98CE7FF0CEDDDA4593726 /* ORTBDeviceExtPrebidInterstitial.swift */; };
 		F7529FB2F355A8903257C921 /* AdLoadManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF431E8ECF05753E4906B88B /* AdLoadManagerDelegate.swift */; };
@@ -799,10 +799,10 @@
 		FAEE4D2A262DC2B200AD9966 /* IMAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE4D02262DC2B200AD9966 /* IMAUtils.swift */; };
 		FAEE4D2C262DC2B200AD9966 /* Host.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE4D04262DC2B200AD9966 /* Host.swift */; };
 		FAEE4DBA262DCBB800AD9966 /* Swizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A88432497A99D00FDCBB6 /* Swizzling.swift */; };
-		FDC2FDF2C1018D2D033A591B /* BidAdTypeExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51286FB5526C0F52FF4556 /* BidAdTypeExtention.swift */; };
-		FF782EE0AAC84719ACB73880 /* Life360ViewExposureChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F0C740153342D5BFCB35E8 /* Life360ViewExposureChecker.swift */; };
 		FAF92DCBEB9306DE062B08B9 /* ORTBRegs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB891002AE52343932C140A /* ORTBRegs.swift */; };
 		FD22C7AED90FB92F3FE45EF0 /* VastCreativeAbstract.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD74809D9B7CB0A60315543E /* VastCreativeAbstract.swift */; };
+		FDC2FDF2C1018D2D033A591B /* BidAdTypeExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51286FB5526C0F52FF4556 /* BidAdTypeExtention.swift */; };
+		FF782EE0AAC84719ACB73880 /* Life360ViewExposureChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F0C740153342D5BFCB35E8 /* Life360ViewExposureChecker.swift */; };
 		FFCE7D8C6F7169C555C60A5E /* InternalUserConsentDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DA26A93B47D46056A9D579 /* InternalUserConsentDataManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -845,10 +845,9 @@
 		0012D7822E0BE602007013F3 /* TransactionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFactory.swift; sourceTree = "<group>"; };
 		0012D7892E0BFABF007013F3 /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
 		0012D7902E0C3109007013F3 /* OMSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSession.swift; sourceTree = "<group>"; };
-		0012D7AA2E0C540C007013F4 /* OMSessionWrapperRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSessionWrapperRegistry.swift; sourceTree = "<group>"; };
-		24F0C740153342D5BFCB35E9 /* Life360NativeOMUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360NativeOMUtils.swift; sourceTree = "<group>"; };
 		0012D7A22E0C320D007013F3 /* OpenMeasurementFriendlyObstructionPurpose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMeasurementFriendlyObstructionPurpose.swift; sourceTree = "<group>"; };
 		0012D7AA2E0C540C007013F3 /* OMSessionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSessionWrapper.swift; sourceTree = "<group>"; };
+		0012D7AA2E0C540C007013F4 /* OMSessionWrapperRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSessionWrapperRegistry.swift; sourceTree = "<group>"; };
 		0012D7B22E0D67A7007013F3 /* OMSDKVersionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMSDKVersionProvider.swift; sourceTree = "<group>"; };
 		0012D7D42E0E97C9007013F3 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		00334CA62D55EFB600770E4C /* PrebidMobileTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = PrebidMobileTests.xctestplan; sourceTree = "<group>"; };
@@ -861,22 +860,23 @@
 		00614C8F2DE87D6900A61974 /* AdLoaderFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdLoaderFlowDelegate.swift; sourceTree = "<group>"; };
 		00614C912DE87D9100A61974 /* AdLoaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdLoaderProtocol.swift; sourceTree = "<group>"; };
 		00CD45992DE9C7E1009D1EEA /* AdLoadFlowState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdLoadFlowState.swift; sourceTree = "<group>"; };
-		0E88FCD794CEBF3EB4BFEFC6 /* BannerViewConcurrencyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewConcurrencyTest.swift; sourceTree = "<group>"; };
-		115C220DA9D6C3B2A8C039A0 /* Life360BidRequesterUserAgentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BidRequesterUserAgentTest.swift; sourceTree = "<group>"; };
-		14D51F62A9D8CE42528222EA /* Life360QueryParameterStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Life360QueryParameterStoreTests.swift; sourceTree = "<group>"; };
-		24F0C740153342D5BFCB35E8 /* Life360ViewExposureChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360ViewExposureChecker.swift; sourceTree = "<group>"; };
 		032A83C4C0D68293758B2AE5 /* AdRequesterVAST.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdRequesterVAST.swift; sourceTree = "<group>"; };
 		0399983F858C8A3A81A03843 /* DeviceInfoParameterBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeviceInfoParameterBuilder.swift; sourceTree = "<group>"; };
 		07A317FB18451250C388872C /* AdFormatTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdFormatTest.swift; sourceTree = "<group>"; };
 		0A8679195AC8696129CE3F88 /* NSMutableDictionary+PBMExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSMutableDictionary+PBMExtensions.swift"; sourceTree = "<group>"; };
 		0D6ACD389F978752087E0949 /* ORTBSource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBSource.swift; sourceTree = "<group>"; };
+		0E88FCD794CEBF3EB4BFEFC6 /* BannerViewConcurrencyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewConcurrencyTest.swift; sourceTree = "<group>"; };
 		0F1079EFFA07871AF2F2B2E8 /* VastParserParityExpectations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastParserParityExpectations.swift; sourceTree = "<group>"; };
+		115C220DA9D6C3B2A8C039A0 /* Life360BidRequesterUserAgentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BidRequesterUserAgentTest.swift; sourceTree = "<group>"; };
 		11D5DA2A315BDB51BC521E9F /* VastCreativeCompanionAdsCompanion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastCreativeCompanionAdsCompanion.swift; sourceTree = "<group>"; };
+		14D51F62A9D8CE42528222EA /* Life360QueryParameterStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Life360QueryParameterStoreTests.swift; sourceTree = "<group>"; };
 		153E6501E30543AE6EF3B80F /* VastResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastResponse.swift; sourceTree = "<group>"; };
 		154530B7BDB688C5495E0AA2 /* VastResponseFlattenTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastResponseFlattenTest.swift; sourceTree = "<group>"; };
 		1E2522632FC00923D8008E59 /* VastWrapperAd.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastWrapperAd.swift; sourceTree = "<group>"; };
 		1F12838B16AF520EC1E7FB80 /* Functions+Testing.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Functions+Testing.swift"; sourceTree = "<group>"; };
 		20DA26A93B47D46056A9D579 /* InternalUserConsentDataManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InternalUserConsentDataManager.swift; sourceTree = "<group>"; };
+		24F0C740153342D5BFCB35E8 /* Life360ViewExposureChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360ViewExposureChecker.swift; sourceTree = "<group>"; };
+		24F0C740153342D5BFCB35E9 /* Life360NativeOMUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360NativeOMUtils.swift; sourceTree = "<group>"; };
 		26190AC809536F33FA984AF2 /* TrackingURLVisitors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingURLVisitors.swift; sourceTree = "<group>"; };
 		267DB939A3FF39911A166671 /* VastParserParityTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastParserParityTests.swift; sourceTree = "<group>"; };
 		28B18994C3F5C22C18C8203A /* VastParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastParser.swift; sourceTree = "<group>"; };
@@ -893,6 +893,7 @@
 		3871C59520F7BB233C8E9387 /* ORTBPmp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBPmp.swift; sourceTree = "<group>"; };
 		38F03B262576421400E026A2 /* CacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManagerTests.swift; sourceTree = "<group>"; };
 		38F03B322576624C00E026A2 /* TrackerManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerManagerTests.swift; sourceTree = "<group>"; };
+		3996B77BA1A2119C714F103A /* ORTBApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBApp.swift; sourceTree = "<group>"; };
 		3A46AA2B2EF5D5300010B2A6 /* Life360Mraid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360Mraid.swift; sourceTree = "<group>"; };
 		3A46AA2F2EF5D5410010B2A6 /* Life360Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Life360Utils.m; sourceTree = "<group>"; };
 		3A46AA332EF5D5740010B2A6 /* Life360Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Life360Utils.h; sourceTree = "<group>"; };
@@ -906,18 +907,14 @@
 		3A8E19102F60C12400720D1B /* Life360PrebidRendererInternal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360PrebidRendererInternal.swift; sourceTree = "<group>"; };
 		3AC452A030474F96009C1050 /* omsdk.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = omsdk.js; sourceTree = "<group>"; };
 		3AED93332FD34398007E2C44 /* Life360Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360Utils.swift; sourceTree = "<group>"; };
-		8072D808734190CA58F817EE /* Life360BidRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BidRequester.swift; sourceTree = "<group>"; };
-		E48A2B7D4C0840DBE326BD93 /* Life360ParameterBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360ParameterBuilder.swift; sourceTree = "<group>"; };
-		5E2946D120A1901C5DE40386 /* Life360GeoLocationParameterBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360GeoLocationParameterBuilder.swift; sourceTree = "<group>"; };
 		3AED93352FD34398007E2C44 /* Life360Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360Ads.swift; sourceTree = "<group>"; };
-		3996B77BA1A2119C714F103A /* ORTBApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBApp.swift; sourceTree = "<group>"; };
 		3CD0ADED2C5125E9006CDA6B /* PluginRegisterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegisterTest.swift; sourceTree = "<group>"; };
 		3CD0ADF22C512E5E006CDA6B /* RawSampleCustomRendererBidFabricator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawSampleCustomRendererBidFabricator.swift; sourceTree = "<group>"; };
-		471CC5ABEB51827296004F85 /* Life360BidRequesterCompletionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BidRequesterCompletionTest.swift; sourceTree = "<group>"; };
 		3DAF9ACA9EF527765CC38A2A /* TransactionFactoryImplTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TransactionFactoryImplTest.swift; sourceTree = "<group>"; };
 		4147DBDA12F19627E087C958 /* ExternalURLOpenCallbacks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExternalURLOpenCallbacks.swift; sourceTree = "<group>"; };
 		41BE7BE833C871ED33B7D670 /* ModalStateImpl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModalStateImpl.swift; sourceTree = "<group>"; };
 		4404B3DFFA15E3C0EA70A691 /* ORTBBidRequestExtPrebid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBBidRequestExtPrebid.swift; sourceTree = "<group>"; };
+		471CC5ABEB51827296004F85 /* Life360BidRequesterCompletionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BidRequesterCompletionTest.swift; sourceTree = "<group>"; };
 		4754427D8E388E3F556014EE /* VastCreativeLinear.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastCreativeLinear.swift; sourceTree = "<group>"; };
 		47D9A0396ABC8830B365D7DD /* MockLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationManager.swift; sourceTree = "<group>"; };
 		47D9A0CD7FB1815DEF68BDCF /* MockPBMModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPBMModalViewController.swift; sourceTree = "<group>"; };
@@ -969,14 +966,14 @@
 		47D9AF73918A74CD0DB665DF /* ACJEmptyChain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ACJEmptyChain.json; sourceTree = "<group>"; };
 		47D9AF9402144C399D6D4A1C /* ACJRefreshTest_0.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ACJRefreshTest_0.json; sourceTree = "<group>"; };
 		47D9AFC2B7BDC0ABEDC5FC65 /* 320x50.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 320x50.jpg; sourceTree = "<group>"; };
-		4C8FE9E7076E1528CD4EE3E3 /* Life360BidResponseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BidResponseTest.swift; sourceTree = "<group>"; };
-		5065AA3433044155983FA07F /* PausableCountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausableCountdownTimer.swift; sourceTree = "<group>"; };
 		48643EC7D63AA93728D47E51 /* ParameterBuilderService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ParameterBuilderService.swift; sourceTree = "<group>"; };
 		4888B94D24C64BB4FB166C4B /* ExternalLinkHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExternalLinkHandler.swift; sourceTree = "<group>"; };
 		4A39AD253CDEECC791304046 /* ORTBImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBImp.swift; sourceTree = "<group>"; };
 		4B589B983A66F5068DF59A31 /* VastAdsBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastAdsBuilder.swift; sourceTree = "<group>"; };
+		4C8FE9E7076E1528CD4EE3E3 /* Life360BidResponseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BidResponseTest.swift; sourceTree = "<group>"; };
 		4D0BFF5BAC7E52A1847038E0 /* BidResponseTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BidResponseTransformer.swift; sourceTree = "<group>"; };
 		4FA25DAA5E2F605055A1A2CD /* NSString+PBMExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSString+PBMExtensions.swift"; sourceTree = "<group>"; };
+		5065AA3433044155983FA07F /* PausableCountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausableCountdownTimer.swift; sourceTree = "<group>"; };
 		51C8A58612B1D71C266D0614 /* EidsPlacement.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EidsPlacement.swift; sourceTree = "<group>"; };
 		53019E6027E9E40700D509C1 /* LogTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTest.swift; sourceTree = "<group>"; };
 		530382F1283197E100B2B111 /* PrebidServerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidServerResponse.swift; sourceTree = "<group>"; };
@@ -1173,8 +1170,6 @@
 		5AE4E5E72DB865B4002C84DF /* DeferredModalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeferredModalState.swift; sourceTree = "<group>"; };
 		5AE4E5EA2DB87172002C84DF /* ModalManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalManagerDelegate.swift; sourceTree = "<group>"; };
 		5AF1BFDB2E1C50D30096B53C /* mraid.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mraid.js; sourceTree = "<group>"; };
-		5AF1BFDC2E1C50D30096B53C /* omsdk.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = omsdk.js; sourceTree = "<group>"; };
-		5AF5E9242E13580F002D80C1 /* InternalUserConsentDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InternalUserConsentDataManager.m; sourceTree = "<group>"; };
 		5AF5E9272E13580F002D80C1 /* PBMOpenMeasurementEventTracker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBMOpenMeasurementEventTracker.m; sourceTree = "<group>"; };
 		5AF5E9282E13580F002D80C1 /* PBMOpenMeasurementFriendlyObstructionTypeBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBMOpenMeasurementFriendlyObstructionTypeBridge.m; sourceTree = "<group>"; };
 		5AF5E9292E13580F002D80C1 /* PBMOpenMeasurementSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBMOpenMeasurementSession.m; sourceTree = "<group>"; };
@@ -1290,15 +1285,14 @@
 		5BC3786F271F1CFF00444D5E /* BannerEventHandlerStandalone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerEventHandlerStandalone.swift; sourceTree = "<group>"; };
 		5BC37872271F1CFF00444D5E /* DemandResponseInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemandResponseInfo.swift; sourceTree = "<group>"; };
 		5BC378A8271F1CFF00444D5E /* AdFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdFormat.swift; sourceTree = "<group>"; };
-		5BC37AE3271F1D4500444D5E /* Life360AdsSDKSwiftHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Life360AdsSDKSwiftHeaders.h; sourceTree = "<group>"; };
-		5BD67815271DF9E5004D334E /* Life360AdsSDK.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = Life360AdsSDK.modulemap; sourceTree = "<group>"; };
+		5BC37AE3271F1D4500444D5E /* PrebidMobileSwiftHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrebidMobileSwiftHeaders.h; sourceTree = "<group>"; };
+		5BD67815271DF9E5004D334E /* PrebidMobile.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = PrebidMobile.modulemap; sourceTree = "<group>"; };
 		5DC1298A0000000000000002 /* Life360BundleFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BundleFieldTest.swift; sourceTree = "<group>"; };
 		5DC1298B0000000000000002 /* Life360BannerViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BannerViewDelegate.swift; sourceTree = "<group>"; };
 		5DC1298C0000000000000002 /* Life360BannerViewDelegateTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BannerViewDelegateTest.swift; sourceTree = "<group>"; };
 		5DC1298E0000000000000002 /* Life360BidRequesterTimeoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BidRequesterTimeoutTest.swift; sourceTree = "<group>"; };
-		5BC37AE3271F1D4500444D5E /* PrebidMobileSwiftHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrebidMobileSwiftHeaders.h; sourceTree = "<group>"; };
-		5BD67815271DF9E5004D334E /* PrebidMobile.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = PrebidMobile.modulemap; sourceTree = "<group>"; };
 		5DF291384001B188BFD83C51 /* VastModelDump.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastModelDump.swift; sourceTree = "<group>"; };
+		5E2946D120A1901C5DE40386 /* Life360GeoLocationParameterBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360GeoLocationParameterBuilder.swift; sourceTree = "<group>"; };
 		600CF06F2208963500C95176 /* UtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTests.swift; sourceTree = "<group>"; };
 		601297E5B5D41ED364B4E464 /* NSTimer+PBMScheduledTimerFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSTimer+PBMScheduledTimerFactory.swift"; sourceTree = "<group>"; };
 		6013E3F72215C82900FEE2B1 /* CLLocationManager+Swizzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Swizzle.swift"; sourceTree = "<group>"; };
@@ -1310,25 +1304,26 @@
 		60C0382B2204BB190082B32C /* PrebidMobileTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PrebidMobileTest-Bridging-Header.h"; sourceTree = "<group>"; };
 		60D792FB217E229B0080F428 /* Life360AdsSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Life360AdsSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D79302217E229B0080F428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6873CFAE748275486EE29AC8 /* Life360AdLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360AdLayout.swift; sourceTree = "<group>"; };
-		744E60F09562467414158B98 /* Life360AdType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360AdType.swift; sourceTree = "<group>"; };
-		79165FCD86E9813EAC2682C6 /* Life360RendererConcurrencyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360RendererConcurrencyTest.swift; sourceTree = "<group>"; };
-		7F53C50C2FC198B1BBF17020 /* Life360QueryParameterStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Life360QueryParameterStore.swift; sourceTree = "<group>"; };
-		810F85C11222A60B07AE86E0 /* Life360RequestURLBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Life360RequestURLBuilder.swift; sourceTree = "<group>"; };
-		82FDBE5844F46A8326B59A8B /* Life360AdLayoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360AdLayoutTest.swift; sourceTree = "<group>"; };
 		63D116E525763D736DB7E649 /* DisplayTransactionFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DisplayTransactionFactory.swift; sourceTree = "<group>"; };
 		652D755A3EB43A8614741A21 /* ORTBUser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBUser.swift; sourceTree = "<group>"; };
 		67498C84B0EDA3352BEB31F3 /* AdLoadManagerVAST.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdLoadManagerVAST.swift; sourceTree = "<group>"; };
 		67F64CA3B3C095D7CA273128 /* ExternalURLOpeners.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExternalURLOpeners.swift; sourceTree = "<group>"; };
 		6831B0DD60EF55A07D4D1847 /* ORTBVideo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBVideo.swift; sourceTree = "<group>"; };
 		68664B988D627C36D0583E20 /* ORTBFormat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBFormat.swift; sourceTree = "<group>"; };
+		6873CFAE748275486EE29AC8 /* Life360AdLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360AdLayout.swift; sourceTree = "<group>"; };
 		68C98CE7FF0CEDDDA4593726 /* ORTBDeviceExtPrebidInterstitial.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBDeviceExtPrebidInterstitial.swift; sourceTree = "<group>"; };
 		6BF8681AE720A2DF62D50457 /* VastGlobals.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastGlobals.swift; sourceTree = "<group>"; };
 		719F3385E1034E4B053CFC70 /* AdLoadManagerBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdLoadManagerBase.swift; sourceTree = "<group>"; };
 		7382945425DA87CF4D4920D5 /* ORTBImpExtPrebid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBImpExtPrebid.swift; sourceTree = "<group>"; };
+		744E60F09562467414158B98 /* Life360AdType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360AdType.swift; sourceTree = "<group>"; };
+		79165FCD86E9813EAC2682C6 /* Life360RendererConcurrencyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360RendererConcurrencyTest.swift; sourceTree = "<group>"; };
 		7A901063285106026F818CE6 /* BidRequesterImpl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BidRequesterImpl.swift; sourceTree = "<group>"; };
+		7F53C50C2FC198B1BBF17020 /* Life360QueryParameterStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Life360QueryParameterStore.swift; sourceTree = "<group>"; };
 		7FAC3CF764AEFF11C515EFF9 /* DeepLinkPlus.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeepLinkPlus.swift; sourceTree = "<group>"; };
+		8072D808734190CA58F817EE /* Life360BidRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360BidRequester.swift; sourceTree = "<group>"; };
+		810F85C11222A60B07AE86E0 /* Life360RequestURLBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Life360RequestURLBuilder.swift; sourceTree = "<group>"; };
 		82FBD50AA9C905E01710527F /* ORTBSourceExtOMID.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBSourceExtOMID.swift; sourceTree = "<group>"; };
+		82FDBE5844F46A8326B59A8B /* Life360AdLayoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360AdLayoutTest.swift; sourceTree = "<group>"; };
 		875BF6DB6E8E8F7D9333F85E /* ORTBBidRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBBidRequest.swift; sourceTree = "<group>"; };
 		87EF3B2EA593FE48C09B0930 /* VastCreativeNonLinearAds.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastCreativeNonLinearAds.swift; sourceTree = "<group>"; };
 		8812D3C5C59838EE2DDB8F3A /* ViewExposureChecker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewExposureChecker.swift; sourceTree = "<group>"; };
@@ -1549,7 +1544,6 @@
 		97826AA621FB4F1B001E2C05 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9791778F2201AF4700E624CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		979177962201AF5F00E624CE /* DispatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatcherTests.swift; sourceTree = "<group>"; };
-		A5C91F12900F4186B630C9E6 /* AdServerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdServerType.swift; sourceTree = "<group>"; };
 		998620523ABC1256267CC282 /* UserConsentParameterBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UserConsentParameterBuilder.swift; sourceTree = "<group>"; };
 		9A0E1C5A2D1F4A0100DE0001 /* SKOverlayManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKOverlayManagerTest.swift; sourceTree = "<group>"; };
 		9B8674299BC145909DB3E1D6 /* ORTBDeviceExtPrebid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBDeviceExtPrebid.swift; sourceTree = "<group>"; };
@@ -1557,14 +1551,11 @@
 		9D6383CDCC7579907805F631 /* UIWindow+PBMExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIWindow+PBMExtensions.swift"; sourceTree = "<group>"; };
 		A4F2C4AFA26DB1ECCDA640F2 /* NSURL+PBMExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSURL+PBMExtensions.swift"; sourceTree = "<group>"; };
 		A59DEE29F49C3AD4461CFD10 /* ORTBParameterBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBParameterBuilder.swift; sourceTree = "<group>"; };
+		A5C91F12900F4186B630C9E6 /* AdServerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdServerType.swift; sourceTree = "<group>"; };
 		A5DA3D2E30C325E66B779F3D /* VideoView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		A908694129E05EAF00B37479 /* PrebidMobilePluginRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidMobilePluginRegister.swift; sourceTree = "<group>"; };
 		A908694329E05ED500B37479 /* PrebidMobilePluginRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidMobilePluginRenderer.swift; sourceTree = "<group>"; };
 		A908694529E05F7900B37479 /* PrebidRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebidRenderer.swift; sourceTree = "<group>"; };
-		B6DA79F1C9609A18EC09622A /* Life360GAMUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360GAMUtils.swift; sourceTree = "<group>"; };
-		DF1A01087C8D2FF9D6D60D82 /* NativeAdViewabilityTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NativeAdViewabilityTests.swift; sourceTree = "<group>"; };
-		DF1A01087C8D2FF9D6D60D84 /* NativeAdOpenMeasurementTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NativeAdOpenMeasurementTests.swift; sourceTree = "<group>"; };
-		DF1A01087C8D2FF9D6D60D83 /* Life360NativeOMUtilsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Life360NativeOMUtilsTests.swift; sourceTree = "<group>"; };
 		AA90616BA371B3101D44D03A /* PBMUIApplicationProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PBMUIApplicationProtocol.swift; sourceTree = "<group>"; };
 		AAC11CB985237BDF13C1EA3A /* TimerInterface.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TimerInterface.swift; sourceTree = "<group>"; };
 		B13EFFA3249245DF91494410 /* TrackingRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingRecord.swift; sourceTree = "<group>"; };
@@ -1574,6 +1565,7 @@
 		B483D135EE02F83C18C3265F /* VastResourceContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastResourceContainer.swift; sourceTree = "<group>"; };
 		B4E812317D294C28D34BDC4A /* VastTransactionFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastTransactionFactory.swift; sourceTree = "<group>"; };
 		B5A24D6E6DE17B5C590F8EBF /* VideoViewPlaybackState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoViewPlaybackState.swift; sourceTree = "<group>"; };
+		B6DA79F1C9609A18EC09622A /* Life360GAMUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360GAMUtils.swift; sourceTree = "<group>"; };
 		B7C9E1A10000000000000001 /* ImageHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelperTests.swift; sourceTree = "<group>"; };
 		B8CED59C60DAFD14AB06D65C /* VastIcon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VastIcon.swift; sourceTree = "<group>"; };
 		BB8862B4B876F83E1ADE91EF /* UIView+PBMExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIView+PBMExtensions.swift"; sourceTree = "<group>"; };
@@ -1594,9 +1586,13 @@
 		D75FE26A056A9AD378E85D92 /* CircularProgressBarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CircularProgressBarView.swift; sourceTree = "<group>"; };
 		DBEB81589766D33F9F73C471 /* ORTBDeviceExtAtts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ORTBDeviceExtAtts.swift; sourceTree = "<group>"; };
 		DDF9C08E8C9EB81A92A0E6D8 /* PrebidParameterBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PrebidParameterBuilder.swift; sourceTree = "<group>"; };
+		DF1A01087C8D2FF9D6D60D82 /* NativeAdViewabilityTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NativeAdViewabilityTests.swift; sourceTree = "<group>"; };
+		DF1A01087C8D2FF9D6D60D83 /* Life360NativeOMUtilsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Life360NativeOMUtilsTests.swift; sourceTree = "<group>"; };
+		DF1A01087C8D2FF9D6D60D84 /* NativeAdOpenMeasurementTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NativeAdOpenMeasurementTests.swift; sourceTree = "<group>"; };
 		E070E09140C3555F8F19C3C6 /* NSException+PBMExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSException+PBMExtensions.swift"; sourceTree = "<group>"; };
 		E0918024B761A2FC1C16C8BB /* GeoLocationParameterBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GeoLocationParameterBuilder.swift; sourceTree = "<group>"; };
 		E467D78D8987842DC7BCC864 /* CircularProgressBarLayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CircularProgressBarLayer.swift; sourceTree = "<group>"; };
+		E48A2B7D4C0840DBE326BD93 /* Life360ParameterBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Life360ParameterBuilder.swift; sourceTree = "<group>"; };
 		E557D4B62ED219CB00E5580A /* UserAgentPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgentPersistence.swift; sourceTree = "<group>"; };
 		E5D79CAD2FAE93BF00C0C44A /* PluginRendererFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRendererFactory.swift; sourceTree = "<group>"; };
 		E5D79CAF2FAE951C00C0C44A /* PluginRendererFactoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRendererFactoryTest.swift; sourceTree = "<group>"; };
@@ -1624,8 +1620,7 @@
 		FAA2990D24349812002ACBF2 /* AdUnitObjCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdUnitObjCTests.m; sourceTree = "<group>"; };
 		FAA2990F2434C141002ACBF2 /* AdViewUtilsObjCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdViewUtilsObjCTests.m; sourceTree = "<group>"; };
 		FAA299112434C769002ACBF2 /* UtilsObjCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UtilsObjCTests.m; sourceTree = "<group>"; };
-		FAAA00BD2322733E009DC7D6 /* Life360AdsSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Life360AdsSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FAAA00BD2322733E009DC7D6 /* PrebidMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrebidMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAAA00BD2322733E009DC7D6 /* PrebidMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PrebidMobile.framework; path = Life360AdsSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FABD5E3359D7378A5ABF80E9 /* UIView+PBMViewExposure.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIView+PBMViewExposure.swift"; sourceTree = "<group>"; };
 		FAC837D72321583500565051 /* CollectionExtensionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionExtensionTest.swift; sourceTree = "<group>"; };
 		FAEE4CDD262DC2B200AD9966 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -1745,7 +1740,6 @@
 			children = (
 				9C3A709F7484F51B8A80C7F0 /* ClickTracking */,
 			);
-			name = NativeEventsTracking;
 			path = NativeEventsTracking;
 			sourceTree = "<group>";
 		};
@@ -1754,7 +1748,6 @@
 			children = (
 				B13EFFA3249245DF91494410 /* TrackingRecord.swift */,
 			);
-			name = Tracking;
 			path = Tracking;
 			sourceTree = "<group>";
 		};
@@ -2038,7 +2031,6 @@
 				5A6167FA2DBA072D0018E6B6 /* ORTBExtensible.swift */,
 				5A46A9672E99C640006780B1 /* CustomModelObject.swift */,
 			);
-			name = Response;
 			path = Response;
 			sourceTree = "<group>";
 		};
@@ -2049,13 +2041,6 @@
 				5AF1BFDB2E1C50D30096B53C /* mraid.js */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		5AF5E9252E13580F002D80C1 /* ConfigurationAndTargeting */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ConfigurationAndTargeting;
 			sourceTree = "<group>";
 		};
 		5AF5E92B2E13580F002D80C1 /* OpenMeasurement */ = {
@@ -2135,36 +2120,6 @@
 			path = CreativeFactory;
 			sourceTree = "<group>";
 		};
-		5AF5E95A2E13580F002D80C1 /* Exposure */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Exposure;
-			sourceTree = "<group>";
-		};
-		5AF5E95D2E13580F002D80C1 /* NSTimer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = NSTimer;
-			sourceTree = "<group>";
-		};
-		5AF5E9662E13580F002D80C1 /* ExtensionsAndWrappers */ = {
-			isa = PBXGroup;
-			children = (
-				5AF5E95A2E13580F002D80C1 /* Exposure */,
-				5AF5E95D2E13580F002D80C1 /* NSTimer */,
-			);
-			path = ExtensionsAndWrappers;
-			sourceTree = "<group>";
-		};
-		5AF5E98F2E13580F002D80C1 /* ORTB */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ORTB;
-			sourceTree = "<group>";
-		};
 		5AF5E9972E13580F002D80C1 /* ClickTracking */ = {
 			isa = PBXGroup;
 			children = (
@@ -2214,8 +2169,6 @@
 				5AF5E92C2E13580F002D80C1 /* 3dPartyWrappers */,
 				5AF5E9532E13580F002D80C1 /* AdTypes */,
 				5AF5E9562E13580F002D80C1 /* CreativeFactory */,
-				5AF5E9662E13580F002D80C1 /* ExtensionsAndWrappers */,
-				5AF5E98F2E13580F002D80C1 /* ORTB */,
 				5AF5E9A42E13580F002D80C1 /* Prebid */,
 				5AF5E9B12E13580F002D80C1 /* Utilities */,
 				5AF5E9B22E13580F002D80C1 /* PBMCreativeViewabilityTracker.m */,
@@ -2294,7 +2247,6 @@
 			isa = PBXGroup;
 			children = (
 				3AFDF6442EC808D600FC7AA2 /* Life360 */,
-				5AF5E9252E13580F002D80C1 /* ConfigurationAndTargeting */,
 				5AF5E9B62E13580F002D80C1 /* PrebidMobileRendering */,
 				5AF5EA4F2E13580F002D80C1 /* PrivateHeaders */,
 				5AF5EA512E13580F002D80C1 /* Utils */,
@@ -2810,8 +2762,8 @@
 		5BD67814271DF9E5004D334E /* BuildFiles */ = {
 			isa = PBXGroup;
 			children = (
-				5BC37AE3271F1D4500444D5E /* Life360AdsSDKSwiftHeaders.h */,
-				5BD67815271DF9E5004D334E /* Life360AdsSDK.modulemap */,
+				5BC37AE3271F1D4500444D5E /* PrebidMobileSwiftHeaders.h */,
+				5BD67815271DF9E5004D334E /* PrebidMobile.modulemap */,
 			);
 			path = BuildFiles;
 			sourceTree = "<group>";
@@ -2872,7 +2824,7 @@
 			isa = PBXGroup;
 			children = (
 				60D792FB217E229B0080F428 /* Life360AdsSDKTests.xctest */,
-				FAAA00BD2322733E009DC7D6 /* Life360AdsSDK.framework */,
+				FAAA00BD2322733E009DC7D6 /* PrebidMobile.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3314,7 +3266,6 @@
 				26190AC809536F33FA984AF2 /* TrackingURLVisitors.swift */,
 				4888B94D24C64BB4FB166C4B /* ExternalLinkHandler.swift */,
 			);
-			name = ClickTracking;
 			path = ClickTracking;
 			sourceTree = "<group>";
 		};
@@ -3358,7 +3309,6 @@
 				82FBD50AA9C905E01710527F /* ORTBSourceExtOMID.swift */,
 				886FF24ABB135D0617F9DB78 /* ORTBRendererConfig.swift */,
 			);
-			name = Request;
 			path = Request;
 			sourceTree = "<group>";
 		};
@@ -3500,9 +3450,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BC37AE4271F1D4500444D5E /* Life360AdsSDKSwiftHeaders.h in Headers */,
+				5BC37AE4271F1D4500444D5E /* PrebidMobileSwiftHeaders.h in Headers */,
 				FAEE4D24262DC2B200AD9966 /* Life360AdsSDK.h in Headers */,
-				5AF5EA532E13580F002D80C1 /* PBMORTBUser.h in Headers */,
 				5AF5EA542E13580F002D80C1 /* PBMAbstractCreative.h in Headers */,
 				5AF5EA562E13580F002D80C1 /* PBMAdLoadFlowController.h in Headers */,
 				5AF5EA572E13580F002D80C1 /* Log+Extensions.h in Headers */,
@@ -3594,7 +3543,7 @@
 			);
 			name = Life360AdsSDK;
 			productName = PrebidMobile;
-			productReference = FAAA00BD2322733E009DC7D6 /* Life360AdsSDK.framework */;
+			productReference = FAAA00BD2322733E009DC7D6 /* PrebidMobile.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
