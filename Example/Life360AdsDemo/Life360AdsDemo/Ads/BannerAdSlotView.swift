@@ -51,6 +51,7 @@ final class BannerAdSlotView: AdSlotView, Life360BannerViewDelegate {
                                 configID: Self.configID,
                                 adSize: Self.adSize)
         banner.adFormat = .banner
+        banner.adUnitConfig.gpid = "demo_123"
         banner.delegate = self
 
         addSubview(banner)

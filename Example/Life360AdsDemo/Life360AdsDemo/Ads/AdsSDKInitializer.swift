@@ -44,6 +44,13 @@ enum AdsSDKInitializer {
         Targeting.shared.storeURL = "https://itunes.apple.com/us/app/nativo-mraid-app/id6444052767?mt=8"
         Targeting.shared.publisherName = "Life360"
         Targeting.shared.itunesID = "6444052767"
+        
+        // Mock targeting parameters
+        let externalUserId = ExternalUserId(source: "user1", uids: [UserUniqueID(uniqueId: "12345", aType: 1)])
+        Targeting.shared.setExternalUserIds([externalUserId])
+        Targeting.shared.publisherUserId = "demoapp_user1"
+        Life360Ads.shared.shareGeoLocationWithLife360 = true
+        Prebid.shared.eidsPlacement = .openRTB26
     }
 
     /// Uses the no-GMA `initializeSDK` overload. The GMA-aware ones exist only to log a warning about the
@@ -77,3 +84,4 @@ enum AdsSDKInitializer {
         return useLocalHost ? local : life360DevHost
     }
 }
+
