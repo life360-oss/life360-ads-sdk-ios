@@ -57,7 +57,6 @@ end
 target 'Life360AdsSDKAdMobAdapters' do
   event_handlers_project
   gma_pods
-
 end
 
 target 'Life360AdsSDKAdMobAdaptersTests' do
@@ -135,5 +134,17 @@ post_install do |installer|
     # Project-level configs too: Xcode validates these separately from the targets.
     project.build_configurations.each(&raise_floor)
     project.targets.each { |target| target.build_configurations.each(&raise_floor) }
+  end
+
+  # GoogleMobileAds is a static archive, so linking it into a dynamic framework copies it in and
+  # collides with the host app's own copy (duplicate GAD* classes). The GMA-based frameworks must
+  # leave it to the host app and resolve its symbols at load time.
+  %w[Life360AdsSDKGAMEventHandlers Life360AdsSDKAdMobAdapters].each do |name|
+    Dir["#{installer.sandbox.root}/Target Support Files/Pods-#{name}/*.xcconfig"].each do |path|
+      content = File.read(path)
+      stripped = content.gsub(/ -framework "(GoogleMobileAds|Google_Mobile_Ads_SDK|UserMessagingPlatform)"/, '')
+      next if stripped == content
+      File.write(path, stripped.sub(/^OTHER_LDFLAGS = .*$/) { |line| "#{line} -Wl,-undefined,dynamic_lookup" })
+    end
   end
 end
