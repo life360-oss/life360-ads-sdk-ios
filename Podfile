@@ -122,16 +122,18 @@ target 'OpenXMockServer' do
 end
 
 post_install do |installer|
-  installer.generated_projects.each do |project|
-    project.targets.each do |target|
-      target.build_configurations.each do |config|
-        # Xcode 27 refuses deployment targets below 15.0. Raise pod targets to the
-        # SDK floor, but keep any pod that already declares a higher minimum.
-        current = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_s
-        if current.empty? || Gem::Version.new(current) < Gem::Version.new('15.0')
-          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
-        end
-      end
+  # Xcode 27 refuses deployment targets below 15.0. Raise pod targets to the SDK
+  # floor, but keep any pod that already declares a higher minimum.
+  raise_floor = lambda do |config|
+    current = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_s
+    if current.empty? || Gem::Version.new(current) < Gem::Version.new('15.0')
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
     end
+  end
+
+  installer.generated_projects.each do |project|
+    # Project-level configs too: Xcode validates these separately from the targets.
+    project.build_configurations.each(&raise_floor)
+    project.targets.each { |target| target.build_configurations.each(&raise_floor) }
   end
 end
