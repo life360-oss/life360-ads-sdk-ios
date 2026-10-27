@@ -70,6 +70,7 @@
 		92EB6DE52799FB4700470DEC /* PrebidAdMobNativeAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EB6DE42799FB4700470DEC /* PrebidAdMobNativeAdapter.swift */; };
 		92F4389E27688E8600FDC950 /* Life360AdsSDKAdMobAdapters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F4389627688E8600FDC950 /* Life360AdsSDKAdMobAdapters.framework */; };
 		92F438A427688E8600FDC950 /* PrebidMobileAdMobAdapters.h in Headers */ = {isa = PBXBuildFile; fileRef = 92F4389827688E8600FDC950 /* PrebidMobileAdMobAdapters.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E5D79CAE2FADC40F00C0C44A /* GAMBannerEventHandlerImpressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D79CAD2FADC40F00C0C44A /* GAMBannerEventHandlerImpressionTests.swift */; };
 		F877BA9007D22AAD0D5E0C98 /* Pods_Life360AdsSDKMAXAdaptersTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E45D8A4F9CDE13D6BB6191 /* Pods_Life360AdsSDKMAXAdaptersTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -178,6 +179,7 @@
 		F3A711F3A1A388C6367F841F /* Pods-Life360AdsSDKMAXAdapters.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Life360AdsSDKMAXAdapters.debug.xcconfig"; path = "Target Support Files/Pods-Life360AdsSDKMAXAdapters/Pods-Life360AdsSDKMAXAdapters.debug.xcconfig"; sourceTree = "<group>"; };
 		F5353DAFDC63ECDA90C36EEE /* Pods_Life360AdsSDKGAMEventHandlers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Life360AdsSDKGAMEventHandlers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9F4025870EA93B8277C1EF4 /* Pods-Life360AdsSDKAdMobAdaptersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Life360AdsSDKAdMobAdaptersTests.debug.xcconfig"; path = "Target Support Files/Pods-Life360AdsSDKAdMobAdaptersTests/Pods-Life360AdsSDKAdMobAdaptersTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E5D79CAD2FADC40F00C0C44A /* GAMBannerEventHandlerImpressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GAMBannerEventHandlerImpressionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +262,7 @@
 				344A7F06250B73A700743A93 /* BoxTests */,
 				344A7F0A250B743900743A93 /* Extensions */,
 				344A7F07250B73BA00743A93 /* TestModels */,
+				E5D79CAD2FADC40F00C0C44A /* GAMBannerEventHandlerImpressionTests.swift */,
 			);
 			path = PrebidMobileGAMEventHandlersTests;
 			sourceTree = "<group>";
@@ -938,6 +941,7 @@
 				5B7B134C26455E5400EBF42A /* GADNativeAdWrapperTest.swift in Sources */,
 				344A7F14250B823F00743A93 /* GAMInterstitialAdWrapperTest.swift in Sources */,
 				344A7F0C250B744D00743A93 /* GADAdSize+Equatable.swift in Sources */,
+				E5D79CAE2FADC40F00C0C44A /* GAMBannerEventHandlerImpressionTests.swift in Sources */,
 				3405F951250A55AE00268A77 /* GAMBannerViewWrapperTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
