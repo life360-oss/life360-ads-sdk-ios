@@ -1,13 +1,13 @@
 ---
 name: xcodebuild
-description: Run xcodebuild tests for a scheme or specific test class in PrebidMobile.xcworkspace
+description: Run xcodebuild tests for a scheme or specific test class in Life360AdsSDK.xcworkspace
 ---
 
-Run xcodebuild tests for this iOS project. The workspace is `PrebidMobile.xcworkspace`.
+Run xcodebuild tests for this iOS project. The workspace is `Life360AdsSDK.xcworkspace`.
 
 ## Available schemes
 
-- `PrebidMobileTests` — core SDK unit tests (694 tests in PR plan, 1111 in full plan)
+- `PrebidMobileTests` — core SDK unit tests (test target `Life360AdsSDKTests`; PR plan `PrebidMobilePRTests`, full plan `PrebidMobileTests`)
 - `PrebidMobileGAMEventHandlersTests` — GAM adapter tests
 - `PrebidMobileAdMobAdaptersTests` — AdMob adapter tests
 - `PrebidMobileMAXAdaptersTests` — MAX adapter tests
@@ -22,10 +22,10 @@ Always use the project scripts, not raw xcodebuild, for build and test:
 # Build all 4 XCFrameworks — run first after every migration step
 ./scripts/buildPrebidMobile.sh
 
-# PR subset — 694 tests, gate for migration PRs
+# PR subset — gate for migration PRs
 ./scripts/testPrebidMobile.sh --latest --quick
 
-# Full suite — 1111 tests, run on final commit of each phase
+# Full suite — run on final commit of each phase
 ./scripts/testPrebidMobile.sh --latest
 ```
 
@@ -251,7 +251,7 @@ xcrun simctl create iPhone-17-Pro-PrebidMobile com.apple.CoreSimulator.SimDevice
 
 ```bash
 xcodebuild \
-  -workspace PrebidMobile.xcworkspace \
+  -workspace Life360AdsSDK.xcworkspace \
   -scheme PrebidMobileTests \
   -sdk iphonesimulator \
   -configuration Debug \
@@ -264,12 +264,12 @@ xcodebuild \
 
 ```bash
 xcodebuild \
-  -workspace PrebidMobile.xcworkspace \
+  -workspace Life360AdsSDK.xcworkspace \
   -scheme PrebidMobileTests \
   -sdk iphonesimulator \
   -destination 'platform=iOS Simulator,name=iPhone-17-Pro-PrebidMobile,OS=latest' \
   -destination-timeout 60 \
-  -only-testing PrebidMobileTests/<TestClass> \
+  -only-testing Life360AdsSDKTests/<TestClass> \
   test-without-building
 ```
 

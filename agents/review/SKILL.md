@@ -151,7 +151,7 @@ simulator load but passes in isolation. Do NOT flag this as a regression unless
 it also fails when run alone:
 
 ```bash
-xcodebuild ... -only-testing PrebidMobileTests/PBMBidRequesterTest/testBanner_300x250 \
+xcodebuild ... -only-testing Life360AdsSDKTests/PBMBidRequesterTest/testBanner_300x250 \
   test-without-building
 ```
 
