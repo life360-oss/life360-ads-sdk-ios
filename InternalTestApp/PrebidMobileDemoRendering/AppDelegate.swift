@@ -80,9 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         processArgumentsParser.addOption("-keyUITests", fireOnce: true) { params in
-            //Speed up UI tests by disabling animation
+            //Speed up UI tests by disabling animation (window speed is set in SceneDelegate)
             UIView.setAnimationsEnabled(false)
-            UIApplication.shared.keyWindow?.layer.speed = 200
         }
         
         processArgumentsParser.addOption("BIDDER_ACCESS_CONTROL_LIST", acceptedParamsRange: (min: 1, max: nil)) { params in
@@ -175,4 +174,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 	}
+}
+
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+
+    var window: UIWindow?
+
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        // The main storyboard creates the window; this only adjusts it for UI tests.
+        if ProcessInfo.processInfo.arguments.contains("-keyUITests") {
+            window?.layer.speed = 200
+        }
+    }
 }
