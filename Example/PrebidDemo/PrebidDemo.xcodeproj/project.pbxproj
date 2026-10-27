@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53BA0000292531D000BE6002 /* SwiftRuntimeLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA0000292531D000BE6001 /* SwiftRuntimeLink.swift */; };
 		0012D8B12E214EBE007013F3 /* MultiformatBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A368F32AB8468200A03B3E /* MultiformatBaseViewController.swift */; };
 		0012D8B22E214EBE007013F3 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ACBEAE2937A6DE00A9BAE2 /* UIApplication+Extensions.swift */; };
 		0012D8B32E214EBE007013F3 /* InAppVideoRewardedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53072B82292275EF00228462 /* InAppVideoRewardedViewController.swift */; };
@@ -312,6 +313,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		53BA0000292531D000BE6001 /* SwiftRuntimeLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftRuntimeLink.swift; sourceTree = "<group>"; };
 		0012D90A2E214EBE007013F3 /* PrebidDemoSPM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrebidDemoSPM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0012D9152E21544E007013F3 /* PrebidDemoSPM-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PrebidDemoSPM-Info.plist"; sourceTree = "<group>"; };
 		383E9CE325712AC3006FA6F4 /* PrebidDemoTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PrebidDemoTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -1167,6 +1169,7 @@
 				53BA02B5292531D000BE6015 /* SceneDelegate.h */,
 				53BA02B6292531D000BE6015 /* SceneDelegate.m */,
 				53BA02C4292531D100BE6015 /* main.m */,
+				53BA0000292531D000BE6001 /* SwiftRuntimeLink.swift */,
 				539928D729254EFD0078053C /* BaseViewControllers */,
 				539928CD29253C430078053C /* Examples */,
 				539928BC292534A70078053C /* IntegrationCase */,
@@ -1859,6 +1862,7 @@
 				539929012926488B0078053C /* GAMOriginalAPIVideoRewardedViewController.m in Sources */,
 				53514CA72CFFA52A00A480C0 /* SampleAdView.m in Sources */,
 				53BA02C5292531D100BE6015 /* main.m in Sources */,
+				53BA0000292531D000BE6002 /* SwiftRuntimeLink.swift in Sources */,
 				53F35F1C292692DC001C1183 /* AdMobDisplayInterstitialViewController.m in Sources */,
 				53BA02B7292531D000BE6015 /* SceneDelegate.m in Sources */,
 				53F35F312926B532001C1183 /* InAppVideoInterstitialViewController.m in Sources */,
@@ -2120,6 +2124,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.prebid.PrebidDemoObjectiveC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2151,6 +2156,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.prebid.PrebidDemoObjectiveC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
