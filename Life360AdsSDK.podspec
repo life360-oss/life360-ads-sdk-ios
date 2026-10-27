@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
     }
 
   s.author         = { "Life360, Inc." => "info@life360.com" }
-  s.platform     	 = :ios, "13.0"
+  s.platform     	 = :ios, "15.0"
   s.swift_version  = '5.0'
   s.source         = { :git => "https://github.com/life360-oss/life360-ads-sdk-ios.git", :tag => "v#{s.version}" }
   s.xcconfig 		   = { :LIBRARY_SEARCH_PATHS => '$(inherited)',
