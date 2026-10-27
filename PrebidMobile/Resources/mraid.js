@@ -67,7 +67,7 @@ debugPBMMRAID(() => "Beginning to add mraid.js...");
 	};
     
     mraid.lastExposure = {
-        exposedPercentage: 100.0,
+        exposedPercentage: 0.0,
         visibleRectangle: {
             x: 0.0,
             y: 0.0,
