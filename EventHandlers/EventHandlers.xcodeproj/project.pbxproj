@@ -74,6 +74,7 @@
 		A6A951B0369D4D1B71AF73DA /* Pods_Life360AdsSDKGAMEventHandlers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C353406A3423CF782411AC0 /* Pods_Life360AdsSDKGAMEventHandlers.framework */; };
 		E3F4E10750ACA079A58E1A91 /* Pods_Life360AdsSDKGAMEventHandlersTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A131574E3385FD0B904D8C /* Pods_Life360AdsSDKGAMEventHandlersTests.framework */; };
 		E5D79CAC2FADC40F00C0C44A /* GAMEventHandlerRequestConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D79CAB2FADC40F00C0C44A /* GAMEventHandlerRequestConfigurationTests.swift */; };
+		E5D79CAE2FADC40F00C0C44A /* GAMBannerEventHandlerImpressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D79CAD2FADC40F00C0C44A /* GAMBannerEventHandlerImpressionTests.swift */; };
 		F6D08ADB6D577CE1787FCA2E /* Pods_Life360AdsSDKAdMobAdapters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3F3D59794599391A53EF4AD /* Pods_Life360AdsSDKAdMobAdapters.framework */; };
 		F877BA9007D22AAD0D5E0C98 /* Pods_Life360AdsSDKMAXAdaptersTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E45D8A4F9CDE13D6BB6191 /* Pods_Life360AdsSDKMAXAdaptersTests.framework */; };
 /* End PBXBuildFile section */
@@ -183,6 +184,7 @@
 		9C353406A3423CF782411AC0 /* Pods_Life360AdsSDKGAMEventHandlers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Life360AdsSDKGAMEventHandlers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABE5B60EC2A658BFDE8400F9 /* Pods_Life360AdsSDKMAXAdapters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Life360AdsSDKMAXAdapters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D79CAB2FADC40F00C0C44A /* GAMEventHandlerRequestConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GAMEventHandlerRequestConfigurationTests.swift; sourceTree = "<group>"; };
+		E5D79CAD2FADC40F00C0C44A /* GAMBannerEventHandlerImpressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GAMBannerEventHandlerImpressionTests.swift; sourceTree = "<group>"; };
 		F3F3D59794599391A53EF4AD /* Pods_Life360AdsSDKAdMobAdapters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Life360AdsSDKAdMobAdapters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -271,6 +273,7 @@
 				344A7F0A250B743900743A93 /* Extensions */,
 				344A7F07250B73BA00743A93 /* TestModels */,
 				E5D79CAB2FADC40F00C0C44A /* GAMEventHandlerRequestConfigurationTests.swift */,
+				E5D79CAD2FADC40F00C0C44A /* GAMBannerEventHandlerImpressionTests.swift */,
 			);
 			path = PrebidMobileGAMEventHandlersTests;
 			sourceTree = "<group>";
@@ -950,6 +953,7 @@
 				344A7F14250B823F00743A93 /* GAMInterstitialAdWrapperTest.swift in Sources */,
 				344A7F0C250B744D00743A93 /* GADAdSize+Equatable.swift in Sources */,
 				E5D79CAC2FADC40F00C0C44A /* GAMEventHandlerRequestConfigurationTests.swift in Sources */,
+				E5D79CAE2FADC40F00C0C44A /* GAMBannerEventHandlerImpressionTests.swift in Sources */,
 				3405F951250A55AE00268A77 /* GAMBannerViewWrapperTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
